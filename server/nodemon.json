@@ -1,0 +1,8 @@
+{
+  "watch": ["src"],
+  "ext": ".ts",
+  "execMap": {
+    "ts": "node -r dotenv/config -r tsconfig-paths/register -r @swc-node/register"
+  },
+  "ignore": ["node_modules", "dist", "logs"]
+}
