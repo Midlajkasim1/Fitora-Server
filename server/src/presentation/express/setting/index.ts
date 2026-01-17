@@ -1,5 +1,6 @@
 import { DatabaseService } from "@/infrastructure/database/mongoose/connect.db";
 import app from "./app";
+import "dotenv/config";
 
 const PORT = process.env.PORT || 4000;
 

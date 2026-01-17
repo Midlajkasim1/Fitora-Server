@@ -1,50 +1,41 @@
-import { RegisterDTO } from "@/application/dto/auth/register.dto";
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import { UserEntity } from "@/domain/entities/user.entity";
+import { RegisterDTO } from "@/application/dto/auth/auth.dto";
+import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
+import { IEmailService } from "@/domain/interfaces/email-service.interface";
 import { PasswordHasher } from "@/shared/utils/password-hash";
+import { randomInt } from "crypto";
+
 export class RegisterUseCase {
-  constructor(private readonly userRepository: IUserRepository) {}
+  constructor(
+    private readonly otpStore: IOtpStore,
+    private readonly emailService: IEmailService
+  ) {}
 
   async execute(dto: RegisterDTO) {
-    const {
-      email,
-      password,
-      confirmPassword,
-      firstName,
-      lastName,
-      phone,
-      role,
-    } = dto;
+    const { email, password, confirmPassword } = dto;
 
     if (password !== confirmPassword) {
       throw new Error("Passwords do not match");
     }
 
-    const existingUser = await this.userRepository.findByEmail(email);
-    if (existingUser) {
-      throw new Error("Email already registered");
-    }
-
     const hashedPassword = await PasswordHasher.hash(password);
 
-    const userEntity = UserEntity.create({
-      email,
-      firstName,
-      lastName,
-      phone,
-      role,
-    });
+    const otp = randomInt(100000, 999999).toString();
+    const ttl = 300;
 
-    const createdUser = await this.userRepository.create(
-      userEntity,
-      hashedPassword,
-      { authProvider: "local" }
+    const redisKey = `otp:register:${email}`;
+
+    await this.otpStore.save(
+      redisKey,
+      {
+        ...dto,
+        password: hashedPassword,
+        otp,
+      },
+      ttl
     );
+   console.log('otp is:',otp)
+    await this.emailService.sendOtp(email, otp);
 
-    return {
-      id: createdUser.id,
-      email: createdUser.email,
-      role: createdUser.role,
-    };
+    return { message: "OTP sent to your email" };
   }
 }

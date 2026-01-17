@@ -579,3 +579,80 @@
 2026-01-16 21-37-16-3716 [32minfo[39m: [32mConnected to Mongodb[39m
 2026-01-16 21-49-01-491 [32minfo[39m: [32mConnected to Mongodb[39m
 2026-01-16 21-54-10-5410 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 09-41-30-4130 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 16-11-08-118 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 17-42-49-4249 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-49-4249 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-49-4249 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-49-4249 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-49-4249 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-49-4249 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 17-42-50-4250 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-50-4250 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-50-4250 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-51-4251 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-51-4251 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-52-4252 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-52-4252 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-53-4253 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-53-4253 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-54-4254 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-55-4255 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-56-4256 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-57-4257 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-57-4257 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 17-42-58-4258 [31merror[39m: [31mRedis error connect ECONNREFUSED 127.0.0.1:6379[39m
+2026-01-17 21-59-51-5951 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 21-59-54-5954 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 22-01-24-124 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 22-01-26-126 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 22-20-35-2035 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 22-20-36-2036 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 22-21-03-213 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 22-21-04-214 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 22-24-18-2418 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 22-24-19-2419 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 22-24-25-2425 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 22-24-26-2426 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 22-25-23-2523 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 22-25-24-2524 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 22-28-17-2817 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 22-28-19-2819 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 22-28-20-2820 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 22-29-35-2935 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 22-29-35-2935 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 22-30-12-3012 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 22-30-13-3013 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 22-30-47-3047 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 22-30-48-3048 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-00-12-012 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-00-14-014 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-00-25-025 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-00-25-025 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-02-03-23 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-02-04-24 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-02-05-25 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-02-06-26 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-02-27-227 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-02-28-228 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-02-30-230 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-02-31-231 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-02-37-237 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-02-39-239 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-02-40-240 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-03-02-32 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-03-03-33 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-03-11-311 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-03-13-313 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-03-14-314 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-03-15-315 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-03-16-316 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-03-31-331 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-03-32-332 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-04-27-427 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-04-29-429 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-04-30-430 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-04-47-447 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-04-48-448 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-17 23-04-50-450 [32minfo[39m: [32mRedis connected[39m
+2026-01-17 23-04-51-451 [32minfo[39m: [32mConnected to Mongodb[39m
