@@ -26,7 +26,7 @@ export class VerifyOtpUseCase {
       lastName: stored.lastName,
       phone: stored.phone,
       role: stored.role,
-      isVerified: true, 
+      isEmailVerified: true, 
     });
 
     await this.userRepository.create(user, stored.password);

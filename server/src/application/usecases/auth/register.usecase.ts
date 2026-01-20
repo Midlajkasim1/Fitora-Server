@@ -1,13 +1,16 @@
 import { RegisterDTO } from "@/application/dto/auth/auth.dto";
 import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
 import { IEmailService } from "@/domain/interfaces/email-service.interface";
-import { PasswordHasher } from "@/shared/utils/password-hash";
+// import { PasswordHasher } from "@/shared/utils/password-hash";
+// import { BcryptPasswordHasher } from "@/infrastructure/providers/crypto/bcrypt-password";
 import { randomInt } from "crypto";
+import { IPasswordHasher } from "@/domain/interfaces/password.interface";
 
 export class RegisterUseCase {
   constructor(
     private readonly otpStore: IOtpStore,
-    private readonly emailService: IEmailService
+    private readonly emailService: IEmailService,
+    private readonly passwordHasher:IPasswordHasher
   ) {}
 
   async execute(dto: RegisterDTO) {
@@ -17,7 +20,7 @@ export class RegisterUseCase {
       throw new Error("Passwords do not match");
     }
 
-    const hashedPassword = await PasswordHasher.hash(password);
+    const hashedPassword = await this.passwordHasher.hash(password)
 
     const otp = randomInt(100000, 999999).toString();
     const ttl = 300;

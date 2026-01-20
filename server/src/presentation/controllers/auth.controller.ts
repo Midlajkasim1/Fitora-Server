@@ -1,14 +1,16 @@
 import { Request, Response } from "express";
 import { RegisterUseCase } from "@/application/usecases/auth/register.usecase";
 import { VerifyOtpUseCase } from "@/application/usecases/auth/verify-otp.usecase";
+import { LoginUseCase } from "@/application/usecases/auth/login.usecase";
 
 export class AuthController {
   constructor(
     private readonly registerUseCase: RegisterUseCase,
-    private readonly verifyOtpUseCase: VerifyOtpUseCase
-  ) {}
+    private readonly verifyOtpUseCase: VerifyOtpUseCase,
+    private readonly loginUseCase: LoginUseCase
+  ) { }
 
-  
+
   async register(req: Request, res: Response): Promise<Response> {
     try {
       const result = await this.registerUseCase.execute(req.body);
@@ -42,4 +44,25 @@ export class AuthController {
       });
     }
   }
+
+async login(req: Request, res: Response): Promise<Response> {
+  try {
+    const result = await this.loginUseCase.execute(req.body);
+    return res.status(200).json({
+      success: true,
+      message: result.message,
+      data: {
+        accessToken: result.accessToken,
+        refreshToken: result.refreshToken,
+        role: result.role
+      }
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      success: false,
+      message: error.message || "Login failed",
+    });
+  }
+}
+
 }

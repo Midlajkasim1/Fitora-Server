@@ -4,6 +4,7 @@ import { useCases } from "./usecases";
 export const controllers = {
   authController: new AuthController(
     useCases.registerUseCase,
-    useCases.verifyOtpUseCase
+    useCases.verifyOtpUseCase,
+    useCases.loginUseCase
   ),
 };

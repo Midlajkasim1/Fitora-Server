@@ -19,7 +19,4 @@ export class NodemailerEmailService implements IEmailService {
     });
   }
 }
-console.log(
-  "EMAIL_USER =", process.env.EMAIL_USER,
-  "EMAIL_PASS =", process.env.EMAIL_PASS ? "SET" : "MISSING"
-);
+

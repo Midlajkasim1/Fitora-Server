@@ -11,6 +11,7 @@ export class UserMapper {
       phone: doc.phone,
       role: doc.role as UserRole,
       status: doc.status as UserStatus,
+      isEmailVerified: doc.isEmailVerified
     });
   }
 
@@ -31,10 +32,9 @@ export class UserMapper {
       phone: user.phone,
       role: user.role,
       status: user.status,
-
+      isEmailVerfied:user.isEmailVerified,
       authProvider: extra?.authProvider ?? "local",
       googleId: extra?.googleId ?? null,
-      isEmailVerified: extra?.isEmailVerified ?? false,
     };
   }
 }

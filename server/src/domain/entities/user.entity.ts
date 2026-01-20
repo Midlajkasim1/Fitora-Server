@@ -9,7 +9,7 @@ export class UserEntity {
   private readonly _phone: string;
   private readonly _role: UserRole;
   private readonly _status: UserStatus;
-   private readonly _isVerified: boolean;
+  private readonly _isEmailVerified: boolean;
 
 
   private constructor(props: {
@@ -20,7 +20,7 @@ export class UserEntity {
     phone: string;
     role: UserRole;
     status: UserStatus;
-     isVerified: boolean;
+    isEmailVerified: boolean;
 
   }) {
     this._id = props.id;
@@ -30,7 +30,7 @@ export class UserEntity {
     this._phone = props.phone;
     this._role = props.role;
     this._status = props.status;
-     this._isVerified = props.isVerified;
+    this._isEmailVerified = props.isEmailVerified;
 
   }
 
@@ -42,13 +42,13 @@ export class UserEntity {
     phone: string;
     role: UserRole;
     status?: UserStatus;
-    isVerified?: boolean;
+    isEmailVerified?: boolean;
 
   }): UserEntity {
     return new UserEntity({
       ...props,
       status: props.status ?? "active",
-      isVerified: props.isVerified ?? false,
+      isEmailVerified: props.isEmailVerified ?? false,
     });
   }
 
@@ -59,13 +59,17 @@ export class UserEntity {
   get phone() { return this._phone }
   get role() { return this._role }
   get status() { return this._status }
-  get isVerified() { return this._isVerified }
-
+  get isEmailVerified() { return this._isEmailVerified }
+  get password():string{
+    return this.password;
+  }
 
   isActive(): boolean {
     return this._status === "active";
   }
-   isEmailVerified(): boolean {
-    return this._isVerified;
+  isverfied(): boolean {
+    return this._isEmailVerified;
   }
+  
+ 
 }
