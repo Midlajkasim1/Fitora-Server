@@ -60,10 +60,7 @@ export class UserEntity {
   get role() { return this._role }
   get status() { return this._status }
   get isEmailVerified() { return this._isEmailVerified }
-  get password():string{
-    return this.password;
-  }
-
+  
   isActive(): boolean {
     return this._status === "active";
   }

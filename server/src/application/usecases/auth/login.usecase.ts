@@ -10,31 +10,34 @@ export class LoginUseCase{
     private readonly tokenService:ITokenService,
    ){}
 
-   async execute(dto: loginDTO) {
-    const user = await this.userRepository.findByEmail(dto.email);
+  async execute(dto: loginDTO) {
+  const result = await this.userRepository.findByEmail(dto.email);
+  if (!result) throw new Error("Invalid credentials");
 
-    if (!user) throw new Error("Invalid credentials");
-    if (!user.isverfied()) throw new Error("Account not verified");
-    if (!user.isActive()) throw new Error("Account blocked");
+  const { user, passwordHash } = result;
 
-    const isMatch = await this.passwordService.compare(
-      dto.password,
-      user.password
-    );
+  if (!user.isverfied()) throw new Error("Account not verified");
+  if (!user.isActive()) throw new Error("Account blocked");
 
-    if (!isMatch) throw new Error("Invalid credentials");
+  const isMatch = await this.passwordService.compare(
+    dto.password,
+    passwordHash
+  );
 
-    return {
-      accessToken: this.tokenService.generateAccessToken({
-        userId: user.id!,
-        email: user.email,
-        role: user.role,
-      }),
-      refreshToken: this.tokenService.generateRefreshToken({
-        userId: user.id!,
-      }),
+  if (!isMatch) throw new Error("Invalid credentials");
+
+  return {
+    accessToken: this.tokenService.generateAccessToken({
+      userId: user.id!,
+      email: user.email,
       role: user.role,
-      message: "Login successful",
-    };
-  }
+    }),
+    refreshToken: this.tokenService.generateRefreshToken({
+      userId: user.id!,
+    }),
+    role: user.role,
+    message: "Login successful",
+  };
+}
+
 }

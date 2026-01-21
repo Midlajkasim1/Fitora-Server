@@ -2,12 +2,14 @@ import { Request, Response } from "express";
 import { RegisterUseCase } from "@/application/usecases/auth/register.usecase";
 import { VerifyOtpUseCase } from "@/application/usecases/auth/verify-otp.usecase";
 import { LoginUseCase } from "@/application/usecases/auth/login.usecase";
+import { GoogleAuthUseCase } from "@/application/usecases/auth/google-auth.usecase";
 
 export class AuthController {
   constructor(
     private readonly registerUseCase: RegisterUseCase,
     private readonly verifyOtpUseCase: VerifyOtpUseCase,
-    private readonly loginUseCase: LoginUseCase
+    private readonly loginUseCase: LoginUseCase,
+    private readonly googleAuthUseCase: GoogleAuthUseCase,
   ) { }
 
 
@@ -64,5 +66,25 @@ async login(req: Request, res: Response): Promise<Response> {
     });
   }
 }
+
+async googleLogin(req: Request, res: Response) {
+  try {
+    const { idToken } = req.body;
+
+    const result = await this.googleAuthUseCase.execute(idToken);
+
+    return res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
+
 
 }

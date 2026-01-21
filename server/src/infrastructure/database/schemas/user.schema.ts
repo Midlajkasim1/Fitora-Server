@@ -2,7 +2,6 @@ import { Schema } from "mongoose";
 
 export const UserSchema = new Schema(
   {
-    // ===== Auth =====
     email: {
       type: String,
       required: true,

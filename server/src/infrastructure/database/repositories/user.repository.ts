@@ -1,8 +1,7 @@
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import {IUserRepository, UserWithPassword } from "@/domain/interfaces/repositories/user.repository";
 import { UserEntity } from "@/domain/entities/user.entity";
 import { UserModel } from "../models/user.models";
 import { UserMapper } from "../mappers/user.mapper";
-
 
 export class UserRepository implements IUserRepository {
 
@@ -15,30 +14,34 @@ export class UserRepository implements IUserRepository {
     }
   ): Promise<UserEntity> {
 
-    const persistenceData = UserMapper.toMongo(
-      user,
-      hashedPassword,
-      {
-        authProvider: options?.authProvider,
-        googleId: options?.googleId,
-        isEmailVerified: options?.authProvider === "google",
-      }
-    );
+    const data = UserMapper.toMongo(user, hashedPassword, {
+      authProvider: options?.authProvider,
+      googleId: options?.googleId,
+      isEmailVerified: true,
+    });
 
-    const createdDoc = await UserModel.create(persistenceData);
-
-    return UserMapper.fromMongo(createdDoc);
+    const doc = await UserModel.create(data);
+    return UserMapper.toEntity(doc);
   }
 
-  async findByEmail(email: string): Promise<UserEntity | null> {
-    const doc = await UserModel.findOne({ email });
+  async findByEmail(email: string): Promise<UserWithPassword | null> {
+    const doc = await UserModel.findOne({ email }).select("+password")
+    if (!doc || !doc.password) return null;
 
-    return doc ? UserMapper.fromMongo(doc) : null;
+    return {
+      user: UserMapper.toEntity(doc),
+      passwordHash:doc.password,
+    };
   }
+
 
   async findById(id: string): Promise<UserEntity | null> {
-    const doc = await UserModel.findById(id);
-
-    return doc ? UserMapper.fromMongo(doc) : null;
+    const doc = await UserModel.findById(id).lean();
+    return doc ? UserMapper.toEntity(doc) : null;
   }
+   async findEntityByEmail(email: string): Promise<UserEntity | null> {
+     const doc = await UserModel.findOne({ email });
+    return doc ? UserMapper.toEntity(doc) : null;
+  }
+
 }

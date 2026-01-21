@@ -1,5 +1,10 @@
 import { UserEntity } from "@/domain/entities/user.entity";
 
+export interface UserWithPassword {
+  user: UserEntity;
+  passwordHash: string;
+}
+
 export interface IUserRepository {
   create(
     user: UserEntity,
@@ -10,6 +15,8 @@ export interface IUserRepository {
     }
   ): Promise<UserEntity>;
 
-  findByEmail(email: string): Promise<UserEntity | null>;
+  findByEmail(email: string): Promise<UserWithPassword | null>;
   findById(id: string): Promise<UserEntity | null>;
+  findEntityByEmail(email: string): Promise<UserEntity | null>;
+
 }
