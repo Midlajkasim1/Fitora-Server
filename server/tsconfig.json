@@ -8,8 +8,8 @@
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    // "experimentalDecorators": true,
-    // "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "rootDir": "src",
     "outDir": "dist",
     "baseUrl": "./src",
@@ -19,7 +19,7 @@
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "noEmitOnError": false,
-    // "typeRoots": ["./node_modules/@types", "./src/@types"]
+    "typeRoots": []
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", ".tsbuildinfo"]

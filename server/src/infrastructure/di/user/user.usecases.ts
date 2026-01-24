@@ -8,6 +8,7 @@ import { BcryptPasswordHasher } from "../../providers/crypto/bcrypt-password.ser
 import { NodemailerEmailService } from "../../providers/email/nodemailer.service";
 import { RedisOtpStore } from "../../providers/redis/redis-otp.store";
 import { userRepositories } from "./user.repositories";
+import { ResendOtpUseCase } from "@/application/usecases/auth/ResendOtp.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -25,6 +26,11 @@ export const useCases = {
     otpStore,
     userRepositories.userRepository
   ),
+   resendOtpUseCase: new ResendOtpUseCase(
+    otpStore,
+    emailService
+  )
+  ,
     loginUseCase: new LoginUseCase(
     userRepositories.userRepository,
     passwordHasher,

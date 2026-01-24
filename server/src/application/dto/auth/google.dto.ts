@@ -1,3 +1,4 @@
 export interface GoogleDTO {
-  credential: string; 
+  idToken:string
+  role: "user" | "trainer"
 }

@@ -1,5 +1,5 @@
-export type UserRole = "user" | "trainer";
-export type UserStatus = "active" | "blocked";
+import { UserRole, UserStatus } from "../constants/auth.constants";
+
 
 export class UserEntity {
   private readonly _id?: string;
@@ -47,7 +47,7 @@ export class UserEntity {
   }): UserEntity {
     return new UserEntity({
       ...props,
-      status: props.status ?? "active",
+      status: props.status ?? UserStatus.ACTIVE,
       isEmailVerified: props.isEmailVerified ?? false,
     });
   }
@@ -62,7 +62,7 @@ export class UserEntity {
   get isEmailVerified() { return this._isEmailVerified }
   
   isActive(): boolean {
-    return this._status === "active";
+    return this._status === UserStatus.ACTIVE;
   }
   isverfied(): boolean {
     return this._isEmailVerified;

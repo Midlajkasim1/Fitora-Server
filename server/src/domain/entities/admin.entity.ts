@@ -1,5 +1,4 @@
-export type AdminStatus = "active" | "blocked";
-
+import { AdminStatus } from "../constants/auth.constants";
 export class AdminEntity {
   private readonly _id?: string;
   private readonly _email: string;
@@ -22,7 +21,7 @@ export class AdminEntity {
   }) {
     return new AdminEntity({
       ...props,
-      status: props.status ?? "active",
+      status: props.status ?? AdminStatus.ACTIVE,
     });
   }
 
@@ -31,6 +30,6 @@ export class AdminEntity {
   get status() { return this._status }
 
   isActive() {
-    return this._status === "active";
+    return this._status === AdminStatus.ACTIVE;
   }
 }

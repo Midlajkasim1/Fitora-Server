@@ -14,11 +14,7 @@ export class RegisterUseCase {
   ) {}
 
   async execute(dto: RegisterDTO) {
-    const { email, password, confirmPassword } = dto;
-
-    if (password !== confirmPassword) {
-      throw new Error("Passwords do not match");
-    }
+    const { email, password } = dto;
 
     const hashedPassword = await this.passwordHasher.hash(password)
 

@@ -36,7 +36,9 @@ export class LoginUseCase{
       userId: user.id!,
     }),
     role: user.role,
+    isOnboardingRequired: !user.phone || user.phone === "",
     message: "Login successful",
+
   };
 }
 

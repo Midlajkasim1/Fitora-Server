@@ -15,6 +15,9 @@ export class VerifyOtpUseCase {
     if (!stored) {
       throw new Error("OTP expired or invalid");
     }
+    if (!stored.email || !stored.role) {
+      throw new Error("Invalid registration session. Please sign up again.");
+    }
 
     if (stored.otp !== otp) {
       throw new Error("Invalid OTP");

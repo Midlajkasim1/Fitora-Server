@@ -65,10 +65,13 @@ export const UserSchema = new Schema(
       trim: true,
     },
 
-    phone: {
+  phone: {
       type: String,
-      required: true,
+      required: function (this: any) {
+        return this.authProvider === "local";
+      },
       index: true,
+      default: "", 
     },
   },
   {

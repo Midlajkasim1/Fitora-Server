@@ -10,7 +10,10 @@ router.post("/register", (req:Request, res:Response) =>
 router.post("/verify-otp", (req:Request, res:Response) =>
   userControllers.authController.verifyOtp(req, res)
 );
-router.post('/login',(req:Request,res:Response)=>{
+router.post("/resend-otp",(req:Request,res:Response)=>{
+  userControllers.authController.resendOtp(req,res)
+})
+router.post("/login",(req:Request,res:Response)=>{
   userControllers.authController.login(req,res)
 })
 router.post("/google", (req:Request,res:Response) =>
@@ -19,3 +22,5 @@ router.post("/google", (req:Request,res:Response) =>
 
 
 export default router;
+
+

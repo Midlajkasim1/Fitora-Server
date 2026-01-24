@@ -7,51 +7,42 @@ export class GoogleAuthUseCase {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly tokenService: ITokenService,
-   private readonly googleTokenProvider: IGoogleTokenProvider
-
+    private readonly googleTokenProvider: IGoogleTokenProvider
   ) {}
 
- async execute(googleUser: {
-  email: string;
-  firstName: string;
-  lastName: string;
-  googleId: string;
-}) {
-  let user = await this.userRepository.findEntityByEmail(googleUser.email);
+  async execute(idToken: string, role: "user" | "trainer") {
+    const googleUser = await this.googleTokenProvider.verifyIdToken(idToken);
 
-  // SIGNUP
-  if (!user) {
-    const newUser = UserEntity.create({
-      email: googleUser.email,
-      firstName: googleUser.firstName,
-      lastName: googleUser.lastName,
-      phone: "",
-      role: "user",
-      isEmailVerified: true,
-    });
+    let user = await this.userRepository.findEntityByEmail(googleUser.email);
 
-    user = await this.userRepository.create(
-      newUser,
-      "",
-      {
+    if (!user) {
+      const newUser = UserEntity.create({
+        email: googleUser.email,
+        firstName: googleUser.firstName,
+        lastName: googleUser.lastName,
+        phone: "",
+        role: role, 
+        isEmailVerified: true,
+      });
+
+      user = await this.userRepository.create(newUser, "", {
         authProvider: "google",
         googleId: googleUser.googleId,
-      }
-    );
-  }
+      });
+    }
 
-  // LOGIN
-  return {
-    accessToken: this.tokenService.generateAccessToken({
-      userId: user.id!,
-      email: user.email,
+    return {
+      accessToken: this.tokenService.generateAccessToken({
+        userId: user.id!,
+        email: user.email,
+        role: user.role,
+      }),
+      refreshToken: this.tokenService.generateRefreshToken({
+        userId: user.id!,
+      }),
       role: user.role,
-    }),
-    refreshToken: this.tokenService.generateRefreshToken({
-      userId: user.id!,
-    }),
-    role: user.role,
-    message: "Google authentication successful",
-  };
-}
+      isOnboardingRequired: !user.phone || user.phone === "", 
+      message: "Google authentication successful",
+    };
+  }
 }

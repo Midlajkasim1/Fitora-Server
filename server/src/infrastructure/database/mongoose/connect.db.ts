@@ -1,10 +1,10 @@
 import { logger } from "@/infrastructure/providers/loggers/logger";
 import mongoose from "mongoose";
-
+import { env } from "@/infrastructure/config/env.config";
 export class DatabaseService{
     static async connect(): Promise<void> {
         try {
-            const uri = process.env.MONGO_URL;
+            const uri = env.MONGO_URL;
     
            if(!uri) throw new Error("Mongo_url is not defined")
             const {connection} = await mongoose.connect(uri,{

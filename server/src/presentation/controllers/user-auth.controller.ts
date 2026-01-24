@@ -3,11 +3,14 @@ import { RegisterUseCase } from "@/application/usecases/auth/register.usecase";
 import { VerifyOtpUseCase } from "@/application/usecases/auth/verify-otp.usecase";
 import { LoginUseCase } from "@/application/usecases/auth/login.usecase";
 import { GoogleAuthUseCase } from "@/application/usecases/auth/google-auth.usecase";
+import { ResendOtpUseCase } from "@/application/usecases/auth/ResendOtp.usecase";
+import { ResendOtpDTO } from "@/application/dto/auth/resend-otp.dto";
 
 export class AuthController {
   constructor(
     private readonly registerUseCase: RegisterUseCase,
     private readonly verifyOtpUseCase: VerifyOtpUseCase,
+    private readonly resendOtpUseCase: ResendOtpUseCase,
     private readonly loginUseCase: LoginUseCase,
     private readonly googleAuthUseCase: GoogleAuthUseCase,
   ) { }
@@ -46,6 +49,24 @@ export class AuthController {
       });
     }
   }
+  async resendOtp(req: Request, res: Response): Promise<Response> {
+  try {
+    const { email } = req.body as ResendOtpDTO;
+
+    const result = await this.resendOtpUseCase.execute(email);
+
+    return res.status(200).json({
+      success: true,
+      message: result.message,
+    });
+  } catch (error: any) {
+    return res.status(400).json({
+      success: false,
+      message: error.message,
+    });
+  }
+}
+
 
 async login(req: Request, res: Response): Promise<Response> {
   try {
@@ -67,21 +88,29 @@ async login(req: Request, res: Response): Promise<Response> {
   }
 }
 
+
 async googleLogin(req: Request, res: Response) {
   try {
-    const { idToken } = req.body;
+    const { idToken, role } = req.body;
+    const result = await this.googleAuthUseCase.execute(idToken, role);
 
-    const result = await this.googleAuthUseCase.execute(idToken);
+    // SET THE COOKIE ON THE BACKEND
+    res.cookie('accessToken', result.accessToken, {
+      httpOnly: true,    // Protects from XSS
+      secure: process.env.NODE_ENV === 'production', 
+      sameSite: 'lax',
+      maxAge: 15 * 60 * 1000 // 15 mins
+    });
 
     return res.status(200).json({
       success: true,
-      data: result,
+      data: {
+        role: result.role,
+        isOnboardingRequired: result.isOnboardingRequired //
+      },
     });
   } catch (error: any) {
-    return res.status(400).json({
-      success: false,
-      message: error.message,
-    });
+    return res.status(400).json({ success: false, message: error.message });
   }
 }
 

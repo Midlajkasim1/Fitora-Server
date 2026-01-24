@@ -6,7 +6,6 @@ export interface RegisterDTO {
   phone: string;
   email: string;
   password: string;
-  confirmPassword: string;
   role: "user" | "trainer";
 }
 
