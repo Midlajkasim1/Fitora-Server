@@ -1,10 +1,14 @@
-import { Request, Response } from "express";
-import { RegisterUseCase } from "@/application/usecases/auth/register.usecase";
-import { VerifyOtpUseCase } from "@/application/usecases/auth/verify-otp.usecase";
-import { LoginUseCase } from "@/application/usecases/auth/login.usecase";
 import { GoogleAuthUseCase } from "@/application/usecases/auth/google-auth.usecase";
-import { ResendOtpUseCase } from "@/application/usecases/auth/ResendOtp.usecase";
-import { ResendOtpDTO } from "@/application/dto/auth/resend-otp.dto";
+import { LoginUseCase } from "@/application/usecases/auth/login.usecase";
+import { RegisterUseCase } from "@/application/usecases/auth/register.usecase";
+import { ResendOtpUseCase } from "@/application/usecases/auth/resend-otp.usecase";
+import { VerifyOtpUseCase } from "@/application/usecases/auth/verify-otp.usecase";
+import { googleLoginSchema } from "@/application/validators/google-login.validator";
+import { loginSchema } from "@/application/validators/login.validator";
+import { registerSchema } from "@/application/validators/register.validator";
+import { resendOtpSchema } from "@/application/validators/resend-otp.validator";
+import { verifyOtpSchema } from "@/application/validators/verify-otp.validator";
+import { Request, Response } from "express";
 
 export class AuthController {
   constructor(
@@ -18,7 +22,8 @@ export class AuthController {
 
   async register(req: Request, res: Response): Promise<Response> {
     try {
-      const result = await this.registerUseCase.execute(req.body);
+      const dto = registerSchema.parse(req.body)
+      await this.registerUseCase.execute(dto);
 
       return res.status(200).json({
         success: true,
@@ -34,13 +39,11 @@ export class AuthController {
 
   async verifyOtp(req: Request, res: Response): Promise<Response> {
     try {
-      const { email, otp } = req.body;
-
-      const result = await this.verifyOtpUseCase.execute(email, otp);
-
+      const dto = verifyOtpSchema.parse(req.body);
+      await this.verifyOtpUseCase.execute(dto)
       return res.status(200).json({
         success: true,
-        message: result.message,
+        message: "Account verfied successfully",
       });
     } catch (error: any) {
       return res.status(400).json({
@@ -50,70 +53,72 @@ export class AuthController {
     }
   }
   async resendOtp(req: Request, res: Response): Promise<Response> {
-  try {
-    const { email } = req.body as ResendOtpDTO;
+    try {
 
-    const result = await this.resendOtpUseCase.execute(email);
+      const dto = resendOtpSchema.parse(req.body);
 
-    return res.status(200).json({
-      success: true,
-      message: result.message,
-    });
-  } catch (error: any) {
-    return res.status(400).json({
-      success: false,
-      message: error.message,
-    });
+      await this.resendOtpUseCase.execute(dto);
+
+      return res.status(200).json({
+        success: true,
+        message: "OTP resent successfully",
+      });
+    } catch (error: any) {
+      return res.status(400).json({
+        success: false,
+        message: error.message,
+      });
+    }
   }
-}
 
 
-async login(req: Request, res: Response): Promise<Response> {
-  try {
-    const result = await this.loginUseCase.execute(req.body);
-    return res.status(200).json({
-      success: true,
-      message: result.message,
-      data: {
-        accessToken: result.accessToken,
-        refreshToken: result.refreshToken,
-        role: result.role
-      }
-    });
-  } catch (error: any) {
-    return res.status(400).json({
-      success: false,
-      message: error.message || "Login failed",
-    });
+  async login(req: Request, res: Response): Promise<Response> {
+    try {
+      const dto = loginSchema.parse(req.body)
+
+      const result= await this.loginUseCase.execute(dto)
+      return res.status(200).json({
+        success: true,
+        message: "Login successful",
+        data: {
+          accessToken: result.accessToken,
+          refreshToken: result.refreshToken,
+          role: result.role
+        }
+      });
+    } catch (error: any) {
+      return res.status(400).json({
+        success: false,
+        message: error.message || "Login failed",
+      });
+    }
   }
-}
 
 
-async googleLogin(req: Request, res: Response) {
-  try {
-    const { idToken, role } = req.body;
-    const result = await this.googleAuthUseCase.execute(idToken, role);
+  async googleLogin(req: Request, res: Response): Promise<Response> {
+    try {
+       const dto = googleLoginSchema.parse(req.body)
+       const result = await this.googleAuthUseCase.execute(dto);
 
-    // SET THE COOKIE ON THE BACKEND
-    res.cookie('accessToken', result.accessToken, {
-      httpOnly: true,    // Protects from XSS
-      secure: process.env.NODE_ENV === 'production', 
-      sameSite: 'lax',
-      maxAge: 15 * 60 * 1000 // 15 mins
-    });
+      res.cookie('accessToken', result.accessToken, {
+        httpOnly: true,   
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 15 * 60 * 1000 
+      });
 
-    return res.status(200).json({
-      success: true,
-      data: {
-        role: result.role,
-        isOnboardingRequired: result.isOnboardingRequired //
-      },
-    });
-  } catch (error: any) {
-    return res.status(400).json({ success: false, message: error.message });
+      return res.status(200).json({
+        success: true,
+        data: {
+          role: result.role,
+          isOnboardingRequired: result.isOnboardingRequired //
+        },
+      });
+    } catch (error: any) {
+      return res.status(400).json({ success: false, message: error.message });
+    }
   }
-}
 
-// next forgot passoword
+  // next forgot passoword
 
 }

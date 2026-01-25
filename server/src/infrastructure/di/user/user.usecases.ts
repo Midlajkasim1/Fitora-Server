@@ -1,6 +1,7 @@
 import { GoogleAuthUseCase } from "@/application/usecases/auth/google-auth.usecase";
 import { LoginUseCase } from "@/application/usecases/auth/login.usecase";
 import { RegisterUseCase } from "@/application/usecases/auth/register.usecase";
+import { ResendOtpUseCase } from "@/application/usecases/auth/resend-otp.usecase";
 import { VerifyOtpUseCase } from "@/application/usecases/auth/verify-otp.usecase";
 import { GoogleTokenProvider } from "../../providers/auth/google-token.provider";
 import { JwtTokenService } from "../../providers/auth/jwt-token.service";
@@ -8,7 +9,6 @@ import { BcryptPasswordHasher } from "../../providers/crypto/bcrypt-password.ser
 import { NodemailerEmailService } from "../../providers/email/nodemailer.service";
 import { RedisOtpStore } from "../../providers/redis/redis-otp.store";
 import { userRepositories } from "./user.repositories";
-import { ResendOtpUseCase } from "@/application/usecases/auth/ResendOtp.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();

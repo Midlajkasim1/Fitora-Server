@@ -1,6 +1,9 @@
+import { OtpSessionDTO } from "@/application/dto/auth/request/otp-session.dto";
+import { VerifyOtpDTO } from "@/application/dto/auth/request/verify-otp.dto";
+import { VerifyOtpResponseDTO } from "@/application/dto/auth/response/verify-otp.dto";
+import { UserEntity } from "@/domain/entities/user.entity";
 import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import { UserEntity } from "@/domain/entities/user.entity";
 
 export class VerifyOtpUseCase {
   constructor(
@@ -8,10 +11,10 @@ export class VerifyOtpUseCase {
     private readonly userRepository: IUserRepository
   ) {}
 
-  async execute(email: string, otp: string) {
-    const redisKey = `otp:register:${email}`;
+  async execute(dto:VerifyOtpDTO):Promise<VerifyOtpResponseDTO> {
+    const redisKey = `otp:register:${dto.email}`;
 
-    const stored = await this.otpStore.get<any>(redisKey);
+    const stored = await this.otpStore.get<OtpSessionDTO>(redisKey);
     if (!stored) {
       throw new Error("OTP expired or invalid");
     }
@@ -19,7 +22,7 @@ export class VerifyOtpUseCase {
       throw new Error("Invalid registration session. Please sign up again.");
     }
 
-    if (stored.otp !== otp) {
+    if (stored.otp !==dto.otp) {
       throw new Error("Invalid OTP");
     }
 
@@ -35,7 +38,7 @@ export class VerifyOtpUseCase {
     await this.userRepository.create(user, stored.password);
 
     await this.otpStore.delete(redisKey);
-
     return { message: "Account verified successfully" };
+
   }
 }

@@ -1,3 +1,5 @@
+import { GoogleLoginResponseDTO } from "@/application/dto/auth/response/google-login.dto";
+import { GoogleDTO } from "@/application/dto/auth/request/google.dto";
 import { UserEntity } from "@/domain/entities/user.entity";
 import { IGoogleTokenProvider } from "@/domain/interfaces/google-token.interface";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
@@ -10,8 +12,8 @@ export class GoogleAuthUseCase {
     private readonly googleTokenProvider: IGoogleTokenProvider
   ) {}
 
-  async execute(idToken: string, role: "user" | "trainer") {
-    const googleUser = await this.googleTokenProvider.verifyIdToken(idToken);
+  async execute(dto:GoogleDTO):Promise<GoogleLoginResponseDTO> {
+    const googleUser = await this.googleTokenProvider.verifyIdToken(dto.idToken);
 
     let user = await this.userRepository.findEntityByEmail(googleUser.email);
 
@@ -21,7 +23,7 @@ export class GoogleAuthUseCase {
         firstName: googleUser.firstName,
         lastName: googleUser.lastName,
         phone: "",
-        role: role, 
+        role: dto.role, 
         isEmailVerified: true,
       });
 
@@ -42,7 +44,6 @@ export class GoogleAuthUseCase {
       }),
       role: user.role,
       isOnboardingRequired: !user.phone || user.phone === "", 
-      message: "Google authentication successful",
     };
   }
 }

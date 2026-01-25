@@ -1,4 +1,5 @@
-import { loginDTO } from "@/application/dto/auth/login.dto";
+import { LoginResponseDTO } from "@/application/dto/auth/response/login.dto";
+import { LoginDTO } from "@/application/dto/auth/request/login.dto";
 import { IPasswordHasher } from "@/domain/interfaces/password.interface";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { ITokenService } from "@/domain/interfaces/token.interface";
@@ -10,7 +11,7 @@ export class LoginUseCase{
     private readonly tokenService:ITokenService,
    ){}
 
-  async execute(dto: loginDTO) {
+  async execute(dto: LoginDTO):Promise<LoginResponseDTO> {
   const result = await this.userRepository.findByEmail(dto.email);
   if (!result) throw new Error("Invalid credentials");
 
@@ -36,8 +37,7 @@ export class LoginUseCase{
       userId: user.id!,
     }),
     role: user.role,
-    isOnboardingRequired: !user.phone || user.phone === "",
-    message: "Login successful",
+    isOnboardingRequired: !user.phone,
 
   };
 }

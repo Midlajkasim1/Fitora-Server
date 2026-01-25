@@ -1,7 +1,10 @@
 import { UserEntity } from "@/domain/entities/user.entity";
+import { IUserDocument } from "../interfaces/user-document.interface";
+import { AuthProvider } from "@/domain/constants/auth.constants";
+import { IMapper } from "@/domain/interfaces/mapper.interface";
 
-export class UserMapper {
-  static toEntity(doc: any): UserEntity {
+export class UserMapper implements IMapper<UserEntity, IUserDocument> {
+   toEntity(doc: IUserDocument): UserEntity {
     return UserEntity.create({
       id: doc._id.toString(),
       email: doc.email,
@@ -14,15 +17,15 @@ export class UserMapper {
     });
   }
 
-  static toMongo(
+   toMongo(
     user: UserEntity,
-    passwordHash: string,
+    passwordHash?: string,
     options?: {
-      authProvider?: "local" | "google";
+      authProvider?: AuthProvider;
       googleId?: string | null;
       isEmailVerified?: boolean;
     }
-  ) {
+  ):Partial<IUserDocument> {
     return {
       email: user.email,
       firstName: user.firstName,
@@ -31,7 +34,7 @@ export class UserMapper {
       role: user.role,
       status: user.status,
       isEmailVerified: options?.isEmailVerified ?? true,
-      authProvider: options?.authProvider ?? "local",
+      authProvider: options?.authProvider ?? AuthProvider.LOCAL,
       googleId: options?.googleId ?? null,
       password: passwordHash,
     };

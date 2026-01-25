@@ -1,47 +1,35 @@
-import {IUserRepository, UserWithPassword } from "@/domain/interfaces/repositories/user.repository";
+import { IUserRepository, UserWithPassword } from "@/domain/interfaces/repositories/user.repository";
 import { UserEntity } from "@/domain/entities/user.entity";
 import { UserModel } from "../models/user.models";
 import { UserMapper } from "../mappers/user.mapper";
+import { IUserDocument } from "../interfaces/user-document.interface";
 
 export class UserRepository implements IUserRepository {
+  constructor(private readonly userMapper: UserMapper) {}
 
-  async create(
-    user: UserEntity,
-    hashedPassword: string,
-    options?: {
-      authProvider?: "local" | "google";
-      googleId?: string | null;
-    }
-  ): Promise<UserEntity> {
-
-    const data = UserMapper.toMongo(user, hashedPassword, {
-      authProvider: options?.authProvider,
-      googleId: options?.googleId,
-      isEmailVerified: true,
-    });
-
+  async create(user: UserEntity, hashedPassword: string, options?: any): Promise<UserEntity> {
+    const data = this.userMapper.toMongo(user, hashedPassword, options);
     const doc = await UserModel.create(data);
-    return UserMapper.toEntity(doc);
+    return this.userMapper.toEntity(doc as unknown as IUserDocument);
   }
 
   async findByEmail(email: string): Promise<UserWithPassword | null> {
-    const doc = await UserModel.findOne({ email }).select("+password")
+    const doc = await UserModel.findOne({ email }).select("+password").lean();
     if (!doc || !doc.password) return null;
 
     return {
-      user: UserMapper.toEntity(doc),
-      passwordHash:doc.password,
+      user: this.userMapper.toEntity(doc as unknown as IUserDocument),
+      passwordHash: doc.password,
     };
   }
 
-
   async findById(id: string): Promise<UserEntity | null> {
     const doc = await UserModel.findById(id).lean();
-    return doc ? UserMapper.toEntity(doc) : null;
-  }
-   async findEntityByEmail(email: string): Promise<UserEntity | null> {
-     const doc = await UserModel.findOne({ email });
-    return doc ? UserMapper.toEntity(doc) : null;
+    return doc ? this.userMapper.toEntity(doc as unknown as IUserDocument) : null;
   }
 
+  async findEntityByEmail(email: string): Promise<UserEntity | null> {
+    const doc = await UserModel.findOne({ email }).lean();
+    return doc ? this.userMapper.toEntity(doc as unknown as IUserDocument) : null;
+  }
 }

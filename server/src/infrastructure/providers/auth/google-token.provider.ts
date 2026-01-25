@@ -16,7 +16,7 @@ export class GoogleTokenProvider implements IGoogleTokenProvider {
 
     const ticket = await this.client.verifyIdToken({
       idToken,
-      audience: clientId, // Use the local variable
+      audience: clientId, 
     });
 
     const payload = ticket.getPayload();
