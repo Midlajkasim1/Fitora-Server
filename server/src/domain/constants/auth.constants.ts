@@ -18,3 +18,8 @@ export enum AdminStatus {
     ACTIVE = "active",
     BLOCKED = "blocked"
 }
+
+export const OTP_PREFIXES = {
+  FORGOT_PASSWORD: "otp:forgot-password:",
+  RESET_SESSION: "reset-session:",
+};

@@ -25,9 +25,9 @@ export class AdminEntity {
     });
   }
 
-  get id() { return this._id }
-  get email() { return this._email }
-  get status() { return this._status }
+  get id() { return this._id; }
+  get email() { return this._email; }
+  get status() { return this._status; }
 
   isActive() {
     return this._status === AdminStatus.ACTIVE;

@@ -52,14 +52,14 @@ export class UserEntity {
     });
   }
 
-  get id() { return this._id }
-  get email() { return this._email }
-  get firstName() { return this._firstName }
-  get lastName() { return this._lastName }
-  get phone() { return this._phone }
-  get role() { return this._role }
-  get status() { return this._status }
-  get isEmailVerified() { return this._isEmailVerified }
+  get id() { return this._id; }
+  get email() { return this._email; }
+  get firstName() { return this._firstName; }
+  get lastName() { return this._lastName; }
+  get phone() { return this._phone; }
+  get role() { return this._role; }
+  get status() { return this._status; }
+  get isEmailVerified() { return this._isEmailVerified; }
   
   isActive(): boolean {
     return this._status === UserStatus.ACTIVE;

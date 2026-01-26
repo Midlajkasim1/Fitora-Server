@@ -1,11 +1,12 @@
 import { OtpSessionDTO } from "@/application/dto/auth/request/otp-session.dto";
 import { ResendOtpDTO } from "@/application/dto/auth/request/resend-otp.dto";
 import { ResendOtpResponseDTO } from "@/application/dto/auth/response/resend-otp.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { IEmailService } from "@/domain/interfaces/email-service.interface";
 import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
 import { randomInt } from "crypto";
 
-export class ResendOtpUseCase {
+export class ResendOtpUseCase implements IBaseUseCase<ResendOtpDTO, ResendOtpResponseDTO> {
   constructor(
     private readonly otpStore: IOtpStore,
     private readonly emailService: IEmailService
@@ -26,7 +27,7 @@ export class ResendOtpUseCase {
     }
 
 const otp = randomInt(100000, 1000000).toString();
-   console.log('otp : ',otp)
+   console.log("otp : ",otp);
    
     await this.otpStore.save(
       registerKey,

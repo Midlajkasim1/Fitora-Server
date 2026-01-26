@@ -1,11 +1,12 @@
 import { OtpSessionDTO } from "@/application/dto/auth/request/otp-session.dto";
 import { VerifyOtpDTO } from "@/application/dto/auth/request/verify-otp.dto";
 import { VerifyOtpResponseDTO } from "@/application/dto/auth/response/verify-otp.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { UserEntity } from "@/domain/entities/user.entity";
 import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 
-export class VerifyOtpUseCase {
+export class VerifyOtpUseCase implements IBaseUseCase<VerifyOtpDTO,VerifyOtpResponseDTO> {
   constructor(
     private readonly otpStore: IOtpStore,
     private readonly userRepository: IUserRepository

@@ -9,14 +9,18 @@ import { BcryptPasswordHasher } from "../../providers/crypto/bcrypt-password.ser
 import { NodemailerEmailService } from "../../providers/email/nodemailer.service";
 import { RedisOtpStore } from "../../providers/redis/redis-otp.store";
 import { userRepositories } from "./user.repositories";
+import { ForgotPasswordUseCase } from "@/application/usecases/auth/forgot-password.usecase";
+import { ResetPasswordUseCase } from "@/application/usecases/auth/reset-password.usecase";
+import { VerifyResetOtpUseCase } from "@/application/usecases/auth/verify-reset-otp.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
-const passwordHasher = new BcryptPasswordHasher()
+const passwordHasher = new BcryptPasswordHasher();
 const tokenService = new JwtTokenService();
 const googleTokenProvider = new GoogleTokenProvider();
 export const useCases = {
   registerUseCase: new RegisterUseCase(
+    userRepositories.userRepository,
     otpStore,
     emailService,
     passwordHasher
@@ -26,12 +30,12 @@ export const useCases = {
     otpStore,
     userRepositories.userRepository
   ),
-   resendOtpUseCase: new ResendOtpUseCase(
+  resendOtpUseCase: new ResendOtpUseCase(
     otpStore,
     emailService
   )
   ,
-    loginUseCase: new LoginUseCase(
+  loginUseCase: new LoginUseCase(
     userRepositories.userRepository,
     passwordHasher,
     tokenService
@@ -40,6 +44,22 @@ export const useCases = {
     userRepositories.userRepository,
     tokenService,
     googleTokenProvider
+  ),
+  forgotPasswordUseCase: new ForgotPasswordUseCase(
+    userRepositories.userRepository,
+    otpStore,
+    emailService
+  ),
+
+  verifyResetOtpUseCase: new VerifyResetOtpUseCase(
+    otpStore
+
+  ),
+
+  resetPasswordUseCase: new ResetPasswordUseCase(
+    userRepositories.userRepository,
+    passwordHasher,
+    otpStore
   )
 };
 

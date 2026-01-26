@@ -1,4 +1,3 @@
-// infrastructure/database/interfaces/user-document.interface.ts
 import { Document, Types } from "mongoose";
 import { UserRole, UserStatus, AuthProvider } from "@/domain/constants/auth.constants";
 

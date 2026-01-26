@@ -5,6 +5,8 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "dev": "nodemon src/presentation/express/setting/index.ts",
     "build": "tsc",
     "start": "node dist/index.ts"
@@ -31,10 +33,10 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "@swc-node/register": "^1.11.1",
     "@swc/core": "^1.15.8",
     "@types/bcrypt": "^6.0.0",
-    "@types/bcryptjs": "^3.0.0",
     "@types/compression": "^1.8.1",
     "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
@@ -43,8 +45,11 @@
     "@types/morgan": "^1.9.10",
     "@types/node": "^25.0.8",
     "@types/nodemailer": "^7.0.5",
+    "eslint": "^9.39.2",
+    "jiti": "^2.6.1",
     "nodemon": "^3.1.11",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.53.1"
   }
 }

@@ -7,6 +7,9 @@ export const userControllers = {
     useCases.verifyOtpUseCase,
     useCases.resendOtpUseCase,
     useCases.loginUseCase,
-    useCases.googleAuthUseCase
+    useCases.googleAuthUseCase,
+    useCases.forgotPasswordUseCase, 
+    useCases.verifyResetOtpUseCase, 
+    useCases.resetPasswordUseCase,
   ),
 };

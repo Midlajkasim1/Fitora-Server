@@ -11,7 +11,8 @@ const envSchema = z.object({
     EMAIL_PASS: z.string(),
     JWT_ACCESS_EXPIRES_IN: z.string().default("15m"),
     JWT_REFRESH_EXPIRES_IN: z.string().default("7d"),
-    REDIS_URL: z.string().url().default("redis://127.0.0.1:6379")
+    REDIS_URL: z.string().url().default("redis://127.0.0.1:6379"),
+    NODE_ENV: z.enum(["development", "production", "test"]).default("development")
 });
 
 const _env = envSchema.safeParse(process.env);

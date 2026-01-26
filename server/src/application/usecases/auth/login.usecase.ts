@@ -3,8 +3,9 @@ import { LoginDTO } from "@/application/dto/auth/request/login.dto";
 import { IPasswordHasher } from "@/domain/interfaces/password.interface";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { ITokenService } from "@/domain/interfaces/token.interface";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 
-export class LoginUseCase{
+export class LoginUseCase implements IBaseUseCase<LoginDTO, LoginResponseDTO>{
    constructor(
      private readonly userRepository:IUserRepository,
     private readonly passwordService:IPasswordHasher,
