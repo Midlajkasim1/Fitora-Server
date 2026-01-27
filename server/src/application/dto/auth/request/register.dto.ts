@@ -1,4 +1,4 @@
-import { UserRole, UserStatus } from "@/domain/constants/auth.constants";
+import { UserRole } from "@/domain/constants/auth.constants";
 
 export interface RegisterDTO {
   email: string;

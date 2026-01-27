@@ -4,13 +4,13 @@ import cookieParser from "cookie-parser";
 import compression from "compression"; 
 import routes from "@/presentation/routes";
 import { errorHandler } from "@/presentation/middleware/error.middleware";
-
+import { env } from "@/infrastructure/config/env.config";
 const app = express();
 
 app.use(cors({
-    origin:"http://localhost:5173",
-    credentials:true,
-    methods:["GET", "POST", "DELETE"," PATCH"],
+    origin: env.CLIENT_URL,
+    credentials: true,
+    methods: ["GET", "POST", "DELETE", "PATCH"], 
 }));
 app.use(cookieParser());
 app.use(compression());
