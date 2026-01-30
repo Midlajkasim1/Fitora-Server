@@ -1,18 +1,20 @@
-import { GoogleLoginResponseDTO } from "@/application/dto/auth/response/google-login.dto";
 import { GoogleDTO } from "@/application/dto/auth/request/google.dto";
-import { UserEntity } from "@/domain/entities/user.entity";
+import { GoogleLoginResponseDTO } from "@/application/dto/auth/response/google-login.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { AuthProvider } from "@/domain/constants/auth.constants"; //
+import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IGoogleTokenProvider } from "@/domain/interfaces/google-token.interface";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { ITokenService } from "@/domain/interfaces/token.interface";
 
-export class GoogleAuthUseCase {
+export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginResponseDTO>{
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly tokenService: ITokenService,
     private readonly googleTokenProvider: IGoogleTokenProvider
   ) {}
 
-  async execute(dto:GoogleDTO):Promise<GoogleLoginResponseDTO> {
+  async execute(dto: GoogleDTO): Promise<GoogleLoginResponseDTO> {
     const googleUser = await this.googleTokenProvider.verifyIdToken(dto.idToken);
 
     let user = await this.userRepository.findEntityByEmail(googleUser.email);
@@ -28,7 +30,7 @@ export class GoogleAuthUseCase {
       });
 
       user = await this.userRepository.create(newUser, "", {
-        authProvider: "google",
+        authProvider: AuthProvider.GOOGLE, 
         googleId: googleUser.googleId,
       });
     }

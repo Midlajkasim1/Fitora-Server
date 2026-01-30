@@ -3,8 +3,9 @@ import { IPasswordHasher } from "@/domain/interfaces/password.interface";
 import { ITokenService } from "@/domain/interfaces/token.interface";
 import { AdminLoginDTO } from "@/application/dto/admin/request/admin-login.dto";
 import { AdminLoginResponseDTO } from "@/application/dto/admin/response/admin-login.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 
-export class AdminLoginUseCase {
+export class AdminLoginUseCase implements IBaseUseCase<AdminLoginDTO,AdminLoginResponseDTO>{
   constructor(
     private readonly adminRepository: IAdminRepository,
     private readonly passwordHasher: IPasswordHasher,

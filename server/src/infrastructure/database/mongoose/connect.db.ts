@@ -6,18 +6,18 @@ export class DatabaseService{
         try {
             const uri = env.MONGO_URL;
     
-           if(!uri) throw new Error("Mongo_url is not defined")
+           if(!uri) throw new Error("Mongo_url is not defined");
             const {connection} = await mongoose.connect(uri,{
                 maxPoolSize: 100,
                 minPoolSize: 10,
             });
-            logger.info('Connected to Mongodb',{
+            logger.info("Connected to Mongodb",{
                 host:connection.host,
                 name: connection.name
 
             });
         } catch (error) {
-            logger.error('Failed to connect to Mongodb',error);
+            logger.error("Failed to connect to Mongodb",error);
             process.exit(1);
         }
     }

@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@layer components {
+  .input {
+    @apply w-full px-3 py-2 border rounded;
+  }
+
+  .btn {
+    @apply px-4 py-2 border rounded font-medium;
+  }
+
+  .error {
+    @apply text-sm text-red-600;
+  }
+}

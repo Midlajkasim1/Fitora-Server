@@ -1,4 +1,4 @@
-import { AuthController } from "@/presentation/controllers/user-auth.controller";
+import { AuthController } from "@/presentation/controllers/user/user-auth.controller";
 import { useCases } from "./user.usecases";
 
 export const userControllers = {
@@ -7,6 +7,10 @@ export const userControllers = {
     useCases.verifyOtpUseCase,
     useCases.resendOtpUseCase,
     useCases.loginUseCase,
-    useCases.googleAuthUseCase
+    useCases.googleAuthUseCase,
+    useCases.forgotPasswordUseCase, 
+    useCases.verifyResetOtpUseCase, 
+    useCases.resetPasswordUseCase,
+    useCases.refreshTokenUseCase
   ),
 };

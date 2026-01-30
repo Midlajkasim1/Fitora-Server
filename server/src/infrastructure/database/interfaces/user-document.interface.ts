@@ -1,4 +1,3 @@
-// infrastructure/database/interfaces/user-document.interface.ts
 import { Document, Types } from "mongoose";
 import { UserRole, UserStatus, AuthProvider } from "@/domain/constants/auth.constants";
 
@@ -11,6 +10,10 @@ export interface IUserDocument extends Document {
   role: UserRole;
   status: UserStatus; 
   isEmailVerified: boolean;
+  dob?: Date;
+  gender?: string;
+  isOnboardingRequired: boolean;
+
   password?: string;
   authProvider: AuthProvider;
   googleId?: string | null;

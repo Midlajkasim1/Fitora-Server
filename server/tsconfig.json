@@ -19,8 +19,11 @@
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "noEmitOnError": false,
-    "typeRoots": []
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/shared/types" 
+    ]
   },
-  "include": ["src"],
+  "include": ["src/**/*"], 
   "exclude": ["node_modules", "dist", ".tsbuildinfo"]
 }

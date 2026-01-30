@@ -1,4 +1,4 @@
-import { AdminEntity } from "@/domain/entities/admin.entity";
+import { AdminEntity } from "@/domain/entities/admin/admin.entity";
 import { IAdminDocument } from "../interfaces/admin-document.interface";
 
 export class AdminMapper {

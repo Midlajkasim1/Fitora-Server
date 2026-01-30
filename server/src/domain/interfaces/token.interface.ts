@@ -1,11 +1,13 @@
-export interface ITokenService {
-  generateAccessToken(payload: {
-    userId: string;
-    email: string;
-    role: string;
-  }): string;
+import { UserRole } from "../constants/auth.constants";
 
-  generateRefreshToken(payload: {
-    userId: string;
-  }): string;
+export interface JwtPayload {
+  userId: string;
+  email: string;
+  role: UserRole;
+}
+
+export interface ITokenService {
+  generateAccessToken(payload: JwtPayload): string;
+  generateRefreshToken(payload: { userId: string }): string;
+  verifyRefreshToken(token: string): { userId: string }
 }
