@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { env } from "@/infrastructure/config/env.config"; 
+import { JwtPayload } from "@/domain/interfaces/token.interface";
 
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.accessToken;
@@ -10,11 +11,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
   }
 
   try {
-    const decoded = jwt.verify(token, env.JWT_ACCESS_SECRET) as {
-      userId: string;
-      email: string;
-      role: any; 
-    };
+    const decoded = jwt.verify(token, env.JWT_ACCESS_SECRET) as JwtPayload;
     
     req.user = decoded; 
     next(); 

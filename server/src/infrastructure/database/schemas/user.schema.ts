@@ -1,4 +1,5 @@
 import { Schema } from "mongoose";
+import { IUserDocument } from "../interfaces/user-document.interface";
 
 export const UserSchema = new Schema(
   {
@@ -13,10 +14,23 @@ export const UserSchema = new Schema(
 
     password: {
       type: String,
-      required: function (this: any) {
+      required: function (this: IUserDocument) {
         return this.authProvider === "local";
       },
       select: false,
+    },
+    dob: {
+      type: Date,
+      default: null,
+    },
+    gender: {
+      type: String,
+      enum: ["male", "female", "other"],
+      default: null,
+    },
+    isOnboardingRequired: {
+      type: Boolean,
+      default: true,
     },
 
     authProvider: {
@@ -67,7 +81,7 @@ export const UserSchema = new Schema(
 
   phone: {
       type: String,
-      required: function (this: any) {
+      required: function (this: IUserDocument) {
         return this.authProvider === "local";
       },
       index: true,

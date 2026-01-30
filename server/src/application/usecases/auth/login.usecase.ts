@@ -38,7 +38,7 @@ export class LoginUseCase implements IBaseUseCase<LoginDTO, LoginResponseDTO>{
       userId: user.id!,
     }),
     role: user.role,
-    isOnboardingRequired: !user.phone,
+    isOnboardingRequired: !user.phone || user.phone === "",
 
   };
 }

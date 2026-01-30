@@ -1,7 +1,7 @@
-import { UserEntity } from "@/domain/entities/user.entity";
-import { IUserDocument } from "../interfaces/user-document.interface";
 import { AuthProvider } from "@/domain/constants/auth.constants";
+import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IMapper } from "@/domain/interfaces/mapper.interface";
+import { IUserDocument } from "../interfaces/user-document.interface";
 
 export class UserMapper implements IMapper<UserEntity, IUserDocument> {
    toEntity(doc: IUserDocument): UserEntity {
@@ -14,6 +14,9 @@ export class UserMapper implements IMapper<UserEntity, IUserDocument> {
       role: doc.role,
       status: doc.status,
       isEmailVerified: doc.isEmailVerified,
+      dob: doc.dob,
+      gender: doc.gender,
+      isOnboardingRequired: doc.isOnboardingRequired,
     });
   }
 
@@ -33,6 +36,9 @@ export class UserMapper implements IMapper<UserEntity, IUserDocument> {
       phone: user.phone,
       role: user.role,
       status: user.status,
+      dob: user.dob,
+      gender: user.gender,
+      isOnboardingRequired: user.isOnboardingRequired,
       isEmailVerified: options?.isEmailVerified ?? true,
       authProvider: options?.authProvider ?? AuthProvider.LOCAL,
       googleId: options?.googleId ?? null,

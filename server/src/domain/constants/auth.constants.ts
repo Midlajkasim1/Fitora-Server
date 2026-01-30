@@ -23,3 +23,18 @@ export const OTP_PREFIXES = {
   FORGOT_PASSWORD: "otp:forgot-password:",
   RESET_SESSION: "reset-session:",
 };
+
+export enum ExperienceLevel {
+  BEGINNER = "beginner",
+  INTERMEDIATE = "intermediate",
+  ADVANCED = "advanced"
+}
+
+
+export enum DietPreference {
+  VEGETARIAN = "vegetarian",
+  VEGAN = "vegan",
+  KETO = "keto",
+  OMNIVORE = "omnivore"
+}
+

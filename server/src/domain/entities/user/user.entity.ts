@@ -1,4 +1,4 @@
-import { UserRole, UserStatus } from "../constants/auth.constants";
+import { UserRole, UserStatus } from "../../constants/auth.constants";
 
 
 export class UserEntity {
@@ -10,7 +10,9 @@ export class UserEntity {
   private readonly _role: UserRole;
   private readonly _status: UserStatus;
   private readonly _isEmailVerified: boolean;
-
+  private readonly _dob?: Date;
+  private readonly _gender?: string;
+  private readonly _isOnboardingRequired: boolean;
 
   private constructor(props: {
     id?: string;
@@ -21,6 +23,9 @@ export class UserEntity {
     role: UserRole;
     status: UserStatus;
     isEmailVerified: boolean;
+    dob?: Date;               
+    gender?: string;          
+    isOnboardingRequired: boolean; 
 
   }) {
     this._id = props.id;
@@ -31,7 +36,10 @@ export class UserEntity {
     this._role = props.role;
     this._status = props.status;
     this._isEmailVerified = props.isEmailVerified;
-
+    this._dob = props.dob;
+    this._gender = props.gender;
+    this._isOnboardingRequired = props.isOnboardingRequired;
+    
   }
 
   static create(props: {
@@ -43,12 +51,16 @@ export class UserEntity {
     role: UserRole;
     status?: UserStatus;
     isEmailVerified?: boolean;
+    dob?: Date;
+    gender?: string;
+    isOnboardingRequired?: boolean;
 
   }): UserEntity {
     return new UserEntity({
       ...props,
       status: props.status ?? UserStatus.ACTIVE,
       isEmailVerified: props.isEmailVerified ?? false,
+      isOnboardingRequired: props.isOnboardingRequired ?? true,
     });
   }
 
@@ -60,13 +72,16 @@ export class UserEntity {
   get role() { return this._role; }
   get status() { return this._status; }
   get isEmailVerified() { return this._isEmailVerified; }
-  
+  get dob() { return this._dob; }
+  get gender() { return this._gender; }
+  get isOnboardingRequired() { return this._isOnboardingRequired; }
+
   isActive(): boolean {
     return this._status === UserStatus.ACTIVE;
   }
   isverfied(): boolean {
     return this._isEmailVerified;
   }
-  
- 
+
+
 }

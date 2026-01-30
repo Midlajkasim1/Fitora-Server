@@ -19,6 +19,7 @@ export class RegisterUseCase implements IBaseUseCase<RegisterDTO, RegisterRespon
 
    const existingUser = await this.userRepository.findByEmail(dto.email);
     if (existingUser) {
+
       throw new Error("User with this email already exists");
     }
     const hashedPassword = await this.passwordHasher.hash(dto.password);

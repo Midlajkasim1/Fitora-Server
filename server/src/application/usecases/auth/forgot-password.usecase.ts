@@ -5,7 +5,6 @@ import { randomInt } from "crypto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { ForgotPasswordRequestDTO } from "@/application/dto/auth/request/forgot-password.dto";
 import { ForgotPasswordResponseDTO } from "@/application/dto/auth/response/forgot-password.dto";
-import winston from "winston/lib/winston/config";
 import { logger } from "@/infrastructure/providers/loggers/logger";
 
 export class ForgotPasswordUseCase implements IBaseUseCase<ForgotPasswordRequestDTO, ForgotPasswordResponseDTO> {
@@ -21,7 +20,7 @@ export class ForgotPasswordUseCase implements IBaseUseCase<ForgotPasswordRequest
 
     const otp = randomInt(100000, 999999).toString();
     const redisKey = `otp:forgot-password:${dto.email}`;
-   logger.info(otp)
+     logger.info(otp);
     await this.otpStore.save(redisKey, { email: dto.email, otp }, 600);
     await this.emailService.sendOtp(dto.email, otp);
 

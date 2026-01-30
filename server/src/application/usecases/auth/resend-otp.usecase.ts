@@ -4,6 +4,7 @@ import { ResendOtpResponseDTO } from "@/application/dto/auth/response/resend-otp
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { IEmailService } from "@/domain/interfaces/email-service.interface";
 import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
+import { logger } from "@/infrastructure/providers/loggers/logger";
 import { randomInt } from "crypto";
 
 export class ResendOtpUseCase implements IBaseUseCase<ResendOtpDTO, ResendOtpResponseDTO> {
@@ -27,7 +28,7 @@ export class ResendOtpUseCase implements IBaseUseCase<ResendOtpDTO, ResendOtpRes
     }
 
 const otp = randomInt(100000, 1000000).toString();
-   console.log("otp : ",otp);
+       logger.info("otp : ",otp);
    
     await this.otpStore.save(
       registerKey,

@@ -2,6 +2,7 @@ import { env } from "@/infrastructure/config/env.config";
 
 import { OAuth2Client } from "google-auth-library";
 import { IGoogleTokenProvider } from "@/domain/interfaces/google-token.interface";
+import { logger } from "../loggers/logger";
 
 export class GoogleTokenProvider implements IGoogleTokenProvider {
   private client = new OAuth2Client();
@@ -10,7 +11,7 @@ export class GoogleTokenProvider implements IGoogleTokenProvider {
     const clientId = env.GOOGLE_CLIENT_ID;
 
     if (!clientId) {
-      console.error("CRITICAL: GOOGLE_CLIENT_ID is missing in backend .env");
+      logger.error("CRITICAL: GOOGLE_CLIENT_ID is missing in backend .env");
       throw new Error("Server configuration error");
     }
 

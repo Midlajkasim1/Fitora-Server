@@ -1,4 +1,4 @@
-import { AdminStatus } from "../constants/auth.constants";
+import { AdminStatus } from "@/domain/constants/auth.constants";
 export class AdminEntity {
   private readonly _id?: string;
   private readonly _email: string;

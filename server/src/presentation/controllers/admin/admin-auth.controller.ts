@@ -1,7 +1,7 @@
-import { Request, Response } from "express";
 import { AdminLoginUseCase } from "@/application/usecases/admin/admin-login.usecase";
-import { adminLoginSchema } from "@/application/validators/admin/admin-login-response.dto";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
+import { adminLoginSchema } from "@/infrastructure/validators/admin/admin-login-response.validators";
+import { Request, Response } from "express";
 
 export class AdminAuthController {
   constructor(

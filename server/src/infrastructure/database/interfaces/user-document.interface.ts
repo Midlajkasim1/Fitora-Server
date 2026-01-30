@@ -10,6 +10,10 @@ export interface IUserDocument extends Document {
   role: UserRole;
   status: UserStatus; 
   isEmailVerified: boolean;
+  dob?: Date;
+  gender?: string;
+  isOnboardingRequired: boolean;
+
   password?: string;
   authProvider: AuthProvider;
   googleId?: string | null;

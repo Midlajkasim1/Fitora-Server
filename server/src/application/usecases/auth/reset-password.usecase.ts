@@ -3,16 +3,17 @@ import { IUserRepository } from "@/domain/interfaces/repositories/user.repositor
 import { IPasswordHasher } from "@/domain/interfaces/password.interface";
 import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { ResetPasswordDTO } from "@/application/dto/auth/request/reset-password..dto";
+import { ResetPasswordDTO } from "@/application/dto/auth/request/reset-password.dto";
+import { ResetPasswordResponseDTO } from "@/application/dto/auth/response/reset-password.dto";
 
-export class ResetPasswordUseCase implements IBaseUseCase<ResetPasswordDTO, { message: string }> {
+export class ResetPasswordUseCase implements IBaseUseCase<ResetPasswordDTO, ResetPasswordResponseDTO> {
   constructor(
     private readonly userRepository: IUserRepository,
     private readonly passwordHasher: IPasswordHasher,
     private readonly otpStore: IOtpStore
   ) {}
 
-  async execute(dto: ResetPasswordDTO): Promise<{ message: string }> {
+  async execute(dto: ResetPasswordDTO): Promise<ResetPasswordResponseDTO> {
     const sessionKey = `reset-session:${dto.token}`;
     const session = await this.otpStore.get<{ email: string }>(sessionKey);
 
@@ -26,6 +27,6 @@ export class ResetPasswordUseCase implements IBaseUseCase<ResetPasswordDTO, { me
     await this.userRepository.updatePassword(user.id!, hashedPassword); 
     await this.otpStore.delete(sessionKey);
 
-    return { message: "Password updated successfully" };
+    return { message: "Password updated successfully",success:true };
   }
 }

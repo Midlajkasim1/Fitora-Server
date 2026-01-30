@@ -2282,3 +2282,1746 @@
 2026-01-27 11-18-16-1816 [32minfo[39m: [32mOTP generated: 112902[39m
 2026-01-27 11-20-45-2045 [32minfo[39m: [32mOTP generated: 445910[39m
 2026-01-27 11-22-35-2235 [32minfo[39m: [32mOTP generated: 974846[39m
+2026-01-27 12-28-22-2822 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-28-23-2823 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-29-17-2917 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-29-18-2918 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-29-20-2920 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-29-20-2920 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-29-24-2924 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-29-25-2925 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-29-27-2927 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-29-28-2928 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-30-15-3015 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-30-18-3018 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-30-19-3019 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-30-53-3053 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-30-54-3054 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-31-00-310 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-31-02-312 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-31-02-312 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-32-10-3210 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-32-11-3211 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-32-16-3216 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-32-18-3218 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-32-38-3238 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-32-39-3239 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-32-42-3242 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-32-44-3244 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-32-45-3245 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-32-50-3250 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-32-51-3251 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-33-07-337 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-33-07-337 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-33-11-3311 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-33-11-3311 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-33-15-3315 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-33-16-3316 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-33-53-3353 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-33-54-3354 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-33-58-3358 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-33-59-3359 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-34-02-342 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-34-03-343 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-34-06-346 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-34-07-347 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-34-10-3410 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-34-12-3412 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-34-13-3413 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-34-16-3416 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-34-18-3418 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-34-20-3420 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-34-22-3422 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-34-23-3423 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-34-26-3426 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-34-26-3426 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-34-30-3430 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-34-31-3431 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-34-48-3448 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-34-49-3449 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-36-34-3634 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-36-35-3635 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-38-39-3839 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-38-41-3841 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-38-42-3842 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-38-44-3844 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-38-45-3845 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-40-03-403 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-40-04-404 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-40-06-406 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-40-07-407 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-40-28-4028 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-40-28-4028 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-40-53-4053 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-40-54-4054 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-40-58-4058 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-40-58-4058 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-41-02-412 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-41-04-414 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-41-05-415 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-41-11-4111 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-41-11-4111 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-41-14-4114 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-41-14-4114 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-42-12-4212 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-42-13-4213 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-43-45-4345 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-43-47-4347 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-43-48-4348 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-44-26-4426 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-44-27-4427 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-44-30-4430 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-44-31-4431 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-44-32-4432 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-44-34-4434 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-44-35-4435 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-46-47-4647 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-46-48-4648 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-48-48-4848 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-48-48-4848 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-49-53-4953 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-49-54-4954 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-49-55-4955 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-49-56-4956 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-50-02-502 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-50-02-502 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-51-34-5134 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-51-35-5135 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-51-54-5154 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-51-55-5155 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-52-26-5226 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-52-27-5227 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-52-43-5243 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-52-44-5244 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-52-58-5258 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-52-59-5259 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-53-14-5314 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-53-14-5314 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-54-31-5431 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-54-33-5433 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-54-49-5449 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-54-50-5450 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-55-21-5521 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-55-21-5521 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-55-36-5536 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-55-38-5538 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-55-44-5544 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-55-45-5545 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-55-48-5548 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-55-49-5549 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-56-54-5654 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-56-55-5655 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-56-58-5658 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-56-59-5659 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-57-01-571 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-57-01-571 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 12-57-35-5735 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 12-57-36-5736 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-01-11-111 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-01-12-112 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-02-12-212 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-02-14-214 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-02-14-214 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-04-21-421 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-04-22-422 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-04-30-430 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-04-31-431 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-04-44-444 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-04-45-445 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-04-52-452 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-04-53-453 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-07-54-754 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-07-54-754 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-07-59-759 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-07-59-759 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-08-13-813 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-08-14-814 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-08-19-819 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-08-20-820 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-08-45-845 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-08-46-846 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-08-48-848 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-08-49-849 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-08-55-855 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-08-56-856 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-08-59-859 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-08-59-859 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-09-02-92 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-09-03-93 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-09-10-910 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-09-13-913 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-09-14-914 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 13-09-15-915 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 13-09-16-916 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 15-02-02-22 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 15-02-03-23 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 15-04-13-413 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 15-04-14-414 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 15-04-16-416 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 15-04-16-416 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 15-04-30-430 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 15-04-31-431 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 15-04-33-433 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 15-04-34-434 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 15-04-36-436 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 15-04-37-437 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 15-06-32-632 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 15-06-32-632 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 15-08-52-852 [32minfo[39m: [32mOTP generated: 525370[39m
+2026-01-27 15-49-52-4952 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 15-49-52-4952 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 15-53-34-5334 [32minfo[39m: [32mOTP generated: 823403[39m
+2026-01-27 16-03-31-331 [32minfo[39m: [32mOTP generated: 662017[39m
+2026-01-27 16-07-07-77 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 16-07-07-77 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 16-07-09-79 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 16-07-10-710 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 16-07-16-716 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 16-07-16-716 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 16-09-16-916 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 16-09-16-916 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 16-12-13-1213 [32minfo[39m: [32mOTP generated: 231695[39m
+2026-01-27 16-22-49-2249 [32minfo[39m: [32mOTP generated: 459813[39m
+2026-01-27 20-02-15-215 [32minfo[39m: [32mOTP generated: 538358[39m
+2026-01-27 21-40-48-4048 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 21-40-48-4048 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 21-41-07-417 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 21-41-08-418 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 21-41-30-4130 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 21-41-31-4131 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 21-42-15-4215 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 21-42-16-4216 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 21-42-34-4234 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 21-42-35-4235 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 21-44-32-4432 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 21-44-33-4433 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 21-44-46-4446 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 21-44-47-4447 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 21-45-54-4554 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 21-45-55-4555 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 21-46-04-464 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 21-46-05-465 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-27 21-46-32-4632 [32minfo[39m: [32mRedis connected[39m
+2026-01-27 21-46-33-4633 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-19-09-199 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-19-10-1910 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-19-32-1932 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-19-33-1933 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-19-34-1934 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-19-36-1936 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-19-37-1937 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-19-40-1940 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-19-40-1940 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-19-43-1943 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-19-44-1944 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-19-52-1952 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-19-53-1953 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-20-02-202 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-20-03-203 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-20-09-209 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-20-10-2010 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-20-12-2012 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-20-13-2013 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-20-15-2015 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-20-16-2016 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-20-18-2018 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-20-19-2019 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-20-22-2022 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-20-23-2023 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-20-28-2028 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-20-29-2029 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-20-32-2032 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-20-34-2034 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-20-35-2035 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-20-59-2059 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-21-00-210 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-21-02-212 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-21-02-212 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-22-41-2241 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-22-42-2242 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-22-55-2255 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-22-56-2256 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-22-58-2258 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-22-58-2258 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-23-01-231 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-23-02-232 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-23-44-2344 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-23-45-2345 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-24-36-2436 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-24-36-2436 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-24-40-2440 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-24-41-2441 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-25-00-250 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-25-01-251 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-25-03-253 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-25-04-254 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-25-06-256 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-25-09-259 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-25-09-259 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-25-11-2511 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-25-12-2512 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-25-27-2527 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-25-28-2528 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-25-50-2550 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-25-51-2551 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-25-55-2555 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-25-56-2556 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-32-14-3214 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-32-15-3215 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-32-22-3222 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-32-23-3223 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-48-05-485 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-48-06-486 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-49-11-4911 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-49-13-4913 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-49-19-4919 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-49-20-4920 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-49-23-4923 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-49-25-4925 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-49-26-4926 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-49-47-4947 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-49-48-4948 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-49-56-4956 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-49-57-4957 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-50-01-501 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-50-01-501 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-50-04-504 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-50-06-506 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-50-07-507 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-50-09-509 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-50-10-5010 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 10-50-12-5012 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 10-50-13-5013 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-01-20-120 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-01-20-120 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-02-27-227 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-02-28-228 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-02-36-236 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-02-37-237 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-02-42-242 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-02-42-242 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-05-03-53 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-05-04-54 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-05-08-58 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-05-09-59 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-05-26-526 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-05-27-527 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-05-36-536 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-05-36-536 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-05-41-541 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-05-41-541 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-05-46-546 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-05-46-546 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-12-28-1228 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-12-29-1229 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-14-43-1443 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-14-43-1443 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-15-10-1510 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-15-10-1510 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-17-36-1736 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-17-37-1737 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-17-41-1741 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-17-42-1742 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-17-44-1744 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-17-44-1744 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-17-56-1756 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-17-56-1756 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-17-58-1758 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-17-59-1759 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-18-05-185 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-18-06-186 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-18-09-189 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-18-11-1811 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-18-11-1811 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-18-17-1817 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-18-17-1817 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-18-19-1819 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-18-20-1820 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-18-34-1834 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-18-34-1834 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-18-39-1839 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-18-40-1840 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-22-08-228 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-22-09-229 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-22-16-2216 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-22-17-2217 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-22-20-2220 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-22-21-2221 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-22-25-2225 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-22-25-2225 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-22-28-2228 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-22-28-2228 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-22-32-2232 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-22-32-2232 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-22-34-2234 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-22-35-2235 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-22-39-2239 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-22-40-2240 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-22-48-2248 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-22-48-2248 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-24-50-2450 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-24-51-2451 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-37-36-3736 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-37-37-3737 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-43-45-4345 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-43-46-4346 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-43-55-4355 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-43-56-4356 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-44-10-4410 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-44-10-4410 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-44-14-4414 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-44-15-4415 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-44-16-4416 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-44-20-4420 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-44-20-4420 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-44-25-4425 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-44-25-4425 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-44-27-4427 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-44-28-4428 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-44-31-4431 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-44-31-4431 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-44-35-4435 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-44-37-4437 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-44-37-4437 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-44-40-4440 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-44-41-4441 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-44-43-4443 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-44-44-4444 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-45-49-4549 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-45-50-4550 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-45-52-4552 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-45-54-4554 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-45-56-4556 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-45-57-4557 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-46-02-462 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-46-03-463 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-46-06-466 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-46-07-467 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-46-14-4614 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-46-15-4615 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-46-16-4616 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-46-17-4617 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-46-24-4624 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-46-24-4624 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-46-26-4626 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-46-29-4629 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-46-30-4630 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-46-32-4632 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-46-33-4633 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-50-55-5055 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-50-56-5056 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-52-09-529 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-52-10-5210 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-52-20-5220 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-52-20-5220 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-52-58-5258 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-52-59-5259 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-53-02-532 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-53-03-533 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-53-33-5333 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-53-34-5334 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-53-36-5336 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-53-37-5337 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-55-48-5548 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-55-49-5549 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-55-52-5552 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-55-53-5553 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-57-56-5756 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-57-57-5757 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-58-05-585 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-58-05-585 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 11-58-10-5810 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 11-58-10-5810 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-00-06-06 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-00-06-06 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-00-14-014 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-00-18-018 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-00-20-020 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-00-21-021 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-00-38-038 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-00-39-039 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-00-43-043 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-00-43-043 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-00-49-049 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-00-50-050 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-00-55-055 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-00-58-058 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-01-22-122 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-01-23-123 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-01-26-126 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-01-27-127 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-01-32-132 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-01-34-134 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-01-36-136 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-01-39-139 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-02-48-248 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-02-52-252 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-02-54-254 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-02-57-257 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-02-59-259 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-03-01-31 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-03-06-36 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-03-08-38 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-03-13-313 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-03-17-317 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-03-18-318 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-03-20-320 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-03-21-321 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-03-46-346 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-03-47-347 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-04-48-448 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-04-49-449 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-04-58-458 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-04-59-459 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-05-05-55 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-05-06-56 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-06-14-614 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-06-14-614 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-06-18-618 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-06-18-618 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-06-58-658 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-06-59-659 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-07-01-71 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-07-03-73 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-07-04-74 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-12-27-1227 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-12-28-1228 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-14-46-1446 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-14-46-1446 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-14-50-1450 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-14-51-1451 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-14-52-1452 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-14-59-1459 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-14-59-1459 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-15-05-155 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-15-05-155 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-15-09-159 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-15-10-1510 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-15-23-1523 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-15-25-1525 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-15-41-1541 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-15-42-1542 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-28-21-2821 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-28-22-2822 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-28-26-2826 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-28-26-2826 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-29-46-2946 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-29-46-2946 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-29-49-2949 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-29-51-2951 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-29-51-2951 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-29-58-2958 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-30-00-300 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-30-00-300 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-30-11-3011 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-30-12-3012 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-30-16-3016 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-30-17-3017 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-30-21-3021 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-30-21-3021 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-31-06-316 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-31-07-317 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-31-26-3126 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-31-26-3126 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-31-28-3128 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-31-29-3129 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-31-45-3145 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-31-47-3147 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-31-47-3147 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-31-54-3154 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-31-55-3155 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-31-57-3157 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-31-59-3159 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-02-322 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-04-324 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-32-06-326 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-08-328 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-32-11-3211 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-12-3212 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-32-15-3215 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-17-3217 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-18-3218 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-32-21-3221 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-23-3223 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-24-3224 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-32-28-3228 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-29-3229 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-32-33-3233 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-34-3234 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-35-3235 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-32-37-3237 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-38-3238 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-32-43-3243 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-44-3244 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-32-46-3246 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-47-3247 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-32-57-3257 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-32-58-3258 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-33-01-331 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-33-02-332 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-33-05-335 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-33-06-336 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-33-46-3346 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-33-47-3347 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-33-51-3351 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-33-53-3353 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-33-54-3354 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-34-57-3457 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-34-58-3458 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-35-05-355 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-35-06-356 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-35-12-3512 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-35-15-3515 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-35-15-3515 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-35-59-3559 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-36-00-360 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-36-02-362 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-36-03-363 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-36-13-3613 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-36-14-3614 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-36-19-3619 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-36-20-3620 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-36-34-3634 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-36-35-3635 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-36-37-3637 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-36-38-3638 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-36-42-3642 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-36-43-3643 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-36-47-3647 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-36-48-3648 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-36-56-3656 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-36-56-3656 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-37-16-3716 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-37-17-3717 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-37-20-3720 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-37-22-3722 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-37-23-3723 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-37-30-3730 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-37-30-3730 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-37-34-3734 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-37-35-3735 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-37-38-3738 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-37-38-3738 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-37-40-3740 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-37-42-3742 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-37-43-3743 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-37-49-3749 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-37-50-3750 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-37-53-3753 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-37-55-3755 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-37-57-3757 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-37-58-3758 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-38-34-3834 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-38-35-3835 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-38-37-3837 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-38-39-3839 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-38-40-3840 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-38-42-3842 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-38-42-3842 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-41-44-4144 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-41-45-4145 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-41-56-4156 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-41-57-4157 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-42-00-420 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-42-01-421 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-42-06-426 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-42-07-427 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-42-10-4210 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-42-11-4211 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-42-15-4215 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-42-16-4216 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-45-21-4521 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-23-4523 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-24-4524 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-45-25-4525 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-26-4526 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-45-28-4528 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-29-4529 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-45-31-4531 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-32-4532 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-34-4534 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-36-4536 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-37-4537 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-45-44-4544 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-46-4546 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-46-4546 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-45-53-4553 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-54-4554 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-45-57-4557 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-45-58-4558 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-46-29-4629 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-46-29-4629 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-46-32-4632 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-46-33-4633 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-46-39-4639 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-46-40-4640 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-46-42-4642 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-46-43-4643 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-46-45-4645 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-46-45-4645 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-46-49-4649 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-46-51-4651 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-46-51-4651 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-46-59-4659 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-47-00-470 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-47-03-473 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-47-04-474 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-52-08-528 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-52-09-529 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-55-19-5519 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-55-20-5520 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-55-28-5528 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-55-29-5529 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-55-31-5531 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-55-32-5532 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-55-36-5536 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-55-37-5537 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-55-40-5540 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-55-41-5541 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-55-46-5546 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-55-47-5547 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-55-49-5549 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-55-50-5550 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 12-55-54-5554 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-55-57-5557 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 12-55-57-5557 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-00-34-034 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-00-35-035 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-01-18-118 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-01-19-119 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-01-23-123 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-01-24-124 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-01-31-131 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-01-32-132 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-01-34-134 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-01-35-135 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-04-54-454 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-04-54-454 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-04-56-456 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-04-57-457 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-05-17-517 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-05-18-518 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-05-21-521 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-05-22-522 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-05-26-526 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-05-27-527 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-05-33-533 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-05-34-534 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-05-36-536 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-05-37-537 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-05-42-542 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-05-43-543 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-06-20-620 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-06-21-621 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-06-24-624 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-06-24-624 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-06-27-627 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-06-28-628 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-06-42-642 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-06-42-642 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-06-49-649 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-06-49-649 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-07-11-711 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-07-12-712 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-07-17-717 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-07-18-718 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-07-23-723 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-07-25-725 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-07-37-737 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-07-37-737 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-07-44-744 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-07-45-745 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-07-47-747 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-07-48-748 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-07-54-754 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-07-55-755 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-07-57-757 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-07-59-759 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-07-59-759 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-01-81 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-02-82 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-04-84 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-05-85 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-07-87 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-07-87 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-14-814 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-14-814 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-20-820 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-21-821 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-23-823 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-24-824 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-26-826 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-27-827 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-32-832 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-33-833 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-35-835 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-36-836 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-38-838 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-39-839 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-43-843 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-45-845 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-46-846 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-50-850 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-51-851 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-08-53-853 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-08-54-854 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-10-25-1025 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-10-26-1026 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-11-42-1142 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-11-42-1142 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-11-45-1145 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-11-46-1146 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-11-48-1148 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-11-50-1150 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-11-51-1151 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-11-54-1154 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-11-54-1154 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-11-56-1156 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-11-57-1157 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-12-01-121 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-12-02-122 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-12-06-126 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-12-07-127 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-12-10-1210 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-12-11-1211 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-12-15-1215 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-12-16-1216 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-12-22-1222 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-12-23-1223 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-12-26-1226 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-12-27-1227 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-12-29-1229 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-12-30-1230 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-12-33-1233 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-12-34-1234 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-12-37-1237 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-12-38-1238 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-13-18-1318 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-13-19-1319 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-13-28-1328 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-13-29-1329 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-13-31-1331 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-13-32-1332 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-13-34-1334 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-13-35-1335 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-13-46-1346 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-13-46-1346 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-13-48-1348 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-13-48-1348 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-13-53-1353 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-13-56-1356 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-13-57-1357 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-14-00-140 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-14-00-140 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-14-02-142 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-14-02-142 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-14-33-1433 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-14-34-1434 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-14-35-1435 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-14-36-1436 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-14-38-1438 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-14-39-1439 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-14-42-1442 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-14-44-1444 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-14-44-1444 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-14-47-1447 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-14-48-1448 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-14-51-1451 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-14-51-1451 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-14-55-1455 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-14-55-1455 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-14-57-1457 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-14-59-1459 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-15-00-150 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-00-160 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-01-161 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-04-164 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-05-165 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-10-1610 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-11-1611 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-12-1612 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-13-1613 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-15-1615 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-16-1616 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-19-1619 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-19-1619 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-25-1625 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-26-1626 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-28-1628 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-29-1629 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-37-1637 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-37-1637 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-40-1640 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-41-1641 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-47-1647 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-48-1648 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-16-56-1656 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-58-1658 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-16-59-1659 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-17-09-179 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-17-10-1710 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-17-14-1714 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-17-15-1715 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-17-19-1719 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-17-20-1720 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-17-24-1724 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-17-25-1725 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-17-26-1726 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-17-28-1728 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-17-29-1729 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-20-15-2015 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-20-15-2015 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-20-18-2018 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-20-18-2018 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-20-21-2021 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-20-23-2023 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-20-23-2023 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-20-28-2028 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-20-29-2029 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-20-33-2033 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-20-34-2034 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-20-35-2035 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-20-38-2038 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-20-39-2039 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-20-47-2047 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-20-47-2047 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 13-20-59-2059 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 13-20-59-2059 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-12-41-1241 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-12-41-1241 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-12-43-1243 [32minfo[39m: [32mOTP generated: 457937[39m
+2026-01-28 18-13-20-1320 [32minfo[39m: [32mOTP generated: 430285[39m
+2026-01-28 18-15-49-1549 [32minfo[39m: [32mOTP generated: 586240[39m
+2026-01-28 18-16-43-1643 [32minfo[39m: [32mOTP generated: 274275[39m
+2026-01-28 18-21-33-2133 [32minfo[39m: [32mOTP generated: 719125[39m
+2026-01-28 18-28-59-2859 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-28-59-2859 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-29-04-294 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-29-04-294 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-29-06-296 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-29-07-297 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-29-16-2916 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-29-16-2916 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-29-21-2921 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-29-22-2922 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-31-55-3155 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-31-55-3155 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-32-17-3217 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-32-18-3218 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-32-22-3222 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-32-23-3223 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-36-00-360 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-36-01-361 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-37-28-3728 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-37-28-3728 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-48-56-4856 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-48-58-4858 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-48-58-4858 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-49-01-491 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-49-01-491 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-49-27-4927 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-49-28-4928 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-49-38-4938 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-49-38-4938 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-49-49-4949 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-49-50-4950 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 18-50-00-500 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 18-50-00-500 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 19-18-39-1839 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 19-18-40-1840 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 19-18-51-1851 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 19-18-51-1851 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 19-19-08-198 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 19-19-08-198 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 19-19-54-1954 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 19-19-54-1954 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 19-21-47-2147 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 19-21-48-2148 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 19-22-00-220 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 19-22-00-220 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 20-34-14-3414 [32minfo[39m: [32mOTP generated: 298376[39m
+2026-01-28 20-36-54-3654 [32minfo[39m: [32mOTP generated: 230563[39m
+2026-01-28 20-47-58-4758 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 20-47-59-4759 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 20-50-34-5034 [32minfo[39m: [32mOTP generated: 665558[39m
+2026-01-28 20-52-34-5234 [32minfo[39m: [32mOTP generated: 145838[39m
+2026-01-28 21-35-22-3522 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 21-35-23-3523 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-28 21-42-40-4240 [32minfo[39m: [32mRedis connected[39m
+2026-01-28 21-42-40-4240 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-29-06-296 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-29-07-297 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-29-07-297 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-30-55-3055 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-30-56-3056 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-30-56-3056 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-32-14-3214 [32minfo[39m: [32mOTP generated: 598601[39m
+2026-01-29 09-34-06-346 [32minfo[39m: [32mOTP generated: 942201[39m
+2026-01-29 09-35-55-3555 [32minfo[39m: [32mOTP generated: 577047[39m
+2026-01-29 09-42-30-4230 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-42-31-4231 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-42-31-4231 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-42-52-4252 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-42-53-4253 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-42-53-4253 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-45-42-4542 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-45-43-4543 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-45-43-4543 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-45-49-4549 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-45-49-4549 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-45-49-4549 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-48-06-486 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-48-07-487 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-48-07-487 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-48-15-4815 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-48-15-4815 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-48-15-4815 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-48-42-4842 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-48-42-4842 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-48-42-4842 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-49-59-4959 [32minfo[39m: [32mOTP generated: 979091[39m
+2026-01-29 09-53-26-5326 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-53-27-5327 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-53-27-5327 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-54-43-5443 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-54-45-5445 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-54-45-5445 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-54-55-5455 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-54-56-5456 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-54-56-5456 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 09-55-15-5515 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 09-55-16-5516 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 09-55-16-5516 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-05-00-50 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-05-02-52 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-05-05-55 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-05-07-57 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-05-07-57 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-05-17-517 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-05-19-519 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-05-19-519 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-05-28-528 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-05-32-532 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-05-32-532 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-05-44-544 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-05-46-546 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-05-46-546 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-05-48-548 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-05-50-550 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-05-50-550 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-06-38-638 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-06-40-640 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-06-40-640 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-06-57-657 [32minfo[39m: [32mOTP generated: 254849[39m
+2026-01-29 10-09-04-94 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-09-07-97 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-09-07-97 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-09-11-911 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-09-13-913 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-09-17-917 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-09-17-917 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-17-16-1716 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-17-18-1718 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-17-18-1718 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-17-20-1720 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-17-23-1723 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-17-23-1723 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-17-25-1725 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-17-28-1728 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-17-31-1731 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-17-31-1731 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-19-05-195 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-19-07-197 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-19-08-198 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-19-08-198 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-19-16-1916 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-19-18-1918 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-19-18-1918 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-20-10-2010 [32minfo[39m: [32mOTP generated: 925876[39m
+2026-01-29 10-24-11-2411 [32minfo[39m: [32mOTP generated: 320787[39m
+2026-01-29 10-36-38-3638 [32minfo[39m: [32mOTP generated: 935724[39m
+2026-01-29 10-37-38-3738 [32minfo[39m: [32mOTP generated: 957108[39m
+2026-01-29 10-37-53-3753 [32minfo[39m: [32mOTP generated: 281932[39m
+2026-01-29 10-53-32-5332 [32minfo[39m: [32mOTP generated: 849767[39m
+2026-01-29 10-58-58-5858 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-59-00-590 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-59-01-591 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-59-01-591 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 10-59-54-5954 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 10-59-55-5955 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 10-59-55-5955 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-01-29-129 [32minfo[39m: [32mOTP generated: 522411[39m
+2026-01-29 11-03-34-334 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-03-35-335 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-03-35-335 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-09-49-949 [32minfo[39m: [32mOTP generated: 233696[39m
+2026-01-29 11-12-27-1227 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-12-28-1228 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-12-28-1228 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-12-33-1233 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-12-35-1235 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-12-35-1235 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-12-39-1239 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-12-40-1240 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-12-40-1240 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-16-48-1648 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-16-49-1649 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-16-49-1649 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-18-48-1848 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-18-52-1852 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-18-55-1855 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-18-55-1855 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-19-34-1934 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-19-36-1936 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-19-38-1938 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-19-40-1940 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-19-40-1940 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-20-11-2011 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-20-12-2012 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-20-12-2012 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-20-24-2024 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-20-26-2026 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-20-26-2026 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-20-26-2026 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-20-45-2045 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-20-50-2050 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-20-51-2051 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-20-51-2051 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-20-57-2057 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-20-58-2058 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-20-58-2058 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-22-05-225 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-22-06-226 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-22-06-226 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-23-41-2341 [32minfo[39m: [32mOTP generated: 203107[39m
+2026-01-29 11-31-27-3127 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-31-28-3128 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-31-28-3128 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-31-49-3149 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-31-50-3150 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-31-50-3150 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-32-41-3241 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-32-42-3242 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-32-42-3242 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-35-39-3539 [32minfo[39m: [32mOTP generated: 267051[39m
+2026-01-29 11-38-45-3845 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-38-45-3845 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-38-45-3845 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-38-50-3850 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-38-53-3853 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-38-55-3855 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-38-55-3855 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-38-58-3858 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-38-59-3859 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-38-59-3859 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-39-35-3935 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-39-36-3936 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-39-36-3936 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-39-39-3939 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-39-40-3940 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-39-40-3940 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-40-14-4014 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-40-16-4016 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-40-18-4018 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-40-18-4018 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-40-31-4031 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-40-34-4034 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-40-34-4034 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-41-39-4139 [32minfo[39m: [32mOTP generated: 181953[39m
+2026-01-29 11-44-37-4437 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-44-38-4438 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-44-40-4440 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-44-41-4441 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-44-41-4441 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-46-52-4652 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-46-53-4653 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-46-53-4653 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-46-56-4656 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-46-59-4659 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-47-01-471 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-47-01-471 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-47-50-4750 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-47-53-4753 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-47-53-4753 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-47-53-4753 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-48-02-482 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-48-04-484 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-48-05-485 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-48-05-485 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-48-11-4811 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-48-13-4813 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-48-14-4814 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-48-14-4814 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-48-27-4827 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-48-27-4827 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-48-27-4827 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-48-29-4829 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-48-30-4830 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-48-30-4830 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-48-45-4845 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-48-47-4847 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-48-50-4850 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-48-50-4850 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-49-03-493 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-49-05-495 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-49-06-496 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-49-06-496 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-49-17-4917 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-49-18-4918 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-49-18-4918 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-49-24-4924 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-49-24-4924 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-49-24-4924 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-49-28-4928 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-49-29-4929 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-49-29-4929 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-50-05-505 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-50-06-506 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-50-06-506 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-50-22-5022 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-50-23-5023 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-50-23-5023 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-59-09-599 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-59-12-5912 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-59-13-5913 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-59-13-5913 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-59-38-5938 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-59-39-5939 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-59-39-5939 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 11-59-45-5945 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 11-59-46-5946 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 11-59-46-5946 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 12-00-14-014 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-00-16-016 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 12-00-16-016 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 12-00-31-031 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-00-32-032 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 12-00-32-032 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 12-02-02-22 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-02-05-25 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-02-10-210 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 12-02-10-210 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 12-02-20-220 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-02-22-222 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-02-24-224 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 12-02-24-224 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 12-02-27-227 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-02-28-228 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 12-02-28-228 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 12-02-45-245 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-02-46-246 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 12-02-46-246 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 12-03-56-356 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-03-56-356 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 12-03-56-356 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 12-04-04-44 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-04-05-45 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 12-04-05-45 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 12-05-45-545 [32minfo[39m: [32mOTP generated: 501378[39m
+2026-01-29 12-07-23-723 [32minfo[39m: [32mOTP generated: 684820[39m
+2026-01-29 12-14-40-1440 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-14-41-1441 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 12-14-41-1441 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 12-14-53-1453 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-14-56-1456 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 12-15-00-150 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 12-15-00-150 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 12-16-42-1642 [32minfo[39m: [32mOTP generated: 138050[39m
+2026-01-29 12-25-17-2517 [32minfo[39m: [32mOTP generated: 837396[39m
+2026-01-29 12-26-02-262 [32minfo[39m: [32mOTP generated: 198691[39m
+2026-01-29 12-42-47-4247 [32minfo[39m: [32mOTP generated: 146143[39m
+2026-01-29 13-10-28-1028 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 13-10-29-1029 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 13-10-29-1029 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 13-27-27-2727 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 13-27-27-2727 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 13-27-27-2727 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 13-27-31-2731 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 13-27-32-2732 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 13-27-32-2732 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-14-33-1433 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-14-34-1434 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 15-14-34-1434 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-15-17-1517 [32minfo[39m: [32mOTP generated: 663256[39m
+2026-01-29 15-16-50-1650 [32minfo[39m: [32mOTP generated: 824059[39m
+2026-01-29 15-17-59-1759 [32minfo[39m: [32mOTP generated: 190908[39m
+2026-01-29 15-20-12-2012 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-20-13-2013 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 15-20-13-2013 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-20-18-2018 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-20-20-2020 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-20-23-2023 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-20-23-2023 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 15-20-23-2023 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-20-26-2026 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-20-26-2026 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 15-20-26-2026 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-20-31-2031 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-20-35-2035 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-20-35-2035 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 15-20-35-2035 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-21-00-210 [32minfo[39m: [32mOTP generated: 286642[39m
+2026-01-29 15-23-35-2335 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-23-37-2337 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 15-23-37-2337 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-23-52-2352 [32minfo[39m: [32mOTP generated: 306863[39m
+2026-01-29 15-26-02-262 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-26-04-264 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 15-26-04-264 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-26-06-266 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-26-07-267 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 15-26-07-267 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-26-11-2611 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-26-11-2611 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 15-26-11-2611 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-26-19-2619 [32minfo[39m: [32mAccount verified successfully[39m
+2026-01-29 15-26-42-2642 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-26-43-2643 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 15-26-43-2643 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-27-06-276 [32minfo[39m: [32mOTP generated: 602942[39m
+2026-01-29 15-27-25-2725 [32minfo[39m: [32mAccount verified successfully[39m
+2026-01-29 15-28-09-289 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 15-28-10-2810 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 15-28-10-2810 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 15-28-25-2825 [32minfo[39m: [32mOTP generated: 171962[39m
+2026-01-29 15-31-16-3116 [32minfo[39m: [32m726626[39m
+2026-01-29 15-41-34-4134 [32minfo[39m: [32mOTP generated: 943550[39m
+2026-01-29 16-16-58-1658 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 16-17-00-170 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 16-17-01-171 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 16-17-01-171 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 16-17-06-176 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 16-17-07-177 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 16-17-07-177 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 16-17-42-1742 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 16-17-45-1745 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 16-17-46-1746 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 16-17-46-1746 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 16-17-48-1748 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 16-17-49-1749 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 16-17-49-1749 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 16-17-58-1758 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 16-18-00-180 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 16-18-01-181 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 16-18-01-181 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 16-18-13-1813 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 16-18-14-1814 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 16-18-14-1814 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-01-40-140 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-01-40-140 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-01-40-140 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-01-43-143 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-01-44-144 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-01-44-144 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-01-47-147 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-01-49-149 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-01-50-150 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-01-50-150 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-42-18-4218 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-42-19-4219 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-42-19-4219 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-42-25-4225 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-42-27-4227 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-42-28-4228 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-42-28-4228 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-44-07-447 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-44-09-449 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-44-09-449 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-44-09-449 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-44-11-4411 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-44-17-4417 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-44-18-4418 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-44-18-4418 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-44-40-4440 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-44-42-4442 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-44-43-4443 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-44-43-4443 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-44-54-4454 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-44-54-4454 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-44-54-4454 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-45-03-453 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-45-03-453 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-45-03-453 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-45-18-4518 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-45-19-4519 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-45-19-4519 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 19-45-38-4538 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 19-45-39-4539 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 19-45-39-4539 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 20-23-14-2314 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 20-23-14-2314 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 20-23-14-2314 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 20-23-20-2320 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 20-23-21-2321 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 20-23-21-2321 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-29 20-23-25-2325 [32minfo[39m: [32mRedis connected[39m
+2026-01-29 20-23-26-2326 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-29 20-23-26-2326 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-33-21-3321 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-33-23-3323 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-33-23-3323 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-33-33-3333 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-33-34-3334 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-33-34-3334 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-33-52-3352 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-33-53-3353 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-33-53-3353 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-35-12-3512 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-35-13-3513 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-35-13-3513 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-36-09-369 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-36-09-369 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-36-09-369 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-37-10-3710 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-37-11-3711 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-37-11-3711 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-38-58-3858 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-39-34-3934 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-39-35-3935 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-39-35-3935 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-39-56-3956 [32minfo[39m: [32mQuery {[39m
+[32m  _mongooseOptions: { lean: true },[39m
+[32m  _transforms: [],[39m
+[32m  _hooks: Kareem { _pres: Map(0) {}, _posts: Map(0) {} },[39m
+[32m  _execCount: 0,[39m
+[32m  mongooseCollection: Collection {[39m
+[32m    collection: null,[39m
+[32m    Promise: [Function: Promise],[39m
+[32m    modelName: 'User',[39m
+[32m    _closed: false,[39m
+[32m    opts: {[39m
+[32m      autoIndex: true,[39m
+[32m      autoCreate: true,[39m
+[32m      autoSearchIndex: false,[39m
+[32m      schemaUserProvidedOptions: [Object],[39m
+[32m      capped: false,[39m
+[32m      Promise: undefined,[39m
+[32m      '$wasForceClosed': undefined[39m
+[32m    },[39m
+[32m    name: 'users',[39m
+[32m    collectionName: 'users',[39m
+[32m    conn: NativeConnection {[39m
+[32m      base: [Mongoose],[39m
+[32m      collections: [Object],[39m
+[32m      models: [Object],[39m
+[32m      config: {},[39m
+[32m      replica: false,[39m
+[32m      options: null,[39m
+[32m      otherDbs: [],[39m
+[32m      relatedDbs: {},[39m
+[32m      states: [Object: null prototype],[39m
+[32m      _readyState: 0,[39m
+[32m      _closeCalled: false,[39m
+[32m      _hasOpened: false,[39m
+[32m      plugins: [],[39m
+[32m      id: 0,[39m
+[32m      _queue: [Array],[39m
+[32m      _listening: false,[39m
+[32m      _lastHeartbeatAt: null,[39m
+[32m      [Symbol(mongoose:defaultConnection)]: true[39m
+[32m    },[39m
+[32m    queue: [],[39m
+[32m    buffer: true,[39m
+[32m    emitter: EventEmitter {[39m
+[32m      _events: [Object: null prototype] {},[39m
+[32m      _eventsCount: 0,[39m
+[32m      _maxListeners: undefined,[39m
+[32m      [Symbol(shapeMode)]: false,[39m
+[32m      [Symbol(kCapture)]: false[39m
+[32m    }[39m
+[32m  },[39m
+[32m  model: Model { User },[39m
+[32m  schema: Schema {[39m
+[32m    obj: {[39m
+[32m      email: [Object],[39m
+[32m      password: [Object],[39m
+[32m      dob: [Object],[39m
+[32m      gender: [Object],[39m
+[32m      isOnboardingRequired: [Object],[39m
+[32m      authProvider: [Object],[39m
+[32m      googleId: [Object],[39m
+[32m      role: [Object],[39m
+[32m      status: [Object],[39m
+[32m      isEmailVerified: [Object],[39m
+[32m      lastLoginAt: [Object],[39m
+[32m      firstName: [Object],[39m
+[32m      lastName: [Object],[39m
+[32m      phone: [Object][39m
+[32m    },[39m
+[32m    paths: {[39m
+[32m      email: [SchemaString],[39m
+[32m      password: [SchemaString],[39m
+[32m      dob: [SchemaDate],[39m
+[32m      gender: [SchemaString],[39m
+[32m      isOnboardingRequired: [SchemaBoolean],[39m
+[32m      authProvider: [SchemaString],[39m
+[32m      googleId: [SchemaString],[39m
+[32m      role: [SchemaString],[39m
+[32m      status: [SchemaString],[39m
+[32m      isEmailVerified: [SchemaBoolean],[39m
+[32m      lastLoginAt: [SchemaDate],[39m
+[32m      firstName: [SchemaString],[39m
+[32m      lastName: [SchemaString],[39m
+[32m      phone: [SchemaString],[39m
+[32m      _id: [SchemaObjectId],[39m
+[32m      createdAt: [SchemaDate],[39m
+[32m      updatedAt: [SchemaDate][39m
+[32m    },[39m
+[32m    aliases: {},[39m
+[32m    subpaths: {},[39m
+[32m    virtuals: { id: [VirtualType] },[39m
+[32m    singleNestedPaths: {},[39m
+[32m    nested: {},[39m
+[32m    inherits: {},[39m
+[32m    callQueue: [],[39m
+[32m    _indexes: [],[39m
+[32m    _searchIndexes: [],[39m
+[32m    methods: { initializeTimestamps: [Function (anonymous)] },[39m
+[32m    methodOptions: {},[39m
+[32m    statics: {},[39m
+[32m    tree: {[39m
+[32m      email: [Object],[39m
+[32m      password: [Object],[39m
+[32m      dob: [Object],[39m
+[32m      gender: [Object],[39m
+[32m      isOnboardingRequired: [Object],[39m
+[32m      authProvider: [Object],[39m
+[32m      googleId: [Object],[39m
+[32m      role: [Object],[39m
+[32m      status: [Object],[39m
+[32m      isEmailVerified: [Object],[39m
+[32m      lastLoginAt: [Object],[39m
+[32m      firstName: [Object],[39m
+[32m      lastName: [Object],[39m
+[32m      phone: [Object],[39m
+[32m      _id: [Object],[39m
+[32m      createdAt: [Object],[39m
+[32m      updatedAt: [Function: Date],[39m
+[32m      id: [VirtualType][39m
+[32m    },[39m
+[32m    query: {},[39m
+[32m    childSchemas: [],[39m
+[32m    plugins: [ [Object], [Object], [Object], [Object], [Object] ],[39m
+[32m    '$id': 1,[39m
+[32m    mapPaths: [],[39m
+[32m    encryptedFields: {},[39m
+[32m    s: { hooks: [Kareem] },[39m
+[32m    _userProvidedOptions: { timestamps: true, versionKey: false },[39m
+[32m    options: {[39m
+[32m      strict: true,[39m
+[32m      strictQuery: false,[39m
+[32m      bufferCommands: true,[39m
+[32m      capped: false,[39m
+[32m      versionKey: false,[39m
+[32m      optimisticConcurrency: false,[39m
+[32m      minimize: true,[39m
+[32m      autoIndex: null,[39m
+[32m      discriminatorKey: '__t',[39m
+[32m      shardKey: null,[39m
+[32m      read: null,[39m
+[32m      validateBeforeSave: true,[39m
+[32m      validateModifiedOnly: false,[39m
+[32m      _id: true,[39m
+[32m      id: true,[39m
+[32m      typeKey: 'type',[39m
+[32m      timestamps: true,[39m
+[32m      pluralization: true[39m
+[32m    },[39m
+[32m    '$timestamps': { createdAt: 'createdAt', updatedAt: 'updatedAt' },[39m
+[32m    '$globalPluginsApplied': true[39m
+[32m  },[39m
+[32m  op: 'find',[39m
+[32m  options: {},[39m
+[32m  _conditions: { firstName: { '$regex': /^a/i }, email: { '$regex': /m$/i } },[39m
+[32m  _fields: undefined,[39m
+[32m  _updateDoc: undefined,[39m
+[32m  _path: undefined,[39m
+[32m  _distinctDoc: undefined,[39m
+[32m  _collection: NodeCollection {[39m
+[32m    collection: Collection {[39m
+[32m      collection: null,[39m
+[32m      Promise: [Function: Promise],[39m
+[32m      modelName: 'User',[39m
+[32m      _closed: false,[39m
+[32m      opts: [Object],[39m
+[32m      name: 'users',[39m
+[32m      collectionName: 'users',[39m
+[32m      conn: [NativeConnection],[39m
+[32m      queue: [],[39m
+[32m      buffer: true,[39m
+[32m      emitter: [EventEmitter][39m
+[32m    },[39m
+[32m    collectionName: 'users'[39m
+[32m  },[39m
+[32m  _traceFunction: undefined,[39m
+[32m  '$useProjection': true[39m
+[32m}[39m
+2026-01-30 01-39-56-3956 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-39-57-3957 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-39-57-3957 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-41-06-416 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-41-07-417 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-41-07-417 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-41-07-417 [32minfo[39m: [32m[[39m
+[32m  {[39m
+[32m    _id: new ObjectId('6970bc64a0244bebbc1b9f17'),[39m
+[32m    email: 'asmil@gmail.com',[39m
+[32m    authProvider: 'local',[39m
+[32m    googleId: null,[39m
+[32m    role: 'user',[39m
+[32m    status: 'active',[39m
+[32m    isEmailVerified: true,[39m
+[32m    lastLoginAt: null,[39m
+[32m    firstName: 'ashmil',[39m
+[32m    lastName: 'india',[39m
+[32m    phone: '987238723',[39m
+[32m    createdAt: 2026-01-21T11:45:40.851Z,[39m
+[32m    updatedAt: 2026-01-21T11:45:40.851Z[39m
+[32m  },[39m
+[32m  {[39m
+[32m    _id: new ObjectId('697b00385369ecb75b4cfd2d'),[39m
+[32m    email: 'nasarpk@gmail.com',[39m
+[32m    dob: 1995-05-20T00:00:00.000Z,[39m
+[32m    gender: 'male',[39m
+[32m    isOnboardingRequired: false,[39m
+[32m    authProvider: 'local',[39m
+[32m    googleId: null,[39m
+[32m    role: 'user',[39m
+[32m    status: 'active',[39m
+[32m    isEmailVerified: true,[39m
+[32m    lastLoginAt: null,[39m
+[32m    firstName: 'Abhiram',[39m
+[32m    lastName: 'ds',[39m
+[32m    phone: '1234567890',[39m
+[32m    createdAt: 2026-01-29T06:37:44.321Z,[39m
+[32m    updatedAt: 2026-01-29T06:39:24.403Z[39m
+[32m  }[39m
+[32m][39m
+2026-01-30 01-41-10-4110 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-41-11-4111 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-41-11-4111 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-41-11-4111 [32minfo[39m: [32m[[39m
+[32m  {[39m
+[32m    "_id": "6970bc64a0244bebbc1b9f17",[39m
+[32m    "email": "asmil@gmail.com",[39m
+[32m    "authProvider": "local",[39m
+[32m    "googleId": null,[39m
+[32m    "role": "user",[39m
+[32m    "status": "active",[39m
+[32m    "isEmailVerified": true,[39m
+[32m    "lastLoginAt": null,[39m
+[32m    "firstName": "ashmil",[39m
+[32m    "lastName": "india",[39m
+[32m    "phone": "987238723",[39m
+[32m    "createdAt": "2026-01-21T11:45:40.851Z",[39m
+[32m    "updatedAt": "2026-01-21T11:45:40.851Z"[39m
+[32m  },[39m
+[32m  {[39m
+[32m    "_id": "697b00385369ecb75b4cfd2d",[39m
+[32m    "email": "nasarpk@gmail.com",[39m
+[32m    "dob": "1995-05-20T00:00:00.000Z",[39m
+[32m    "gender": "male",[39m
+[32m    "isOnboardingRequired": false,[39m
+[32m    "authProvider": "local",[39m
+[32m    "googleId": null,[39m
+[32m    "role": "user",[39m
+[32m    "status": "active",[39m
+[32m    "isEmailVerified": true,[39m
+[32m    "lastLoginAt": null,[39m
+[32m    "firstName": "Abhiram",[39m
+[32m    "lastName": "ds",[39m
+[32m    "phone": "1234567890",[39m
+[32m    "createdAt": "2026-01-29T06:37:44.321Z",[39m
+[32m    "updatedAt": "2026-01-29T06:39:24.403Z"[39m
+[32m  }[39m
+[32m][39m
+2026-01-30 01-41-25-4125 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-41-26-4126 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-41-26-4126 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-41-26-4126 [32minfo[39m: [32m[[39m
+[32m  {[39m
+[32m    "_id": "6970bc64a0244bebbc1b9f17",[39m
+[32m    "email": "asmil@gmail.com",[39m
+[32m    "authProvider": "local",[39m
+[32m    "googleId": null,[39m
+[32m    "role": "user",[39m
+[32m    "status": "active",[39m
+[32m    "isEmailVerified": true,[39m
+[32m    "lastLoginAt": null,[39m
+[32m    "firstName": "ashmil",[39m
+[32m    "lastName": "india",[39m
+[32m    "phone": "987238723",[39m
+[32m    "createdAt": "2026-01-21T11:45:40.851Z",[39m
+[32m    "updatedAt": "2026-01-21T11:45:40.851Z"[39m
+[32m  },[39m
+[32m  {[39m
+[32m    "_id": "697b00385369ecb75b4cfd2d",[39m
+[32m    "email": "nasarpk@gmail.com",[39m
+[32m    "dob": "1995-05-20T00:00:00.000Z",[39m
+[32m    "gender": "male",[39m
+[32m    "isOnboardingRequired": false,[39m
+[32m    "authProvider": "local",[39m
+[32m    "googleId": null,[39m
+[32m    "role": "user",[39m
+[32m    "status": "active",[39m
+[32m    "isEmailVerified": true,[39m
+[32m    "lastLoginAt": null,[39m
+[32m    "firstName": "Abhiram",[39m
+[32m    "lastName": "ds",[39m
+[32m    "phone": "1234567890",[39m
+[32m    "createdAt": "2026-01-29T06:37:44.321Z",[39m
+[32m    "updatedAt": "2026-01-29T06:39:24.403Z"[39m
+[32m  }[39m
+[32m][39m
+2026-01-30 01-42-23-4223 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-42-24-4224 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-42-24-4224 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-42-24-4224 [32minfo[39m: [32m[{"_id":"6970bc64a0244bebbc1b9f17","email":"asmil@gmail.com","authProvider":"local","googleId":null,"role":"user","status":"active","isEmailVerified":true,"lastLoginAt":null,"firstName":"ashmil","lastName":"india","phone":"987238723","createdAt":"2026-01-21T11:45:40.851Z","updatedAt":"2026-01-21T11:45:40.851Z"},{"_id":"697b00385369ecb75b4cfd2d","email":"nasarpk@gmail.com","dob":"1995-05-20T00:00:00.000Z","gender":"male","isOnboardingRequired":false,"authProvider":"local","googleId":null,"role":"user","status":"active","isEmailVerified":true,"lastLoginAt":null,"firstName":"Abhiram","lastName":"ds","phone":"1234567890","createdAt":"2026-01-29T06:37:44.321Z","updatedAt":"2026-01-29T06:39:24.403Z"}][39m
+2026-01-30 01-44-16-4416 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-44-17-4417 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-44-17-4417 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-45-18-4518 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-45-19-4519 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-45-19-4519 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-45-31-4531 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-45-33-4533 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-45-34-4534 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-45-34-4534 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-45-38-4538 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-45-39-4539 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-45-39-4539 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-46-44-4644 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-46-45-4645 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-46-45-4645 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-46-51-4651 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-46-52-4652 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-46-52-4652 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-47-01-471 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-47-02-472 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-47-02-472 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-47-22-4722 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-47-23-4723 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-47-23-4723 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-47-27-4727 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-47-28-4728 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-47-28-4728 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-47-30-4730 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-47-33-4733 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-47-34-4734 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-47-34-4734 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-47-44-4744 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-47-47-4747 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-47-50-4750 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-47-52-4752 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-47-53-4753 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-47-53-4753 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-48-06-486 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-48-07-487 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-48-07-487 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-48-12-4812 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-48-16-4816 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-48-17-4817 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-48-17-4817 [32minfo[39m: [32mServer started on http://localhost:4000[39m
+2026-01-30 01-48-29-4829 [32minfo[39m: [32mRedis connected[39m
+2026-01-30 01-48-30-4830 [32minfo[39m: [32mConnected to Mongodb[39m
+2026-01-30 01-48-30-4830 [32minfo[39m: [32mServer started on http://localhost:4000[39m

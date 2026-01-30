@@ -12,6 +12,7 @@ import { userRepositories } from "./user.repositories";
 import { ForgotPasswordUseCase } from "@/application/usecases/auth/forgot-password.usecase";
 import { ResetPasswordUseCase } from "@/application/usecases/auth/reset-password.usecase";
 import { VerifyResetOtpUseCase } from "@/application/usecases/auth/verify-reset-otp.usecase";
+import { RefreshTokenUseCase } from "@/application/usecases/auth/refresh-token.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -28,7 +29,12 @@ export const useCases = {
 
   verifyOtpUseCase: new VerifyOtpUseCase(
     otpStore,
-    userRepositories.userRepository
+    userRepositories.userRepository,
+    tokenService,
+  ),
+  refreshTokenUseCase: new RefreshTokenUseCase(
+    userRepositories.userRepository,
+    tokenService
   ),
   resendOtpUseCase: new ResendOtpUseCase(
     otpStore,

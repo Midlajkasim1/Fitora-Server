@@ -1,11 +1,11 @@
-import { GoogleLoginResponseDTO } from "@/application/dto/auth/response/google-login.dto";
 import { GoogleDTO } from "@/application/dto/auth/request/google.dto";
-import { UserEntity } from "@/domain/entities/user.entity";
-import { AuthProvider, UserRole } from "@/domain/constants/auth.constants"; //
-import { IGoogleTokenProvider } from "@/domain/interfaces/google-token.interface";
-import { ITokenService } from "@/domain/interfaces/token.interface";
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { GoogleLoginResponseDTO } from "@/application/dto/auth/response/google-login.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { AuthProvider } from "@/domain/constants/auth.constants"; //
+import { UserEntity } from "@/domain/entities/user/user.entity";
+import { IGoogleTokenProvider } from "@/domain/interfaces/google-token.interface";
+import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { ITokenService } from "@/domain/interfaces/token.interface";
 
 export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginResponseDTO>{
   constructor(

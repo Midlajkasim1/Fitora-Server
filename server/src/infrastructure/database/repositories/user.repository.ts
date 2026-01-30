@@ -1,8 +1,8 @@
+import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IUserRepository, UserWithPassword } from "@/domain/interfaces/repositories/user.repository";
-import { UserEntity } from "@/domain/entities/user.entity";
-import { UserModel } from "../models/user.models";
-import { UserMapper } from "../mappers/user.mapper";
 import { IUserDocument } from "../interfaces/user-document.interface";
+import { UserMapper } from "../mappers/user.mapper";
+import { UserModel } from "../models/user.models";
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly userMapper: UserMapper) {}
@@ -35,5 +35,18 @@ export class UserRepository implements IUserRepository {
   async updatePassword(id: string, passwordHash: string): Promise<void> {
   await UserModel.findByIdAndUpdate(id, { password: passwordHash });
 }
+async completeOnboarding(userId: string, data: { 
+    dob: Date; 
+    gender: string; 
+    isOnboardingRequired: boolean 
+  }): Promise<void> {
+    await UserModel.findByIdAndUpdate(userId, {
+      $set: {
+        dob: data.dob,
+        gender: data.gender,
+        isOnboardingRequired: data.isOnboardingRequired
+      }
+    }).exec();
 
+  }
 }
