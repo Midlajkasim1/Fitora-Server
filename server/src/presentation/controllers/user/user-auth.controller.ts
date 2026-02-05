@@ -1,4 +1,5 @@
 import { ForgotPasswordUseCase } from "@/application/usecases/auth/forgot-password.usecase";
+import { GetMeUseCase } from "@/application/usecases/auth/get-me.usecase";
 import { GoogleAuthUseCase } from "@/application/usecases/auth/google-auth.usecase";
 import { LoginUseCase } from "@/application/usecases/auth/login.usecase";
 import { RefreshTokenUseCase } from "@/application/usecases/auth/refresh-token.usecase";
@@ -8,6 +9,7 @@ import { ResetPasswordUseCase } from "@/application/usecases/auth/reset-password
 import { VerifyOtpUseCase } from "@/application/usecases/auth/verify-otp.usecase";
 import { VerifyResetOtpUseCase } from "@/application/usecases/auth/verify-reset-otp.usecase";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
+import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { CookieManager } from "@/infrastructure/security/cookie-manager";
 import { forgotPasswordSchema } from "@/infrastructure/validators/user/forgot-password.validator";
 import { googleLoginSchema } from "@/infrastructure/validators/user/google-login.validator";
@@ -21,41 +23,47 @@ import { Request, Response } from "express";
 
 export class AuthController {
   constructor(
-    private readonly registerUseCase: RegisterUseCase,
-    private readonly verifyOtpUseCase: VerifyOtpUseCase,
+    private readonly _registerUseCase: RegisterUseCase,
+    private readonly _verifyOtpUseCase: VerifyOtpUseCase,
     private readonly resendOtpUseCase: ResendOtpUseCase,
-    private readonly loginUseCase: LoginUseCase,
-    private readonly googleAuthUseCase: GoogleAuthUseCase,
-    private readonly forgotPasswordUseCase: ForgotPasswordUseCase,
-    private readonly verifyResetOtpUseCase: VerifyResetOtpUseCase,
-    private readonly resetPasswordUseCase: ResetPasswordUseCase,
-    private readonly refreshTokenUseCase: RefreshTokenUseCase,
+    private readonly _loginUseCase: LoginUseCase,
+    private readonly _googleAuthUseCase: GoogleAuthUseCase,
+    private readonly _forgotPasswordUseCase: ForgotPasswordUseCase,
+    private readonly _verifyResetOtpUseCase: VerifyResetOtpUseCase,
+    private readonly _resetPasswordUseCase: ResetPasswordUseCase,
+    private readonly _refreshTokenUseCase: RefreshTokenUseCase,
+    private readonly _getMeUseCase: GetMeUseCase
   ) { }
 
 
   async register(req: Request, res: Response): Promise<Response> {
     try {
       const dto = registerSchema.parse(req.body);
-      await this.registerUseCase.execute(dto);
+      await this._registerUseCase.execute(dto);
 
       return res.status(HttpStatus.CREATED).json({
         success: true,
-        message: "OTP sent successfully",
+        message: AUTH_MESSAGES.OTP_SENT,
       });
     } catch (error: any) {
-      const message = error.errors
-        ? error.errors[0].message
-        : (error.message || "Registration failed");
-      return res.status(HttpStatus.BAD_REQUEST).json({
-        success: false,
-        message: message
+     let message = AUTH_MESSAGES.REGISTER_FAIL;
+    
+    if (error.name === "ZodError") {
+      message = error.errors[0].message;
+    } else if (error.message) {
+      message = error.message;
+    }
+
+    return res.status(HttpStatus.BAD_REQUEST).json({
+      success: false,
+      message: message
       });
     }
   }
   async verifyOtp(req: Request, res: Response): Promise<Response> {
     try {
       const dto = verifyOtpSchema.parse(req.body);
-      const result = await this.verifyOtpUseCase.execute(dto);
+      const result = await this._verifyOtpUseCase.execute(dto);
       CookieManager.setAuthCookies(res, result.accessToken, result.refreshToken);
 
       return res.status(HttpStatus.OK).json({
@@ -76,9 +84,9 @@ export class AuthController {
   async refreshToken(req: Request, res: Response): Promise<Response> {
     try {
       const token = req.cookies.refreshToken;
-      if (!token) throw new Error("Refresh token missing");
+      if (!token) throw new Error(AUTH_MESSAGES.REFRESH_TOKEN_MISSING);
 
-      const result = await this.refreshTokenUseCase.execute({ refreshToken: token });
+      const result = await this._refreshTokenUseCase.execute({ refreshToken: token });
 
       CookieManager.setAccessCookie(res, result.accessToken);
       return res.status(HttpStatus.OK).json({
@@ -101,7 +109,7 @@ export class AuthController {
 
       return res.status(HttpStatus.OK).json({
         success: true,
-        message: "OTP resent successfully",
+        message: AUTH_MESSAGES.OTP_RESENT,
       });
     } catch (error: any) {
       return res.status(HttpStatus.OK).json({
@@ -116,14 +124,20 @@ export class AuthController {
     try {
       const dto = loginSchema.parse(req.body);
 
-      const result = await this.loginUseCase.execute(dto);
+      const result = await this._loginUseCase.execute(dto);
       CookieManager.setAuthCookies(res, result.accessToken, result.refreshToken);
       return res.status(HttpStatus.OK).json({
         success: true,
-        message: "Login successful",
+        message: AUTH_MESSAGES.LOGINSUCCESS,
         data: {
+       user: {
+          id: result.userId, 
+          email: dto.email,
           role: result.role,
-          isOnboardingRequired: result.isOnboardingRequired
+          isOnboardingRequired: result.isOnboardingRequired,
+          approval_status: result.approval_status
+
+        }
 
         }
       });
@@ -140,15 +154,17 @@ export class AuthController {
     try {
       const dto = googleLoginSchema.parse(req.body);
 
-      const result = await this.googleAuthUseCase.execute(dto);
+      const result = await this._googleAuthUseCase.execute(dto);
 
       CookieManager.setAuthCookies(res, result.accessToken, result.refreshToken);
 
       return res.status(HttpStatus.OK).json({
         success: true,
         data: {
-          role: result.role,
-          isOnboardingRequired: result.isOnboardingRequired
+         user: {
+          ...result.user,
+          approval_status: result.user.approval_status 
+        }
         },
       });
     } catch (error: any) {
@@ -162,7 +178,7 @@ export class AuthController {
     try {
       const dto = forgotPasswordSchema.parse(req.body);
 
-      const result = await this.forgotPasswordUseCase.execute(dto);
+      const result = await this._forgotPasswordUseCase.execute(dto);
 
       return res.status(HttpStatus.OK).json({
         success: true,
@@ -179,7 +195,7 @@ export class AuthController {
   async verifyResetOtp(req: Request, res: Response): Promise<Response> {
     try {
       const dto = verifyResetOtpSchema.parse(req.body);
-      const result = await this.verifyResetOtpUseCase.execute(dto);
+      const result = await this._verifyResetOtpUseCase.execute(dto);
 
       return res.status(HttpStatus.OK).json({
         success: true,
@@ -196,7 +212,7 @@ export class AuthController {
   async resetPassword(req: Request, res: Response): Promise<Response> {
     try {
       const dto = resetPasswordSchema.parse(req.body);
-      const result = await this.resetPasswordUseCase.execute(dto);
+      const result = await this._resetPasswordUseCase.execute(dto);
 
       return res.status(HttpStatus.OK).json({
         success: true,
@@ -210,5 +226,33 @@ export class AuthController {
     }
   }
 
+  async getMe(req: Request, res: Response): Promise<Response> {
+  try {
+    const userId = req.user?.userId; 
+    
+    if (!userId) {
+      return res.status(401).json({ success: false, message: AUTH_MESSAGES.UNAUTHORIZED });
+    }
+
+    const result = await this._getMeUseCase.execute(userId);
+
+    return res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error: any) {
+    return res.status(401).json({
+      success: false,
+      message: error.message || "Session expired",
+    });
+  }
+}
+async logout(req: Request, res: Response): Promise<Response> {
+  CookieManager.clearAuthCookies(res);
+  return res.status(200).json({ 
+    success: true, 
+    message: AUTH_MESSAGES.USERLOGOUT
+  });
+}
 
 }

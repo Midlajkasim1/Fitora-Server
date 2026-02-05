@@ -1,4 +1,4 @@
-import { AuthProvider } from "@/domain/constants/auth.constants";
+import { AuthProvider, UserRole, UserStatus } from "@/domain/constants/auth.constants";
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IBaseRepository } from "./base.repository";
 
@@ -27,5 +27,16 @@ export interface IUserRepository extends IBaseRepository<UserEntity> {
     gender: string;
     isOnboardingRequired: boolean
   }): Promise<void>;
+
+  updateStatus(id: string, status: UserStatus): Promise<void>;
+
+  findAll(params:{
+    page:number;
+    limit:number;
+    search?:string;
+    status?:string;
+    specialization?:string;
+    role?:UserRole;
+  }):Promise<{users:UserEntity[];total:number}>
 
 }

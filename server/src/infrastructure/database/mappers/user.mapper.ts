@@ -13,10 +13,12 @@ export class UserMapper implements IMapper<UserEntity, IUserDocument> {
       phone: doc.phone,
       role: doc.role,
       status: doc.status,
+      profileImage:doc.profileImage,
       isEmailVerified: doc.isEmailVerified,
       dob: doc.dob,
       gender: doc.gender,
       isOnboardingRequired: doc.isOnboardingRequired,
+      createdAt: doc.createdAt
     });
   }
 
@@ -36,6 +38,7 @@ export class UserMapper implements IMapper<UserEntity, IUserDocument> {
       phone: user.phone,
       role: user.role,
       status: user.status,
+      profileImage:user.profileImage,
       dob: user.dob,
       gender: user.gender,
       isOnboardingRequired: user.isOnboardingRequired,
@@ -43,6 +46,7 @@ export class UserMapper implements IMapper<UserEntity, IUserDocument> {
       authProvider: options?.authProvider ?? AuthProvider.LOCAL,
       googleId: options?.googleId ?? null,
       password: passwordHash,
+      createdAt: user.createdAt
     };
   }
 }

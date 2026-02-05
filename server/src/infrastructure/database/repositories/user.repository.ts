@@ -3,6 +3,7 @@ import { IUserRepository, UserWithPassword } from "@/domain/interfaces/repositor
 import { IUserDocument } from "../interfaces/user-document.interface";
 import { UserMapper } from "../mappers/user.mapper";
 import { UserModel } from "../models/user.models";
+import { UserRole, UserStatus } from "@/domain/constants/auth.constants";
 
 export class UserRepository implements IUserRepository {
   constructor(private readonly userMapper: UserMapper) {}
@@ -49,4 +50,47 @@ async completeOnboarding(userId: string, data: {
     }).exec();
 
   }
+async findAll(params: {
+    page: number;
+    limit: number;
+    search?: string;
+    status?: string;
+    role?: UserRole; 
+  }): Promise<{ users: UserEntity[]; total: number }> {
+    const { page, limit, search, status, role } = params;
+    const skip = (page - 1) * limit;
+
+    const filter: any = {};
+    if (role) filter.role = role; 
+    if (status) filter.status = status;
+
+    if (search) {
+      filter.$or = [
+        { email: { $regex: search, $options: "i" } },
+        { firstName: { $regex: search, $options: "i" } },
+    
+      ];
+    }
+
+    const [docs, total] = await Promise.all([
+      UserModel.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean<IUserDocument[]>(),
+      UserModel.countDocuments(filter)
+    ]);
+
+    return {
+      users: docs.map((doc) => this.userMapper.toEntity(doc)),
+      total
+    };
+  }
+
+async updateStatus(id: string, status: UserStatus): Promise<void> {
+    await UserModel.findByIdAndUpdate(id, { 
+      $set: { status: status } 
+    }).exec();
+  }
+
 }

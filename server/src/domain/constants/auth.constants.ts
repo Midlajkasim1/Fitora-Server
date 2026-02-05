@@ -38,3 +38,6 @@ export enum DietPreference {
   OMNIVORE = "omnivore"
 }
 
+export enum AdminRole {
+  ADMIN = "admin"
+}

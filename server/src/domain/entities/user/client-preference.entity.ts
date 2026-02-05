@@ -12,7 +12,7 @@ private readonly _id?: string;
   private readonly _medicalConditions: string[];
 
   constructor(props: {
-id?: string;
+    id?: string;
     userId: string;
     sleepHours: number;
     waterIntake: number;

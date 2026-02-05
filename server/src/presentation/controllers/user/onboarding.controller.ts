@@ -6,14 +6,14 @@ import { trainerOnboardingSchema } from "@/infrastructure/validators/user/onboar
 import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer-upload-file.dto";
 export class OnboardingController {
   constructor(
-    private readonly userOnboardingUseCase: CompleteUserOnboardingUseCase,
-    private readonly trainerOnboardingUseCase: CompleteTrainerOnboardingUseCase
+    private readonly _userOnboardingUseCase: CompleteUserOnboardingUseCase,
+    private readonly _trainerOnboardingUseCase: CompleteTrainerOnboardingUseCase
   ) { }
 
 async completeUser(req: Request, res: Response): Promise<Response> {
   try {
     const validatedData = userOnboardingSchema.parse(req.body);
-    const result = await this.userOnboardingUseCase.execute(validatedData);
+    const result = await this._userOnboardingUseCase.execute(validatedData);
     
     return res.status(200).json(result);
   } catch (error: any) {
@@ -35,7 +35,7 @@ async completeUser(req: Request, res: Response): Promise<Response> {
         mimetype: file.mimetype,
         size: file.size,
       }));
-      const result = await this.trainerOnboardingUseCase.execute(validatedData, uploadedFiles);
+      const result = await this._trainerOnboardingUseCase.execute(validatedData, uploadedFiles);
 
       return res.status(200).json(result);
     } catch (error: any) {

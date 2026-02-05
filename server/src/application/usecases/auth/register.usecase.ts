@@ -7,29 +7,30 @@ import { RegisterDTO } from "@/application/dto/auth/request/register.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { logger } from "@/infrastructure/providers/loggers/logger";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 export class RegisterUseCase implements IBaseUseCase<RegisterDTO, RegisterResponseDTO> {
   constructor(
-    private readonly userRepository: IUserRepository,
-    private readonly otpStore: IOtpStore,
-    private readonly emailService: IEmailService,
-    private readonly passwordHasher: IPasswordHasher
+    private readonly _userRepository: IUserRepository,
+    private readonly _otpStore: IOtpStore,
+    private readonly _emailService: IEmailService,
+    private readonly _passwordHasher: IPasswordHasher
   ) { }
 
   async execute(dto: RegisterDTO): Promise<RegisterResponseDTO> {
 
-   const existingUser = await this.userRepository.findByEmail(dto.email);
+   const existingUser = await this._userRepository.findByEmail(dto.email);
     if (existingUser) {
 
-      throw new Error("User with this email already exists");
+      throw new Error(AUTH_MESSAGES.EMAIL_ALREADY_EXISTS);
     }
-    const hashedPassword = await this.passwordHasher.hash(dto.password);
+    const hashedPassword = await this._passwordHasher.hash(dto.password);
 
     const otp = randomInt(100000, 999999).toString();
     const ttl = 300;
 
     const redisKey = `otp:register:${dto.email}`;
 
-    await this.otpStore.save(
+    await this._otpStore.save(
       redisKey,
       {
         ...dto,
@@ -39,8 +40,8 @@ export class RegisterUseCase implements IBaseUseCase<RegisterDTO, RegisterRespon
       ttl
     );
     logger.info(`OTP generated: ${otp}`);
-    await this.emailService.sendOtp(dto.email, otp);
-    return { message: "OTP sent successfully" };
+    await this._emailService.sendOtp(dto.email, otp);
+    return { message: AUTH_MESSAGES.OTP_RESENT };
 
 
   }

@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { UserIcon, MailIcon, PhoneIcon, LockIcon, UserCheckIcon, ShieldCheckIcon } from 'lucide-react';
-
+import {  UserIcon, MailIcon, PhoneIcon, LockIcon,  UserCheckIcon, ShieldCheckIcon, EyeIcon, EyeOffIcon }from'lucide-react';
 const registerSchema = z.object({
   role: z.enum(['user', 'trainer']),
   firstName: z.string().min(2, "First name is too short"),
@@ -26,6 +25,8 @@ interface RegisterFormProps {
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, onRoleChange, isLoading }) => {
+  const [showPass, setShowPass] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: { role: 'user' }
@@ -83,21 +84,51 @@ const onInternalSubmit = (data: RegisterFormData) => {
         {errors.email && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.email.message}</p>}
       </div>
 
-      <div className="relative">
+    <div className="relative">
         <PhoneIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-        <input type="tel" placeholder="Phone Number" className={inputClass(errors.phone)} {...register('phone')} />
+        <input 
+          type="tel" 
+          placeholder="Phone Number" 
+          maxLength={10} 
+          className={inputClass(errors.phone)} 
+          {...register('phone')} 
+        />
         {errors.phone && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.phone.message}</p>}
       </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="relative">
           <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-          <input type="password" placeholder="Password" className={inputClass(errors.password)} {...register('password')} />
+          <input 
+            type={showPass ? "text" : "password"} 
+            placeholder="Password" 
+            className={inputClass(errors.password)} 
+            {...register('password')} 
+          />
+          <button 
+            type="button" 
+            onClick={() => setShowPass(!showPass)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#00ff94]"
+          >
+            {showPass ? <EyeOffIcon size={16} /> : <EyeIcon size={16} />}
+          </button>
           {errors.password && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.password.message}</p>}
         </div>
+
         <div className="relative">
           <LockIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-          <input type="password" placeholder="Confirm" className={inputClass(errors.confirmPassword)} {...register('confirmPassword')} />
+          <input 
+            type={showConfirm ? "text" : "password"} 
+            placeholder="Confirm" 
+            className={inputClass(errors.confirmPassword)} 
+            {...register('confirmPassword')} 
+          />
+          <button 
+            type="button" 
+            onClick={() => setShowConfirm(!showConfirm)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-[#00ff94]"
+          >
+            {showConfirm ? <EyeOffIcon size={16} /> : <EyeIcon size={16} />}
+          </button>
           {errors.confirmPassword && <p className="text-red-500 text-[10px] mt-1 ml-1">{errors.confirmPassword.message}</p>}
         </div>
       </div>

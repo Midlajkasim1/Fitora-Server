@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import { IUserDocument } from "../interfaces/user-document.interface";
+import { IUserDocument } from "../../interfaces/user-document.interface";
 
 export const UserSchema = new Schema(
   {

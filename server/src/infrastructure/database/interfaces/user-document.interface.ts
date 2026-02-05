@@ -9,6 +9,7 @@ export interface IUserDocument extends Document {
   phone: string;
   role: UserRole;
   status: UserStatus; 
+  profileImage?:string
   isEmailVerified: boolean;
   dob?: Date;
   gender?: string;

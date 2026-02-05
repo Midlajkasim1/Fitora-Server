@@ -1,53 +1,37 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-
-interface User {
-  id: string; 
-  email: string;
-  role: 'user' | 'trainer';
-  isOnboardingRequired: boolean;
-  firstName: string;
-  approval_status?: 'pending' | 'approved' | 'rejected';
-}
+import type { User } from '../type/auth.types';
 
 interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
-  hasHydrated: boolean; 
+  isInitialLoading: boolean; 
   setAuth: (user: User) => void;
-  updateOnboardingStatus: (status: boolean) => void;
-  setHasHydrated: (val: boolean) => void;
+  updateOnboardingStatus: (status: boolean) => void; 
+  setInitialLoading: (val: boolean) => void;
   logout: () => void;
 }
 
-export const useAuthStore = create<AuthState>()(
-  persist(
-    (set) => ({
-      user: null,
-      isAuthenticated: false,
-      hasHydrated: false,
+export const useAuthStore = create<AuthState>((set) => ({
+  user: null,
+  isAuthenticated: false,
+  isInitialLoading: true, 
 
-      setAuth: (user) => set({ 
-        user, 
-        isAuthenticated: true 
-      }),
+  setAuth: (user) => {
+    set({ user, isAuthenticated: true, isInitialLoading: false });
+  },
 
-      updateOnboardingStatus: (status) => set((state) => ({
-        user: state.user ? { ...state.user, isOnboardingRequired: status } : null
-      })),
+  updateOnboardingStatus: (status) => set((state) => ({
+    user: state.user ? { ...state.user, isOnboardingRequired: status } : null
+  })),
 
-      setHasHydrated: (val) => set({ hasHydrated: val }),
+  setInitialLoading: (val) => set({ isInitialLoading: val }),
 
-      logout: () => {
-        set({ user: null, isAuthenticated: false });
-        localStorage.removeItem('auth-storage');
-      },
-    }),
-    {
-      name: 'auth-storage',
-      onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true);
-      },
-    }
-  )
-);
+  logout: () => {
+    set({ 
+      user: null, 
+      isAuthenticated: false, 
+      isInitialLoading: false 
+    });
+    localStorage.removeItem('onboarding-storage');
+  },
+}));

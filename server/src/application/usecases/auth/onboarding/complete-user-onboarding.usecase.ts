@@ -6,15 +6,16 @@ import { IClientPreferenceRepository } from "@/domain/interfaces/repositories/on
 import { UserOnboardingDTO } from "@/application/dto/auth/onboarding/request/user-onboarding.dto";
 import { ExperienceLevel,DietPreference } from "@/domain/constants/auth.constants";
 import { ClientPreferenceEntity } from "@/domain/entities/user/client-preference.entity";
+import { ONBOARDING_MESSAGES } from "@/domain/constants/messages.constants";
 
 export class CompleteUserOnboardingUseCase implements IBaseUseCase<UserOnboardingDTO, OnboardingResponseDTO> {
   constructor(
-    private userRepo: IUserRepository,
-    private preferenceRepo: IClientPreferenceRepository
+    private _userRepo: IUserRepository,
+    private _preferenceRepo: IClientPreferenceRepository
   ) {}
 
   async execute(dto: UserOnboardingDTO): Promise<OnboardingResponseDTO> {
-    await this.userRepo.completeOnboarding(dto.userId, {
+    await this._userRepo.completeOnboarding(dto.userId, {
       dob: dto.dob,
       gender: dto.gender,
       isOnboardingRequired: false
@@ -31,11 +32,11 @@ export class CompleteUserOnboardingUseCase implements IBaseUseCase<UserOnboardin
       medicalConditions: dto.medical_conditions
     });
 
-    await this.preferenceRepo.save(preference);
+    await this._preferenceRepo.save(preference);
 
     return {
       success: true,
-      message: "User onboarding completed successfully"
+      message: ONBOARDING_MESSAGES.CLIENT_COMPLETE
     };
   }
 }

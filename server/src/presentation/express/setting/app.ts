@@ -6,8 +6,10 @@ import routes from "@/presentation/routes";
 import { errorHandler } from "@/presentation/middleware/error.middleware";
 import { env } from "@/infrastructure/config/env.config";
 import onboardingRouter from "@/presentation/routes/auth/onboarding.routes";
+import helmet from "helmet";
 const app = express();
 
+app.use(helmet());
 app.use(cors({
     origin: env.CLIENT_URL,
     credentials: true,

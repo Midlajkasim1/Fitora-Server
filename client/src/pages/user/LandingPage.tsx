@@ -6,9 +6,11 @@ import {
     PlayCircleIcon, StarIcon,
     UtensilsIcon
 } from 'lucide-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Footer } from '../../layout/Footer';
 import { Header } from '../../layout/Header';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/use-auth-store';
 
 const LandingPage: React.FC = () => {
   const problems = [
@@ -16,7 +18,14 @@ const LandingPage: React.FC = () => {
     { icon: UtensilsIcon, title: 'Confusing Diet Plans', description: 'Overwhelmed by conflicting nutrition information and calorie counting.' },
     { icon: FileTextIcon, title: 'Generic Advice', description: 'Following cookie-cutter programs that ignore your unique physiology and goals.' },
   ];
+const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuthStore();
 
+  useEffect(() => {
+    if (isAuthenticated && !user?.isOnboardingRequired) {
+      navigate('/home', { replace: true });
+    }
+  }, [isAuthenticated, user, navigate]);
   const coachFeatures = [
     'Dynamic workout adjustments', 'Real-time form correction', 'Nutrition integration', 'Sleep & recovery analysis',
   ];

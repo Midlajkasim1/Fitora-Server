@@ -11,6 +11,7 @@ export const userControllers = {
     useCases.forgotPasswordUseCase, 
     useCases.verifyResetOtpUseCase, 
     useCases.resetPasswordUseCase,
-    useCases.refreshTokenUseCase
+    useCases.refreshTokenUseCase,
+    useCases.getMeUseCase
   ),
 };

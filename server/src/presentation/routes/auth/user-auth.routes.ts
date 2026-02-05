@@ -1,4 +1,5 @@
 import { userControllers } from "@/infrastructure/di/user/user.controllers";
+import { authenticate } from "@/presentation/middleware/auth.middleware";
 import { Request, Response, Router } from "express";
 
 const router = Router();
@@ -30,6 +31,12 @@ router.post("/verify-reset-otp", (req: Request, res: Response) => {
 router.post("/reset-password", (req: Request, res: Response) => {
   userControllers.authController.resetPassword(req, res);
 });
+router.get("/me", authenticate, (req:Request, res:Response) => 
+  userControllers.authController.getMe(req, res)
+);
+router.post("/logout", authenticate, (req, res) => 
+  userControllers.authController.logout(req, res)
+);
 
 export default router;
 

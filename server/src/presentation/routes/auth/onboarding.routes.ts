@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { onboardingControllers } from "@/infrastructure/di/user/onboarding/onboarding.controller";
 import multer from "multer";
 import { authenticate } from "@/presentation/middleware/auth.middleware";
@@ -11,9 +11,9 @@ const upload = multer({ storage: multer.memoryStorage() });
 router.post(
   "/trainer/complete", 
   upload.array("certificates"),authenticate, 
-  (req, res) => controller.completeTrainer(req, res)
+  (req:Request, res:Response) => controller.completeTrainer(req, res)
 );
 
-router.post("/user/complete", authenticate,(req, res) => controller.completeUser(req, res));
+router.post("/user/complete", authenticate,(req:Request, res:Response) => controller.completeUser(req, res));
 
 export default router;

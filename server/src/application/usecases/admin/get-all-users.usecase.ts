@@ -1,0 +1,39 @@
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { GetUsersRequestDTO } from "@/application/dto/admin/request/get-users.dto";
+import { GetUsersResponseDTO } from "@/application/dto/admin/response/get-users.dto";
+import { UserManagementDTO } from "@/application/dto/admin/response/user-management.dto";
+import { UserEntity } from "@/domain/entities/user/user.entity";
+import { UserRole } from "@/domain/constants/auth.constants";
+import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+
+export class GetAllUsersUseCase implements IBaseUseCase<GetUsersRequestDTO, GetUsersResponseDTO> {
+  constructor(private readonly _userRepository: IUserRepository) {}
+
+  async execute(dto: GetUsersRequestDTO): Promise<GetUsersResponseDTO> {
+
+    const { users, total } = await this._userRepository.findAll({
+      ...dto,
+      role:UserRole.USER
+    });
+
+    const userListItems: UserManagementDTO[] = users.map((user: UserEntity) => {
+      if (!user.id) throw new Error(AUTH_MESSAGES.ENTITY_ID_MISSING);
+
+      return {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        profileImage: user.profileImage,
+        status: user.status,
+        createdAt: user.createdAt|| new Date(), 
+      };
+    });
+
+    return {
+      users: userListItems,
+      total
+    };
+  }
+}

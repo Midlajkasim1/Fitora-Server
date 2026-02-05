@@ -13,6 +13,7 @@ import { ForgotPasswordUseCase } from "@/application/usecases/auth/forgot-passwo
 import { ResetPasswordUseCase } from "@/application/usecases/auth/reset-password.usecase";
 import { VerifyResetOtpUseCase } from "@/application/usecases/auth/verify-reset-otp.usecase";
 import { RefreshTokenUseCase } from "@/application/usecases/auth/refresh-token.usecase";
+import { GetMeUseCase } from "@/application/usecases/auth/get-me.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -43,11 +44,13 @@ export const useCases = {
   ,
   loginUseCase: new LoginUseCase(
     userRepositories.userRepository,
+    userRepositories.trainerRepository,
     passwordHasher,
     tokenService
   ),
   googleAuthUseCase: new GoogleAuthUseCase(
     userRepositories.userRepository,
+    userRepositories.trainerRepository,
     tokenService,
     googleTokenProvider
   ),
@@ -66,6 +69,9 @@ export const useCases = {
     userRepositories.userRepository,
     passwordHasher,
     otpStore
+  ),
+  getMeUseCase: new GetMeUseCase(
+    userRepositories.userRepository
   )
 };
 

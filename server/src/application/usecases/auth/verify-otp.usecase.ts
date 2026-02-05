@@ -2,6 +2,7 @@ import { OtpSessionDTO } from "@/application/dto/auth/request/otp-session.dto";
 import { VerifyOtpDTO } from "@/application/dto/auth/request/verify-otp.dto";
 import { VerifyOtpResponseDTO } from "@/application/dto/auth/response/verify-otp.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
@@ -9,24 +10,24 @@ import { ITokenService } from "@/domain/interfaces/token.interface";
 
 export class VerifyOtpUseCase implements IBaseUseCase<VerifyOtpDTO,VerifyOtpResponseDTO> {
   constructor(
-    private readonly otpStore: IOtpStore,
-    private readonly userRepository: IUserRepository,
-    private readonly tokenService: ITokenService
+    private readonly _otpStore: IOtpStore,
+    private readonly _userRepository: IUserRepository,
+    private readonly _tokenService: ITokenService
   ) {}
 
   async execute(dto:VerifyOtpDTO):Promise<VerifyOtpResponseDTO> {
     const redisKey = `otp:register:${dto.email}`;
 
-    const stored = await this.otpStore.get<OtpSessionDTO>(redisKey);
+    const stored = await this._otpStore.get<OtpSessionDTO>(redisKey);
     if (!stored) {
-      throw new Error("OTP expired or invalid");
+      throw new Error(AUTH_MESSAGES.OTPS_EXPIRED);
     }
     if (!stored.email || !stored.role) {
-      throw new Error("Invalid registration session. Please sign up again.");
+      throw new Error(AUTH_MESSAGES.SIGNUP_INVALID);
     }
 
     if (stored.otp !==dto.otp) {
-      throw new Error("Invalid OTP");
+      throw new Error(AUTH_MESSAGES.OTP_INVALID);
     }
 
  const userEntity = UserEntity.create({
@@ -38,22 +39,23 @@ export class VerifyOtpUseCase implements IBaseUseCase<VerifyOtpDTO,VerifyOtpResp
       isEmailVerified: true,
     });
 
-  const createdUser = await this.userRepository.create(userEntity, stored.password);
+  const createdUser = await this._userRepository.create(userEntity, stored.password);
 
-    const accessToken = this.tokenService.generateAccessToken({ 
+    const accessToken = this._tokenService.generateAccessToken({ 
       userId: createdUser.id!, 
       email: createdUser.email, 
       role: createdUser.role 
     });
-    const refreshToken = this.tokenService.generateRefreshToken({ userId: createdUser.id! });
+    const refreshToken = this._tokenService.generateRefreshToken({ userId: createdUser.id! });
 
-    await this.otpStore.delete(redisKey);
+    await this._otpStore.delete(redisKey);
 
     return {
-      message: "Account verified successfully",
+      message: AUTH_MESSAGES.VERIFICATION_SUCCESS,
       accessToken,
       refreshToken,
       user: {
+        id:createdUser.id!,
         email: createdUser.email,
         role: createdUser.role,
         isOnboardingRequired: true 

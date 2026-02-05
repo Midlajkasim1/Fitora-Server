@@ -1,4 +1,4 @@
-import { UserRole } from "@/domain/constants/auth.constants";
+import { AdminRole, UserRole } from "@/domain/constants/auth.constants";
 
 declare global {
   namespace Express {
@@ -7,7 +7,7 @@ declare global {
       user?: {
         userId: string;
         email: string;
-        role: UserRole;
+        role: UserRole | AdminRole;
       };
     }
   }

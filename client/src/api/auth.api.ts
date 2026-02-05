@@ -39,3 +39,10 @@ export const resetPassword = (data: ResetPasswordPayload) => {
 export const loginUser = (data: LoginPayload) => {
   return api.post('/auth/login', data);
 };
+
+export const getMe= ()=>{
+  return api.get('/auth/me')
+}
+export const logoutUser = () => {
+  return api.post("/auth/logout");
+};

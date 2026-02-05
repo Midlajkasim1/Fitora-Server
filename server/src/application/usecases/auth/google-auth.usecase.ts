@@ -1,23 +1,25 @@
 import { GoogleDTO } from "@/application/dto/auth/request/google.dto";
 import { GoogleLoginResponseDTO } from "@/application/dto/auth/response/google-login.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { AuthProvider } from "@/domain/constants/auth.constants"; //
+import { AuthProvider, UserRole } from "@/domain/constants/auth.constants"; //
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IGoogleTokenProvider } from "@/domain/interfaces/google-token.interface";
+import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { ITokenService } from "@/domain/interfaces/token.interface";
 
-export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginResponseDTO>{
+export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginResponseDTO> {
   constructor(
-    private readonly userRepository: IUserRepository,
-    private readonly tokenService: ITokenService,
-    private readonly googleTokenProvider: IGoogleTokenProvider
-  ) {}
+    private readonly _userRepository: IUserRepository,
+    private readonly _trainerRepository: ITrainerRepository,
+    private readonly _tokenService: ITokenService,
+    private readonly _googleTokenProvider: IGoogleTokenProvider
+  ) { }
 
   async execute(dto: GoogleDTO): Promise<GoogleLoginResponseDTO> {
-    const googleUser = await this.googleTokenProvider.verifyIdToken(dto.idToken);
+    const googleUser = await this._googleTokenProvider.verifyIdToken(dto.idToken);
 
-    let user = await this.userRepository.findEntityByEmail(googleUser.email);
+    let user = await this._userRepository.findEntityByEmail(googleUser.email);
 
     if (!user) {
       const newUser = UserEntity.create({
@@ -25,27 +27,38 @@ export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginRes
         firstName: googleUser.firstName,
         lastName: googleUser.lastName,
         phone: "",
-        role: dto.role, 
+        role: dto.role,
         isEmailVerified: true,
       });
 
-      user = await this.userRepository.create(newUser, "", {
-        authProvider: AuthProvider.GOOGLE, 
+      user = await this._userRepository.create(newUser, "", {
+        authProvider: AuthProvider.GOOGLE,
         googleId: googleUser.googleId,
       });
     }
-
-    return {
-      accessToken: this.tokenService.generateAccessToken({
+    let approvalStatus;
+    if (user.role === UserRole.TRAINER) {
+      const trainer = await this._trainerRepository.findByUserId(user.id!);
+      approvalStatus = trainer?.approvalStatus;
+    }
+    const onboardingRequired = user.isOnboardingRequired; return {
+      accessToken: this._tokenService.generateAccessToken({
         userId: user.id!,
         email: user.email,
         role: user.role,
       }),
-      refreshToken: this.tokenService.generateRefreshToken({
+      refreshToken: this._tokenService.generateRefreshToken({
         userId: user.id!,
       }),
       role: user.role,
-      isOnboardingRequired: !user.phone || user.phone === "", 
+      isOnboardingRequired: onboardingRequired,
+      user: {
+        id: user.id!,
+        email: user.email,
+        role: user.role,
+        isOnboardingRequired: onboardingRequired,
+        approval_status: approvalStatus,
+      }
     };
   }
 }

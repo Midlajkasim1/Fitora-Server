@@ -1,3 +1,4 @@
+import { ApprovalStatus } from "@/domain/enum/user/trainer-details.enum";
 import { UserRole, UserStatus } from "../../constants/auth.constants";
 
 
@@ -8,11 +9,14 @@ export class UserEntity {
   private readonly _lastName: string;
   private readonly _phone: string;
   private readonly _role: UserRole;
-  private readonly _status: UserStatus;
+  private          _status: UserStatus;
+  private readonly _profileImage?: string;
   private readonly _isEmailVerified: boolean;
   private readonly _dob?: Date;
   private readonly _gender?: string;
   private readonly _isOnboardingRequired: boolean;
+  private          _approvalStatus: ApprovalStatus;
+  private _createdAt ?: Date;
 
   private constructor(props: {
     id?: string;
@@ -22,10 +26,13 @@ export class UserEntity {
     phone: string;
     role: UserRole;
     status: UserStatus;
+    profileImage?:string;
     isEmailVerified: boolean;
     dob?: Date;               
     gender?: string;          
     isOnboardingRequired: boolean; 
+    approvalStatus: ApprovalStatus;
+    createdAt?:Date;
 
   }) {
     this._id = props.id;
@@ -35,10 +42,13 @@ export class UserEntity {
     this._phone = props.phone;
     this._role = props.role;
     this._status = props.status;
+    this._profileImage = props.profileImage;
     this._isEmailVerified = props.isEmailVerified;
     this._dob = props.dob;
     this._gender = props.gender;
     this._isOnboardingRequired = props.isOnboardingRequired;
+    this._approvalStatus = props.approvalStatus;
+    this._createdAt = props.createdAt || new Date();
     
   }
 
@@ -49,11 +59,14 @@ export class UserEntity {
     lastName: string;
     phone: string;
     role: UserRole;
+    profileImage?:string;
     status?: UserStatus;
     isEmailVerified?: boolean;
     dob?: Date;
     gender?: string;
     isOnboardingRequired?: boolean;
+    approvalStatus?: ApprovalStatus;
+    createdAt?:Date;
 
   }): UserEntity {
     return new UserEntity({
@@ -61,6 +74,7 @@ export class UserEntity {
       status: props.status ?? UserStatus.ACTIVE,
       isEmailVerified: props.isEmailVerified ?? false,
       isOnboardingRequired: props.isOnboardingRequired ?? true,
+      approvalStatus: props.approvalStatus ?? ApprovalStatus.PENDING,
     });
   }
 
@@ -71,16 +85,24 @@ export class UserEntity {
   get phone() { return this._phone; }
   get role() { return this._role; }
   get status() { return this._status; }
+  get profileImage() { return this._profileImage; }
   get isEmailVerified() { return this._isEmailVerified; }
   get dob() { return this._dob; }
   get gender() { return this._gender; }
   get isOnboardingRequired() { return this._isOnboardingRequired; }
+  get approvalStatus() { return this._approvalStatus; }
+  get createdAt() {return this._createdAt;}
 
   isActive(): boolean {
     return this._status === UserStatus.ACTIVE;
   }
   isverfied(): boolean {
     return this._isEmailVerified;
+  }
+  toggleStatus(): void {
+    this._status = this._status === UserStatus.ACTIVE 
+      ? UserStatus.BLOCKED 
+      : UserStatus.ACTIVE;
   }
 
 

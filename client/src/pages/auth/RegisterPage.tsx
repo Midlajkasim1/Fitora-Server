@@ -3,9 +3,9 @@ import { UserIcon } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RegisterForm } from '../../components/auth/RegisterForm';
+import { useAuth } from '../../hooks/user/use-auth';
 import { Footer } from '../../layout/Footer';
 import { Header } from '../../layout/Header';
-import { useAuth } from '../../hooks/use-auth'; 
 import type { RegisterPayload } from '../../type/auth.types';
 
 const RegisterPage: React.FC = () => {

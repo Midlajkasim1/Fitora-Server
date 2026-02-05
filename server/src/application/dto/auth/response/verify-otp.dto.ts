@@ -5,6 +5,7 @@ message: string;
   accessToken: string;
   refreshToken: string;
   user: {
+    id:string;
     email: string;
     role: UserRole;
     isOnboardingRequired: boolean;
