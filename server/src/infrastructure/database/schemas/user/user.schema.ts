@@ -1,5 +1,6 @@
 import { Schema } from "mongoose";
 import { IUserDocument } from "../../interfaces/user-document.interface";
+import { UserRole, UserStatus } from "@/domain/constants/auth.constants";
 
 export const UserSchema = new Schema(
   {
@@ -46,16 +47,16 @@ export const UserSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["user", "trainer"],
+      enum: [UserRole.USER, UserRole.TRAINER],
       required: true,
       default: "user",
     },
 
-    status: {
-      type: String,
-      enum: ["active", "blocked"],
-      default: "active",
-    },
+   status: {
+  type: String,
+  enum: Object.values(UserStatus),
+  default: UserStatus.ACTIVE
+},
 
     isEmailVerified: {
       type: Boolean,

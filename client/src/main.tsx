@@ -1,4 +1,4 @@
-import { StrictMode } from 'react';
+// import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { QueryProvider } from './providers/query-provider'; 
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -8,7 +8,7 @@ import { AuthProvider } from './providers/AuthProvider';
 import { ToastProvider } from './providers/ToastProvider';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  // <StrictMode>
     <QueryProvider> 
       <AuthProvider>
         <ToastProvider/>
@@ -17,5 +17,5 @@ createRoot(document.getElementById('root')!).render(
       </GoogleOAuthProvider>
       </AuthProvider>
     </QueryProvider>
-  </StrictMode>
+  /* </StrictMode> */
 );

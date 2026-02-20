@@ -7,6 +7,7 @@ export class AdminMapper {
       id: doc._id.toString(),
       email: doc.email,
       status: doc.status,
+      role:doc.role
     });
   }
 }

@@ -3,10 +3,10 @@ import { GoogleLoginResponseDTO } from "@/application/dto/auth/response/google-l
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AuthProvider, UserRole } from "@/domain/constants/auth.constants"; //
 import { UserEntity } from "@/domain/entities/user/user.entity";
-import { IGoogleTokenProvider } from "@/domain/interfaces/google-token.interface";
 import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import { ITokenService } from "@/domain/interfaces/token.interface";
+import { IGoogleTokenProvider } from "@/domain/interfaces/services/google-token.interface";
+import { ITokenService } from "@/domain/interfaces/services/token.interface";
 
 export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginResponseDTO> {
   constructor(

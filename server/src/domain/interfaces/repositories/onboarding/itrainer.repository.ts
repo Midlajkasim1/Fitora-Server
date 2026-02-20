@@ -6,4 +6,6 @@ export interface ITrainerRepository extends IBaseRepository<TrainerDetailsEntity
   save(details: TrainerDetailsEntity): Promise<void>;
 
   findByUserId(userId: string): Promise<TrainerDetailsEntity | null>;
+  findById(id:string):Promise<TrainerDetailsEntity | null>;
+  
 }

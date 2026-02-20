@@ -44,8 +44,7 @@ export default function AppRoutes() {
     >
       <Routes>
         {/* public routs */}
-        <Route path="/" element={<LandingPage />} />
-
+       <Route  path="/"  element={ <GuestGuard><LandingPage /></GuestGuard>} />
         {/* guest routes */}
         <Route path="/login" element={<GuestGuard><LoginPage /></GuestGuard>} />
         <Route path="/register" element={<GuestGuard><RegisterPage /></GuestGuard>} />

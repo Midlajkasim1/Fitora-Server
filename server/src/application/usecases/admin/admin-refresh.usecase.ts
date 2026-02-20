@@ -1,19 +1,19 @@
-import { IAdminRepository } from "@/domain/interfaces/repositories/admin.repository";
-import { ITokenService } from "@/domain/interfaces/token.interface";
+import { RefreshTokenRequestDTO } from "@/application/dto/auth/request/refresh-token.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { AdminRefreshResponseDTO } from "../../dto/admin/response/admin-refresh.dto";
 import { AdminRole } from "@/domain/constants/auth.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { IAdminRepository } from "@/domain/interfaces/repositories/admin.repository";
+import { ITokenService } from "@/domain/interfaces/services/token.interface";
+import { AdminRefreshResponseDTO } from "../../dto/admin/response/admin-refresh.dto";
 
-export class AdminRefreshUseCase implements IBaseUseCase<string, AdminRefreshResponseDTO> {
+export class AdminRefreshUseCase implements IBaseUseCase<RefreshTokenRequestDTO, AdminRefreshResponseDTO> {
   constructor(
     private readonly _adminRepository: IAdminRepository,
     private readonly _tokenService: ITokenService
   ) {}
 
-  async execute(refreshToken: string): Promise<AdminRefreshResponseDTO> {
-    const decoded = this._tokenService.verifyRefreshToken(refreshToken);
-
+  async execute(dto:RefreshTokenRequestDTO): Promise<AdminRefreshResponseDTO> {
+    const decoded = this._tokenService.verifyRefreshToken(dto.refreshToken);
     const admin = await this._adminRepository.findById(decoded.userId);
     if (!admin || !admin.isActive()) {
       throw new Error(AUTH_MESSAGES.SESSION_INVALID);

@@ -4,6 +4,6 @@ import { ClientPreferenceSchema } from "../schemas/user/client-preference.schema
 
 export const ClientPreferenceModel = model<IClientPreferenceDocument>(
   "ClientPreference", 
-  ClientPreferenceSchema, 
+  ClientPreferenceSchema,
   "client_preferences"
 );

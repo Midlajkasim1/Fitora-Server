@@ -8,9 +8,15 @@ import { GetAllTrainersUseCase } from "@/application/usecases/admin/get-all-trai
 import { TrainerBlockUseCase } from "@/application/usecases/admin/trainer-block.usecase";
 import { AdminRefreshUseCase } from "@/application/usecases/admin/admin-refresh.usecase";
 import { GetAdminMeUseCase } from "@/application/usecases/admin/get-admin-me.usecase";
+import { CreateSpecializationUseCase } from "@/application/usecases/admin/create-specialization.usecase";
+import { S3StorageProvider } from "@/infrastructure/providers/storage/s3-storage.provider";
+import { UpdateSpecializationUsecase } from "@/application/usecases/admin/update-specialization.usecase";
+import { AllUserCount } from "@/application/usecases/auth/AllcountUser.usecase";
 
 const tokenService = new JwtTokenService();
 const passwordHasher = new BcryptPasswordHasher();
+const storageProvider = new S3StorageProvider();
+
 
 export const adminUseCases = {
   adminLoginUseCase: new AdminLoginUseCase(
@@ -36,5 +42,18 @@ export const adminUseCases = {
   ),
   getAdminMeUseCase: new GetAdminMeUseCase(
     adminRepositories.adminRepository
+  ),
+  createSpecialisationUseCase: new CreateSpecializationUseCase(
+    adminRepositories.specialisatonRepository,
+    storageProvider
+
+  ),
+  updateSpecialisationUseCase: new UpdateSpecializationUsecase(
+    adminRepositories.specialisatonRepository,
+    storageProvider
+  ),
+  getCountUserUseCase : new AllUserCount(
+    adminRepositories.userRepository
   )
+
 };

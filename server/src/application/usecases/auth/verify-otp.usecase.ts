@@ -4,9 +4,9 @@ import { VerifyOtpResponseDTO } from "@/application/dto/auth/response/verify-otp
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { UserEntity } from "@/domain/entities/user/user.entity";
-import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import { ITokenService } from "@/domain/interfaces/token.interface";
+import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
+import { ITokenService } from "@/domain/interfaces/services/token.interface";
 
 export class VerifyOtpUseCase implements IBaseUseCase<VerifyOtpDTO,VerifyOtpResponseDTO> {
   constructor(

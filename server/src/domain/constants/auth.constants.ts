@@ -41,3 +41,8 @@ export enum DietPreference {
 export enum AdminRole {
   ADMIN = "admin"
 }
+
+export enum SpecializationStatus{
+  ACTIVE = "active",
+  BLOCKED ="blocked"
+}

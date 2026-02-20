@@ -1,7 +1,7 @@
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { GetMeResponseDTO } from "@/application/dto/auth/response/get-me.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 
 export class GetMeUseCase implements IBaseUseCase<string, GetMeResponseDTO> {
   constructor(private readonly _userRepository: IUserRepository) {}

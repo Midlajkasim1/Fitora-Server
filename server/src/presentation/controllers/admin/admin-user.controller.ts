@@ -1,15 +1,16 @@
 import { Request, Response } from "express";
-import { GetAllUsersUseCase } from "@/application/usecases/admin/get-all-users.usecase";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { GetUsersRequestDTO } from "@/application/dto/admin/request/get-users.dto";
 import { BlockUserRequestDTO } from "@/application/dto/admin/request/block-user.dto";
-import { UserBlockUsecase } from "@/application/usecases/admin/user-block.usecase";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { GetUsersResponseDTO } from "@/application/dto/admin/response/get-users.dto";
+import { BlockUserResponseDTO } from "@/application/dto/admin/response/block-user.dto";
 
 export class AdminUserController {
   constructor(
-    private readonly _getAllUsersUseCase: GetAllUsersUseCase,
-    private readonly _userBlockUsecase: UserBlockUsecase,
+    private readonly _getAllUsersUseCase: IBaseUseCase<GetUsersRequestDTO,GetUsersResponseDTO>,
+    private readonly _userBlockUsecase: IBaseUseCase<BlockUserRequestDTO,BlockUserResponseDTO>,
   ) { }
 
   async getUsers(req: Request, res: Response): Promise<Response> {

@@ -1,0 +1,34 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+
+    {
+      "name": "Debug Backend (SWC)",
+      "type": "node",
+      "request": "launch",
+
+      "runtimeArgs": [
+        "-r",
+        "@swc-node/register"
+      ],
+
+      "program": "${workspaceFolder}/server/src/presentation/express/setting/index.ts",
+
+      "cwd": "${workspaceFolder}/server",
+
+      "console": "integratedTerminal",
+
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Debug Frontend (React)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/client/src",
+      "sourceMaps": true,
+      "skipFiles": ["<node_internals>/**"]
+    }
+
+  ]
+}

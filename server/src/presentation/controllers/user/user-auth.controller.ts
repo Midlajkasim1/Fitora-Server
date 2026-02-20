@@ -1,13 +1,23 @@
-import { ForgotPasswordUseCase } from "@/application/usecases/auth/forgot-password.usecase";
-import { GetMeUseCase } from "@/application/usecases/auth/get-me.usecase";
-import { GoogleAuthUseCase } from "@/application/usecases/auth/google-auth.usecase";
-import { LoginUseCase } from "@/application/usecases/auth/login.usecase";
-import { RefreshTokenUseCase } from "@/application/usecases/auth/refresh-token.usecase";
-import { RegisterUseCase } from "@/application/usecases/auth/register.usecase";
-import { ResendOtpUseCase } from "@/application/usecases/auth/resend-otp.usecase";
-import { ResetPasswordUseCase } from "@/application/usecases/auth/reset-password.usecase";
-import { VerifyOtpUseCase } from "@/application/usecases/auth/verify-otp.usecase";
-import { VerifyResetOtpUseCase } from "@/application/usecases/auth/verify-reset-otp.usecase";
+import { ForgotPasswordRequestDTO } from "@/application/dto/auth/request/forgot-password.dto";
+import { GoogleDTO } from "@/application/dto/auth/request/google.dto";
+import { LoginDTO } from "@/application/dto/auth/request/login.dto";
+import { RefreshTokenRequestDTO } from "@/application/dto/auth/request/refresh-token.dto";
+import { RegisterDTO } from "@/application/dto/auth/request/register.dto";
+import { ResendOtpDTO } from "@/application/dto/auth/request/resend-otp.dto";
+import { ResetPasswordDTO } from "@/application/dto/auth/request/reset-password.dto";
+import { VerifyOtpDTO } from "@/application/dto/auth/request/verify-otp.dto";
+import { VerifyResetOtpDTO } from "@/application/dto/auth/request/verify-reset-otp.dto";
+import { ForgotPasswordResponseDTO } from "@/application/dto/auth/response/forgot-password.dto";
+import { GetMeResponseDTO } from "@/application/dto/auth/response/get-me.dto";
+import { GoogleLoginResponseDTO } from "@/application/dto/auth/response/google-login.dto";
+import { LoginResponseDTO } from "@/application/dto/auth/response/login.dto";
+import { RefreshTokenResponseDTO } from "@/application/dto/auth/response/refresh-token.dto";
+import { RegisterResponseDTO } from "@/application/dto/auth/response/register.dto";
+import { ResendOtpResponseDTO } from "@/application/dto/auth/response/resend-otp.dto";
+import { ResetPasswordResponseDTO } from "@/application/dto/auth/response/reset-password.dto";
+import { VerifyOtpResponseDTO } from "@/application/dto/auth/response/verify-otp.dto";
+import { VerifyResetOtpResponseDTO } from "@/application/dto/auth/response/verify-reset-otp.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { CookieManager } from "@/infrastructure/security/cookie-manager";
@@ -23,16 +33,16 @@ import { Request, Response } from "express";
 
 export class AuthController {
   constructor(
-    private readonly _registerUseCase: RegisterUseCase,
-    private readonly _verifyOtpUseCase: VerifyOtpUseCase,
-    private readonly resendOtpUseCase: ResendOtpUseCase,
-    private readonly _loginUseCase: LoginUseCase,
-    private readonly _googleAuthUseCase: GoogleAuthUseCase,
-    private readonly _forgotPasswordUseCase: ForgotPasswordUseCase,
-    private readonly _verifyResetOtpUseCase: VerifyResetOtpUseCase,
-    private readonly _resetPasswordUseCase: ResetPasswordUseCase,
-    private readonly _refreshTokenUseCase: RefreshTokenUseCase,
-    private readonly _getMeUseCase: GetMeUseCase
+    private readonly _registerUseCase: IBaseUseCase<RegisterDTO,RegisterResponseDTO>,
+    private readonly _verifyOtpUseCase: IBaseUseCase<VerifyOtpDTO,VerifyOtpResponseDTO>,
+    private readonly resendOtpUseCase: IBaseUseCase<ResendOtpDTO,ResendOtpResponseDTO>,
+    private readonly _loginUseCase: IBaseUseCase<LoginDTO,LoginResponseDTO>,
+    private readonly _googleAuthUseCase: IBaseUseCase<GoogleDTO,GoogleLoginResponseDTO>,
+    private readonly _forgotPasswordUseCase: IBaseUseCase<ForgotPasswordRequestDTO,ForgotPasswordResponseDTO>,
+    private readonly _verifyResetOtpUseCase: IBaseUseCase<VerifyResetOtpDTO,VerifyResetOtpResponseDTO>,
+    private readonly _resetPasswordUseCase: IBaseUseCase<ResetPasswordDTO,ResetPasswordResponseDTO>,
+    private readonly _refreshTokenUseCase: IBaseUseCase<RefreshTokenRequestDTO,RefreshTokenResponseDTO>,
+    private readonly _getMeUseCase: IBaseUseCase<string,GetMeResponseDTO>
   ) { }
 
 
@@ -85,9 +95,7 @@ export class AuthController {
     try {
       const token = req.cookies.refreshToken;
       if (!token) throw new Error(AUTH_MESSAGES.REFRESH_TOKEN_MISSING);
-
       const result = await this._refreshTokenUseCase.execute({ refreshToken: token });
-
       CookieManager.setAccessCookie(res, result.accessToken);
       return res.status(HttpStatus.OK).json({
         success: true,
@@ -134,7 +142,7 @@ export class AuthController {
           id: result.userId, 
           email: dto.email,
           role: result.role,
-          isOnboardingRequired: result.isOnboardingRequired,
+          iOnboardingRequired: result.isOnboardingRequired,
           approval_status: result.approval_status
 
         }

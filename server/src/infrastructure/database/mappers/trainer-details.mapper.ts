@@ -2,9 +2,10 @@ import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.ent
 import { ITrainerDetailsDocument } from "../interfaces/trainer-details-document.interface";
 import { Types } from "mongoose";
 import { ApprovalStatus } from "@/domain/enum/user/trainer-details.enum";
+import { IMapper } from "@/domain/interfaces/services/mapper.interface";
 
-export class TrainerDetailsMapper {
-  static toEntity(doc: ITrainerDetailsDocument): TrainerDetailsEntity {
+export class TrainerDetailsMapper implements IMapper<TrainerDetailsEntity,ITrainerDetailsDocument> {
+   toEntity(doc: ITrainerDetailsDocument): TrainerDetailsEntity {
     return new TrainerDetailsEntity({
       id: doc._id.toString(),
       userId: doc.user_id.toString(),
@@ -16,7 +17,7 @@ export class TrainerDetailsMapper {
     });
   }
 
-  static toMongo(entity: TrainerDetailsEntity): Partial<ITrainerDetailsDocument> {
+   toMongo(entity: TrainerDetailsEntity): Partial<ITrainerDetailsDocument> {
     return {
       user_id: new Types.ObjectId(entity.userId),
       bio: entity.bio,

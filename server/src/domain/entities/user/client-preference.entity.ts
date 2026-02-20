@@ -22,7 +22,7 @@ private readonly _id?: string;
     dietPreference: DietPreference;
     medicalConditions: string[];
   }) {
- this._id = props.id;
+    this._id = props.id;
     this._userId = props.userId;
     this._sleepHours = props.sleepHours;
     this._waterIntake = props.waterIntake;

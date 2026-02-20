@@ -5,8 +5,9 @@ import { ClientPreferenceMapper } from "../mappers/client-preference.mapper";
 import { Types } from "mongoose";
 
 export class ClientPreferenceRepository implements IClientPreferenceRepository {
+  constructor(private readonly clientPreferenceMapper: ClientPreferenceMapper) {}
   async save(prefs: ClientPreferenceEntity): Promise<void> {
-    const mongoData = ClientPreferenceMapper.toMongo(prefs);
+    const mongoData = this.clientPreferenceMapper.toMongo(prefs);
     
     await ClientPreferenceModel.findOneAndUpdate(
       { user_id: mongoData.user_id },
@@ -20,11 +21,11 @@ export class ClientPreferenceRepository implements IClientPreferenceRepository {
       user_id: new Types.ObjectId(userId) 
     }).lean();
 
-    return doc ? ClientPreferenceMapper.toEntity(doc) : null;
+    return doc ? this.clientPreferenceMapper.toEntity(doc) : null;
   }
 
   async findById(id: string): Promise<ClientPreferenceEntity | null> {
     const doc = await ClientPreferenceModel.findById(id).lean();
-    return doc ? ClientPreferenceMapper.toEntity(doc) : null;
+    return doc ? this.clientPreferenceMapper.toEntity(doc) : null;
   }
 }

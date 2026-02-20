@@ -4,7 +4,7 @@ import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { UserStatus } from "@/domain/constants/auth.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import { ITokenService } from "@/domain/interfaces/token.interface";
+import { ITokenService } from "@/domain/interfaces/services/token.interface";
 
 export class RefreshTokenUseCase implements IBaseUseCase<RefreshTokenRequestDTO,RefreshTokenResponseDTO> {
   constructor(

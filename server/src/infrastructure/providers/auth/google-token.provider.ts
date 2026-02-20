@@ -1,7 +1,7 @@
 import { env } from "@/infrastructure/config/env.config";
 
+import { IGoogleTokenProvider } from "@/domain/interfaces/services/google-token.interface";
 import { OAuth2Client } from "google-auth-library";
-import { IGoogleTokenProvider } from "@/domain/interfaces/google-token.interface";
 import { logger } from "../loggers/logger";
 
 export class GoogleTokenProvider implements IGoogleTokenProvider {

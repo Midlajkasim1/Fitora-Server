@@ -1,17 +1,18 @@
+import { UserRole, UserStatus } from "@/domain/constants/auth.constants";
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IUserRepository, UserWithPassword } from "@/domain/interfaces/repositories/user.repository";
 import { IUserDocument } from "../interfaces/user-document.interface";
 import { UserMapper } from "../mappers/user.mapper";
 import { UserModel } from "../models/user.models";
-import { UserRole, UserStatus } from "@/domain/constants/auth.constants";
 
 export class UserRepository implements IUserRepository {
+
   constructor(private readonly userMapper: UserMapper) {}
 
   async create(user: UserEntity, hashedPassword: string, options?: Record<string,unknown>): Promise<UserEntity> {
     const data = this.userMapper.toMongo(user, hashedPassword, options);
     const doc = await UserModel.create(data);
-    return this.userMapper.toEntity(doc as unknown as IUserDocument);
+    return this.userMapper.toEntity(doc as IUserDocument);
   }
 
   async findByEmail(email: string): Promise<UserWithPassword | null> {
@@ -34,7 +35,7 @@ export class UserRepository implements IUserRepository {
     return doc ? this.userMapper.toEntity(doc as unknown as IUserDocument) : null;
   }
   async updatePassword(id: string, passwordHash: string): Promise<void> {
-  await UserModel.findByIdAndUpdate(id, { password: passwordHash });
+  await UserModel.findByIdAndUpdate(id, {$set:{password:passwordHash}});
 }
 async completeOnboarding(userId: string, data: { 
     dob: Date; 
@@ -92,5 +93,12 @@ async updateStatus(id: string, status: UserStatus): Promise<void> {
       $set: { status: status } 
     }).exec();
   }
+async countAllUsers(): Promise<number> {
+  return await UserModel.countDocuments();
+  
+}
+
 
 }
+
+

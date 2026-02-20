@@ -1,7 +1,7 @@
-import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
-import { Upload } from "@aws-sdk/lib-storage";
-import { IStorageProvider } from "@/domain/interfaces/storage-provider.interface";
+import { IStorageProvider } from "@/domain/interfaces/services/storage-provider.interface";
 import { env } from "@/infrastructure/config/env.config";
+import { DeleteObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 
 
 export class S3StorageProvider implements IStorageProvider {

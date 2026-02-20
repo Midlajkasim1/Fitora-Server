@@ -1,4 +1,4 @@
-import { AdminStatus } from "@/domain/constants/auth.constants";
+import { AdminRole, AdminStatus } from "@/domain/constants/auth.constants";
 import { Types } from "mongoose";
 
 export interface IAdminDocument {
@@ -6,6 +6,7 @@ export interface IAdminDocument {
   email: string;
   password: string;
   status: AdminStatus;
+  role:AdminRole.ADMIN;
   createdAt: Date;
   updatedAt: Date;
 }

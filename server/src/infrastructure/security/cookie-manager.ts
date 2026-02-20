@@ -2,8 +2,8 @@ import { Response } from "express";
 import { env } from "../config/env.config";
 
 export class CookieManager {
-  private static readonly ACCESS_TOKEN_MAX_AGE = 15 * 60 * 1000;
-  private static readonly REFRESH_TOKEN_MAX_AGE = 7 * 24 * 60 * 60 * 1000;
+  private static readonly ACCESS_TOKEN_MAX_AGE=env.ACCESS_TOKEN_MAX_AGE;
+  private static readonly REFRESH_TOKEN_MAX_AGE = env.REFRESH_TOKEN_MAX_AGE;
 
   private static get defaultOptions() {
     return {

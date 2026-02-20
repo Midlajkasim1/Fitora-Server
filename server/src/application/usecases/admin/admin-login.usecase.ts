@@ -1,11 +1,11 @@
-import { IAdminRepository } from "@/domain/interfaces/repositories/admin.repository";
-import { IPasswordHasher } from "@/domain/interfaces/password.interface";
-import { ITokenService } from "@/domain/interfaces/token.interface";
 import { AdminLoginDTO } from "@/application/dto/admin/request/admin-login.dto";
 import { AdminLoginResponseDTO } from "@/application/dto/admin/response/admin-login.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AdminRole } from "@/domain/constants/auth.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { IAdminRepository } from "@/domain/interfaces/repositories/admin.repository";
+import { IPasswordHasher } from "@/domain/interfaces/services/password.interface";
+import { ITokenService } from "@/domain/interfaces/services/token.interface";
 
 export class AdminLoginUseCase implements IBaseUseCase<AdminLoginDTO,AdminLoginResponseDTO>{
   constructor(
@@ -36,6 +36,9 @@ export class AdminLoginUseCase implements IBaseUseCase<AdminLoginDTO,AdminLoginR
         userId: admin.id!,
         email: admin.email,
         role: AdminRole.ADMIN,
+      }),
+      refreshToken:this._tokenService.generateRefreshToken({
+        userId:admin.id!,
       }),
     };
   }

@@ -40,7 +40,7 @@ export default function AdminLoginPage() {
               <input
                 {...register("email")}
                 type="email"
-                value={"adminfitora@gmail.com"}
+      
                 placeholder="admin@fitness.com"
                 className="w-full bg-white/5 border border-white/10 rounded-xl p-4 text-white outline-none focus:border-[#00ff94]/50 focus:bg-white/[0.08] transition-all"
               />

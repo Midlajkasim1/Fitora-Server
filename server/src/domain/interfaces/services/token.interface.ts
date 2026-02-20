@@ -1,4 +1,4 @@
-import { AdminRole, UserRole } from "../constants/auth.constants";
+import { AdminRole,UserRole } from "@/domain/constants/auth.constants";
 
 export interface JwtPayload {
   userId: string;

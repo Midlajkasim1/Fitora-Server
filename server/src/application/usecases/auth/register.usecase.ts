@@ -1,13 +1,13 @@
-import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
-import { IEmailService } from "@/domain/interfaces/email-service.interface";
-import { randomInt } from "crypto";
-import { IPasswordHasher } from "@/domain/interfaces/password.interface";
-import { RegisterResponseDTO } from "@/application/dto/auth/response/register.dto";
 import { RegisterDTO } from "@/application/dto/auth/request/register.dto";
+import { RegisterResponseDTO } from "@/application/dto/auth/response/register.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { logger } from "@/infrastructure/providers/loggers/logger";
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { IEmailService } from "@/domain/interfaces/services/email-service.interface";
+import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
+import { IPasswordHasher } from "@/domain/interfaces/services/password.interface";
+import { logger } from "@/infrastructure/providers/loggers/logger";
+import { randomInt } from "crypto";
 export class RegisterUseCase implements IBaseUseCase<RegisterDTO, RegisterResponseDTO> {
   constructor(
     private readonly _userRepository: IUserRepository,
@@ -20,9 +20,10 @@ export class RegisterUseCase implements IBaseUseCase<RegisterDTO, RegisterRespon
 
    const existingUser = await this._userRepository.findByEmail(dto.email);
     if (existingUser) {
-
       throw new Error(AUTH_MESSAGES.EMAIL_ALREADY_EXISTS);
     }
+ 
+   
     const hashedPassword = await this._passwordHasher.hash(dto.password);
 
     const otp = randomInt(100000, 999999).toString();

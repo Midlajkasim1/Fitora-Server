@@ -1,12 +1,12 @@
-import { LoginResponseDTO } from "@/application/dto/auth/response/login.dto";
 import { LoginDTO } from "@/application/dto/auth/request/login.dto";
-import { IPasswordHasher } from "@/domain/interfaces/password.interface";
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import { ITokenService } from "@/domain/interfaces/token.interface";
+import { LoginResponseDTO } from "@/application/dto/auth/response/login.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
-import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { UserRole } from "@/domain/constants/auth.constants";
+import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
+import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { IPasswordHasher } from "@/domain/interfaces/services/password.interface";
+import { ITokenService } from "@/domain/interfaces/services/token.interface";
 
 export class LoginUseCase implements IBaseUseCase<LoginDTO, LoginResponseDTO>{
    constructor(

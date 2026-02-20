@@ -1,9 +1,10 @@
 import { ClientPreferenceEntity } from "@/domain/entities/user/client-preference.entity";
 import { IClientPreferenceDocument } from "../interfaces/client-preference-document.interface";
 import { Types } from "mongoose";
+import { IMapper } from "@/domain/interfaces/services/mapper.interface";
 
-export class ClientPreferenceMapper {
-  static toEntity(doc: IClientPreferenceDocument): ClientPreferenceEntity {
+export class ClientPreferenceMapper implements IMapper<ClientPreferenceEntity,IClientPreferenceDocument> {
+   toEntity(doc: IClientPreferenceDocument): ClientPreferenceEntity {
     return new ClientPreferenceEntity({
       id: doc._id.toString(),
       userId: doc.user_id.toString(),
@@ -17,7 +18,7 @@ export class ClientPreferenceMapper {
     });
   }
 
-  static toMongo(entity: ClientPreferenceEntity): Partial<IClientPreferenceDocument> {
+   toMongo(entity: ClientPreferenceEntity): Partial<IClientPreferenceDocument> {
     return {
       user_id: new Types.ObjectId(entity.userId),
       sleep_hours: entity.sleepHours,

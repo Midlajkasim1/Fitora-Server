@@ -6,9 +6,10 @@ import { TrainerDetailsMapper } from "../mappers/trainer-details.mapper";
 import { Types } from "mongoose";
 
 export class TrainerRepository implements ITrainerRepository {
+  constructor(private readonly trainerMapper:TrainerDetailsMapper){}
  
   async save(details: TrainerDetailsEntity): Promise<void> {
-    const mongoData = TrainerDetailsMapper.toMongo(details);
+    const mongoData = this.trainerMapper.toMongo(details);
 
     await TrainerDetailsModel.findOneAndUpdate(
       { user_id: mongoData.user_id },
@@ -23,11 +24,11 @@ export class TrainerRepository implements ITrainerRepository {
       user_id: new Types.ObjectId(userId) 
     }).lean();
 
-    return doc ? TrainerDetailsMapper.toEntity(doc) : null;
+    return doc ? this.trainerMapper.toEntity(doc) : null;
   }
 
   async findById(id: string): Promise<TrainerDetailsEntity | null> {
     const doc = await TrainerDetailsModel.findById(id).lean();
-    return doc ? TrainerDetailsMapper.toEntity(doc) : null;
+    return doc ? this.trainerMapper.toEntity(doc) : null;
   }
 }

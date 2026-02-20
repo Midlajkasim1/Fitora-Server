@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const syncAuth = async () => {
+      
       const publicPaths = ['/', '/login', '/register', '/admin-portal', '/verify-otp', '/forgot-password', '/reset-password', '/verify-reset-otp'];
       const currentPath = window.location.pathname;
       const isPublicPath = publicPaths.includes(currentPath);
@@ -21,10 +22,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         const isAdmin = currentPath.startsWith('/admin');
         const response = await (isAdmin ? getAdminMe() : getMe());
         
+        
         if (response.data?.data) {
           setAuth(response.data.data);
         }
       } catch (err: any) {
+       
         if (err.response?.status === 401) {
           logout();
         }

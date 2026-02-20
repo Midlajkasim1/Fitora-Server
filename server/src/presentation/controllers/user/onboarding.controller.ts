@@ -1,13 +1,15 @@
 import { Request, Response } from "express";
-import { CompleteUserOnboardingUseCase } from "@/application/usecases/auth/onboarding/complete-user-onboarding.usecase";
-import { CompleteTrainerOnboardingUseCase } from "@/application/usecases/auth/onboarding/complete-trainer-onboarding.usecase";
 import { userOnboardingSchema } from "@/infrastructure/validators/user/onboarding/user-onboarding.validator";
 import { trainerOnboardingSchema } from "@/infrastructure/validators/user/onboarding/trainer-onboarding";
 import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer-upload-file.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { UserOnboardingDTO } from "@/application/dto/auth/onboarding/request/user-onboarding.dto";
+import { OnboardingResponseDTO } from "@/application/dto/auth/onboarding/response/onboarding-success.dto";
+import { TrainerOnboardingDTO } from "@/application/dto/auth/onboarding/request/trainer-onboarding.dto";
 export class OnboardingController {
   constructor(
-    private readonly _userOnboardingUseCase: CompleteUserOnboardingUseCase,
-    private readonly _trainerOnboardingUseCase: CompleteTrainerOnboardingUseCase
+    private readonly _userOnboardingUseCase: IBaseUseCase<UserOnboardingDTO,OnboardingResponseDTO>,
+    private readonly _trainerOnboardingUseCase: IBaseUseCase<TrainerOnboardingDTO,OnboardingResponseDTO,UploadFileDTO[]>
   ) { }
 
 async completeUser(req: Request, res: Response): Promise<Response> {

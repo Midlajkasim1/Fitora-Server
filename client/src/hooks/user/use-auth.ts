@@ -1,4 +1,3 @@
-// src/hooks/use-auth.ts
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { 
@@ -32,6 +31,7 @@ export const useAuth = () => {
       handleAuthSuccess(res.data?.data?.user);
     }
   });
+    ;
 
   const googleMutation = useMutation({
     mutationFn: googleAuth,

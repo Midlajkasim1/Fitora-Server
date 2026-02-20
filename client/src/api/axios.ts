@@ -1,4 +1,3 @@
-// src/api/axios.ts
 import axios from "axios";
 import { useAuthStore } from "../store/use-auth-store";
 import toast from "react-hot-toast";
@@ -34,7 +33,6 @@ api.interceptors.response.use(
       try {
         const isAdmin = window.location.pathname.startsWith('/admin');
         const endpoint = isAdmin ? "/admin/refresh-token" : "/auth/refresh-token";
-        
         await axios.post(`${import.meta.env.VITE_API_URL}${endpoint}`, {}, { withCredentials: true });
         return api(originalRequest); 
       } catch (refreshErr) {

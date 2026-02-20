@@ -1,8 +1,8 @@
-import { BlockUserRequestDTO } from "../../dto/admin/request/block-user.dto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { BlockUserResponseDTO } from "@/application/dto/admin/response/block-user.dto";
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { BlockUserRequestDTO } from "../../dto/admin/request/block-user.dto";
 
 export class UserBlockUsecase implements IBaseUseCase<BlockUserRequestDTO, BlockUserResponseDTO> {
   constructor(private readonly _userRepository: IUserRepository) {}

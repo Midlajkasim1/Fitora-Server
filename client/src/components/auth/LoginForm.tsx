@@ -10,7 +10,7 @@ const loginSchema = z.object({
     email: z.string().email("Please enter a valid email address"),
     password: z.string().min(6, "Password must be at least 6 characters"),
 });
-
+debugger;
 type LoginFormData = z.infer<typeof loginSchema>;
 
 interface LoginFormProps {
@@ -62,7 +62,7 @@ export const LoginForm = ({ onSubmit, onGoogleLogin, isLoading }: LoginFormProps
                         <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-600 group-focus-within:text-[#00ff94] transition-colors" />
                         <input
                             {...register("password")}
-                            type={showPassword ? "text" : "password"} // 4. Dynamic type
+                            type={showPassword ? "text" : "password"} 
                             placeholder="••••••••"
                             className="w-full bg-[#0a1810] border border-white/5 rounded-2xl p-4 pl-12 pr-12 text-white outline-none focus:border-[#00ff94]/50 transition-all placeholder:text-gray-800"
                         />

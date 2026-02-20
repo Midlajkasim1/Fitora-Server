@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express";
 import { adminControllers } from "@/infrastructure/di/admin/admin.controllers";
 import { authenticate } from "@/presentation/middleware/auth.middleware";
+import { upload } from "@/presentation/middleware/multer.middleware";
 const router = Router();
 
 router.post( "/login",(req: Request, res:Response) => adminControllers.adminAuthController.login(req, res)
@@ -26,6 +27,15 @@ router.patch("/trainers/:id/block", authenticate, (req:Request, res:Response) =>
 );
 router.post("/logout", authenticate, (req:Request, res:Response) => 
   adminControllers.adminAuthController.logout(req, res)
+);
+router.post("/specializations",authenticate,upload.single("imageUrl"),(req:Request,res:Response)=>
+  adminControllers.specializationController.createSpecialization(req,res)
+);
+router.put("/specializations/:id",authenticate,upload.single("imageUrl"),(req:Request,res:Response)=>
+  adminControllers.specializationController.updateSpecialization(req,res)
+);
+router.get("/get-allUsers",authenticate,(req:Request,res:Response)=>
+  adminControllers.adminAuthController.getAllUSerCount(req,res)
 );
 
 export default router;

@@ -1,11 +1,11 @@
 
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import { IPasswordHasher } from "@/domain/interfaces/password.interface";
-import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { ResetPasswordDTO } from "@/application/dto/auth/request/reset-password.dto";
 import { ResetPasswordResponseDTO } from "@/application/dto/auth/response/reset-password.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
+import { IPasswordHasher } from "@/domain/interfaces/services/password.interface";
 
 export class ResetPasswordUseCase implements IBaseUseCase<ResetPasswordDTO, ResetPasswordResponseDTO> {
   constructor(

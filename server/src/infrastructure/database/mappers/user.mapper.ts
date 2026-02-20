@@ -1,6 +1,6 @@
 import { AuthProvider } from "@/domain/constants/auth.constants";
 import { UserEntity } from "@/domain/entities/user/user.entity";
-import { IMapper } from "@/domain/interfaces/mapper.interface";
+import { IMapper } from "@/domain/interfaces/services/mapper.interface";
 import { IUserDocument } from "../interfaces/user-document.interface";
 
 export class UserMapper implements IMapper<UserEntity, IUserDocument> {

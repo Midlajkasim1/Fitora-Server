@@ -30,13 +30,13 @@ export interface IUserRepository extends IBaseRepository<UserEntity> {
 
   updateStatus(id: string, status: UserStatus): Promise<void>;
 
-  findAll(params:{
-    page:number;
-    limit:number;
-    search?:string;
-    status?:string;
-    specialization?:string;
-    role?:UserRole;
-  }):Promise<{users:UserEntity[];total:number}>
-
+  findAll(params: {
+    page: number;
+    limit: number;
+    search?: string;
+    status?: string;
+    specialization?: string;
+    role?: UserRole;
+  }): Promise<{ users: UserEntity[]; total: number }>;
+countAllUsers():Promise<number>;
 }

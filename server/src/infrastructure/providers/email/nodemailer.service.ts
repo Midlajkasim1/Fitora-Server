@@ -1,6 +1,6 @@
-import nodemailer from "nodemailer";
-import { IEmailService } from "@/domain/interfaces/email-service.interface";
+import { IEmailService } from "@/domain/interfaces/services/email-service.interface";
 import { env } from "@/infrastructure/config/env.config";
+import nodemailer from "nodemailer";
 export class NodemailerEmailService implements IEmailService {
   private transporter = nodemailer.createTransport({
     service: "gmail",

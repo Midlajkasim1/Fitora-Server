@@ -41,7 +41,9 @@ export const loginUser = (data: LoginPayload) => {
 };
 
 export const getMe= ()=>{
+  ;
   return api.get('/auth/me')
+  ;
 }
 export const logoutUser = () => {
   return api.post("/auth/logout");

@@ -1,4 +1,4 @@
-import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
+import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
 import { redisClient } from "./redis.client";
 export class RedisOtpStore implements IOtpStore {
 

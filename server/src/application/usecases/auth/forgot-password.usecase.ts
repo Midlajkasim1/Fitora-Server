@@ -1,12 +1,12 @@
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
-import { IEmailService } from "@/domain/interfaces/email-service.interface";
-import { randomInt } from "crypto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { ForgotPasswordRequestDTO } from "@/application/dto/auth/request/forgot-password.dto";
 import { ForgotPasswordResponseDTO } from "@/application/dto/auth/response/forgot-password.dto";
-import { logger } from "@/infrastructure/providers/loggers/logger";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { IEmailService } from "@/domain/interfaces/services/email-service.interface";
+import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
+import { logger } from "@/infrastructure/providers/loggers/logger";
+import { randomInt } from "crypto";
 
 export class ForgotPasswordUseCase implements IBaseUseCase<ForgotPasswordRequestDTO, ForgotPasswordResponseDTO> {
   constructor(

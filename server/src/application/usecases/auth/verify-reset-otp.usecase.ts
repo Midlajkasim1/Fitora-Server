@@ -3,7 +3,7 @@ import { VerifyResetOtpDTO } from "@/application/dto/auth/request/verify-reset-o
 import { VerifyResetOtpResponseDTO } from "@/application/dto/auth/response/verify-reset-otp.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
-import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
+import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
 import { randomBytes } from "crypto";
 
 export class VerifyResetOtpUseCase implements IBaseUseCase<VerifyResetOtpDTO, VerifyResetOtpResponseDTO> {

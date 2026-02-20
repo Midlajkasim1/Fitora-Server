@@ -1,13 +1,16 @@
 import { Request, Response } from "express";
-import { GetAllTrainersUseCase } from "@/application/usecases/admin/get-all-trainers.usecase";
 import { GetUsersRequestDTO } from "@/application/dto/admin/request/get-users.dto";
-import { TrainerBlockUseCase } from "@/application/usecases/admin/trainer-block.usecase";
 import { BlockTrainerRequestDTO } from "@/application/dto/admin/request/block-trainer.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { GetTrainersRequestDTO } from "@/application/dto/admin/request/get-trainer.dto";
+import { GetTrainersResponseDTO } from "@/application/dto/admin/response/get-trainers.dto";
+import { BlockTrainerResponseDTO } from "@/application/dto/admin/response/block-trainer.dto";
+import { HttpStatus } from "@/domain/constants/http-status.constants";
 
 export class AdminTrainerController {
   constructor(
-    private readonly _getAllTrainersUseCase: GetAllTrainersUseCase,
-    private readonly _trainerBlockUseCase: TrainerBlockUseCase
+    private readonly _getAllTrainersUseCase: IBaseUseCase<GetTrainersRequestDTO,GetTrainersResponseDTO>,
+    private readonly _trainerBlockUseCase: IBaseUseCase<BlockTrainerRequestDTO,BlockTrainerResponseDTO>
   ) {}
 
   async getAllTrainers(req: Request, res: Response) {
@@ -36,7 +39,7 @@ async blockTrainer(req: Request, res: Response) {
         data: result,
       });
     } catch (error: any) {
-      return res.status(400).json({
+      return res.status(HttpStatus.NOT_FOUND).json({
         success: false,
         message: error.message,
       });

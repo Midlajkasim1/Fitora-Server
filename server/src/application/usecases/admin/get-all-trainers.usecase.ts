@@ -1,11 +1,11 @@
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { GetTrainersRequestDTO } from "@/application/dto/admin/request/get-trainer.dto";
+import { TrainerManagementDTO } from "@/application/dto/admin/response/trainer-management.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { UserRole } from "@/domain/constants/auth.constants";
+import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { GetUsersRequestDTO } from "../../dto/admin/request/get-users.dto";
 import { GetTrainersResponseDTO } from "../../dto/admin/response/get-trainers.dto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { TrainerManagementDTO } from "@/application/dto/admin/response/trainer-management.dto";
-import { GetTrainersRequestDTO } from "@/application/dto/admin/request/get-trainer.dto";
-import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 
 export class GetAllTrainersUseCase implements IBaseUseCase<GetUsersRequestDTO, GetTrainersResponseDTO> {
   constructor(private readonly _userRepository: IUserRepository) {}

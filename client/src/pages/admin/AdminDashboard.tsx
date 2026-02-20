@@ -1,8 +1,21 @@
 import { AdminSidebar } from "../../layout/admin/AdminSideBar";
 import { AdminFooter } from "../../layout/admin/AdminFooter";
 import { TrendingUp, Users, GraduationCap, Grid, Calendar } from "lucide-react";
+import { useEffect, useState } from "react";
+import { AllUserCount } from "../../api/admin.api";
 
 export default function AdminDashboard() {
+  const [count,setCount]=useState(0);
+
+  useEffect(()=>{
+    const handleuserCount = async ()=>{
+      const res = await AllUserCount();
+
+      const count = res.data?.allUser
+      setCount(count | 0);
+    }
+   handleuserCount()
+  },[])
   return (
     <div className="min-h-screen bg-[#050a05] text-white flex">
       <AdminSidebar />
@@ -28,8 +41,8 @@ export default function AdminDashboard() {
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             {[
-              { label: "Total Revenue", val: "$200.00", change: "12%", icon: TrendingUp },
-              { label: "Total Users", val: "551", change: "5%", icon: Users },
+              { label: "Total Revenue", val: "3555", change: "12%", icon: TrendingUp },
+              { label: "Total Users", val:count, change: "5%", icon: Users },
               { label: "Total Trainers", val: "551", change: "3%", icon: GraduationCap },
               { label: "Total Specialization", val: "15", change: "1%", icon: Grid },
             ].map((stat) => (

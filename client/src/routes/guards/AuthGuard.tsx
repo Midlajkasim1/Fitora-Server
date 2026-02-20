@@ -7,12 +7,11 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   if (isInitialLoading) {
     return <div className="min-h-screen bg-[#0a1810]" />;
   }
-
-
+ ;
   if (!isAuthenticated || !user) {
     return <Navigate to="/" replace />;
   }
-
+;
   const path = window.location.pathname;
 
   if (path.startsWith("/trainer") && user.role !== "trainer") {

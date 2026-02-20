@@ -3,8 +3,8 @@ import { ResendOtpDTO } from "@/application/dto/auth/request/resend-otp.dto";
 import { ResendOtpResponseDTO } from "@/application/dto/auth/response/resend-otp.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
-import { IEmailService } from "@/domain/interfaces/email-service.interface";
-import { IOtpStore } from "@/domain/interfaces/otp-store.interface";
+import { IEmailService } from "@/domain/interfaces/services/email-service.interface";
+import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
 import { logger } from "@/infrastructure/providers/loggers/logger";
 import { randomInt } from "crypto";
 

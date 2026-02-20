@@ -38,6 +38,9 @@ router.post("/logout", authenticate, (req, res) =>
   userControllers.authController.logout(req, res)
 );
 
+router.post("/refresh-token",(req:Request,res:Response)=>
+  userControllers.authController.refreshToken(req,res)
+);
 export default router;
 
 

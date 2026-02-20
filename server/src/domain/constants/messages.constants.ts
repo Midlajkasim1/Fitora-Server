@@ -43,3 +43,15 @@ export const ONBOARDING_MESSAGES = {
   UPLOAD_FAILED: "Failed to upload certifications. Please try again.",
   CLIENT_COMPLETE: "User onboarding profile completed successfully. Welcome to Fitora!",
 };
+
+
+
+export const SPECIALIZATION_MESSAGES ={
+   NAME_ALREADY_EXIST:"Name is already exist" ,
+   SPECIALIZATION_CREATED:"specialization is created",
+   SPECIALIZATION_NOT_FOUND:"specialization not found",
+    SPECIALIZATION_UPDATED:"specialization updated"
+
+   
+
+};

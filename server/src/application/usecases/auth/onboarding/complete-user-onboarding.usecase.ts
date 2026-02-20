@@ -1,12 +1,12 @@
 
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import { OnboardingResponseDTO } from "@/application/dto/auth/onboarding/response/onboarding-success.dto";
-import { IClientPreferenceRepository } from "@/domain/interfaces/repositories/onboarding/iclient.repository";
 import { UserOnboardingDTO } from "@/application/dto/auth/onboarding/request/user-onboarding.dto";
-import { ExperienceLevel,DietPreference } from "@/domain/constants/auth.constants";
-import { ClientPreferenceEntity } from "@/domain/entities/user/client-preference.entity";
+import { OnboardingResponseDTO } from "@/application/dto/auth/onboarding/response/onboarding-success.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { DietPreference, ExperienceLevel } from "@/domain/constants/auth.constants";
 import { ONBOARDING_MESSAGES } from "@/domain/constants/messages.constants";
+import { ClientPreferenceEntity } from "@/domain/entities/user/client-preference.entity";
+import { IClientPreferenceRepository } from "@/domain/interfaces/repositories/onboarding/iclient.repository";
+import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 
 export class CompleteUserOnboardingUseCase implements IBaseUseCase<UserOnboardingDTO, OnboardingResponseDTO> {
   constructor(

@@ -1,13 +1,13 @@
 
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
-import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.entity";
 import { TrainerOnboardingDTO } from "@/application/dto/auth/onboarding/request/trainer-onboarding.dto";
-import { OnboardingResponseDTO } from "@/application/dto/auth/onboarding/response/onboarding-success.dto";
-import { IStorageProvider } from "@/domain/interfaces/storage-provider.interface";
 import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer-upload-file.dto";
+import { OnboardingResponseDTO } from "@/application/dto/auth/onboarding/response/onboarding-success.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { ONBOARDING_MESSAGES } from "@/domain/constants/messages.constants";
+import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.entity";
+import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
+import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { IStorageProvider } from "@/domain/interfaces/services/storage-provider.interface";
 export class CompleteTrainerOnboardingUseCase implements IBaseUseCase<TrainerOnboardingDTO, OnboardingResponseDTO,UploadFileDTO[]> {
   constructor(
     private readonly _userRepo: IUserRepository,

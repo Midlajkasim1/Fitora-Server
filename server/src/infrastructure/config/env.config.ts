@@ -18,8 +18,11 @@ const envSchema = z.object({
     NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
     AWS_ACCESS_KEY_ID: z.string().min(1),
     AWS_SECRET_ACCESS_KEY: z.string().min(1),
-    AWS_REGION: z.string().min(1).default("us-east-1"), 
-    S3_BUCKET_NAME: z.string().min(1)
+    AWS_REGION: z.string().min(1).default("us-east-1"),
+    S3_BUCKET_NAME: z.string().min(1),
+    ACCESS_TOKEN_MAX_AGE: z.coerce.number().default(900000),
+    REFRESH_TOKEN_MAX_AGE: z.coerce.number().default(604800000),
+
 });
 
 const _env = envSchema.safeParse(process.env);
