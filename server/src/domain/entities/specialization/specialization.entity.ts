@@ -6,7 +6,7 @@ export class SpecializationEntity {
   private  _name : string;
   private  _description ?: string;
   private _imageUrl?: string;
-  private _status ?: SpecializationStatus;
+  private _status : SpecializationStatus;
   private _createdAt? : Date;
   private _updatedAt?: Date;
  private constructor(props: {
@@ -14,7 +14,7 @@ export class SpecializationEntity {
     name:string;
     description?:string;
     imageUrl?:string;
-    status?:SpecializationStatus;
+    status:SpecializationStatus;
     createdAt?:Date;
     updatedAt?:Date;
 
@@ -34,7 +34,7 @@ static create(props:{
   name:string;
   description?:string;
   imageUrl?:string;
-  status?:SpecializationStatus;
+  status:SpecializationStatus;
   createdAt?:Date;
   updatedAt?:Date;
 

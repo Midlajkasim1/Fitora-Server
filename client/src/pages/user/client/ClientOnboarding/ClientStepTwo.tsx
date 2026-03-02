@@ -1,19 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  ArrowLeft,
-  CheckCircle2,
-  Droplets,
-  Moon,
-  Utensils,
-  AlertCircle
+    ArrowLeft,
+    CheckCircle2,
+    Droplets,
+    Moon,
+    Utensils
 } from "lucide-react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import toast from "react-hot-toast";
 
 import { completeClientOnboarding } from "../../../../api/onboarding.apis";
-import { OnboardingLayout } from "../../../../components/onboarding/OnboardingLayout";
+import { OnboardingLayout } from "../../../../components/auth/onboarding/OnboardingLayout";
 import { useAuthStore } from "../../../../store/use-auth-store";
 import { useOnboardingStore } from "../../../../store/use-onboarding-store";
 

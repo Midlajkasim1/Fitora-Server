@@ -12,12 +12,12 @@ const navItems = [
   { name: "Dashboard", path: "/admin/dashboard", icon: LayoutDashboard },
   { name: "Users", path: "/admin/users", icon: Users },
   { name: "Trainers", path: "/admin/trainers", icon: GraduationCap },
-  { name: "Specialisation", path: "", icon: Settings },
-  { name: "Verification", path: "", icon: CheckCircle },
+  { name: "Specialisation", path: "/admin/specializations", icon: Settings },
+  { name: "Verification", path: "/admin/trainer/verifications", icon: CheckCircle },
   { name: "Finance Management", path: "", icon: Wallet },
   { name: "Advertisements", path: "", icon: Megaphone },
   { name: "Report", path: "", icon: FileText },
-  { name: "Workout", path: "", icon: Dumbbell },
+  { name: "Workout", path: "/admin/workouts", icon: Dumbbell },
 ];
 
 export const AdminSidebar = () => {
@@ -36,7 +36,8 @@ const handleLogout = async () => {
 
       
       // 3. Navigate to login without a full page reload
-         window.location.replace("/admin-portal");    }
+navigate("/admin-portal", { replace: true });     
+      }
 
 
     }

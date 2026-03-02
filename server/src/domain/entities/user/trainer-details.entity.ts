@@ -1,4 +1,4 @@
-import { ApprovalStatus } from "@/domain/enum/user/trainer-details.enum";
+import { ApprovalStatus } from "@/domain/constants/auth.constants";
 
 export class TrainerDetailsEntity {
   private readonly _id?: string;
@@ -8,6 +8,8 @@ export class TrainerDetailsEntity {
   private readonly _certifications: string[];
   private readonly _specializations: string[];
   private readonly _approvalStatus: ApprovalStatus;
+  private readonly _rejectionReason?: string | null;
+  private readonly _createdAt?: Date;
 
   constructor(props: {
     id?: string;
@@ -17,6 +19,8 @@ export class TrainerDetailsEntity {
     certifications: string[];
     specializations: string[];
     approvalStatus: ApprovalStatus;
+    rejectionReason?:string | null;
+    createdAt?:Date;
   }) {
     this._id = props.id;
     this._userId = props.userId;
@@ -25,6 +29,8 @@ export class TrainerDetailsEntity {
     this._certifications = props.certifications;
     this._specializations = props.specializations;
     this._approvalStatus = props.approvalStatus;
+     this._rejectionReason = props.rejectionReason ?? null;
+    this._createdAt = props.createdAt;
   }
 
   static create(props: {
@@ -36,7 +42,7 @@ export class TrainerDetailsEntity {
   }): TrainerDetailsEntity {
     return new TrainerDetailsEntity({
       ...props,
-      approvalStatus: ApprovalStatus.PENDING 
+      approvalStatus: ApprovalStatus.PENDING
     });
   }
 
@@ -47,4 +53,6 @@ export class TrainerDetailsEntity {
   get certifications() { return this._certifications; }
   get specializations() { return this._specializations; }
   get approvalStatus() { return this._approvalStatus; }
+  get rejectionReason(){return this._rejectionReason;}
+  get createdAt(){return this._createdAt;}
 }

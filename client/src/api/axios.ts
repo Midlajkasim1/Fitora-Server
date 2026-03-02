@@ -5,9 +5,6 @@ import toast from "react-hot-toast";
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true, 
-  headers: {
-    'Content-Type': 'application/json',
-  }
 });
 
 api.interceptors.response.use(
@@ -44,7 +41,7 @@ api.interceptors.response.use(
 
     const isSilentRequest = originalRequest.url?.includes('/me') || originalRequest.url?.includes('/refresh-token');
 
-    if (!isSilentRequest && err.response?.status !== 401) {
+    if (!isSilentRequest) {
       toast.error(errorMessage, { id: errorMessage });
     }
 

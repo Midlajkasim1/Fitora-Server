@@ -1,8 +1,8 @@
 import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.entity";
 import { ITrainerDetailsDocument } from "../interfaces/trainer-details-document.interface";
 import { Types } from "mongoose";
-import { ApprovalStatus } from "@/domain/enum/user/trainer-details.enum";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
+import { ApprovalStatus } from "@/domain/constants/auth.constants";
 
 export class TrainerDetailsMapper implements IMapper<TrainerDetailsEntity,ITrainerDetailsDocument> {
    toEntity(doc: ITrainerDetailsDocument): TrainerDetailsEntity {

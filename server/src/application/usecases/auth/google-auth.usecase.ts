@@ -2,6 +2,7 @@ import { GoogleDTO } from "@/application/dto/auth/request/google.dto";
 import { GoogleLoginResponseDTO } from "@/application/dto/auth/response/google-login.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AuthProvider, UserRole } from "@/domain/constants/auth.constants"; //
+import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
@@ -36,6 +37,11 @@ export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginRes
         googleId: googleUser.googleId,
       });
     }
+    if(!user.isActive()){
+      throw new Error(AUTH_MESSAGES.ACCOUNT_BLOCKED);
+    }
+
+
     let approvalStatus;
     if (user.role === UserRole.TRAINER) {
       const trainer = await this._trainerRepository.findByUserId(user.id!);

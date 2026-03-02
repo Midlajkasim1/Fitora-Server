@@ -1,6 +1,7 @@
 
 export const AUTH_MESSAGES = {
   EMAIL_ALREADY_EXISTS: "User with this email already exists",
+  PASSWORD_NOT_CORRECT:"password not correct",
   INVALID_CREDENTIALS: "The email or password you entered is incorrect",
   USER_NOT_FOUND: "No account found with this email address",
   OTP_SENT: "OTP sent successfully to your email",
@@ -33,6 +34,8 @@ export const AUTH_MESSAGES = {
   INVALID_TOKEN:"Invalid token" ,
   TRAINER_STATUS_UPDATED: (status: string) => `Trainer status successfully updated to ${status}`,
   USER_STATUS_UPDATED: (status: string) => `User status successfully updated to ${status}`,
+  PROFILE_IMAGE_UPDATED:"Profile updated",
+  FILE_NOT_FOUND:"No file uploaded"
 
 
 };
@@ -50,8 +53,26 @@ export const SPECIALIZATION_MESSAGES ={
    NAME_ALREADY_EXIST:"Name is already exist" ,
    SPECIALIZATION_CREATED:"specialization is created",
    SPECIALIZATION_NOT_FOUND:"specialization not found",
-    SPECIALIZATION_UPDATED:"specialization updated"
+    SPECIALIZATION_UPDATED:"specialization updated",
+    SPECIALIZATION_ID_MISSING:"specialization id missing",
+    SPECIALIZATION_STATUS_UPDATED: (status: string) => `specialization status successfully updated to ${status}`,
 
-   
+};
+export const  USER_MESSAGES={
+  PROFILE_UPDATED:"Profile updated successfully"
+};
 
+export const  ADMIN_MESSAGES={
+  TRAINER_NOT_FOUND:"Trainer id is not found",
+  TRAINER_REJECTION_REASON:"Rejection reason is required",
+  TRAINER_APPROVAL_DONE:"verfied trainer profile"
+
+};
+
+export const WORKOUT_MESSAGES={
+  WORKOUT_NOT_FOUND:"Workout not found",
+  FILES_MUST_REQUIRED:"Video and thumbnail are required",
+  WORKOUT_UPDATED:"Workout updated successfully",
+  WORKOUT_ALREADY_EXIST:"Workout already exists",
+  WORKOUT_STATUS_UPDATED:"Workout status updated"
 };

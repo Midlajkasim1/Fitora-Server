@@ -2,7 +2,7 @@ import { UploadCloud, X } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { OnboardingLayout } from "../../../../components/onboarding/OnboardingLayout";
+import { OnboardingLayout } from "../../../../components/auth/onboarding/OnboardingLayout";
 import { useOnboardingStore } from "../../../../store/use-onboarding-store";
 export default function TrainerStepOne() {
   const navigate = useNavigate();

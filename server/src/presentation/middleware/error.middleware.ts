@@ -1,20 +1,30 @@
 import { Request, Response, NextFunction } from "express";
+import { ZodError } from "zod";
 import { logger } from "@/infrastructure/providers/loggers/logger";
 
 export const errorHandler = (
-  err: any,
+  err: unknown,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  logger.error(err.message, { stack: err.stack });
+  let message = "Internal Server Error";
+  let statusCode = 500;
 
-  const statusCode = err.statusCode || 500;
-  const message = err.message || "Internal Server Error";
+  if (err instanceof ZodError) {
+    message = err.issues[0]?.message || "Validation error";
+    statusCode = 400;
+  } 
+  else if (err instanceof Error) {
+    message = err.message;
+  }
 
-  res.status(statusCode).json({
+  logger.error(message, {
+    stack: err instanceof Error ? err.stack : undefined,
+  });
+
+  return res.status(statusCode).json({
     success: false,
     message,
-    errors: process.env.NODE_ENV === "development" ? err.errors : undefined,
   });
 };

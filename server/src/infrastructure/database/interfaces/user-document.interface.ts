@@ -1,7 +1,7 @@
-import { Document, Types } from "mongoose";
-import { UserRole, UserStatus, AuthProvider } from "@/domain/constants/auth.constants";
+import {  Types } from "mongoose";
+import { UserRole, UserStatus } from "@/domain/constants/auth.constants";
 
-export interface IUserDocument extends Document {
+export interface IUserDocument  {
   _id: Types.ObjectId; 
   email: string;
   firstName: string;
@@ -9,14 +9,14 @@ export interface IUserDocument extends Document {
   phone: string;
   role: UserRole;
   status: UserStatus; 
-  profileImage?:string
+  profileImage?:string | null;
   isEmailVerified: boolean;
-  dob?: Date;
-  gender?: string;
+  dob?: Date | null;
+  gender?: string | null;
   isOnboardingRequired: boolean;
 
-  password?: string;
-  authProvider: AuthProvider;
+  password?: string | null;
+authProvider: "local" | "google";
   googleId?: string | null;
   createdAt: Date;
   updatedAt: Date;

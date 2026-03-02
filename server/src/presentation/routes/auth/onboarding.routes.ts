@@ -1,19 +1,22 @@
-import { Request, Response, Router } from "express";
 import { onboardingControllers } from "@/infrastructure/di/user/onboarding/onboarding.controller";
-import multer from "multer";
-import { authenticate } from "@/presentation/middleware/auth.middleware";
+import { userMiddlewares } from "@/infrastructure/di/user/user.middleware";
+import { asyncHandler } from "@/presentation/middleware/asyncHandler";
+import { upload } from "@/presentation/middleware/multer.middleware";
+import { Request, Response, Router } from "express";
 
 const router = Router();
-const controller = onboardingControllers.onboardingController;
-
-const upload = multer({ storage: multer.memoryStorage() });
 
 router.post(
-  "/trainer/complete", 
-  upload.array("certificates"),authenticate, 
-  (req:Request, res:Response) => controller.completeTrainer(req, res)
+  "/trainer/complete",
+  upload.array("certificates"), userMiddlewares.authMiddleware, asyncHandler((req: Request, res: Response) =>
+  onboardingControllers.onboardingController.completeTrainer(req, res))
 );
 
-router.post("/user/complete", authenticate,(req:Request, res:Response) => controller.completeUser(req, res));
+router.post("/user/complete", userMiddlewares.authMiddleware, asyncHandler((req: Request, res: Response) =>
+  onboardingControllers.onboardingController.completeUser(req, res))
+);
+router.get("/active-specialization",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+  onboardingControllers.onboardingController.getActiveSpecializations(req,res)
+));
 
 export default router;

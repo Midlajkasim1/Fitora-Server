@@ -30,13 +30,12 @@ export const ManagementHeader = ({ placeholder, filters, onSearch }: ManagementH
 
       {filters.map((filter, index) => (
         <div key={index} className="relative group">
-          <select 
+          <select
             onChange={(e) => filter.onChange(e.target.value)}
-            className="appearance-none bg-black/20 border border-white/10 rounded-xl py-3 px-6 pr-12 text-sm text-gray-300 outline-none focus:border-[#00ff94]/50 cursor-pointer transition-all"
-          >
-            <option value="">{filter.label}</option>
+className="appearance-none bg-[#0d1f17] border border-white/10 rounded-xl py-3 px-6 pr-12 text-sm text-white outline-none focus:border-[#00ff94]/30 transition-all cursor-pointer">            <option value="" className="bg-[#0a1810]" >{filter.label}</option>
             {filter.options.map((opt) => (
-              <option key={opt.value} value={opt.value}>{opt.label}</option>
+              <option className="px-6 py-4 text-[10px] font-black uppercase italic tracking-widest text-gray-400 hover:bg-[#00ff94] hover:text-[#0d1f17] transition-colors cursor-pointer border-b border-white/5 last:border-0"
+                 key={opt.value} value={opt.value}>{opt.label}</option>
             ))}
           </select>
           <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" size={16} />

@@ -4,7 +4,6 @@ import { IUserRepository, UserWithPassword } from "@/domain/interfaces/repositor
 import { IUserDocument } from "../interfaces/user-document.interface";
 import { UserMapper } from "../mappers/user.mapper";
 import { UserModel } from "../models/user.models";
-
 export class UserRepository implements IUserRepository {
 
   constructor(private readonly userMapper: UserMapper) {}
@@ -58,13 +57,14 @@ async findAll(params: {
     status?: string;
     role?: UserRole; 
   }): Promise<{ users: UserEntity[]; total: number }> {
-    const { page, limit, search, status, role } = params;
+    const { page, limit, search, status, role} = params;
     const skip = (page - 1) * limit;
 
-    const filter: any = {};
+    const filter: Record<string,unknown> = {};
     if (role) filter.role = role; 
     if (status) filter.status = status;
 
+  
     if (search) {
       filter.$or = [
         { email: { $regex: search, $options: "i" } },
@@ -93,12 +93,17 @@ async updateStatus(id: string, status: UserStatus): Promise<void> {
       $set: { status: status } 
     }).exec();
   }
-async countAllUsers(): Promise<number> {
-  return await UserModel.countDocuments();
-  
+async updateUserProfile(user: UserEntity): Promise<UserEntity | null> {
+  const data = await UserModel.findByIdAndUpdate(user.id,
+   {$set:this.userMapper.toMongo(user)},{new:true}
+  ).lean();
+  if(!data)return null;
+  return this.userMapper.toEntity(data);
 }
-
-
+ async findPasswordById(userId: string): Promise<string | null> {
+   const user = await UserModel.findById(userId).select("+password").lean();
+   return user?.password  ?? null;
+ }
 }
 
 

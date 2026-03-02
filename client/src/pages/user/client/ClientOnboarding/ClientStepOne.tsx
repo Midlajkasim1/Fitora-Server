@@ -1,21 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  CheckCircle2,
-  ChevronDown,
-  Dumbbell,
-  Flame,
-  Heart,
-  Target,
-  Trophy,
-  User,
-  Zap
+  CheckCircle2, ChevronDown, Dumbbell, Flame, Heart, Target, Trophy, User, Zap
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { OnboardingLayout } from "../../../../components/onboarding/OnboardingLayout";
+import { OnboardingLayout } from "../../../../components/auth/onboarding/OnboardingLayout";
 import { useOnboardingStore } from "../../../../store/use-onboarding-store";
 import type { ClientStepOne } from "../../../../type/onboarding.types";
+import { useSpecializations } from "../../../../hooks/user/use-specialization";
 
 const schema = z.object({
   dob: z.string()
@@ -27,7 +20,7 @@ const schema = z.object({
     }, "Date of birth cannot be in the future")
     .refine((date) => {
       const year = new Date(date).getFullYear();
-      return year > 1920 && year  <= 2012
+      return year > 1920 && year <= 2012
     }, "Please enter a realistic year"),
   gender: z.enum(["male", "female", "other"]),
   preferredWorkouts: z.array(z.string()).min(1, "Select at least one workout"),
@@ -38,6 +31,8 @@ const schema = z.object({
 export default function ClientStepOnePage() {
   const navigate = useNavigate();
   const setClientStepOne = useOnboardingStore((state) => state.setClientStepOne);
+  const { data: specialization = [], isLoading } = useSpecializations();
+
 
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<ClientStepOne>({
     resolver: zodResolver(schema),
@@ -53,13 +48,15 @@ export default function ClientStepOnePage() {
     navigate("/onboarding/user/step-2");
   };
 
-  const toggleSelection = (field: keyof ClientStepOne, val: string) => {
-    const current = (watch(field) as string[]) || [];
-    const next = current.includes(val)
-      ? current.filter(i => i !== val)
-      : [...current, val];
-    setValue(field, next as any, { shouldValidate: true });
-  };
+const toggleSelection = (field: keyof ClientStepOne, val: string) => {
+  const current = (watch(field) as string[]) || [];
+
+  const next = current.includes(val)
+    ? current.filter(i => i !== val)
+    : [...current, val];
+
+  setValue(field, next as any, { shouldValidate: true });
+};
 
   return (
     <OnboardingLayout title="Create Your Profile" subtitle="Complete these final details to help our AI understand your starting point." step={1}>
@@ -98,31 +95,58 @@ export default function ClientStepOnePage() {
           </div>
           {errors.gender && <p className="text-red-500 text-[10px] italic font-bold ml-1">{errors.gender.message}</p>}
         </div>
+       <div className="space-y-3">
+  <label className="text-gray-400 text-[10px] font-bold uppercase tracking-widest ml-1 italic">
+    Preferred Workouts
+  </label>
 
-        <div className="space-y-3">
-          <label className="text-gray-400 text-[10px] font-bold uppercase tracking-widest ml-1 italic">Preferred Workouts</label>
-          <div className="grid grid-cols-2 gap-3">
-            {[
-              { id: "yoga", label: "Yoga", icon: Heart },
-              { id: "strength", label: "Strength", icon: Dumbbell },
-              { id: "cardio", label: "Cardio", icon: Flame },
-              { id: "hiit", label: "HIIT", icon: Zap }
-            ].map((w) => (
-              <button
-                key={w.id}
-                type="button"
-                onClick={() => toggleSelection("preferredWorkouts", w.id)}
-                className={`relative p-5 rounded-2xl border transition-all flex items-center gap-4 group ${selectedWorkouts.includes(w.id) ? "bg-[#00ff94] border-[#00ff94]" : "bg-[#0a1810] border-white/5 hover:border-white/10"
-                  }`}
-              >
-                <w.icon className={`w-5 h-5 ${selectedWorkouts.includes(w.id) ? "text-[#0d1f1d]" : "text-[#00ff94]"}`} />
-                <span className={`text-[11px] font-black uppercase italic ${selectedWorkouts.includes(w.id) ? "text-[#0d1f1d]" : "text-white"}`}>{w.label}</span>
-                {selectedWorkouts.includes(w.id) && <CheckCircle2 className="absolute top-2 right-2 w-3 h-3 text-[#0d1f1d]" />}
-              </button>
-            ))}
-          </div>
-          {errors.preferredWorkouts && <p className="text-red-500 text-[10px] italic font-bold ml-1">{errors.preferredWorkouts.message}</p>}
-        </div>
+  {isLoading ? (
+    <p className="text-gray-500 text-sm">Loading workouts...</p>
+  ) : (
+    <div className="grid grid-cols-2 gap-3">
+      {specialization.map((spec: any) => {
+        const isActive = selectedWorkouts.includes(spec.id);
+
+        return (
+          <button
+            key={spec.id}
+            type="button"
+            onClick={() => toggleSelection("preferredWorkouts", spec.id)}
+            className={`relative p-5 rounded-2xl border transition-all flex items-center gap-4 ${
+              isActive
+                ? "bg-[#00ff94] border-[#00ff94]"
+                : "bg-[#0a1810] border-white/5 hover:border-white/10"
+            }`}
+          >
+            <Dumbbell
+              className={`w-5 h-5 ${
+                isActive ? "text-[#0d1f1d]" : "text-[#00ff94]"
+              }`}
+            />
+
+            <span
+              className={`text-[11px] font-black uppercase italic ${
+                isActive ? "text-[#0d1f1d]" : "text-white"
+              }`}
+            >
+              {spec.name}
+            </span>
+
+            {isActive && (
+              <CheckCircle2 className="absolute top-2 right-2 w-3 h-3 text-[#0d1f1d]" />
+            )}
+          </button>
+        );
+      })}
+    </div>
+  )}
+
+  {errors.preferredWorkouts && (
+    <p className="text-red-500 text-[10px] italic font-bold ml-1">
+      {errors.preferredWorkouts.message}
+    </p>
+  )}
+</div>
 
         <div className="space-y-3">
           <label className="text-gray-400 text-[10px] font-bold uppercase tracking-widest ml-1 italic">Primary Motives</label>

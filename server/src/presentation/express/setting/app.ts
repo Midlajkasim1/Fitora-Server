@@ -13,13 +13,12 @@ app.use(helmet());
 app.use(cors({
     origin: env.CLIENT_URL,
     credentials: true,
-    methods: ["GET", "POST", "DELETE", "PATCH"], 
+    methods: ["GET", "POST", "DELETE", "PATCH","PUT"], 
 }));
 app.use(cookieParser());
 app.use(compression());
 app.use(express.json());
 
-app.use("/api/onboarding", onboardingRouter);
 app.use("/api", routes);
 app.use(errorHandler);
 

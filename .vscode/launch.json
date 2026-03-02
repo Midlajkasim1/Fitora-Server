@@ -1,9 +1,9 @@
 {
   "version": "0.2.0",
   "configurations": [
-
+    
     {
-      "name": "Debug Backend (SWC)",
+      "name": "Debug Backend (TS Clean)",
       "type": "node",
       "request": "launch",
 
@@ -18,16 +18,26 @@
 
       "console": "integratedTerminal",
 
-      "skipFiles": ["<node_internals>/**"]
+      "sourceMaps": true,
+
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/server/node_modules/**",
+        "**/node_modules/**"
+      ]
     },
+
     {
-      "name": "Debug Frontend (React)",
-      "type": "chrome",
+      "name": "Debug Frontend (React + Vite)",
+      "type": "pwa-chrome",
       "request": "launch",
       "url": "http://localhost:5173",
-      "webRoot": "${workspaceFolder}/client/src",
+      "webRoot": "${workspaceFolder}/client",
       "sourceMaps": true,
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**"
+      ]
     }
 
   ]

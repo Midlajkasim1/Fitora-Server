@@ -1,8 +1,8 @@
 import { SpecializationStatus } from "@/domain/constants/auth.constants";
-import { Document, Types } from "mongoose";
+import {  Types } from "mongoose";
 
 
-export interface ISpecializationDocument extends Document {
+export interface ISpecializationDocument  {
     _id:Types.ObjectId;
     name:string;
     description:string;

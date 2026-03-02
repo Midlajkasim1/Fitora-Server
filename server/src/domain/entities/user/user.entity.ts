@@ -1,5 +1,4 @@
-import { ApprovalStatus } from "@/domain/enum/user/trainer-details.enum";
-import { UserRole, UserStatus } from "../../constants/auth.constants";
+import { ApprovalStatus, UserRole, UserStatus } from "../../constants/auth.constants";
 
 
 export class UserEntity {

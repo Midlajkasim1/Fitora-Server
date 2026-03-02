@@ -1,21 +1,16 @@
-import { Activity, ArrowLeft, CheckCircle2, Dumbbell, Flame, Target, Trophy, Zap, AlertCircle } from "lucide-react";
+import { Activity, AlertCircle, ArrowLeft, CheckCircle2, Dumbbell, Flame, Target, Trophy, Zap } from "lucide-react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 import { completeTrainerOnboarding } from "../../../../api/onboarding.apis";
-import { OnboardingLayout } from "../../../../components/onboarding/OnboardingLayout";
+import { OnboardingLayout } from "../../../../components/auth/onboarding/OnboardingLayout";
 import { useAuthStore } from "../../../../store/use-auth-store";
 import { useOnboardingStore } from "../../../../store/use-onboarding-store";
+import { useSpecializations } from "../../../../hooks/user/use-specialization";
 
-const SPECIALIZATIONS = [
-  { id: "hiit", label: "HIIT", desc: "High-intensity interval training", icon: Flame },
-  { id: "yoga", label: "Yoga", desc: "Flexibility & mindfulness", icon: Target },
-  { id: "zumba", label: "Zumba", desc: "Dance & cardio fitness", icon: Activity },
-  { id: "martial_arts", label: "Martial Arts", desc: "Combat & discipline", icon: Trophy },
-  { id: "strength", label: "Strength", desc: "Weightlifting & power", icon: Dumbbell },
-  { id: "athletics", label: "Athletics", desc: "Performance & speed", icon: Zap },
-];
+
+
 
 export default function TrainerStepTwo() {
   const navigate = useNavigate();
@@ -29,6 +24,7 @@ export default function TrainerStepTwo() {
     getTrainerPayload, 
     clearTrainer 
   } = useOnboardingStore();
+  const { data: specialization = [], isLoading } = useSpecializations();
 
   const [selected, setSelected] = useState<string[]>(trainerStepTwo?.specializations || []);
 
@@ -39,45 +35,53 @@ export default function TrainerStepTwo() {
     );
   };
 
-  const handleFinish = async () => {
-    if (selected.length === 0) {
-      setError("Please select at least one specialization.");
-      return;
-    }
+const handleFinish = async () => {
+  if (selected.length === 0) {
+    setError("Please select at least one specialization.");
+    return;
+  }
 
-    setLoading(true);
-    setTrainerStepTwo({ specializations: selected });
+  setTrainerStepTwo({ specializations: selected });
 
-    const payload = getTrainerPayload(user?.id || "");
+  const payload = getTrainerPayload(user?.id || "");
 
-    if (!payload) {
-      toast.error("Session expired. Returning to Step 1.");
-      navigate("/onboarding/trainer/step-1");
-      setLoading(false);
-      return;
-    }
+  if (!payload) {
+    toast.error("Session expired. Returning to Step 1.");
+    navigate("/onboarding/trainer/step-1");
+    return;
+  }
 
-    try {
-      await completeTrainerOnboarding(payload);
-      
-      useAuthStore.setState((state) => ({
-        user: state.user ? { 
-          ...state.user, 
-          isOnboardingRequired: false, 
-          approval_status: 'pending' 
-        } : null
-      }));
+  useAuthStore.setState((state) => ({
+    user: state.user
+      ? {
+          ...state.user,
+          isOnboardingRequired: false,
+          approval_status: "pending",
+        }
+      : null,
+  }));
 
-      clearTrainer();
-      toast.success("Application submitted successfully!");
-      navigate("/trainer/waiting-approval", { replace: true });
+  clearTrainer();
 
-    } catch (error: any) {
-      console.error("Onboarding Error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  navigate("/trainer/waiting-approval", { replace: true });
+
+  toast.success("Application submitted successfully!");
+
+  completeTrainerOnboarding(payload).catch((error) => {
+    console.error("Onboarding Error:", error);
+
+    useAuthStore.setState((state) => ({
+      user: state.user
+        ? {
+            ...state.user,
+            isOnboardingRequired: true,
+          }
+        : null,
+    }));
+
+    toast.error("Submission failed. Please try again.");
+  });
+};
 
   return (
     <OnboardingLayout 
@@ -85,32 +89,43 @@ export default function TrainerStepTwo() {
       subtitle="Select the disciplines you are certified to teach." 
       step={2}
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {SPECIALIZATIONS.map((skill) => {
-          const isActive = selected.includes(skill.id);
-          return (
-            <div 
-              key={skill.id}
-              onClick={() => toggleSkill(skill.id)}
-              className={`p-6 rounded-2xl border transition-all cursor-pointer group relative ${
-                isActive 
-                ? 'border-[#00ff94] bg-[#00ff94]/5 shadow-[0_0_20px_rgba(0,255,148,0.05)]' 
-                : error 
-                  ? 'border-red-500/40 bg-red-500/5' 
-                  : 'border-white/5 bg-[#0d1f17] hover:border-white/10'
-              }`}
-            >
-              <skill.icon className={`w-6 h-6 mb-4 transition-colors ${isActive ? 'text-[#00ff94]' : error ? 'text-red-400' : 'text-gray-600 group-hover:text-gray-400'}`} />
-              <h3 className="text-white font-black italic uppercase text-sm mb-1 tracking-tighter">{skill.label}</h3>
-              <p className="text-gray-500 text-[10px] font-medium italic">{skill.desc}</p>
-              
-              {isActive && (
-                <CheckCircle2 className="absolute top-4 right-4 w-5 h-5 text-[#00ff94] animate-in zoom-in duration-300" />
-              )}
-            </div>
-          );
-        })}
-      </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+  {isLoading ? (
+    <p className="text-gray-500">Loading specializations...</p>
+  ) : (
+    specialization.map((spec: any) => {
+      const isActive = selected.includes(spec.id);
+
+      return (
+        <div
+          key={spec.id}
+          onClick={() => toggleSkill(spec.id)}
+          className={`p-6 rounded-2xl border transition-all cursor-pointer group relative ${
+            isActive
+              ? "border-[#00ff94] bg-[#00ff94]/5"
+              : "border-white/5 bg-[#0d1f17] hover:border-white/10"
+          }`}
+        >
+          <Dumbbell
+            className={`w-6 h-6 mb-4 ${
+              isActive ? "text-[#00ff94]" : "text-gray-600"
+            }`}
+          />
+          <h3 className="text-white font-black italic uppercase text-sm mb-1">
+            {spec.name}
+          </h3>
+          <p className="text-gray-500 text-[10px] italic">
+            {spec.description}
+          </p>
+
+          {isActive && (
+            <CheckCircle2 className="absolute top-4 right-4 w-5 h-5 text-[#00ff94]" />
+          )}
+        </div>
+      );
+    })
+  )}
+</div>
       
       {error && (
         <div className="mt-6 flex items-center justify-center gap-2 text-red-500 animate-in fade-in slide-in-from-top-2">

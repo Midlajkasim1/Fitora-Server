@@ -13,10 +13,10 @@ export class UserMapper implements IMapper<UserEntity, IUserDocument> {
       phone: doc.phone,
       role: doc.role,
       status: doc.status,
-      profileImage:doc.profileImage,
+      profileImage:doc.profileImage ?? undefined,
       isEmailVerified: doc.isEmailVerified,
-      dob: doc.dob,
-      gender: doc.gender,
+      dob: doc.dob ?? undefined,
+      gender: doc.gender ?? undefined,
       isOnboardingRequired: doc.isOnboardingRequired,
       createdAt: doc.createdAt
     });

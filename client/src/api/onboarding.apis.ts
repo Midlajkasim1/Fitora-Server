@@ -40,3 +40,7 @@ export const completeTrainerOnboarding = async (data: TrainerOnboardingPayload) 
     },
   });
 };
+
+export const getSpecializations=()=>{
+  return api.get("/onboarding/active-specialization");
+}

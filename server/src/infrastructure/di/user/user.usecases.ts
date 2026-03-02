@@ -14,12 +14,19 @@ import { ResetPasswordUseCase } from "@/application/usecases/auth/reset-password
 import { VerifyResetOtpUseCase } from "@/application/usecases/auth/verify-reset-otp.usecase";
 import { RefreshTokenUseCase } from "@/application/usecases/auth/refresh-token.usecase";
 import { GetMeUseCase } from "@/application/usecases/auth/get-me.usecase";
+import { GetUserProfileUseCase } from "@/application/usecases/user/get-userProfile.usecase";
+import { UpdateUserProfileUseCase } from "@/application/usecases/user/update-userProfile.usecase";
+import { S3StorageProvider } from "@/infrastructure/providers/storage/s3-storage.provider";
+import { UploadProfileImageUseCase } from "@/application/usecases/user/upload-profileImage.usecase";
+import { ChangePasswordUseCase } from "@/application/usecases/user/change-password.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
 const passwordHasher = new BcryptPasswordHasher();
 const tokenService = new JwtTokenService();
 const googleTokenProvider = new GoogleTokenProvider();
+const storageProvider = new S3StorageProvider();
+
 export const useCases = {
   registerUseCase: new RegisterUseCase(
     userRepositories.userRepository,
@@ -71,7 +78,27 @@ export const useCases = {
     otpStore
   ),
   getMeUseCase: new GetMeUseCase(
-    userRepositories.userRepository
+    userRepositories.userRepository,
+    userRepositories.trainerRepository
+
+    
+  ),
+  getUserProfileUseCase:new GetUserProfileUseCase(
+    userRepositories.userRepository,
+    userRepositories.clientPreferenceRepository
+  ),
+  updateUserProfileUseCase : new UpdateUserProfileUseCase(
+    userRepositories.userRepository,
+    userRepositories.clientPreferenceRepository
+  ),
+  uploadProfileImageUseCase: new UploadProfileImageUseCase(
+    userRepositories.userRepository,
+    storageProvider
+
+  ),
+  changePasswordUseCase: new ChangePasswordUseCase(
+    userRepositories.userRepository,
+    passwordHasher
   )
 };
 

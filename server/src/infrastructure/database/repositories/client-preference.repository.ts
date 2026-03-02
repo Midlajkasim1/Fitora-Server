@@ -28,4 +28,11 @@ export class ClientPreferenceRepository implements IClientPreferenceRepository {
     const doc = await ClientPreferenceModel.findById(id).lean();
     return doc ? this.clientPreferenceMapper.toEntity(doc) : null;
   }
+  async updateClientPreference(clientPreference: ClientPreferenceEntity): Promise<ClientPreferenceEntity | null> {
+    const data = await ClientPreferenceModel.findByIdAndUpdate(clientPreference.id,
+      {$set:this.clientPreferenceMapper.toMongo(clientPreference)},{new:true}
+    ).lean();
+    if(!data)return null;
+    return this.clientPreferenceMapper.toEntity(data);
+  }
 }

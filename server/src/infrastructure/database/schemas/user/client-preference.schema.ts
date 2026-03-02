@@ -21,10 +21,13 @@ export const ClientPreferenceSchema = new Schema(
       type: [String],
       required: true
     },
-    preferred_workouts: {
-      type: [String],
-      required: true
-    },
+   preferred_workouts: [
+  {
+    type: Schema.Types.ObjectId,
+    ref: "Specialization",
+    required: true
+  }
+],
     experience_level: {
       type: String,
       required: true

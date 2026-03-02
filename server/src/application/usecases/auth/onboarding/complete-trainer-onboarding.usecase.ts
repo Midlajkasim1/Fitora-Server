@@ -19,7 +19,7 @@ export class CompleteTrainerOnboardingUseCase implements IBaseUseCase<TrainerOnb
 
     const certificationUrls = await Promise.all(
       files.map((file) => 
-        this._storageProvider.uploadFile(file.buffer, file.originalname, file.mimetype)
+        this._storageProvider.uploadCertificate(file.buffer, file.originalname, file.mimetype)
       )
     );
     await this._userRepo.completeOnboarding(dto.userId, {

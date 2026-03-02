@@ -3,6 +3,7 @@ import { onboardingUseCases } from "./onboarding.usecase";
 export const onboardingControllers = {
   onboardingController: new OnboardingController(
     onboardingUseCases.completeUserOnboarding,
-    onboardingUseCases.completeTrainerOnboarding
+    onboardingUseCases.completeTrainerOnboarding,
+    onboardingUseCases.getActiveSpecialization
   ),
 };

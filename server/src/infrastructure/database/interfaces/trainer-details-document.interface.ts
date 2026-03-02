@@ -1,6 +1,6 @@
-import { Document, Types } from "mongoose";
+import {  Types } from "mongoose";
 
-export interface ITrainerDetailsDocument extends Document {
+export interface ITrainerDetailsDocument  {
   _id: Types.ObjectId;
   user_id: Types.ObjectId; 
   bio: string; 

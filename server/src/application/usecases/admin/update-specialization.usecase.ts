@@ -28,11 +28,11 @@ export class UpdateSpecializationUsecase implements IBaseUseCase<UpdateSpecializ
        }
        let imageUrl = existing.imageUrl;
        if(file){
-        imageUrl= await this._storageProvider.uploadFile(file.buffer,file.originalname,file.mimetype);
+        imageUrl= await this._storageProvider.uploadImage(file.buffer,file.originalname,file.mimetype);
        }
 
        const updatedSpecialization = SpecializationEntity.create({
-        id:existing.id ?? dto.name,
+        id:existing.id ,
         name: dto.name ||   existing.name,
         description: dto.description ??  existing.description,
         imageUrl:imageUrl,

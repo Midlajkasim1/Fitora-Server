@@ -19,6 +19,12 @@ export enum AdminStatus {
     BLOCKED = "blocked"
 }
 
+export enum ApprovalStatus {
+  PENDING = "pending",
+  APPROVED = "approved",
+  REJECTED = "rejected"
+};
+
 export const OTP_PREFIXES = {
   FORGOT_PASSWORD: "otp:forgot-password:",
   RESET_SESSION: "reset-session:",

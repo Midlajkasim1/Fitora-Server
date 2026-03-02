@@ -21,13 +21,12 @@ export const TrainerDetailsSchema = new Schema(
             type: [String],
             default: []
         },
-        specializations: {
-
-            type: [String], 
-
-            default: []
-
-        },
+       specializations: [
+  {
+    type: Schema.Types.ObjectId,
+    ref: "Specialization"
+  }
+],
         rating: {
             type: Number,
             default: 0

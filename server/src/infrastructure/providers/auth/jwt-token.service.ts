@@ -1,4 +1,4 @@
-import { ITokenService, JwtPayload } from "@/domain/interfaces/token.interface";
+import { ITokenService, JwtPayload } from "@/domain/interfaces/services/token.interface";
 import jwt from "jsonwebtoken";
 import { env } from "@/infrastructure/config/env.config";
 

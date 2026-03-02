@@ -1,5 +1,6 @@
 import { AuthController } from "@/presentation/controllers/user/user-auth.controller";
 import { useCases } from "./user.usecases";
+import { UserController } from "@/presentation/controllers/user/user.controller";
 
 export const userControllers = {
   authController: new AuthController(
@@ -14,4 +15,11 @@ export const userControllers = {
     useCases.refreshTokenUseCase,
     useCases.getMeUseCase
   ),
+  userController: new UserController(
+  useCases.getUserProfileUseCase,
+  useCases.updateUserProfileUseCase,
+  useCases.uploadProfileImageUseCase,
+  useCases.changePasswordUseCase
+  ),
+
 };

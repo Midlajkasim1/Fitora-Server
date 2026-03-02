@@ -1,4 +1,4 @@
-import type { AdminLoginPayload } from "../type/admin.types";
+import type { AdminLoginPayload, WorkoutQuery } from "../type/admin.types";
 import api from "./axios";
 
 export const adminLogin = (data: AdminLoginPayload) => {
@@ -20,6 +20,20 @@ export const toggleTrainerBlock = (userId:string)=>{
   return api.patch(`/admin/trainers/${userId}/block`)
 }
 
-export const AllUserCount = ()=>{
-  return api.get("/admin/get-allUsers");
+export const toggleSpecializationBlock =(specializationId:string)=>{
+  return api.patch(`/admin/specializations/${specializationId}/block`)
+}
+
+export const getAllWorkouts = (params:WorkoutQuery)=>{
+  return api.get("/admin/workouts",{
+    params:{
+      page:params.page,
+      search:params.search,
+      status:params.status
+    }
+  })
+};
+
+export const toggleWorkoutStatus = (workoutId:string)=>{
+  return api.patch(`/admin/workouts/${workoutId}/status`)
 }

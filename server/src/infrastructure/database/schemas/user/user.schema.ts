@@ -24,6 +24,10 @@ export const UserSchema = new Schema(
       type: Date,
       default: null,
     },
+     profileImage:{
+      type:String,
+      default:null
+    },
     gender: {
       type: String,
       enum: ["male", "female", "other"],
@@ -79,7 +83,7 @@ export const UserSchema = new Schema(
       required: true,
       trim: true,
     },
-
+   
   phone: {
       type: String,
       required: function (this: IUserDocument) {

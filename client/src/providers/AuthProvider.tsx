@@ -8,17 +8,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const syncAuth = async () => {
-      
-      const publicPaths = ['/', '/login', '/register', '/admin-portal', '/verify-otp', '/forgot-password', '/reset-password', '/verify-reset-otp'];
       const currentPath = window.location.pathname;
-      const isPublicPath = publicPaths.includes(currentPath);
-
       try {
-        if (isPublicPath) {
-          setInitialLoading(false);
-          return; 
-        }
-
         const isAdmin = currentPath.startsWith('/admin');
         const response = await (isAdmin ? getAdminMe() : getMe());
         

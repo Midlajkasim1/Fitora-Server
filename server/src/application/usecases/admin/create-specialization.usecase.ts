@@ -2,6 +2,7 @@ import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer
 import { CreateSpecializationDTO } from "@/application/dto/specialization/request/create-specialization.dto";
 import { CreateSpecializationResponseDTO } from "@/application/dto/specialization/response/create-specialization.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { SpecializationStatus } from "@/domain/constants/auth.constants";
 import { SPECIALIZATION_MESSAGES } from "@/domain/constants/messages.constants";
 import { SpecializationEntity } from "@/domain/entities/specialization/specialization.entity";
 import { ISpecialization } from "@/domain/interfaces/repositories/specialization.interface";
@@ -22,12 +23,13 @@ export class CreateSpecializationUseCase implements IBaseUseCase<CreateSpecializ
       }
       let imageUrl: string | undefined;
       if(file){
-       imageUrl= await this._storageProvider.uploadFile(file.buffer,file.originalname,file.mimetype);
+       imageUrl= await this._storageProvider.uploadImage(file.buffer,file.originalname,file.mimetype);
       }
       const specialization = SpecializationEntity.create({
         name:dto.name,
         description:dto.description,
-        imageUrl:imageUrl
+        imageUrl:imageUrl,
+        status:SpecializationStatus.ACTIVE
       });
       await this._specializationRepository.create(specialization);
       return {

@@ -38,5 +38,7 @@ export interface IUserRepository extends IBaseRepository<UserEntity> {
     specialization?: string;
     role?: UserRole;
   }): Promise<{ users: UserEntity[]; total: number }>;
-countAllUsers():Promise<number>;
+    updateUserProfile(user:UserEntity):Promise<UserEntity | null>;
+findPasswordById(userId:string):Promise<string | null>;
+
 }

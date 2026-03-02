@@ -21,11 +21,15 @@ const LandingPage: React.FC = () => {
 const navigate = useNavigate();
   const { isAuthenticated, user } = useAuthStore();
 
-  useEffect(() => {
-    if (isAuthenticated && !user?.isOnboardingRequired) {
-      navigate('/home', { replace: true });
-    }
-  }, [isAuthenticated, user, navigate]);
+useEffect(() => {
+  if (isAuthenticated && user?.role === "admin") {
+    navigate("/admin/dashboard", { replace: true });
+  }
+
+  if (isAuthenticated && user?.role === "user" && !user?.isOnboardingRequired) {
+    navigate("/home", { replace: true });
+  }
+}, [isAuthenticated, user, navigate]);
   const coachFeatures = [
     'Dynamic workout adjustments', 'Real-time form correction', 'Nutrition integration', 'Sleep & recovery analysis',
   ];
