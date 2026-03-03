@@ -74,5 +74,6 @@ export const WORKOUT_MESSAGES={
   FILES_MUST_REQUIRED:"Video and thumbnail are required",
   WORKOUT_UPDATED:"Workout updated successfully",
   WORKOUT_ALREADY_EXIST:"Workout already exists",
-  WORKOUT_STATUS_UPDATED:"Workout status updated"
+  WORKOUT_STATUS_UPDATED:"Workout status updated",
+  WORKOUT_NOT_MATCH:"No workout matches this time and difficulty for this specialization"
 };

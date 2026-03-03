@@ -31,13 +31,19 @@ export interface IChangePassword {
   newPassword:string
 }
 
+export interface Specialization {
+  id:string;
+  name:string;
+  description:string;
+  imageUrl:string;
+}
+export interface SpResponse {
+  items:Specialization[];
+  total:number;
+}
 
-export interface TrainerVerificationList {
+export interface StartWorkout{
   id: string;
-  userId: string;
-  trainerName: string;
-  email: string;
-  experienceYear: number;
-  approvalStatus: string;
-  createdAt: Date;
+  difficulty: string;
+  duration: number;
 }

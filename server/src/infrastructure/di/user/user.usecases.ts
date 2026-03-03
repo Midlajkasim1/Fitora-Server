@@ -19,6 +19,10 @@ import { UpdateUserProfileUseCase } from "@/application/usecases/user/update-use
 import { S3StorageProvider } from "@/infrastructure/providers/storage/s3-storage.provider";
 import { UploadProfileImageUseCase } from "@/application/usecases/user/upload-profileImage.usecase";
 import { ChangePasswordUseCase } from "@/application/usecases/user/change-password.usecase";
+import { GetAllSpecializationUsecase } from "@/application/usecases/specialization/get-all-specializations.usecase";
+import { GetSpecializationByIdUseCase } from "@/application/usecases/specialization/get-specializationById.usecase";
+import { GetWorkoutBySpecializationUseCase } from "@/application/usecases/user/getWorkoutBySpecialization.usecase";
+import { GetWorkoutSelectionUseCase } from "@/application/usecases/user/get-workoutSelection.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -99,6 +103,19 @@ export const useCases = {
   changePasswordUseCase: new ChangePasswordUseCase(
     userRepositories.userRepository,
     passwordHasher
+  ),
+  getAllSpecializationUseCase: new GetAllSpecializationUsecase(
+    userRepositories.specializationRepository
+  ),
+  getWorkoutBySpecializationById:new GetWorkoutBySpecializationUseCase(
+    userRepositories.workoutRepository
+  ),
+  getUserSpecializationById:new GetSpecializationByIdUseCase(
+    userRepositories.specializationRepository
+  ),
+  getWorkoutSelectionUseCase: new GetWorkoutSelectionUseCase(
+    userRepositories.workoutRepository
   )
+  
 };
 

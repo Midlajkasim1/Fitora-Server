@@ -121,6 +121,16 @@ export interface TrainerVerificationById {
   }[];
   rejectionReason?: string | null;
 }
+export interface TrainerVerificationList {
+  id: string;
+  userId: string;
+  trainerName: string;
+  email: string;
+  experienceYear: number;
+  approvalStatus: string;
+  createdAt: Date;
+}
+
 
 export interface WorkoutQuery {
   page: number;

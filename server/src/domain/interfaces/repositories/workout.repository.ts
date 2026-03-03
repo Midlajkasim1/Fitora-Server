@@ -1,6 +1,7 @@
 import { WorkoutEntity } from "@/domain/entities/workout/workout.entity";
 import { IBaseRepository } from "./base.repository";
 import { WorkoutStatus } from "@/domain/constants/workout.constant";
+import { GetWorkoutSelectionRequestDTO } from "@/application/dto/user/request/get-workoutselection.dto";
 
 
 export interface IWorkoutRepository extends IBaseRepository<WorkoutEntity> {
@@ -14,5 +15,7 @@ export interface IWorkoutRepository extends IBaseRepository<WorkoutEntity> {
     update(id: string, updateData:Record<string,unknown>):Promise<void | null>;
     findByTitle(title:string):Promise<WorkoutEntity | null>
     updateStatus(id:string,status:WorkoutStatus):Promise<void>;
+    findBySpecializationId(specializationId:string):Promise<WorkoutEntity[] | null>;
+    findOneByWorkoutSelection(dto:GetWorkoutSelectionRequestDTO):Promise<WorkoutEntity | null>;
 }
 

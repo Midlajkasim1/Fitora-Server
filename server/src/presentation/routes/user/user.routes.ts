@@ -19,4 +19,15 @@ router.put("/profileImage",userMiddlewares.authMiddleware,upload.single("profile
 router.put("/change-password",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
     userControllers.userController.ChangePassword(req,res)
 ));
+router.get("/specializations",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSpecializationController.getActiveSpecializations(req,res)
+));
+router.get("/specializations/:id",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSpecializationController.getSpecializationDetails(req,res)
+));
+router.get("/specializations/:id/start",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSpecializationController.getStartSession(req,res)
+));
+
+
 export default router;

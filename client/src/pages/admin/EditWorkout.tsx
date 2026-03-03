@@ -36,7 +36,6 @@ export default function EditWorkoutPage() {
     const [videoPreview, setVideoPreview] = useState<string | null>(null);
     const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
 
-    // Prefill form
     useEffect(() => {
         if (data) {
             reset({
@@ -54,7 +53,6 @@ export default function EditWorkoutPage() {
         }
     }, [data, reset]);
 
-    // Preview updates
     useEffect(() => {
         if (!videoFile) return;
         const url = URL.createObjectURL(videoFile);

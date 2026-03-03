@@ -4,13 +4,23 @@ import { TrainerRepository } from "@/infrastructure/database/repositories/traine
 import { TrainerDetailsMapper } from "@/infrastructure/database/mappers/trainer-details.mapper";
 import { ClientPreferenceRepository } from "@/infrastructure/database/repositories/client-preference.repository";
 import { ClientPreferenceMapper } from "@/infrastructure/database/mappers/client-preference.mapper";
+import { SpecializationRepository } from "@/infrastructure/database/repositories/specialization.repository";
+import { SpecializationMapper } from "@/infrastructure/database/mappers/specialization.mapper";
+import { WorkoutRepository } from "@/infrastructure/database/repositories/workout.repository";
+import { WorkoutMapper } from "@/infrastructure/database/mappers/workout.mapper";
 const userMapper = new UserMapper();
 const trainerMapper = new TrainerDetailsMapper();
 const clientPreferenceMapper= new ClientPreferenceMapper();
+const specializationMapper = new SpecializationMapper();
+const workoutMapper = new WorkoutMapper();
+
 export const userRepositories = {
   userRepository: new UserRepository(userMapper) ,
   trainerRepository: new TrainerRepository(trainerMapper,userMapper),
-    clientPreferenceRepository: new ClientPreferenceRepository(clientPreferenceMapper),
+  clientPreferenceRepository: new ClientPreferenceRepository(clientPreferenceMapper),
+   specializationRepository: new SpecializationRepository(specializationMapper),
+   workoutRepository : new WorkoutRepository(workoutMapper)
+  
   
 
 };

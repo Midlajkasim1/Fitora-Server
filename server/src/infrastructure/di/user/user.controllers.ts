@@ -1,6 +1,8 @@
 import { AuthController } from "@/presentation/controllers/user/user-auth.controller";
 import { useCases } from "./user.usecases";
 import { UserController } from "@/presentation/controllers/user/user.controller";
+// import { sharedUseCases } from "../shared/shared.usecase";
+import { UserSpecializationController } from "@/presentation/controllers/user/userSpecialization.controller";
 
 export const userControllers = {
   authController: new AuthController(
@@ -19,7 +21,16 @@ export const userControllers = {
   useCases.getUserProfileUseCase,
   useCases.updateUserProfileUseCase,
   useCases.uploadProfileImageUseCase,
-  useCases.changePasswordUseCase
+  useCases.changePasswordUseCase,
+  
   ),
+  userSpecializationController:new UserSpecializationController(
+    useCases.getAllSpecializationUseCase,
+    useCases.getUserSpecializationById,
+    useCases.getWorkoutBySpecializationById,
+    useCases.getWorkoutSelectionUseCase
+
+    
+  )
 
 };

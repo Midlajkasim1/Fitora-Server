@@ -95,4 +95,17 @@ async GetSingleSpecialization(req:Request,res:Response):Promise<Response>{
 
   });
 }
+async getActiveSpecialization(req:Request,res:Response):Promise<Response>{
+  const dto: GetSpecializationRequest ={
+    page:Number(req.query.page) || 1,
+    limit: Number(req.query.limit) || 10,
+    search: req.query.search as string,
+    status:SpecializationStatus.ACTIVE
+  };
+  const result = await this._getAllSpecializationUseCase.execute(dto);
+  return res.status(HttpStatus.OK).json({
+    success:true,
+    data:result
+  });
+}
 }

@@ -3,6 +3,7 @@ import { WorkoutMapper } from "../mappers/workout.mapper";
 import { WorkoutEntity } from "@/domain/entities/workout/workout.entity";
 import { WorkoutModel } from "../models/workout.model";
 import { WorkoutStatus } from "@/domain/constants/workout.constant";
+import { GetWorkoutSelectionRequestDTO } from "@/application/dto/user/request/get-workoutselection.dto";
 
 
 
@@ -66,4 +67,24 @@ export class WorkoutRepository implements IWorkoutRepository {
     async updateStatus(id: string,status:WorkoutStatus): Promise<void> {
         await WorkoutModel.findByIdAndUpdate(id,{status});
     }
+    async findBySpecializationId(specializationId: string): Promise<WorkoutEntity[]> {
+        const docs = await WorkoutModel.find({
+            specializationId,
+            status:"active"
+        }).sort({createdAt:-1})
+        .lean();
+        return docs.map(doc=>this.workoutMapper.toEntity(doc));
+    }
+async findOneByWorkoutSelection(dto: GetWorkoutSelectionRequestDTO): Promise<WorkoutEntity | null> {
+    const doc = await WorkoutModel.findOne({
+        specializationId:dto.id,
+        difficulty:dto.difficulty,
+        duration:dto.duration,
+        status:WorkoutStatus.ACTIVE
+
+    }).lean();
+    if(!doc)return null;
+    return this.workoutMapper.toEntity(doc);
+}
+    
 }

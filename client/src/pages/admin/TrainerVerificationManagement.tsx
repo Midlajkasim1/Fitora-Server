@@ -6,7 +6,7 @@ import { Pagination } from "../../components/admin/Pagination";
 import { Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTrainerVerificationManagement } from "../../hooks/admin/use-trainer-verification-management";
-import type { TrainerVerificationList } from "../../type/user.types";
+import type { TrainerVerificationList } from "../../type/admin.types";
 
 export default function TrainerVerificationManagement() {
   const [page, setPage] = useState(1);
