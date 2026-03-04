@@ -1,4 +1,4 @@
-import { GetWorkoutSelectionRequestDTO } from "@/application/dto/user/request/get-workoutselection.dto";
+import { GetWorkoutSelectionRequestDTO } from "@/application/dto/user/request/get-workoutSelection.dto";
 import { GetWorkoutSelectionResponseDTO } from "@/application/dto/user/response/get-workoutSelection.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { WORKOUT_MESSAGES } from "@/domain/constants/messages.constants";
@@ -18,6 +18,7 @@ export class GetWorkoutSelectionUseCase implements IBaseUseCase<GetWorkoutSelect
             id:workout.id!,
             title:workout.title,
             videoUrl:workout.videoUrl,
+            duration:workout.duration,
             caloriesBurn:workout.caloriesBurn,
             description:workout.description
         };

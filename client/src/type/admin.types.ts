@@ -152,3 +152,34 @@ export interface GetAllWorkoutResponse {
   workouts: WorkoutManagement[];
   total: number;
 }
+
+export interface SubscriptionManagement {
+  id: string;
+  name: string;
+  price: string | number;
+  billingCycle: string;
+  description?: string;
+  status: "active" | "inactive";
+  totalPurchaseUser: number;
+  createdAt: string | Date;
+}
+
+export interface GetSubscriptionsResponse {
+  subscriptions: SubscriptionManagement[];
+  totals: number;
+}
+
+export interface SubscriptionQuery {
+  page: number;
+  search?: string;
+  status?: string;
+}
+
+
+export interface CreateSubscriptionRequest {
+  name: string;
+  price: string | number;
+  billingCycle: string;
+  description: string;
+}
+

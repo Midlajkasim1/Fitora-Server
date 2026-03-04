@@ -29,6 +29,9 @@ const ChangePassword = lazy(() => import("../pages/user/client/ChangePassword"))
 const UserSpecializationList = lazy(() => import("../pages/user/client/SpecializationPage"));
 const UserSpecializationDetails = lazy(() => import("../pages/user/client/SpecializationDetailsPage"));
 const UserWorkoutTimeSelectionPage = lazy(() => import("../pages/user/client/WorkoutTimeSelectionPage"));
+const WorkoutCompletedPage = lazy(()=>import("../pages/user/client/WorkoutCompletePage"));
+const SubscriptionListPage = lazy(()=>import("../pages/user/client/SubscriptionPage"));
+
 
 /* Video Session Page - Positioned for Full Screen */
 const UserWorkoutSessionPage = lazy(() => import("../pages/user/client/VideoSessionPage"));
@@ -49,6 +52,11 @@ const TrainerVerificationDetails = lazy(() => import("../pages/admin/TrainerVeri
 const WorkoutManagement = lazy(() => import("../pages/admin/WorkoutManagement"));
 const CreateWorkoutPage = lazy(() => import("../pages/admin/CreateWorkout"));
 const EditWorkoutPage = lazy(() => import("../pages/admin/EditWorkout"));
+const SubscriptionManagement = lazy(()=>import("../pages/admin/subscription/SubscriptionManagement"));
+const CreateSpecializationPage = lazy(()=>import("../pages/admin/subscription/CreateSubscription"));
+const EditSpecializationPage = lazy(()=>import("../pages/admin/subscription/EditSubscriptionPage"));
+
+
 
 export default function AppRoutes() {
   return (
@@ -98,6 +106,9 @@ export default function AppRoutes() {
           <Route path="/workouts" element={<UserSpecializationList />} />
           <Route path="/workouts/:id" element={<UserSpecializationDetails />} />
           <Route path="/select-workouts/:id" element={<UserWorkoutTimeSelectionPage />} />
+          <Route path="/workouts/completed" element={<WorkoutCompletedPage />} />
+          <Route path="/subscription" element={<SubscriptionListPage />} />
+
         </Route>
 
         {/* Admin Portal */}
@@ -117,6 +128,11 @@ export default function AppRoutes() {
           <Route path="workouts" element={<WorkoutManagement />} />
           <Route path="create-workouts" element={<CreateWorkoutPage />} />
           <Route path="edit-workouts/:id" element={<EditWorkoutPage />} />
+          <Route path="subscriptions" element={<SubscriptionManagement/>}/>
+          <Route path="create-subscriptions" element={<CreateSpecializationPage/>}/>
+          <Route path="edit-subscriptions/:id" element={<EditSpecializationPage/>}/>
+
+
         </Route>
 
         {/* Fallback */}

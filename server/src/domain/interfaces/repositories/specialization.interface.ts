@@ -12,7 +12,7 @@ export interface ISpecialization extends IBaseRepository<SpecializationEntity> {
     limit:number,
     search?:string,
     status?:SpecializationStatus
-  }):Promise<{specializations:SpecializationEntity[],total:number}>
+  }):Promise<{specializations:SpecializationEntity[];total:number}>
 
     updateStatus(id:string,status:SpecializationStatus):Promise<void>;
     findByIds(ids:string[]):Promise<SpecializationEntity[]>

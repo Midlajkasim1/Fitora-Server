@@ -5,47 +5,47 @@ import { Timer, Flame, XCircle, Play, Pause } from "lucide-react";
 export default function VideoSessionPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const workout = location.state?.workout;
   const videoRef = useRef<HTMLVideoElement>(null);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // 1. Correct Initialization: Parse duration from state
-  const [secondsLeft, setSecondsLeft] = useState(() => {
-    const durationMinutes = Number(workout?.duration) || 0;
-    console.log("Raw Duration from state:", workout?.duration);
-    console.log("Timer Initialized with seconds:", durationMinutes * 60);
-    return durationMinutes * 60;
-  });
+  // 1. DATA: Get workout details passed from the previous page
+  const workout = location.state?.workout;
 
+  // 2. STATE: Minutes to seconds conversion and activity toggle
+  const [secondsLeft, setSecondsLeft] = useState(() => (Number(workout?.duration) || 0) * 60);
   const [isActive, setIsActive] = useState(false);
 
-  // 2. Sync Video with isActive state
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+  // 3. LOGIC: Navigation to Results Page
+  const goToResults = () => {
+    setIsActive(false);
+    navigate("/workouts/completed", { 
+      state: { 
+        calories: workout?.caloriesBurn, 
+        title: workout?.title 
+      } 
+    });
+  };
 
+  // 4. EFFECT: Sync Video Element with Play/Pause state
+  useEffect(() => {
+    if (!videoRef.current) return;
+    
     if (isActive) {
-      video.play().catch((err) => {
-        console.error("Playback blocked by browser:", err);
-        setIsActive(false);
-      });
+      videoRef.current.play().catch(() => setIsActive(false));
     } else {
-      video.pause();
+      videoRef.current.pause();
     }
   }, [isActive]);
 
-  // 3. Optimized Backward Timer
+
   useEffect(() => {
-    // Clear any existing interval to prevent multiple timers
-    if (intervalRef.current) clearInterval(intervalRef.current);
+    let interval: any = null;
 
     if (isActive && secondsLeft > 0) {
-      intervalRef.current = setInterval(() => {
+      interval = setInterval(() => {
         setSecondsLeft((prev) => {
           if (prev <= 1) {
-            console.log("Session Completed");
-            setIsActive(false);
-            if (videoRef.current) videoRef.current.pause();
+            clearInterval(interval);
+            setTimeout(() => goToResults(), 0);
             return 0;
           }
           return prev - 1;
@@ -53,68 +53,57 @@ export default function VideoSessionPage() {
       }, 1000);
     }
 
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [isActive]); // Only re-run when pause/play is toggled
+    return () => clearInterval(interval);
+  }, [isActive, goToResults]); 
 
   const formatTime = (totalSeconds: number) => {
-    const m = Math.floor(totalSeconds / 60);
-    const s = totalSeconds % 60;
-    return `${m}:${s < 10 ? "0" : ""}${s}`;
+    const mins = Math.floor(totalSeconds / 60);
+    const secs = totalSeconds % 60;
+    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
-  if (!workout) {
-    return (
-      <div className="h-screen bg-[#07140f] flex items-center justify-center text-white font-black italic">
-        SESSION DATA MISSING
-      </div>
-    );
-  }
+  if (!workout) return <div className="h-screen bg-[#07140f] flex items-center justify-center text-white">Loading Workout...</div>;
 
   return (
-    <div className="h-screen bg-[#07140f] text-white flex flex-col lg:flex-row overflow-hidden font-sans">
+    <div className="h-screen bg-[#07140f] text-white flex flex-col lg:flex-row overflow-hidden">
       
-      {/* LEFT: MAIN VIDEO AREA */}
+      {/* LEFT SIDE: THE PLAYER */}
       <div className="flex-1 bg-black relative flex items-center justify-center">
         <video 
           ref={videoRef}
           src={workout.videoUrl} 
           className="w-full h-full object-contain"
           playsInline 
+          onEnded={goToResults} // Trigger results when video finishes
           onPlay={() => setIsActive(true)}
           onPause={() => setIsActive(false)}
         />
         
         {/* Title Overlay */}
-        <div className="absolute top-8 left-8 bg-black/60 backdrop-blur-md px-6 py-3 rounded-2xl border border-white/10">
-          <h1 className="text-[#00ff94] font-black uppercase italic tracking-widest text-lg">
-            {workout.title}
-          </h1>
+        <div className="absolute top-6 left-6 bg-black/50 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10">
+          <h1 className="text-[#00ff94] font-bold italic uppercase tracking-wider">{workout.title}</h1>
         </div>
       </div>
 
-      {/* RIGHT: CONTROL DASHBOARD */}
+      {/* RIGHT SIDE: DASHBOARD */}
       <div className="w-full lg:w-96 bg-[#0d1f17] p-8 flex flex-col justify-between border-l border-white/5">
         <div className="space-y-8">
-          <h2 className="text-gray-500 font-black uppercase italic text-xs tracking-[0.3em]">Live Metrics</h2>
+          <h2 className="text-gray-500 font-bold uppercase italic text-xs tracking-widest">Session Stats</h2>
 
-          {/* Timer Card */}
-          <div className="bg-black/20 p-8 rounded-[2rem] border border-white/5 flex flex-col items-center">
+          {/* Timer Display */}
+          <div className="bg-black/40 p-10 rounded-[2.5rem] border border-white/5 flex flex-col items-center mb-2">
             <Timer size={24} className={isActive ? "text-[#00ff94] animate-pulse" : "text-gray-600"} />
-            <span className="text-5xl font-black italic tracking-tighter tabular-nums mt-2">
+            <span className="text-6xl font-black italic tracking-tighter mt-2 tabular-nums">
               {formatTime(secondsLeft)}
             </span>
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Remaining Time</p>
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mt-2">Remaining</p>
           </div>
 
-          {/* Calories Card */}
-          <div className="bg-[#00ff94]/5 p-8 rounded-[2rem] border border-[#00ff94]/10 flex flex-col items-center">
+          {/* Calories Display */}
+          <div className="bg-[#00ff94]/5 p-10 rounded-[2.5rem] border border-[#00ff94]/10 flex flex-col items-center ">
             <Flame size={24} className="text-orange-500" />
-            <span className="text-4xl font-black italic text-[#00ff94] mt-2">
-              {workout.caloriesBurn}
-            </span>
-            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Est. Calories</p>
+            <span className="text-4xl font-black italic text-[#00ff94] mt-2">{workout.caloriesBurn}</span>
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mt-2">Est. Burned</p>
           </div>
         </div>
 
@@ -123,19 +112,17 @@ export default function VideoSessionPage() {
           <button 
             onClick={() => setIsActive(!isActive)}
             className={`w-full py-5 rounded-2xl font-black uppercase italic text-xs flex items-center justify-center gap-3 transition-all border ${
-              isActive 
-              ? "bg-white/5 border-white/10 hover:bg-white/20" 
-              : "bg-[#00ff94] text-black border-[#00ff94] hover:shadow-[0_0_20px_rgba(0,255,148,0.3)]"
+              isActive ? "bg-white/5 border-white/10" : "bg-[#00ff94] text-black border-[#00ff94]"
             }`}
           >
-            {isActive ? <><Pause size={18} /> Pause Session</> : <><Play size={18} /> Resume Session</>}
+            {isActive ? <><Pause size={18} fill="currentColor" /> Pause Session</> : <><Play size={18} fill="currentColor" /> Resume Session</>}
           </button>
 
           <button 
-            onClick={() => navigate('/home')}
-            className="w-full py-5 bg-red-500/10 border border-red-500/20 text-red-500 rounded-2xl font-black uppercase italic text-xs flex items-center justify-center gap-3 hover:bg-red-500/20 transition-all"
+            onClick={() => navigate('/workouts')}
+            className="w-full py-5 bg-red-500/10 border border-red-500/20 text-red-500 rounded-2xl font-black uppercase italic text-xs flex items-center justify-center gap-3"
           >
-            <XCircle size={18} /> Stop Session
+            <XCircle size={18} /> Exit Workout
           </button>
         </div>
       </div>

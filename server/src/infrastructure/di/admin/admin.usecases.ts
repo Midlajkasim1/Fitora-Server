@@ -23,6 +23,11 @@ import { GetAllWorkoutUseCase } from "@/application/usecases/workout/getAll-work
 import { GetWorkoutByIdUseCase } from "@/application/usecases/workout/getWorkoutById.usecase";
 import { UpdateWorkoutUseCase } from "@/application/usecases/workout/update-workout.usecase";
 import { UpdateWorkoutStatusUseCase } from "@/application/usecases/workout/update-workoutStatus.usecase";
+import { CreateSubscriptionUseCase } from "@/application/usecases/subscription/create-subscription.usecase";
+import { GetSubcriptionUseCase } from "@/application/usecases/subscription/get-subcription.usecase";
+import { UpdateSubscriptionUseCase } from "@/application/usecases/subscription/update-subscription.usecase";
+import { UpdateSubscriptionStatusUseCase } from "@/application/usecases/subscription/updateStatus-subscription.usecase";
+import { GetSubscriptionByIdUseCase } from "@/application/usecases/subscription/get-subscriptionById.usecase";
 
 const tokenService = new JwtTokenService();
 const passwordHasher = new BcryptPasswordHasher();
@@ -103,6 +108,21 @@ export const adminUseCases = {
   ),
   updateWorkoutStatusUseCase: new UpdateWorkoutStatusUseCase(
     adminRepositories.workoutRepository
+  ),
+  createSubscriptionUseCase: new CreateSubscriptionUseCase(
+    adminRepositories.subcriptionRepository
+  ),
+  getSubscriptionUseCase: new GetSubcriptionUseCase(
+    adminRepositories.subcriptionRepository
+  ),
+  updateSubscriptionUseCase:new UpdateSubscriptionUseCase(
+    adminRepositories.subcriptionRepository
+  ),
+  updateSubscriptionStatus:new UpdateSubscriptionStatusUseCase(
+    adminRepositories.subcriptionRepository
+  ),
+  getSubscriptionByIdUseCase : new GetSubscriptionByIdUseCase(
+    adminRepositories.subcriptionRepository
   )
   
 

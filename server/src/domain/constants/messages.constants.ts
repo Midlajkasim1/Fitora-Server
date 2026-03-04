@@ -77,3 +77,13 @@ export const WORKOUT_MESSAGES={
   WORKOUT_STATUS_UPDATED:"Workout status updated",
   WORKOUT_NOT_MATCH:"No workout matches this time and difficulty for this specialization"
 };
+
+export const SUBSCRIPTION_MESSAGES={
+  SUBSCRIPTION_ALREADY_EXISTS:"Subscription already exists",
+  SUBSCRIPTION_PLAN_CREATED:"Subcription plan created",
+  SUBSCRIPTION_NOT_FOUND:"Subscription not found",
+  SUBSCRIPTION_PLAN_UPDATED:"Subcription plan updated",
+    SUBSCRIPTION_PLAN_STATUS_UPDATED:"Subcription plan stated updated",
+
+
+};

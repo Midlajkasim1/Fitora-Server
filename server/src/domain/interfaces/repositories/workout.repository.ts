@@ -1,7 +1,7 @@
 import { WorkoutEntity } from "@/domain/entities/workout/workout.entity";
 import { IBaseRepository } from "./base.repository";
 import { WorkoutStatus } from "@/domain/constants/workout.constant";
-import { GetWorkoutSelectionRequestDTO } from "@/application/dto/user/request/get-workoutselection.dto";
+import { GetWorkoutSelectionRequestDTO } from "@/application/dto/user/request/get-workoutSelection.dto";
 
 
 export interface IWorkoutRepository extends IBaseRepository<WorkoutEntity> {

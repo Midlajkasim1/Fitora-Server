@@ -3,7 +3,7 @@ import { GetSpecializationByIdRequestDTO } from "@/application/dto/specializatio
 import { GetSpecializationResponseDTO } from "@/application/dto/specialization/response/get-specialization.dto";
 import { GetSpecializationByIdResponseDTO } from "@/application/dto/specialization/response/get-specializationById.dto";
 import { GetWorkoutBySpecializationRequestDTO } from "@/application/dto/user/request/get-workoutBy-Specialization.dto";
-import { GetWorkoutSelectionRequestDTO } from "@/application/dto/user/request/get-workoutselection.dto";
+import { GetWorkoutSelectionRequestDTO } from "@/application/dto/user/request/get-workoutSelection.dto";
 import { GetWorkoutsBySpecializationResponseDTO } from "@/application/dto/user/response/get-workoutBy-specialization.dto";
 import { GetWorkoutSelectionResponseDTO } from "@/application/dto/user/response/get-workoutSelection.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";

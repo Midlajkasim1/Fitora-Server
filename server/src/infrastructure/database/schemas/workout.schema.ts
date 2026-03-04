@@ -1,4 +1,4 @@
-import { WorkoutDifficulty, WorkoutStatus } from "@/domain/constants/workout.constant";
+import {  WorkoutStatus } from "@/domain/constants/workout.constant";
 import { Schema } from "mongoose";
 
 

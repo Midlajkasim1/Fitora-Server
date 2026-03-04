@@ -3,7 +3,7 @@ import { WorkoutMapper } from "../mappers/workout.mapper";
 import { WorkoutEntity } from "@/domain/entities/workout/workout.entity";
 import { WorkoutModel } from "../models/workout.model";
 import { WorkoutStatus } from "@/domain/constants/workout.constant";
-import { GetWorkoutSelectionRequestDTO } from "@/application/dto/user/request/get-workoutselection.dto";
+import { GetWorkoutSelectionRequestDTO } from "@/application/dto/user/request/get-workoutSelection.dto";
 
 
 

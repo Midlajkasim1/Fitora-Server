@@ -3,7 +3,7 @@ import {
   LayoutDashboard, Users, GraduationCap, 
   Settings, CheckCircle, Wallet, 
   Megaphone, FileText, Dumbbell, LogOut, 
-  ActivityIcon
+  ActivityIcon,Zap
 } from "lucide-react";
 import { useAuthStore } from "../../store/use-auth-store";
 import { adminLogout } from "../../api/admin.api";
@@ -14,6 +14,7 @@ const navItems = [
   { name: "Trainers", path: "/admin/trainers", icon: GraduationCap },
   { name: "Specialisation", path: "/admin/specializations", icon: Settings },
   { name: "Verification", path: "/admin/trainer/verifications", icon: CheckCircle },
+  { name: "Subscription", path: "/admin/subscriptions", icon: Zap },
   { name: "Finance Management", path: "", icon: Wallet },
   { name: "Advertisements", path: "", icon: Megaphone },
   { name: "Report", path: "", icon: FileText },

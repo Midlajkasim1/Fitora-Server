@@ -3,76 +3,88 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useStartWorkout } from "../../../hooks/user/workout/use-user-startWorkout-session";
 
 export default function WorkoutConfiguration() {
-  const { id } = useParams(); // Specialization ID
+  const { id } = useParams();
   const navigate = useNavigate();
-  const [selectedDifficulty, setSelectedDifficulty] = useState("beginner");
-  const [selectedDuration, setSelectedDuration] = useState(5);
-  const [shouldFetch, setShouldFetch] = useState(false);
 
-const { data, isFetching, isError, error } = useStartWorkout(
-  {
-    id: id!,
-    difficulty: selectedDifficulty,
-    duration: selectedDuration,
-  },
-  shouldFetch // Pass this as the second argument
-);
+  const [difficulty, setDifficulty] = useState("beginner");
+  const [duration, setDuration] = useState(5);
 
-  // Effect to navigate once data is received
-  if (data && shouldFetch) {
-    navigate(`/workouts/session/${data.id}`, { state: { workout: data } });
-    setShouldFetch(false);
-  }
+  // 1. We keep enabled: false so it doesn't run automatically
+  const { isFetching, isError, error, refetch } = useStartWorkout(
+    {
+      id: id!,
+      difficulty: difficulty,
+      duration: duration,
+    },
+    false // Enabled is false by default
+  );
 
-  const handleStart = () => {
-    setShouldFetch(true);
+  // 2. We handle the logic entirely in the click function
+  const handleStart = async () => {
+    // Manually trigger the fetch
+    const result = await refetch();
+
+    // If we get data back successfully, navigate immediately
+    if (result.data) {
+      navigate(`/workouts/session/${result.data.id}`, { 
+        state: { workout: result.data } 
+      });
+    }
   };
 
   return (
     <div className="min-h-screen bg-[#07140f] text-white flex flex-col items-center justify-center p-6">
-      <h1 className="text-5xl font-black italic uppercase text-[#00ff94] mb-4">Select Time</h1>
-      
-      {/* Difficulty Selection Cards */}
-      <div className="flex gap-6 mb-12">
-        {["Easy", "Intermediate", "Advanced"].map((level) => (
-          <div
-            key={level}
-            onClick={() => setSelectedDifficulty(level.toLowerCase())}
-            className={`cursor-pointer p-10 rounded-3xl border-2 transition-all flex flex-col items-center gap-4 w-52 ${
-              selectedDifficulty === level.toLowerCase() 
-                ? "border-[#00ff94] bg-[#00ff94]/5" 
-                : "border-white/5 bg-[#0d1f17]"
-            }`}
-          >
-            <span className="font-bold uppercase italic">{level}</span>
-          </div>
-        ))}
-      </div>
+      <h1 className="text-4xl font-black uppercase italic text-[#00ff94] mb-10 text-center">
+        Customize Session
+      </h1>
 
-      {/* Duration Selection */}
-      <div className="flex gap-10 mb-16">
-        {[5, 10, 15].map((time) => (
+      {/* DIFFICULTY SELECTION */}
+      <div className="flex flex-wrap justify-center gap-4 mb-10">
+        {["Easy", "Intermediate", "Advanced"].map((level) => (
           <button
-            key={time}
-            onClick={() => setSelectedDuration(time)}
-            className={`text-sm font-black italic uppercase tracking-widest transition-all ${
-              selectedDuration === time ? "text-[#00ff94]" : "text-gray-600"
+            key={level}
+            onClick={() => setDifficulty(level.toLowerCase())}
+            className={`px-8 py-6 rounded-2xl border-2 font-bold uppercase italic transition-all ${
+              difficulty === level.toLowerCase()
+                ? "border-[#00ff94] bg-[#00ff94]/10 text-[#00ff94]"
+                : "border-white/5 bg-[#0d1f17] text-gray-500"
             }`}
           >
-            {time}:00 Minutes
+            {level}
           </button>
         ))}
       </div>
 
-      <button 
+      {/* DURATION SELECTION */}
+      <div className="flex flex-wrap justify-center gap-8 mb-16">
+        {[5, 10, 15].map((mins) => (
+          <button
+            key={mins}
+            onClick={() => setDuration(mins)}
+            className={`text-lg font-black uppercase italic transition-all ${
+              duration === mins ? "text-[#00ff94] border-b-2 border-[#00ff94]" : "text-gray-600 hover:text-white"
+            }`}
+          >
+            {mins} Mins
+          </button>
+        ))}
+      </div>
+
+      {/* START ACTION */}
+      <button
         onClick={handleStart}
         disabled={isFetching}
-        className="px-16 py-5 bg-[#00ff94] text-black font-black rounded-2xl uppercase italic text-sm hover:shadow-[0_0_30px_rgba(0,255,148,0.4)] transition-all disabled:opacity-50"
+        className="px-16 py-5 bg-[#00ff94] text-black font-black rounded-xl uppercase italic hover:scale-105 transition-all disabled:opacity-50 disabled:hover:scale-100"
       >
-        {isFetching ? "Syncing..." : "Start"}
+        {isFetching ? "Locating Workout..." : "Start Workout"}
       </button>
 
-      {isError && <p className="text-red-500 mt-4 italic">{(error as any)?.response?.data?.message || "No session found"}</p>}
+      {/* ERROR HANDLING */}
+      {isError && (
+        <p className="mt-6 text-red-500 font-bold italic bg-red-500/10 px-4 py-2 rounded-lg">
+          {(error as any)?.response?.data?.message || "No workout found for this selection."}
+        </p>
+      )}
     </div>
   );
 }

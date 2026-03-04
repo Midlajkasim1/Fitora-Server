@@ -23,6 +23,8 @@ import { GetAllSpecializationUsecase } from "@/application/usecases/specializati
 import { GetSpecializationByIdUseCase } from "@/application/usecases/specialization/get-specializationById.usecase";
 import { GetWorkoutBySpecializationUseCase } from "@/application/usecases/user/getWorkoutBySpecialization.usecase";
 import { GetWorkoutSelectionUseCase } from "@/application/usecases/user/get-workoutSelection.usecase";
+import { GetSubcriptionUseCase } from "@/application/usecases/subscription/get-subcription.usecase";
+import { GetSubscriptionByIdUseCase } from "@/application/usecases/subscription/get-subscriptionById.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -115,6 +117,12 @@ export const useCases = {
   ),
   getWorkoutSelectionUseCase: new GetWorkoutSelectionUseCase(
     userRepositories.workoutRepository
+  ),
+  getUserSubscriptionUseCase: new GetSubcriptionUseCase(
+    userRepositories.subscriptionRepository
+  ),
+  getUserSubscriptionByIdUseCase: new GetSubscriptionByIdUseCase(
+    userRepositories.subscriptionRepository
   )
   
 };

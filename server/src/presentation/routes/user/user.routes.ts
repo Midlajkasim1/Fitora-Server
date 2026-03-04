@@ -28,6 +28,11 @@ router.get("/specializations/:id",userMiddlewares.authMiddleware,asyncHandler((r
 router.get("/specializations/:id/start",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
     userControllers.userSpecializationController.getStartSession(req,res)
 ));
-
+router.get("/subscriptions",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSubscriptionController.getUserSubscription(req,res)
+));
+router.get("/subscriptions/:id",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSubscriptionController.getPlanDetails(req,res)
+));
 
 export default router;

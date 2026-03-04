@@ -79,4 +79,21 @@ router.patch("/workouts/:id/status",adminMiddlewares.authMiddleware,asyncHandler
   adminControllers.workoutController.updateWorkoutStatus(req,res)
 ));
 
+router.post("/subscriptions",adminMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+ adminControllers.subscriptionController.createSubscripion(req,res)
+));
+router.get("/subscriptions",adminMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+ adminControllers.subscriptionController.getSubscription(req,res)
+));
+router.put("/subscriptions/:id",adminMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+ adminControllers.subscriptionController.updateSubscription(req,res)
+));
+router.patch("/subscriptions/:id/status",adminMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+ adminControllers.subscriptionController.updateSubscriptionStatus(req,res)
+));
+router.get("/subscriptions/:id",adminMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+ adminControllers.subscriptionController.getSubscriptionById(req,res)
+));
+
+
 export default router;
