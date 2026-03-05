@@ -1,13 +1,10 @@
-import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
 import { Types } from "mongoose";
 
 export interface ISubscriptionDocument {
-  _id: Types.ObjectId;
-    name: string;
-    price: string; 
-    billingCycle: string;
-    description: string;
-    status: SubscriptionStatus;
-    totalPurchaseUser: number;
-    createdAt: Date;
+    _id: Types.ObjectId ;
+    plan_id: Types.ObjectId | string;
+    user_id: Types.ObjectId | string;
+    status: string;
+    start_date: Date;
+    end_date: Date;
 }

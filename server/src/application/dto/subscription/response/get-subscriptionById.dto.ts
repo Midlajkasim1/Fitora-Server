@@ -1,13 +1,13 @@
-import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
+import { SubscriptionPlanStatus } from "@/domain/constants/subscription.constants";
 
 
 
-export interface GetSubscriptionByIdResponseDTO{
+export interface GetSubscriptionPlanByIdResponseDTO{
     id:string;
     name:string;
     price:number | string;
     billingCycle:string;
     description:string;
-    status?:SubscriptionStatus
+    status?:SubscriptionPlanStatus
     createdAt:Date;
 }

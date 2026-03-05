@@ -29,8 +29,12 @@ export const authenticateAdmin = (adminRepository: IAdminRepository) => {
         });
       }
 
-      req.user = decoded;
-
+     req.user = {
+        userId: admin.id!,
+        email: admin.email,
+        name: "Admin", 
+        role: admin.role
+      };
           res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
       res.setHeader("Pragma", "no-cache");
       res.setHeader("Expires", "0");

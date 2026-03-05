@@ -1,28 +1,28 @@
+import { Types } from "mongoose";
 import { SubscriptionEntity } from "@/domain/entities/subscription/subscription.entity";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
 import { ISubscriptionDocument } from "../interfaces/ISubscription.document";
+import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
 
-
-
-export class SubscriptionMapper implements IMapper<SubscriptionEntity,ISubscriptionDocument>{
+export class SubscriptionMapper implements IMapper<SubscriptionEntity, ISubscriptionDocument> {
     toEntity(doc: ISubscriptionDocument): SubscriptionEntity {
-        return SubscriptionEntity.create({
+        return new SubscriptionEntity({
             id: doc._id.toString(),
-            name: doc.name,
-            price: doc.price,
-            billingCycle: doc.billingCycle,
-            description: doc.description,
-            status: doc.status,
-            createdAt: doc.createdAt
+            planId: doc.plan_id.toString(),
+            userId: doc.user_id.toString(),
+            status: doc.status as SubscriptionStatus,
+            startDate: doc.start_date,
+            endDate: doc.end_date
         });
     }
+
     toMongo(entity: SubscriptionEntity): Partial<ISubscriptionDocument> {
-        return{
-            name: entity.name,
-            price: entity.price.toString(),
-            billingCycle: entity.billingCycle,
-            description: entity.description,
-            status: entity.status
+        return {
+            plan_id: new Types.ObjectId(entity.planId),
+            user_id: new Types.ObjectId(entity.userId),
+            status: entity.status,
+            start_date: entity.startDate,
+            end_date: entity.endDate
         };
     }
 }

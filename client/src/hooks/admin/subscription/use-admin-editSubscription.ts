@@ -3,7 +3,7 @@ import api from "../../../api/axios";
 import toast from "react-hot-toast";
 import type { CreateSubscriptionFormData } from "../../../validators/admin/Subcription.Schema";
 
-export const useUpdateSubscription = () => {
+export const useUpdateSubscriptionPlan = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

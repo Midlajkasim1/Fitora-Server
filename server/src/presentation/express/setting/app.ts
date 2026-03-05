@@ -1,12 +1,13 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import compression from "compression"; 
 import routes from "@/presentation/routes";
 import { errorHandler } from "@/presentation/middleware/error.middleware";
 import { env } from "@/infrastructure/config/env.config";
-import onboardingRouter from "@/presentation/routes/auth/onboarding.routes";
 import helmet from "helmet";
+import { userControllers } from "@/infrastructure/di/user/user.controllers";
+import { asyncHandler } from "@/presentation/middleware/asyncHandler";
 const app = express();
 
 app.use(helmet());
@@ -17,6 +18,9 @@ app.use(cors({
 }));
 app.use(cookieParser());
 app.use(compression());
+app.post("/api/user/webhook",express.raw({type:"application/json"}),asyncHandler((req:Request,res:Response)=>
+    userControllers.userSubscriptionController.handlewebhook(req,res)
+));
 app.use(express.json());
 
 app.use("/api", routes);

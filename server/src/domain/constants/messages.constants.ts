@@ -35,7 +35,9 @@ export const AUTH_MESSAGES = {
   TRAINER_STATUS_UPDATED: (status: string) => `Trainer status successfully updated to ${status}`,
   USER_STATUS_UPDATED: (status: string) => `User status successfully updated to ${status}`,
   PROFILE_IMAGE_UPDATED:"Profile updated",
-  FILE_NOT_FOUND:"No file uploaded"
+  FILE_NOT_FOUND:"No file uploaded",  
+  USER_AUTHENTICATION_NOT_FOUND:"User authentication data is incomplete. Please log in again."
+
 
 
 };
@@ -84,6 +86,9 @@ export const SUBSCRIPTION_MESSAGES={
   SUBSCRIPTION_NOT_FOUND:"Subscription not found",
   SUBSCRIPTION_PLAN_UPDATED:"Subcription plan updated",
     SUBSCRIPTION_PLAN_STATUS_UPDATED:"Subcription plan stated updated",
+    
 
-
+};
+export const PAYMENT_MESSAGES={
+  PAYMENT_NOT_FOUND:"Payment not found for provider session"
 };

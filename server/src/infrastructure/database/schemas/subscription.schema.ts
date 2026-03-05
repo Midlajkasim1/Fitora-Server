@@ -2,32 +2,29 @@ import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
 import { Schema } from "mongoose";
 
 
-export const SubscriptionSchema = new Schema({
-    name:{
-        type:String,
-        required:true,
-        unique:true
+export const SubscriptionSchema =  new Schema({
+    plan_id:{
+        type:Schema.Types.ObjectId,
+        ref:"SubscriptionPlan",
+        required:true 
     },
-    price:{
-        type:String,
+    user_id:{
+        type:Schema.Types.ObjectId,
+        ref:"User",
         required:true
-
-    },
-    billingCycle:{
-        type:String,
-        required:true 
-    },
-    description:{
-        type:String,
-        required:true 
     },
     status:{
         type:String,
         enum:Object.values(SubscriptionStatus),
-        default:SubscriptionStatus.ACTIVE
+        default:SubscriptionStatus.PENDING
     },
-    totalPurchaseUser:{
-        type:Number,
-        default:0
+    start_date:{
+        type:Date,
+        required:true
+    },
+    end_date:{
+        type:Date,
+        required:true 
     }
+
 },{timestamps:true});

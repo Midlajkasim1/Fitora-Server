@@ -1,3 +1,4 @@
+import { PlanSessionType } from "@/domain/constants/subscription.constants";
 import { z } from "zod";
 
 export const SubscriptionSchema = z.object({
@@ -21,5 +22,12 @@ export const SubscriptionSchema = z.object({
     .string()
     .min(10, "Description should be at least 10 characters")
     .max(500, "Description is too long"),
+
+sessionType: z.nativeEnum(PlanSessionType),
+  sessionCredits: z.coerce.number().min(0, "Credits cannot be negative"),
+
+  aiWorkoutLimit: z.coerce.number().int().describe("-1 for unlimited"),
+
+  aiDietLimit: z.coerce.number().int().describe("-1 for unlimited"),
 });
 

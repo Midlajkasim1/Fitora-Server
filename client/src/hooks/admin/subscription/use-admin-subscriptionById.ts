@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import api from "../../../api/axios";
 
-export const useSubscriptionById = (id: string) => {
+export const useSubscriptionPlanById = (id: string) => {
   return useQuery({
     queryKey: ["subscription", id],
     queryFn: async () => {

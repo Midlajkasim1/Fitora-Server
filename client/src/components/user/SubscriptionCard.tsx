@@ -1,4 +1,5 @@
-import { Zap, ChevronRight, Target } from "lucide-react";
+// components/user/SubscriptionCard.tsx
+import { Zap, ChevronRight, Target, Loader2 } from "lucide-react";
 
 interface PricingCardProps {
   plan: {
@@ -8,13 +9,19 @@ interface PricingCardProps {
     billingCycle: string;
     description: string;
   };
+  onSubscribe: (id: string) => void;
+  isPurchasing: boolean; // Managed by the parent page
 }
 
-export const SubscriptionCard = ({ plan }: PricingCardProps) => {
-  const isPro = plan.name.toLowerCase().includes("pro");
+export const SubscriptionCard = ({ plan, onSubscribe, isPurchasing }: PricingCardProps) => {
+  const isPro = 
+    plan.name.toLowerCase().includes("pro") || 
+    plan.name.toLowerCase().includes("performance");
 
+  const formattedDescription = plan.description?.replace(/,/g, '\n');
+  
   return (
-    <div className={`relative rounded-[2.5rem] p-10 flex flex-col transition-all duration-300 hover:translate-y-[-10px] ${
+    <div className={`relative rounded-[2.5rem] p-10 flex flex-col transition-all duration-300 hover:translate-y-[-10px] h-full ${
       isPro 
         ? "bg-gradient-to-b from-[#132a1e] to-[#0a1810] border-2 border-[#00ff94]/50 shadow-[0_20px_50px_rgba(0,255,148,0.1)]" 
         : "bg-[#0a1810] border border-white/5"
@@ -37,8 +44,8 @@ export const SubscriptionCard = ({ plan }: PricingCardProps) => {
         </div>
         
         <div className="flex items-baseline gap-1">
-          <span className="text-5xl font-black italic tracking-tighter">
-            ${plan.price}
+          <span className="text-5xl font-black italic tracking-tighter text-white">
+            ₹{plan.price}
           </span>
           <span className="text-gray-500 text-[10px] font-bold uppercase italic">
             / {plan.billingCycle}
@@ -51,8 +58,8 @@ export const SubscriptionCard = ({ plan }: PricingCardProps) => {
           <div className="mt-1">
             <Target size={16} className="text-[#00ff94]" />
           </div>
-          <p className="text-gray-300 text-xs font-bold italic leading-relaxed uppercase tracking-wide">
-            {plan.description}
+          <p className="text-gray-300 text-[11px] font-bold italic leading-relaxed uppercase tracking-wider whitespace-pre-line">
+            {formattedDescription}
           </p>
         </div>
         
@@ -63,12 +70,20 @@ export const SubscriptionCard = ({ plan }: PricingCardProps) => {
         </p>
       </div>
 
-      <button className={`w-full py-5 rounded-2xl font-black uppercase italic text-xs tracking-widest flex items-center justify-center gap-2 transition-all ${
-        isPro 
-        ? "bg-[#00ff94] text-black hover:shadow-[0_0_30px_rgba(0,255,148,0.4)]" 
-        : "bg-white/5 text-white border border-white/10 hover:bg-white/10"
-      }`}>
-        Subscribe Now <ChevronRight size={16} />
+      <button 
+        disabled={isPurchasing}
+        onClick={() => onSubscribe(plan.id)}
+        className={`w-full py-5 rounded-2xl font-black uppercase italic text-xs tracking-widest flex items-center justify-center gap-2 transition-all ${
+          isPro 
+          ? "bg-[#00ff94] text-black hover:shadow-[0_0_30px_rgba(0,255,148,0.4)]" 
+          : "bg-white/5 text-white border border-white/10 hover:bg-white/10"
+        } ${isPurchasing ? "opacity-50 cursor-not-allowed" : ""}`}
+      >
+        {isPurchasing ? (
+          <Loader2 className="animate-spin" size={16} />
+        ) : (
+          <>Subscribe Now <ChevronRight size={16} /></>
+        )}
       </button>
     </div>
   );

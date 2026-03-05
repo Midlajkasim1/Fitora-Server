@@ -1,10 +1,8 @@
 import { AuthController } from "@/presentation/controllers/user/user-auth.controller";
-import { useCases } from "./user.usecases";
+import { paymentProvider, useCases } from "./user.usecases";
 import { UserController } from "@/presentation/controllers/user/user.controller";
-// import { sharedUseCases } from "../shared/shared.usecase";
 import { UserSpecializationController } from "@/presentation/controllers/user/userSpecialization.controller";
 import { UserSubscriptionController } from "@/presentation/controllers/user/user-subscription.controller";
-
 export const userControllers = {
   authController: new AuthController(
     useCases.registerUseCase,
@@ -34,8 +32,12 @@ export const userControllers = {
     
   ),
   userSubscriptionController : new UserSubscriptionController(
-    useCases.getUserSubscriptionUseCase,
-    useCases.getUserSubscriptionByIdUseCase
+    useCases.getUserSubscriptionPlanUseCase,
+    useCases.getUserSubscriptionPlanByIdUseCase,
+    useCases.purchaseSubscriptionPlan,
+    useCases.handleWebhookUseCase,
+    paymentProvider
+
 
   )
 

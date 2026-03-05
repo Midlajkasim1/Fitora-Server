@@ -29,8 +29,12 @@ export const authenticateUser =(userRepository:IUserRepository)=>{
         });
       }
 
-      req.user = decoded;
-
+    req.user = {
+        userId: user.id!,
+        email: user.email,
+        name: user.firstName,
+        role: user.role
+      };
        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
       res.setHeader("Pragma", "no-cache");
       res.setHeader("Expires", "0");

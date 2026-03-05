@@ -35,6 +35,7 @@ export class AdminLoginUseCase implements IBaseUseCase<AdminLoginDTO,AdminLoginR
       accessToken: this._tokenService.generateAccessToken({
         userId: admin.id!,
         email: admin.email,
+        name:"Admin",
         role: AdminRole.ADMIN,
       }),
       refreshToken:this._tokenService.generateRefreshToken({

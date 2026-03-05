@@ -36,7 +36,7 @@ export const SpecializationCard = ({
           {name}
         </h3>
 
-        <p className="text-gray-400 text-sm leading-relaxed line-clamp-2">
+        <p className="text-gray-300 text-[11px] font-bold italic leading-relaxed uppercase tracking-wider whitespace-pre-line">
           {description}
         </p>
 

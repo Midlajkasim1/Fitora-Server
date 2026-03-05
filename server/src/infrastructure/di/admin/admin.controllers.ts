@@ -43,11 +43,11 @@ export const adminControllers = {
     adminUseCases.updateWorkoutStatusUseCase
   ),
   subscriptionController: new AdminSubscriptionController(
-    adminUseCases.createSubscriptionUseCase,
-    adminUseCases.getSubscriptionUseCase,
-    adminUseCases.updateSubscriptionUseCase,
-    adminUseCases.updateSubscriptionStatus,
-    adminUseCases.getSubscriptionByIdUseCase
+    adminUseCases.createSubscriptionPlanUseCase,
+    adminUseCases.getSubscriptionPlanUseCase,
+    adminUseCases.updateSubscriptionPlanUseCase,
+    adminUseCases.updateSubscriptionPlanStatus,
+    adminUseCases.getSubscriptionPlanByIdUseCase
   )
  
 };

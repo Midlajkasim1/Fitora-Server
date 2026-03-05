@@ -22,6 +22,8 @@ const envSchema = z.object({
     S3_BUCKET_NAME: z.string().min(1),
     ACCESS_TOKEN_MAX_AGE: z.coerce.number().default(900000),
     REFRESH_TOKEN_MAX_AGE: z.coerce.number().default(604800000),
+    STRIPE_SECRET_KEY: z.string().startsWith("sk_test_"),
+    STRIPE_WEBHOOK_SECRET: z.string().startsWith("whsec_").optional()
 
 });
 

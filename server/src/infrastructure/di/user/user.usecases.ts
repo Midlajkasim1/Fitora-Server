@@ -1,30 +1,33 @@
+import { ForgotPasswordUseCase } from "@/application/usecases/auth/forgot-password.usecase";
+import { GetMeUseCase } from "@/application/usecases/auth/get-me.usecase";
 import { GoogleAuthUseCase } from "@/application/usecases/auth/google-auth.usecase";
 import { LoginUseCase } from "@/application/usecases/auth/login.usecase";
+import { RefreshTokenUseCase } from "@/application/usecases/auth/refresh-token.usecase";
 import { RegisterUseCase } from "@/application/usecases/auth/register.usecase";
 import { ResendOtpUseCase } from "@/application/usecases/auth/resend-otp.usecase";
+import { ResetPasswordUseCase } from "@/application/usecases/auth/reset-password.usecase";
 import { VerifyOtpUseCase } from "@/application/usecases/auth/verify-otp.usecase";
+import { VerifyResetOtpUseCase } from "@/application/usecases/auth/verify-reset-otp.usecase";
+import { GetAllSpecializationUsecase } from "@/application/usecases/specialization/get-all-specializations.usecase";
+import { GetSpecializationByIdUseCase } from "@/application/usecases/specialization/get-specializationById.usecase";
+import { GetSubcriptionPlanUseCase } from "@/application/usecases/subscription/get-subcriptionPlan.usecase";
+import { GetSubscriptionPlanByIdUseCase } from "@/application/usecases/subscription/get-subscriptionByIdPlan.usecase";
+import { ChangePasswordUseCase } from "@/application/usecases/user/change-password.usecase";
+import { GetUserProfileUseCase } from "@/application/usecases/user/get-userProfile.usecase";
+import { GetWorkoutSelectionUseCase } from "@/application/usecases/user/get-workoutSelection.usecase";
+import { GetWorkoutBySpecializationUseCase } from "@/application/usecases/user/getWorkoutBySpecialization.usecase";
+import { UpdateUserProfileUseCase } from "@/application/usecases/user/update-userProfile.usecase";
+import { UploadProfileImageUseCase } from "@/application/usecases/user/upload-profileImage.usecase";
+import { S3StorageProvider } from "@/infrastructure/providers/storage/s3-storage.provider";
 import { GoogleTokenProvider } from "../../providers/auth/google-token.provider";
 import { JwtTokenService } from "../../providers/auth/jwt-token.service";
 import { BcryptPasswordHasher } from "../../providers/crypto/bcrypt-password.service";
 import { NodemailerEmailService } from "../../providers/email/nodemailer.service";
 import { RedisOtpStore } from "../../providers/redis/redis-otp.store";
 import { userRepositories } from "./user.repositories";
-import { ForgotPasswordUseCase } from "@/application/usecases/auth/forgot-password.usecase";
-import { ResetPasswordUseCase } from "@/application/usecases/auth/reset-password.usecase";
-import { VerifyResetOtpUseCase } from "@/application/usecases/auth/verify-reset-otp.usecase";
-import { RefreshTokenUseCase } from "@/application/usecases/auth/refresh-token.usecase";
-import { GetMeUseCase } from "@/application/usecases/auth/get-me.usecase";
-import { GetUserProfileUseCase } from "@/application/usecases/user/get-userProfile.usecase";
-import { UpdateUserProfileUseCase } from "@/application/usecases/user/update-userProfile.usecase";
-import { S3StorageProvider } from "@/infrastructure/providers/storage/s3-storage.provider";
-import { UploadProfileImageUseCase } from "@/application/usecases/user/upload-profileImage.usecase";
-import { ChangePasswordUseCase } from "@/application/usecases/user/change-password.usecase";
-import { GetAllSpecializationUsecase } from "@/application/usecases/specialization/get-all-specializations.usecase";
-import { GetSpecializationByIdUseCase } from "@/application/usecases/specialization/get-specializationById.usecase";
-import { GetWorkoutBySpecializationUseCase } from "@/application/usecases/user/getWorkoutBySpecialization.usecase";
-import { GetWorkoutSelectionUseCase } from "@/application/usecases/user/get-workoutSelection.usecase";
-import { GetSubcriptionUseCase } from "@/application/usecases/subscription/get-subcription.usecase";
-import { GetSubscriptionByIdUseCase } from "@/application/usecases/subscription/get-subscriptionById.usecase";
+import { PurchaseSubscriptionUseCase } from "@/application/usecases/subscription/purchase-subscription.usecase";
+import { StripePaymentProvider } from "@/infrastructure/providers/payment/stripePayment";
+import { HandleWebhookUseCase } from "@/application/usecases/subscription/handle-webhook.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -32,6 +35,7 @@ const passwordHasher = new BcryptPasswordHasher();
 const tokenService = new JwtTokenService();
 const googleTokenProvider = new GoogleTokenProvider();
 const storageProvider = new S3StorageProvider();
+export const paymentProvider = new StripePaymentProvider();
 
 export const useCases = {
   registerUseCase: new RegisterUseCase(
@@ -118,10 +122,21 @@ export const useCases = {
   getWorkoutSelectionUseCase: new GetWorkoutSelectionUseCase(
     userRepositories.workoutRepository
   ),
-  getUserSubscriptionUseCase: new GetSubcriptionUseCase(
-    userRepositories.subscriptionRepository
+  getUserSubscriptionPlanUseCase: new GetSubcriptionPlanUseCase(
+    userRepositories.subscriptionPlanRepository
   ),
-  getUserSubscriptionByIdUseCase: new GetSubscriptionByIdUseCase(
+  getUserSubscriptionPlanByIdUseCase: new GetSubscriptionPlanByIdUseCase(
+    userRepositories.subscriptionPlanRepository
+  ),
+  purchaseSubscriptionPlan:new PurchaseSubscriptionUseCase(
+    userRepositories.subscriptionPlanRepository,
+    userRepositories.subscriptionRepository,
+    paymentProvider,
+    userRepositories.paymentRepository
+
+  ),
+  handleWebhookUseCase:new HandleWebhookUseCase(
+    userRepositories.paymentRepository,
     userRepositories.subscriptionRepository
   )
   

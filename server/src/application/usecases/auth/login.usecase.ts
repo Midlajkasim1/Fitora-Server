@@ -40,6 +40,7 @@ let approvalStatus;
    accessToken: this._tokenService.generateAccessToken({
         userId: user.id!,  
         email: user.email,
+        name:user.firstName,
         role: user.role,
       }),
       refreshToken: this._tokenService.generateRefreshToken({ userId: user.id! }),

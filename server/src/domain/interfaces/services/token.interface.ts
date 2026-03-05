@@ -3,6 +3,7 @@ import { AdminRole,UserRole } from "@/domain/constants/auth.constants";
 export interface JwtPayload {
   userId: string;
   email: string;
+  name:string;
   role: UserRole | AdminRole;
 }
 

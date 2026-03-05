@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import type { CreateSubscriptionRequest } from "../../../type/admin.types";
 import api from "../../../api/axios";
 
-export const useCreateSubscription = () => {
+export const useCreateSubscriptionPlan = () => {
   const queryClient = useQueryClient();
 
   return useMutation({

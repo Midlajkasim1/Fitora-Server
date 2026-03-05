@@ -1,17 +1,17 @@
-import { CreateSubscriptionRequestDTO } from "@/application/dto/subscription/request/create-subscription.dto";
-import { GetSubscriptionRequestDTO } from "@/application/dto/subscription/request/get-subscription.dto";
-import { GetSubscriptionByIdRequestDTO } from "@/application/dto/subscription/request/get-subscriptionById.dto";
-import { UpdateSubscriptionRequestDTO } from "@/application/dto/subscription/request/update-subscription.dto";
-import { UpdateSubscriptionStatusRequestDTO } from "@/application/dto/subscription/request/updateStatus-subscription.dto";
-import { CreateSubscriptionResponseDTO } from "@/application/dto/subscription/response/create-subscription.dto";
-import { GetSubscriptionResponseDTO } from "@/application/dto/subscription/response/get-subscription.dto";
-import { GetSubscriptionByIdResponseDTO } from "@/application/dto/subscription/response/get-subscriptionById.dto";
-import { UpdateSubscriptionResponseDTO } from "@/application/dto/subscription/response/update-subscription.dto";
-import { UpdateSubscriptionStatusResponseDTO } from "@/application/dto/subscription/response/updateStatus-subscription.dto";
+import { CreateSubscriptionPlanRequestDTO } from "@/application/dto/subscription/request/create-subscriptionPlan.dto";
+import { GetSubscriptionPlanByIdRequestDTO } from "@/application/dto/subscription/request/get-subscriptionByIdPlan.dto";
+import { GetSubscriptionPlanRequestDTO } from "@/application/dto/subscription/request/get-subscriptionPlan.dto";
+import { UpdateSubscriptionPlanRequestDTO } from "@/application/dto/subscription/request/update-subscriptionPlan.dto";
+import { UpdateSubscriptionPlanStatusRequestDTO } from "@/application/dto/subscription/request/updateStatus-subscriptionPlan.dto";
+import { CreateSubscriptionPlanResponseDTO } from "@/application/dto/subscription/response/create-subscriptionPlan.dto";
+import { GetSubscriptionPlanByIdResponseDTO } from "@/application/dto/subscription/response/get-subscriptionById.dto";
+import { GetSubscriptionPlanResponseDTO } from "@/application/dto/subscription/response/get-subscriptionPlan.dto";
+import { UpdateSubscriptionPlanResponseDTO } from "@/application/dto/subscription/response/update-subscriptionPlan.dto";
+import { UpdateSubscriptionPlanStatusResponseDTO } from "@/application/dto/subscription/response/updateStatus-subscriptionPlan.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { SUBSCRIPTION_MESSAGES } from "@/domain/constants/messages.constants";
-import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
+import { SubscriptionPlanStatus } from "@/domain/constants/subscription.constants";
 import { SubscriptionSchema } from "@/infrastructure/validators/admin/subscription.validators";
 import { Request, Response } from "express";
 
@@ -20,13 +20,13 @@ import { Request, Response } from "express";
 
 export class AdminSubscriptionController {
     constructor(
-        private readonly _createSubscriptionUseCase:IBaseUseCase<CreateSubscriptionRequestDTO,CreateSubscriptionResponseDTO>,
-        private readonly _getSubscriptionUseCase:IBaseUseCase<GetSubscriptionRequestDTO,GetSubscriptionResponseDTO>,
-        private readonly _updateSubscriptionUseCase:IBaseUseCase<UpdateSubscriptionRequestDTO,UpdateSubscriptionResponseDTO>,
-        private readonly _updateSubscriptionStatus:IBaseUseCase<UpdateSubscriptionStatusRequestDTO,UpdateSubscriptionStatusResponseDTO>,
-        private readonly _getSubscriptionByIdUseCase:IBaseUseCase<GetSubscriptionByIdRequestDTO,GetSubscriptionByIdResponseDTO>
+        private readonly _createSubscriptionUseCase:IBaseUseCase<CreateSubscriptionPlanRequestDTO,CreateSubscriptionPlanResponseDTO>,
+        private readonly _getSubscriptionUseCase:IBaseUseCase<GetSubscriptionPlanRequestDTO,GetSubscriptionPlanResponseDTO>,
+        private readonly _updateSubscriptionUseCase:IBaseUseCase<UpdateSubscriptionPlanRequestDTO,UpdateSubscriptionPlanResponseDTO>,
+        private readonly _updateSubscriptionStatus:IBaseUseCase<UpdateSubscriptionPlanStatusRequestDTO,UpdateSubscriptionPlanStatusResponseDTO>,
+        private readonly _getSubscriptionByIdUseCase:IBaseUseCase<GetSubscriptionPlanByIdRequestDTO,GetSubscriptionPlanByIdResponseDTO>
     ){}
-    async createSubscripion(req:Request,res:Response):Promise<Response>{
+    async createSubscripionPlan(req:Request,res:Response):Promise<Response>{
         const dto = SubscriptionSchema.parse(req.body);
         const result = await this._createSubscriptionUseCase.execute(dto);
         return res.status(HttpStatus.OK).json({
@@ -34,12 +34,12 @@ export class AdminSubscriptionController {
             data:result
         });
     }
-    async getSubscription(req:Request,res:Response):Promise<Response>{
-        const dto:GetSubscriptionRequestDTO={
+    async getSubscriptionPlan(req:Request,res:Response):Promise<Response>{
+        const dto:GetSubscriptionPlanRequestDTO={
             page:Number(req.query.page)||1,
             limit:Number(req.query.limit)||10,
             search:req.query.search as string,
-            status:req.query.status as SubscriptionStatus.ACTIVE | SubscriptionStatus.INACTIVE | undefined 
+            status:req.query.status as SubscriptionPlanStatus.ACTIVE | SubscriptionPlanStatus.INACTIVE | undefined 
         };
         const result = await this._getSubscriptionUseCase.execute(dto);
         return res.status(HttpStatus.OK).json({
@@ -48,7 +48,7 @@ export class AdminSubscriptionController {
 
         });
     }
-    async updateSubscription(req:Request,res:Response):Promise<Response>{
+    async updateSubscriptionPlan(req:Request,res:Response):Promise<Response>{
     const id = req.params.id;
     const dto = SubscriptionSchema.parse(req.body);
     const result = await this._updateSubscriptionUseCase.execute({id,...dto});
@@ -57,7 +57,7 @@ export class AdminSubscriptionController {
         data:result
     });
     }
-    async updateSubscriptionStatus(req:Request,res:Response):Promise<Response>{
+    async updateSubscriptionPlanStatus(req:Request,res:Response):Promise<Response>{
     const id = req.params.id;
     await this._updateSubscriptionStatus.execute({id});
     return res.status(HttpStatus.OK).json({
@@ -65,7 +65,7 @@ export class AdminSubscriptionController {
         message:SUBSCRIPTION_MESSAGES.SUBSCRIPTION_PLAN_STATUS_UPDATED
     });
     }
-    async getSubscriptionById(req:Request,res:Response):Promise<Response>{
+    async getSubscriptionPlanById(req:Request,res:Response):Promise<Response>{
         const id = req.params.id;
         const result = await this._getSubscriptionByIdUseCase.execute({id});
         return res.status(HttpStatus.OK).json({
