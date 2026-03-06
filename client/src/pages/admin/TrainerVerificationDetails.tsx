@@ -4,17 +4,15 @@ import { useState } from "react";
 import { ConfirmModal } from "../../shared/ConfirmModal";
 import { useTrainerVerificationById } from "../../hooks/admin/use-trainer-verification-byId";
 import { useUpdateTrainerApproval } from "../../hooks/admin/use-updateTrainerVerificationStatus";
-import { Loader2, CheckCircle, XCircle, FileText, Calendar, Mail, User } from "lucide-react";
+import { Loader2, CheckCircle, FileText, User } from "lucide-react";
 
 export default function TrainerVerificationDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
     
-    // 1. DATA FETCHING
     const { data, isLoading } = useTrainerVerificationById(id!);
     const updateMutation = useUpdateTrainerApproval();
 
-    // 2. LOCAL STATE
     const [showRejectModal, setShowRejectModal] = useState(false);
     const [rejectReason, setRejectReason] = useState("");
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -29,7 +27,6 @@ export default function TrainerVerificationDetails() {
 
     if (!data) return null;
 
-    // 3. ACTION HANDLERS (With Loading Logic)
     const handleApprove = () => {
         updateMutation.mutate(
             { id: data.id, status: "approved" },

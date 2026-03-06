@@ -11,6 +11,7 @@ export enum PlanSessionType{
 export enum SubscriptionStatus{
    ACTIVE ="active",
    EXPIRED="expired",
-   PENDING="pending"
+   PENDING="pending",
+   CANCELLED="cancelled"
 }
 

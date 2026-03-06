@@ -7,20 +7,20 @@ import { SubscriptionPlanModel } from "../models/subscriptionPlan.models";
 
 export class SubscriptionplanRepository implements ISubscriptionPlanRepository{
     constructor(
-        private readonly subscriptionMapper:SubscriptionPlanMapper
+        private readonly subscriptionPlanMapper:SubscriptionPlanMapper
     ){}
     async create(subscription: SubscriptionPlanEntity): Promise<SubscriptionPlanEntity> {
-       const data = this.subscriptionMapper.toMongo(subscription);
+       const data = this.subscriptionPlanMapper.toMongo(subscription);
        const created = await SubscriptionPlanModel.create(data);
-       return this.subscriptionMapper.toEntity(created); 
+       return this.subscriptionPlanMapper.toEntity(created); 
     }
     async findByName(name: string): Promise<SubscriptionPlanEntity | null> {
         const data = await SubscriptionPlanModel.findOne({name}).lean();
         if(!data)return null;
-        return this.subscriptionMapper.toEntity(data);
+        return this.subscriptionPlanMapper.toEntity(data);
 
     }
- async   findAll(params: { page: number; limit: number; search?: string; status?: SubscriptionPlanStatus; }): Promise<{ subscriptions: SubscriptionPlanEntity[]; totals: number; }> {
+   async  findAll(params: { page: number; limit: number; search?: string; status?: SubscriptionPlanStatus; }): Promise<{ subscriptions: SubscriptionPlanEntity[]; totals: number; }> {
         const {page,limit,search,status} = params;
          const skip = (page -  1) * limit;
          const filter:Record<string,unknown>={};
@@ -40,24 +40,25 @@ export class SubscriptionplanRepository implements ISubscriptionPlanRepository{
 
          ]);
          return {
-            subscriptions:docs.map((doc)=>this.subscriptionMapper.toEntity(doc)),
+            subscriptions:docs.map((doc)=>this.subscriptionPlanMapper.toEntity(doc)),
             totals
          };
     }
    async findById(id: string): Promise<SubscriptionPlanEntity | null> {
         const doc =  await SubscriptionPlanModel.findById(id).lean();
-        return doc ? this.subscriptionMapper.toEntity(doc) : null;
+        return doc ? this.subscriptionPlanMapper.toEntity(doc) : null;
     }
     async update(subscription: SubscriptionPlanEntity): Promise<SubscriptionPlanEntity | null> {
         const  data = await SubscriptionPlanModel.findByIdAndUpdate(subscription.id,
-            {$set:this.subscriptionMapper.toMongo(subscription)},{new:true}
+            {$set:this.subscriptionPlanMapper.toMongo(subscription)},{new:true}
         ).lean();
         if(!data)return null;
-        return this.subscriptionMapper.toEntity(data);
+        return this.subscriptionPlanMapper.toEntity(data);
     }
     async updataStatus(id: string, status: SubscriptionPlanStatus): Promise<void> {
         await SubscriptionPlanModel.findByIdAndUpdate(id,
             {$set:{status:status}}
         ).exec();
     }
+ 
 }

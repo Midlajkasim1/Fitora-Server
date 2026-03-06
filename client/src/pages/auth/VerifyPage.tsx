@@ -1,4 +1,4 @@
-import { ShieldCheck, Loader2 } from 'lucide-react';
+import { ShieldCheck } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useLocation, Navigate } from 'react-router-dom';
 import { VerifyOtpForm } from '../../components/auth/VerifyOtpForm';

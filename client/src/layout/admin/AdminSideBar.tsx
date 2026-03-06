@@ -27,16 +27,12 @@ export const AdminSidebar = () => {
 
 const handleLogout = async () => {
     try {
-      // 1. Hit the backend API
       await adminLogout(); 
     } catch (error) {
       console.error("Logout API failed", error);
     } finally {
-      // 2. Clear Zustand state immediately
       logout(); 
 
-      
-      // 3. Navigate to login without a full page reload
 navigate("/admin-portal", { replace: true });     
       }
 
@@ -45,7 +41,6 @@ navigate("/admin-portal", { replace: true });
   
   return (
     <aside className="w-64 h-screen bg-[#0d1f17] border-r border-white/5 flex flex-col fixed left-0 top-0 overflow-y-auto">
-      {/* Admin Profile Branding */}
       <div className="p-8 flex items-center gap-3">
         <div>
         <Link to="" className="flex items-center gap-2">

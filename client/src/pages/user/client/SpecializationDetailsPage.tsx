@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useUserSpecializationById } from "../../../hooks/user/workout/use-user-specializationById";
-import { Clock, Flame, Play, ChevronRight, Zap } from "lucide-react";
+import { Clock, Flame, ChevronRight, Zap } from "lucide-react";
 
 export default function SpecializationDetailsPage() {
   const { id } = useParams();

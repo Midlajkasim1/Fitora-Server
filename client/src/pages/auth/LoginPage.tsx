@@ -8,12 +8,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen w-full flex flex-col bg-[#0a1810] text-white selection:bg-[#00ff94] selection:text-[#0d1f17]">
       <header className="p-8">
-        {/* <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-[#00ff94] rounded-full flex items-center justify-center group-hover:rotate-12 transition-transform">
-            <div className="w-4 h-4 bg-[#0a1810] rounded-full translate-x-1" />
-          </div>
-          <span className="font-black italic uppercase tracking-tighter text-xl">AI Fitness</span>
-        </Link> */}
+      
       </header>
 
       <main className="flex-1 flex items-center justify-center px-4 relative overflow-hidden pb-20">

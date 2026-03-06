@@ -5,6 +5,8 @@ import { AdminGuard } from "./guards/AdminGuard";
 import { AuthGuard } from "./guards/AuthGuard";
 import { GuestGuard } from "./guards/GuestGuard";
 import { OnboardingGuard } from "./guards/OnbaordingGuard";
+import { SubscriptionGuard } from "./guards/SubscriptionGuard";
+import { GlobalLoader } from "../shared/GlobalLoader";
 
 /* Auth Pages */
 const LandingPage = lazy(() => import("../pages/user/LandingPage"));
@@ -21,6 +23,7 @@ const TrainerStepOne = lazy(() => import("../pages/user/trainer/TrainerOnboardin
 const TrainerStepTwo = lazy(() => import("../pages/user/trainer/TrainerOnboarding/TrainerStepTwo"));
 const WaitingApproval = lazy(() => import("../pages/user/trainer/TrainerOnboarding/WaitingApprovalPage"));
 
+
 /* User - Client */
 const UserLayoutPage = lazy(() => import("../layout/client/UserLayout"));
 const HomePage = lazy(() => import("../pages/user/client/HomePage"));
@@ -31,7 +34,10 @@ const UserSpecializationDetails = lazy(() => import("../pages/user/client/Specia
 const UserWorkoutTimeSelectionPage = lazy(() => import("../pages/user/client/WorkoutTimeSelectionPage"));
 const WorkoutCompletedPage = lazy(()=>import("../pages/user/client/WorkoutCompletePage"));
 const SubscriptionListPage = lazy(()=>import("../pages/user/client/SubscriptionPage"));
-
+const PaymentSuccessPage =lazy(()=>import("../pages/user/client/PaymentSucessPage"));
+const PaymentFailedPage = lazy(()=>import("../pages/user/client/PaymentFailedPage"));
+const ClientHealthMetrics = lazy(()=>import("../pages/user/client/ClientHealthMetricsPage"));
+const PremiumDashboardPage = lazy(()=>import("../pages/user/client/PremiumDashboardPage"));
 
 /* Video Session Page - Positioned for Full Screen */
 const UserWorkoutSessionPage = lazy(() => import("../pages/user/client/VideoSessionPage"));
@@ -61,11 +67,7 @@ const EditSpecializationPage = lazy(()=>import("../pages/admin/subscription/Edit
 export default function AppRoutes() {
   return (
     <Suspense
-      fallback={
-        <div className="h-screen w-full bg-[#0a1810] flex items-center justify-center text-[#00ff94] font-black italic tracking-widest animate-pulse">
-          LOADING ....
-        </div>
-      }
+      fallback={<GlobalLoader/>}
     >
       <Routes>
         {/* Public Routes */}
@@ -85,21 +87,12 @@ export default function AppRoutes() {
         <Route path="/onboarding/trainer/step-1" element={<OnboardingGuard><TrainerStepOne /></OnboardingGuard>} />
         <Route path="/onboarding/trainer/step-2" element={<OnboardingGuard><TrainerStepTwo /></OnboardingGuard>} />
 
-        {/* Full Screen Authenticated Pages (No Layout/Sidebar) */}
         <Route path="/home" element={<AuthGuard><HomePage /></AuthGuard>} />
         <Route path="/trainer/waiting-approval" element={<AuthGuard><WaitingApproval /></AuthGuard>} />
         
-        {/* Video Session - Placed outside Layout for full-screen experience */}
         <Route path="/workouts/session/:id" element={<AuthGuard><UserWorkoutSessionPage /></AuthGuard>} />
 
-        {/* User Pages With Layout (Sidebar, Header, etc.) */}
-        <Route
-          element={
-            <AuthGuard>
-              <UserLayoutPage />
-            </AuthGuard>
-          }
-        >
+          <Route element={<AuthGuard><UserLayoutPage /></AuthGuard>}>
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/change-password" element={<ChangePassword />} />
           <Route path="/trainer/dashboard" element={<TrainerDashboard />} />
@@ -108,13 +101,18 @@ export default function AppRoutes() {
           <Route path="/select-workouts/:id" element={<UserWorkoutTimeSelectionPage />} />
           <Route path="/workouts/completed" element={<WorkoutCompletedPage />} />
           <Route path="/subscription" element={<SubscriptionListPage />} />
-
+          <Route  path="/health-metrics"  element={<AuthGuard><ClientHealthMetrics /></AuthGuard>} />  
+         <Route path="/payment/success" element={<AuthGuard><PaymentSuccessPage /></AuthGuard>} />
+        <Route path="/payment/cancel" element={<AuthGuard><PaymentFailedPage /></AuthGuard>} />
+         <Route element={<SubscriptionGuard />}>
+        <Route path="/premium-dashboard" element={<PremiumDashboardPage />} />
+        </Route>
         </Route>
 
-        {/* Admin Portal */}
+        {/* Admin  */}
         <Route path="/admin-portal" element={<AdminLoginPage />} />
 
-        {/* Admin Dashboard with Sidebar */}
+        {/* Admin Dashboard  */}
         <Route path="/admin" element={<AdminGuard />}>
           <Route index element={<Navigate to="dashboard" replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />
@@ -135,7 +133,7 @@ export default function AppRoutes() {
 
         </Route>
 
-        {/* Fallback */}
+        {/* landing page */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>

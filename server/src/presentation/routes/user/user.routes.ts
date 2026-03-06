@@ -3,7 +3,6 @@ import { userMiddlewares } from "@/infrastructure/di/user/user.middleware";
 import { asyncHandler } from "@/presentation/middleware/asyncHandler";
 import { upload } from "@/presentation/middleware/multer.middleware";
 import { Request, Response, Router } from "express";
-import express from "express";
 
 const router = Router();
 
@@ -31,11 +30,19 @@ router.get("/specializations/:id/start",userMiddlewares.authMiddleware,asyncHand
 router.get("/subscriptions",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
     userControllers.userSubscriptionController.getUserSubscriptionPlan(req,res)
 ));
+router.get("/active-user-plan",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSubscriptionController.checkActiveSubcriptionStatus(req,res)
+));
+
+
 router.get("/subscriptions/:id",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
     userControllers.userSubscriptionController.getPlanDetails(req,res)
 ));
 router.post("/purchase",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
     userControllers.userSubscriptionController.purchasePlan(req,res)
+));
+router.post("/health-metrics",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+    userControllers.userHealthMetricsController.saveMetrics(req,res)
 ));
 
 export default router;

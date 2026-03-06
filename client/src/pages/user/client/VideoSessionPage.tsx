@@ -7,14 +7,11 @@ export default function VideoSessionPage() {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // 1. DATA: Get workout details passed from the previous page
   const workout = location.state?.workout;
 
-  // 2. STATE: Minutes to seconds conversion and activity toggle
   const [secondsLeft, setSecondsLeft] = useState(() => (Number(workout?.duration) || 0) * 60);
   const [isActive, setIsActive] = useState(false);
 
-  // 3. LOGIC: Navigation to Results Page
   const goToResults = () => {
     setIsActive(false);
     navigate("/workouts/completed", { 
@@ -25,7 +22,6 @@ export default function VideoSessionPage() {
     });
   };
 
-  // 4. EFFECT: Sync Video Element with Play/Pause state
   useEffect(() => {
     if (!videoRef.current) return;
     
@@ -67,19 +63,17 @@ export default function VideoSessionPage() {
   return (
     <div className="h-screen bg-[#07140f] text-white flex flex-col lg:flex-row overflow-hidden">
       
-      {/* LEFT SIDE: THE PLAYER */}
       <div className="flex-1 bg-black relative flex items-center justify-center">
         <video 
           ref={videoRef}
           src={workout.videoUrl} 
           className="w-full h-full object-contain"
           playsInline 
-          onEnded={goToResults} // Trigger results when video finishes
+          onEnded={goToResults} 
           onPlay={() => setIsActive(true)}
           onPause={() => setIsActive(false)}
         />
         
-        {/* Title Overlay */}
         <div className="absolute top-6 left-6 bg-black/50 px-4 py-2 rounded-xl backdrop-blur-sm border border-white/10">
           <h1 className="text-[#00ff94] font-bold italic uppercase tracking-wider">{workout.title}</h1>
         </div>

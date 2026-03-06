@@ -3,6 +3,7 @@ import { paymentProvider, useCases } from "./user.usecases";
 import { UserController } from "@/presentation/controllers/user/user.controller";
 import { UserSpecializationController } from "@/presentation/controllers/user/userSpecialization.controller";
 import { UserSubscriptionController } from "@/presentation/controllers/user/user-subscription.controller";
+import { HealthMetricsController } from "@/presentation/controllers/user/user-health-metrics.controller";
 export const userControllers = {
   authController: new AuthController(
     useCases.registerUseCase,
@@ -36,9 +37,13 @@ export const userControllers = {
     useCases.getUserSubscriptionPlanByIdUseCase,
     useCases.purchaseSubscriptionPlan,
     useCases.handleWebhookUseCase,
-    paymentProvider
+    paymentProvider,
+    useCases.checkActiveSubscriptionUser
 
 
+  ),
+  userHealthMetricsController: new HealthMetricsController(
+    useCases.clientHealthMetricsUseCase
   )
 
 };

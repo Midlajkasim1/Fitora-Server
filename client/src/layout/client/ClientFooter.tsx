@@ -1,4 +1,3 @@
-// components/common/UserFooter.tsx
 import { Link } from "react-router-dom";
 
 export const UserFooter = () => {
@@ -6,7 +5,6 @@ export const UserFooter = () => {
     <footer className="bg-[#0a1810] border-t border-white/5 pt-16 pb-8 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
-          {/* Brand Info */}
           <div className="col-span-1 md:col-span-2">
             <span className="font-black italic uppercase text-2xl text-white">AI Fitness</span>
             <p className="text-gray-500 text-sm mt-4 italic max-w-xs leading-relaxed">

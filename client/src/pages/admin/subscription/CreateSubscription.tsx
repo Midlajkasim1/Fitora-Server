@@ -32,7 +32,6 @@ export default function CreateSubscription() {
     });
   };
 
-  // Reusable style for all dropdown options to ensure visibility
   const optionStyle = "bg-[#1a2e25] text-white";
 
   return (

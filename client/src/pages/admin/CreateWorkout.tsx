@@ -31,7 +31,6 @@ export default function CreateWorkoutPage() {
     const [videoPreview, setVideoPreview] = useState<string | null>(null);
     const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null);
 
-    // Video Preview
     useEffect(() => {
         if (!videoFile) return;
         const url = URL.createObjectURL(videoFile);
@@ -39,7 +38,6 @@ export default function CreateWorkoutPage() {
         return () => URL.revokeObjectURL(url);
     }, [videoFile]);
 
-    // Thumbnail Preview
     useEffect(() => {
         if (!thumbnailFile) return;
         const url = URL.createObjectURL(thumbnailFile);

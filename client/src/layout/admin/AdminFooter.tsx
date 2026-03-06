@@ -1,4 +1,3 @@
-// components/admin/AdminFooter.tsx
 export const AdminFooter = () => {
   return (
     <footer className="bg-[#0a1810] border-t border-white/5 pt-16 pb-8 px-12 mt-20">

@@ -1,5 +1,4 @@
-// components/user/SubscriptionCard.tsx
-import { Zap, ChevronRight, Target, Loader2 } from "lucide-react";
+import { Zap, ChevronRight, Target, Loader2, ShieldCheck } from "lucide-react";
 
 interface PricingCardProps {
   plan: {
@@ -10,10 +9,16 @@ interface PricingCardProps {
     description: string;
   };
   onSubscribe: (id: string) => void;
-  isPurchasing: boolean; // Managed by the parent page
+  isPurchasing: boolean;
+  isCurrentPlan: boolean; 
 }
 
-export const SubscriptionCard = ({ plan, onSubscribe, isPurchasing }: PricingCardProps) => {
+export const SubscriptionCard = ({ 
+  plan, 
+  onSubscribe, 
+  isPurchasing, 
+  isCurrentPlan 
+}: PricingCardProps) => {
   const isPro = 
     plan.name.toLowerCase().includes("pro") || 
     plan.name.toLowerCase().includes("performance");
@@ -21,13 +26,17 @@ export const SubscriptionCard = ({ plan, onSubscribe, isPurchasing }: PricingCar
   const formattedDescription = plan.description?.replace(/,/g, '\n');
   
   return (
-    <div className={`relative rounded-[2.5rem] p-10 flex flex-col transition-all duration-300 hover:translate-y-[-10px] h-full ${
-      isPro 
-        ? "bg-gradient-to-b from-[#132a1e] to-[#0a1810] border-2 border-[#00ff94]/50 shadow-[0_20px_50px_rgba(0,255,148,0.1)]" 
-        : "bg-[#0a1810] border border-white/5"
-    }`}>
+    <div className={`relative rounded-[2.5rem] p-10 flex flex-col transition-all duration-300 h-full ${
+      isCurrentPlan 
+        ? "border-2 border-[#00ff94] bg-[#132a1e] shadow-[0_0_40px_rgba(0,255,148,0.15)] scale-105 z-10" 
+        : "hover:translate-y-[-10px] bg-[#0a1810] border border-white/5"
+    } ${!isCurrentPlan && isPro ? "bg-gradient-to-b from-[#132a1e] to-[#0a1810] border-[#00ff94]/30" : ""}`}>
       
-      {isPro && (
+      {isCurrentPlan ? (
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-white text-black text-[9px] font-black uppercase italic px-4 py-1.5 rounded-full tracking-widest shadow-xl">
+          Your Active Plan
+        </div>
+      ) : isPro && (
         <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#00ff94] text-black text-[9px] font-black uppercase italic px-4 py-1 rounded-full tracking-widest">
           Most Popular
         </div>
@@ -35,7 +44,7 @@ export const SubscriptionCard = ({ plan, onSubscribe, isPurchasing }: PricingCar
 
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-4">
-          <div className={`p-2 rounded-lg ${isPro ? "bg-[#00ff94] text-black" : "bg-white/5 text-[#00ff94]"}`}>
+          <div className={`p-2 rounded-lg ${isCurrentPlan || isPro ? "bg-[#00ff94] text-black" : "bg-white/5 text-[#00ff94]"}`}>
             <Zap size={20} />
           </div>
           <h3 className="text-xl font-black italic uppercase tracking-tight text-white">
@@ -62,25 +71,27 @@ export const SubscriptionCard = ({ plan, onSubscribe, isPurchasing }: PricingCar
             {formattedDescription}
           </p>
         </div>
-        
         <div className="w-full h-px bg-white/5" />
-        
         <p className="text-[9px] text-gray-500 font-black uppercase italic tracking-widest opacity-60">
           Full Access to FitAdmin Tracking
         </p>
       </div>
 
       <button 
-        disabled={isPurchasing}
+        disabled={isPurchasing || isCurrentPlan}
         onClick={() => onSubscribe(plan.id)}
         className={`w-full py-5 rounded-2xl font-black uppercase italic text-xs tracking-widest flex items-center justify-center gap-2 transition-all ${
-          isPro 
-          ? "bg-[#00ff94] text-black hover:shadow-[0_0_30px_rgba(0,255,148,0.4)]" 
-          : "bg-white/5 text-white border border-white/10 hover:bg-white/10"
+          isCurrentPlan
+            ? "bg-white/10 text-gray-400 cursor-default border border-white/10" 
+            : isPro 
+              ? "bg-[#00ff94] text-black hover:shadow-[0_0_30px_rgba(0,255,148,0.4)] hover:scale-[1.02]" 
+              : "bg-white/5 text-white border border-white/10 hover:bg-white/10"
         } ${isPurchasing ? "opacity-50 cursor-not-allowed" : ""}`}
       >
         {isPurchasing ? (
           <Loader2 className="animate-spin" size={16} />
+        ) : isCurrentPlan ? (
+          <>Active Plan <ShieldCheck size={16} className="text-[#00ff94]" /></>
         ) : (
           <>Subscribe Now <ChevronRight size={16} /></>
         )}

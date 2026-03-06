@@ -4,14 +4,12 @@ import { useAuthStore } from "../../store/use-auth-store";
 export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, user, isInitialLoading } = useAuthStore();
 
-  if (isInitialLoading) {
-    return <div className="min-h-screen bg-[#0a1810]" />;
-  }
- ;
+  if (isInitialLoading) return null;
+
   if (!isAuthenticated || !user) {
     return <Navigate to="/" replace />;
   }
-;
+
   const path = window.location.pathname;
 
   if (path.startsWith("/trainer") && user.role !== "trainer") {
@@ -24,11 +22,15 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
 
   if (user.role === "trainer") {
     const isApproved = user.approval_status === "approved";
-    if (!isApproved && path.includes("/trainer/dashboard")) {
+
+    if (path.includes("/trainer/dashboard") && !isApproved) {
       return <Navigate to="/trainer/waiting-approval" replace />;
     }
-    if (isApproved && path.includes("/trainer/waiting-approval")) {
-      return <Navigate to="/trainer/dashboard" replace />;
+
+  
+    if (path.includes("/trainer/waiting-approval")) {
+    
+      return <>{children}</>;
     }
   }
 

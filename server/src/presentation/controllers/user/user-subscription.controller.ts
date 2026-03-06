@@ -1,6 +1,8 @@
+import { CheckActiveSubscriptionRequestDTO } from "@/application/dto/subscription/request/check-active-subscriptionUser.dto";
 import { GetSubscriptionPlanByIdRequestDTO } from "@/application/dto/subscription/request/get-subscriptionByIdPlan.dto";
 import { GetSubscriptionPlanRequestDTO } from "@/application/dto/subscription/request/get-subscriptionPlan.dto";
 import { PurchaseSubscriptionRequestDTO } from "@/application/dto/subscription/request/purchase-subscription.dto";
+import { ActiveSubscriptionResponseDTO } from "@/application/dto/subscription/response/check-active-subscriptionUser.dto";
 import { GetSubscriptionPlanByIdResponseDTO } from "@/application/dto/subscription/response/get-subscriptionById.dto";
 import { GetSubscriptionPlanResponseDTO } from "@/application/dto/subscription/response/get-subscriptionPlan.dto";
 import { PurchaseSubscriptionResponseDTO } from "@/application/dto/subscription/response/purchaseSubscription.dto";
@@ -20,7 +22,8 @@ export class UserSubscriptionController{
         private readonly _getSubscriptionByIdUseCase: IBaseUseCase<GetSubscriptionPlanByIdRequestDTO,GetSubscriptionPlanByIdResponseDTO>,
         private readonly _purchaseSubscriptionUseCase: IBaseUseCase<PurchaseSubscriptionRequestDTO,PurchaseSubscriptionResponseDTO>,
         private readonly _webhookUseCase:IBaseUseCase<string,void>,
-        private readonly _paymentProvider:IPaymentProvider
+        private readonly _paymentProvider:IPaymentProvider,
+        private readonly _checkActiveSubscriptionUserUseCase: IBaseUseCase<CheckActiveSubscriptionRequestDTO,ActiveSubscriptionResponseDTO>
     ){}
     async getUserSubscriptionPlan(req:Request,res:Response):Promise<Response>{
      const dto:GetSubscriptionPlanRequestDTO={
@@ -78,5 +81,15 @@ export class UserSubscriptionController{
     }
     return res.status(HttpStatus.OK).json({recieved:true});
   }
-
+async checkActiveSubcriptionStatus(req:Request,res:Response):Promise<Response>{
+  const userId = req.user?.userId;
+  if(!userId){
+    throw new Error(AUTH_MESSAGES.USER_AUTHENTICATION_NOT_FOUND);
+  }
+  const result = await this._checkActiveSubscriptionUserUseCase.execute({userId});
+  return res.status(HttpStatus.OK).json({
+    success:true,
+    data:result
+  });
+}
 }

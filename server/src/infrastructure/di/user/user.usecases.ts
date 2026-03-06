@@ -28,6 +28,8 @@ import { userRepositories } from "./user.repositories";
 import { PurchaseSubscriptionUseCase } from "@/application/usecases/subscription/purchase-subscription.usecase";
 import { StripePaymentProvider } from "@/infrastructure/providers/payment/stripePayment";
 import { HandleWebhookUseCase } from "@/application/usecases/subscription/handle-webhook.usecase";
+import { SaveHealthMetricsUseCase } from "@/application/usecases/user/user-health-metrics.usecase";
+import { CheckActiveSubscriptionUserUseCase } from "@/application/usecases/subscription/check-activeSubscriptionUser.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -138,6 +140,13 @@ export const useCases = {
   handleWebhookUseCase:new HandleWebhookUseCase(
     userRepositories.paymentRepository,
     userRepositories.subscriptionRepository
+  ),
+  clientHealthMetricsUseCase:new SaveHealthMetricsUseCase(
+    userRepositories.clientHealthMetricRepository
+  ),
+  checkActiveSubscriptionUser:new CheckActiveSubscriptionUserUseCase(
+    userRepositories.subscriptionRepository,
+    userRepositories.subscriptionPlanRepository
   )
   
 };

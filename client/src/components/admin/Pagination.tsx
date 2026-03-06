@@ -25,7 +25,6 @@ export const Pagination = ({ currentPage, totalPages, totalResults, resultsPerPa
           Previous
         </button>
         
-        {/* Render Page Numbers */}
         {[...Array(totalPages)].map((_, i) => (
           <button
             key={i}

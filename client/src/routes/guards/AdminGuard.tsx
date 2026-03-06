@@ -5,11 +5,7 @@ export const AdminGuard = () => {
   const { isAuthenticated, user, isInitialLoading } = useAuthStore();
 
   if (isInitialLoading) {
-    return (
-      <div className="h-screen w-full bg-[#0a1810] flex items-center justify-center text-[#00ff94] font-black italic tracking-widest animate-pulse">
-        LOADING...
-      </div>
-    );
+    return null;
   }
 
   if (!isAuthenticated || user?.role !== "admin") {

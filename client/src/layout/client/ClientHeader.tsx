@@ -1,14 +1,20 @@
-// components/common/UserHeader.tsx
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/use-auth-store";
-import { User, LogOut, ChevronDown, ActivityIcon } from "lucide-react";
+import { User, LogOut, ChevronDown, ActivityIcon, Zap } from "lucide-react";
 import { logoutUser } from "../../api/auth.api";
 import { useUser } from "../../hooks/user/use-user";
+import { useUserSubscriptions } from "../../hooks/user/subscription/use-user-subscription";
+import { queryClient } from "../../constants/query-client";
 
 export const UserHeader = () => {
   const { logout } = useAuthStore();
   const location = useLocation();
+  const navigate = useNavigate();
   const { user } = useUser();
+  const { data: subData } = useUserSubscriptions();
+  const activePlanName = subData?.subscriptions?.[0]?.name;
+  const isPremium = !!activePlanName;
+  console.log(activePlanName)
   const avatarSrc =
     user?.profileImage ||
     (user?.gender === "male"
@@ -16,20 +22,18 @@ export const UserHeader = () => {
       : user?.gender === "female"
         ? "/avatarFemale.png"
         : "/default-avatar.png");
-  // Unified Logout Function
-  const handleLogout = async () => {
+const handleLogout = async () => {
     try {
       await logoutUser();
     } catch (error) {
       console.error("Logout API failed:", error);
     } finally {
-      // 4. Clear local Zustand state regardless of API success
+      queryClient.clear(); 
+      
       logout();
-      window.location.replace("/");
+      navigate("/", { replace: true });
     }
-
-
-  }
+  };
 
   const navLinks = [
     { name: "Dashboard", path: "/home" },
@@ -42,13 +46,11 @@ export const UserHeader = () => {
   return (
     <nav className="fixed top-0 w-full z-50 bg-[#0d1f17]/90 backdrop-blur-xl border-b border-white/5 h-20">
       <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-        {/* Brand Logo */}
         <Link to="/" className="flex items-center gap-2">
           <ActivityIcon className="w-6 h-6 text-[#00ff94]" />
           <span className="text-white font-bold text-xl italic tracking-tighter uppercase">Fitora</span>
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest italic">
           {navLinks.map((link) => (
             <Link
@@ -62,15 +64,17 @@ export const UserHeader = () => {
           ))}
         </div>
 
-        {/* User Profile & Logout Dropdown */}
         <div className="relative group py-4">
           <div className="flex items-center gap-4 cursor-pointer">
             <div className="text-right hidden sm:block">
               <p className="text-[10px] text-white font-black uppercase italic leading-none">
                 {user?.firstName || "User"}
               </p>
-              <p className="text-[9px] text-[#00ff94] font-bold uppercase italic tracking-tighter">
-                {user?.role === "trainer" ? "Pro Trainer" : "Elite Member"}
+              <p className="text-[9px] text-[#00ff94] font-bold uppercase italic tracking-tighter flex items-center justify-end gap-1">
+                {isPremium && <Zap size={8} fill="#00ff94" />}
+                {user?.role === "trainer" 
+                  ? "Pro Trainer" 
+                  : activePlanName || "Free Member"}
               </p>
             </div>
             <div className="relative">
@@ -85,7 +89,6 @@ export const UserHeader = () => {
             </div>
           </div>
 
-          {/* HOVER DROPDOWN MENU */}
           <div className="absolute right-0 top-full pt-2 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-200 z-[60]">
             <div className="w-48 bg-[#0a1810] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
               <Link

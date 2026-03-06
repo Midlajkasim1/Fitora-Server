@@ -2,6 +2,7 @@ import { PurchaseSubscriptionRequestDTO } from "@/application/dto/subscription/r
 import { PurchaseSubscriptionResponseDTO } from "@/application/dto/subscription/response/purchaseSubscription.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { SUBSCRIPTION_MESSAGES } from "@/domain/constants/messages.constants";
+import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
 import { PaymentEntity } from "@/domain/entities/payment/payment.entity";
 import { SubscriptionEntity } from "@/domain/entities/subscription/subscription.entity";
 import { IPaymentRepository } from "@/domain/interfaces/repositories/payment.repository";
@@ -18,6 +19,13 @@ export class PurchaseSubscriptionUseCase implements IBaseUseCase<PurchaseSubscri
         private readonly _paymentRepository:IPaymentRepository
     ){}
     async execute(dto: PurchaseSubscriptionRequestDTO): Promise<PurchaseSubscriptionResponseDTO> {
+        const activePlan = await this._subscriptionRepository.findActiveByUserId(dto.userId);
+        if(activePlan){
+            if(activePlan.planId === dto.planId){
+           throw new Error(SUBSCRIPTION_MESSAGES.SUBSCRIPTION_ALREADY_HAVE);
+            }
+           await this._subscriptionRepository.updateStatus(activePlan.id!,SubscriptionStatus.CANCELLED);
+        }
         const plan = await this._subscriptionPlanRepository.findById(dto.planId);
         if(!plan){
             throw new Error(SUBSCRIPTION_MESSAGES.SUBSCRIPTION_NOT_FOUND);

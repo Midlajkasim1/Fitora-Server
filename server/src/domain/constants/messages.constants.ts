@@ -86,9 +86,13 @@ export const SUBSCRIPTION_MESSAGES={
   SUBSCRIPTION_NOT_FOUND:"Subscription not found",
   SUBSCRIPTION_PLAN_UPDATED:"Subcription plan updated",
     SUBSCRIPTION_PLAN_STATUS_UPDATED:"Subcription plan stated updated",
+    SUBSCRIPTION_ALREADY_HAVE:"You already have an same active plan"
     
 
 };
 export const PAYMENT_MESSAGES={
   PAYMENT_NOT_FOUND:"Payment not found for provider session"
+};
+export const HEALTH_METRICS_MESSAGES={
+  HEALTH_METRICS_SAVED:"Health metrics saved successfully"
 };

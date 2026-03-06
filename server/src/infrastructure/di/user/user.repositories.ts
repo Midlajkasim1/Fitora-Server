@@ -1,3 +1,4 @@
+import { HealthMetricsMapper } from "@/infrastructure/database/mappers/client-health-metrics.mapper";
 import { ClientPreferenceMapper } from "@/infrastructure/database/mappers/client-preference.mapper";
 import { PaymentMapper } from "@/infrastructure/database/mappers/payment.mapper";
 import { SpecializationMapper } from "@/infrastructure/database/mappers/specialization.mapper";
@@ -6,6 +7,7 @@ import { SubscriptionPlanMapper } from "@/infrastructure/database/mappers/subscr
 import { TrainerDetailsMapper } from "@/infrastructure/database/mappers/trainer-details.mapper";
 import { UserMapper } from "@/infrastructure/database/mappers/user.mapper";
 import { WorkoutMapper } from "@/infrastructure/database/mappers/workout.mapper";
+import { HealthMetricsRepository } from "@/infrastructure/database/repositories/client-health-metrics";
 import { ClientPreferenceRepository } from "@/infrastructure/database/repositories/client-preference.repository";
 import { PaymentRepository } from "@/infrastructure/database/repositories/paymentRepository";
 import { SpecializationRepository } from "@/infrastructure/database/repositories/specialization.repository";
@@ -22,6 +24,7 @@ const workoutMapper = new WorkoutMapper();
 const subscriptionPlanMapper = new SubscriptionPlanMapper();
 const subscriptionMapper= new SubscriptionMapper();
 const paymentMapper = new PaymentMapper();
+const clientHealthMetrics = new HealthMetricsMapper();
 
 export const userRepositories = {
   userRepository: new UserRepository(userMapper) ,
@@ -31,7 +34,8 @@ export const userRepositories = {
    workoutRepository : new WorkoutRepository(workoutMapper),
    subscriptionPlanRepository:new SubscriptionplanRepository(subscriptionPlanMapper),
    subscriptionRepository:new SubscriptionRepository(subscriptionMapper),
-   paymentRepository:new PaymentRepository(paymentMapper)
+   paymentRepository:new PaymentRepository(paymentMapper),
+   clientHealthMetricRepository:new HealthMetricsRepository(clientHealthMetrics)
    
   
   

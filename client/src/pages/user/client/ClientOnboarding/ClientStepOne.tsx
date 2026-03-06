@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  CheckCircle2, ChevronDown, Dumbbell, Flame, Heart, Target, Trophy, User, Zap
+  CheckCircle2, ChevronDown, Dumbbell, Flame, Target, Trophy, User
 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";

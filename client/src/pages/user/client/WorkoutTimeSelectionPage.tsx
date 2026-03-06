@@ -9,22 +9,18 @@ export default function WorkoutConfiguration() {
   const [difficulty, setDifficulty] = useState("beginner");
   const [duration, setDuration] = useState(5);
 
-  // 1. We keep enabled: false so it doesn't run automatically
   const { isFetching, isError, error, refetch } = useStartWorkout(
     {
       id: id!,
       difficulty: difficulty,
       duration: duration,
     },
-    false // Enabled is false by default
+    false 
   );
 
-  // 2. We handle the logic entirely in the click function
   const handleStart = async () => {
-    // Manually trigger the fetch
     const result = await refetch();
 
-    // If we get data back successfully, navigate immediately
     if (result.data) {
       navigate(`/workouts/session/${result.data.id}`, { 
         state: { workout: result.data } 

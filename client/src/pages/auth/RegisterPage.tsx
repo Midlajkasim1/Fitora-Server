@@ -11,7 +11,7 @@ import type { RegisterPayload } from '../../type/auth.types';
 const RegisterPage: React.FC = () => {
   const [selectedRole, setSelectedRole] = useState<'user' | 'trainer'>('user');
   const navigate = useNavigate();
-  const { register, isRegistering, googleLogin, isGoogleLoading } = useAuth();
+  const { register, isRegistering, googleLogin } = useAuth();
 
   const handleRegister = (data: RegisterPayload) => {
     register(data);

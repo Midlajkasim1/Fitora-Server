@@ -14,7 +14,7 @@ export default function EditSpecialization() {
   const { id } = useParams();
   const navigate = useNavigate();
   const updateMutation = useUpdateSpecialization();
-  const { data, isLoading } = useSpecializationById(id!);
+  const { data } = useSpecializationById(id!);
 
   const {
     register,
@@ -26,7 +26,6 @@ export default function EditSpecialization() {
     resolver: zodResolver(editSpecializationSchema),
   });
 
-  // Prefill form
   useEffect(() => {
     if (!data) return;
 

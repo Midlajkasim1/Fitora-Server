@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, Phone, Dumbbell, Target, Lock, Edit3, ChevronDown } from "lucide-react";
+import { User, Phone, Dumbbell, Target, Lock, Edit3 } from "lucide-react";
 import { UserHeader } from "../../../layout/client/ClientHeader";
 import { useUpdateUser, useUploadProfileImage, useUser } from "../../../hooks/user/use-user";
 import { ProfileField } from "../../../components/user/UserProfileInput";
