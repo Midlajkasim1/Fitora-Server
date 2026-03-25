@@ -94,6 +94,20 @@ router.patch("/subscriptions/:id/status",adminMiddlewares.authMiddleware,asyncHa
 router.get("/subscriptions/:id",adminMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
  adminControllers.subscriptionController.getSubscriptionPlanById(req,res)
 ));
-
+router.post("/create-ad",adminMiddlewares.authMiddleware,upload.array("bannerImages",5),asyncHandler((req:Request,res:Response)=>
+  adminControllers.advertisementController.createAdvertisement(req,res)
+));
+router.put("/update-ad/:id",adminMiddlewares.authMiddleware,upload.array("bannerImages",5),asyncHandler((req:Request,res:Response)=>
+  adminControllers.advertisementController.updateAdvertisement(req,res)
+));
+router.get("/advertisement",adminMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+  adminControllers.advertisementController.getAllAdvertisement(req,res)
+));
+router.patch("/advertisement/:adId/status",adminMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+  adminControllers.advertisementController.updateStatusAdvertisement(req,res)
+));
+router.get("/advertisement/:id",adminMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+  adminControllers.advertisementController.getAdvertisementById(req,res)
+));
 
 export default router;

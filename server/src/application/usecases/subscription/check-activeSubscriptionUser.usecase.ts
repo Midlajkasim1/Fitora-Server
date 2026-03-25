@@ -15,13 +15,13 @@ export class CheckActiveSubscriptionUserUseCase implements IBaseUseCase<CheckAct
         
         const activesub= await this._subscriptionRepository.findActiveByUserId(dto.userId);
         if(!activesub){
-            return{
+            return new ActiveSubscriptionResponseDTO({
                 isPremium:false,
                 subscription:null
-            };
+            });
         }
         const plan = await this._subscriptionPlanRepository.findById(activesub.planId);
-        return {
+        return new ActiveSubscriptionResponseDTO({
             isPremium: true,
             subscription: {
                 id: activesub.id!,
@@ -30,6 +30,6 @@ export class CheckActiveSubscriptionUserUseCase implements IBaseUseCase<CheckAct
                 endDate: activesub.endDate,
                 status: activesub.status
             }
-    };
+    });
 };
 }

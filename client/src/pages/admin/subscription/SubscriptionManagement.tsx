@@ -23,7 +23,7 @@ export default function SubscriptionManagementPage() {
 
   const subscriptions = data?.subscriptions ?? [];
   const total = data?.totals ?? 0;
-
+  
   const handleToggleStatus = () => {
     if (targetSub) {
       toggleMutation.mutate(targetSub.id);
@@ -47,7 +47,7 @@ export default function SubscriptionManagementPage() {
       header: "Price",
       render: (item: SubscriptionManagement) => (
         <span className="text-[#00ff94] font-black italic">
-          {typeof item.price === 'number' ? `$${item.price}` : item.price}
+          {typeof item.price === 'number' ? `₹ ${item.price}` : item.price}
         </span>
       )
     },

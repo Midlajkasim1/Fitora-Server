@@ -35,7 +35,7 @@ export class CreateWorkoutUseCase implements IBaseUseCase<CreateWorkoutRequestDT
         });
 
         const saved = await this._workoutRepository.create(workout);
-        return{
+        return new CreateWorkoutResponseDTO({
       id:saved.id!,
       title: saved.title,
       description: saved.description,
@@ -48,6 +48,6 @@ export class CreateWorkoutUseCase implements IBaseUseCase<CreateWorkoutRequestDT
       thumbnailUrl: saved.thumbnailUrl,
       status: saved.status,
       createdAt: saved.createdAt,       
-     };
+     });
     };
 }

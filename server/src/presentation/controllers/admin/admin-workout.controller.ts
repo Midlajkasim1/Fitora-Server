@@ -13,7 +13,7 @@ import { UpdateWorkoutStatusResponseDTO } from "@/application/dto/workout/respon
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { WORKOUT_MESSAGES } from "@/domain/constants/messages.constants";
-import { WorkoutStatus } from "@/domain/constants/workout.constant";
+import { WorkoutDifficulty, WorkoutStatus } from "@/domain/constants/workout.constant";
 import { UpdateWorkoutSchema } from "@/infrastructure/validators/admin/update-workout.validator";
 import { CreateWorkoutSchema } from "@/infrastructure/validators/admin/workout.validator";
 import { Request, Response } from "express";
@@ -51,7 +51,9 @@ export class WorkoutController{
             page:Number(req.query.page) || 1,
             limit:Number(req.query.limit) || 10,
             search:req.query.search as string,
-            status:req.query.status as WorkoutStatus.ACTIVE | WorkoutStatus.BLOCKED | undefined
+            status:req.query.status as WorkoutStatus.ACTIVE | WorkoutStatus.BLOCKED | undefined,
+            difficulty:req.query.difficulty as WorkoutDifficulty.BEGINNER | WorkoutDifficulty.ADVANCED | WorkoutDifficulty.INTERMEDIATE,
+            
         };
         const result = await this._getAllWorkoutUsecase.execute(dto);
         return res.status(HttpStatus.OK).json({

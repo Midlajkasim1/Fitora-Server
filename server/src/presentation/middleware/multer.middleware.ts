@@ -10,7 +10,7 @@ export const upload = multer({
   fileFilter: (_req, file, cb) => {
     const allowedImageTypes = ["image/jpeg", "image/png", "image/webp"];
     const allowedVideoTypes = ["video/mp4", "video/quicktime"];
-    const allowedDocTypes = ["application/pdf"]; // Added PDF support
+    const allowedDocTypes = ["application/pdf"]; 
 
     if (
       allowedImageTypes.includes(file.mimetype) ||

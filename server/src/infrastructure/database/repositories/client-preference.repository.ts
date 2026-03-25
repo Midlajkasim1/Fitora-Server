@@ -2,10 +2,14 @@ import { IClientPreferenceRepository } from "@/domain/interfaces/repositories/on
 import { ClientPreferenceEntity } from "@/domain/entities/user/client-preference.entity";
 import { ClientPreferenceModel } from "../models/client-preference.model";
 import { ClientPreferenceMapper } from "../mappers/client-preference.mapper";
-import { Types } from "mongoose";
+import { Model, Types } from "mongoose";
+import { IClientPreferenceDocument } from "../interfaces/client-preference-document.interface";
+import { BaseRepository } from "./base.repository";
 
-export class ClientPreferenceRepository implements IClientPreferenceRepository {
-  constructor(private readonly clientPreferenceMapper: ClientPreferenceMapper) {}
+export class ClientPreferenceRepository extends BaseRepository<ClientPreferenceEntity,IClientPreferenceDocument> implements IClientPreferenceRepository {
+  constructor(private readonly clientPreferenceMapper: ClientPreferenceMapper) {
+    super(ClientPreferenceModel as unknown as Model<IClientPreferenceDocument>, clientPreferenceMapper);
+  }
   async save(prefs: ClientPreferenceEntity): Promise<void> {
     const mongoData = this.clientPreferenceMapper.toMongo(prefs);
     
@@ -28,9 +32,9 @@ export class ClientPreferenceRepository implements IClientPreferenceRepository {
     const doc = await ClientPreferenceModel.findById(id).lean();
     return doc ? this.clientPreferenceMapper.toEntity(doc) : null;
   }
-  async updateClientPreference(clientPreference: ClientPreferenceEntity): Promise<ClientPreferenceEntity | null> {
-    const data = await ClientPreferenceModel.findByIdAndUpdate(clientPreference.id,
-      {$set:this.clientPreferenceMapper.toMongo(clientPreference)},{new:true}
+  async update(id:string,entity:Partial<ClientPreferenceEntity>): Promise<ClientPreferenceEntity | null> {
+    const data = await ClientPreferenceModel.findByIdAndUpdate(id,
+      {$set:this.clientPreferenceMapper.toMongo(entity as ClientPreferenceEntity)},{new:true}
     ).lean();
     if(!data)return null;
     return this.clientPreferenceMapper.toEntity(data);

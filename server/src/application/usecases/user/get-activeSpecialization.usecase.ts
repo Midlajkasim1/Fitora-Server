@@ -11,14 +11,14 @@ export class GetActiveSpecializationUseCase implements IBaseUseCase<void, GetAct
 
   async execute(): Promise<GetActiveSpecializationResponse> {
 
-    const { specializations } =
-      await this._specializationRepository.findAll({
+    const { data } =
+      await this._specializationRepository.findAllSP({
         page: 1,
         limit: 100,
         status: SpecializationStatus.ACTIVE
       });
 
-    const result = specializations.map(spec => {
+    const result = data.map(spec => {
       if (!spec.id) {
         throw new Error("Specialization id missing");
       }
@@ -30,8 +30,8 @@ export class GetActiveSpecializationUseCase implements IBaseUseCase<void, GetAct
       };
     });
 
-    return {
+    return new GetActiveSpecializationResponse({
       specialization: result
-    };
+    });
   }
 }

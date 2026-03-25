@@ -1,5 +1,9 @@
 
 
-export interface UpdateWorkoutStatusResponseDTO {
-  message: string;
+export class UpdateWorkoutStatusResponseDTO {
+  message!: string;
+
+  constructor(data: UpdateWorkoutStatusResponseDTO) {
+    Object.assign(this, data);
+  }
 }

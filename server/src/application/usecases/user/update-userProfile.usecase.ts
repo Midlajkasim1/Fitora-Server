@@ -55,9 +55,9 @@ export class UpdateUserProfileUseCase implements IBaseUseCase<UpdateUserProfileR
         await this._clientPreferenceRepository.save(updatedPreference);
 
 
-        return {
+        return new updateUserProfileResponse({
             message: USER_MESSAGES.PROFILE_UPDATED
-        };
+        });
     }
 
 }

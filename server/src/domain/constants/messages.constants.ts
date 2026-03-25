@@ -23,6 +23,7 @@ export const AUTH_MESSAGES = {
   FAILED_FETCH_USER:"Failed to fetch users",
   ADMIN_BLOCK:"Admin blocked",
   PASSWORD_UPDATE:"Password updated successfully",
+  ADMIN_ACESS_DENIED:"Access denied. Admin privileges required",
   RESET_SESSION_EXPIRED: "Reset session expired. Please restart the process",
   SESSION_INVALID: "Your session is no longer valid",
   ENTITY_ID_MISSING: "Technical error: Entity ID is missing from the database record",
@@ -36,8 +37,8 @@ export const AUTH_MESSAGES = {
   USER_STATUS_UPDATED: (status: string) => `User status successfully updated to ${status}`,
   PROFILE_IMAGE_UPDATED:"Profile updated",
   FILE_NOT_FOUND:"No file uploaded",  
-  USER_AUTHENTICATION_NOT_FOUND:"User authentication data is incomplete. Please log in again."
-
+  USER_AUTHENTICATION_NOT_FOUND:"User authentication data is incomplete. Please log in again.",
+  AUTHENTICATION_REQUIRED:"Authentication is required"
 
 
 };
@@ -77,7 +78,8 @@ export const WORKOUT_MESSAGES={
   WORKOUT_UPDATED:"Workout updated successfully",
   WORKOUT_ALREADY_EXIST:"Workout already exists",
   WORKOUT_STATUS_UPDATED:"Workout status updated",
-  WORKOUT_NOT_MATCH:"No workout matches this time and difficulty for this specialization"
+  WORKOUT_NOT_MATCH:"No workout matches this time and difficulty for this specialization",
+  WORKOUT_CREATION_FAILED:"Workout creation falied"
 };
 
 export const SUBSCRIPTION_MESSAGES={
@@ -85,14 +87,35 @@ export const SUBSCRIPTION_MESSAGES={
   SUBSCRIPTION_PLAN_CREATED:"Subcription plan created",
   SUBSCRIPTION_NOT_FOUND:"Subscription not found",
   SUBSCRIPTION_PLAN_UPDATED:"Subcription plan updated",
-    SUBSCRIPTION_PLAN_STATUS_UPDATED:"Subcription plan stated updated",
-    SUBSCRIPTION_ALREADY_HAVE:"You already have an same active plan"
+  SUBSCRIPTION_PLAN_STATUS_UPDATED:"Subcription plan stated updated",
+  SUBSCRIPTION_ALREADY_HAVE:"You already have an  active plan",
+  SUBSCRIPTION_CANCELLED:"Subscription cancelled successfully"  ,
+  SUBSCRIPTION_ACTIVATED:"Subscription activated",
+  SUBSCRIPTION_SESSION_EXPIRED:"Session expired, subscription cancelled",
+  SUBCRIPTION_UNHANDLED_TYPE:"Unhandled event type",
+  SUBSCRIPTION_CHECKOUT_SESSION_COMPLETED:"checkout.session.completed",
+  SUBSCRIPTION_CHECKOUT_SESSION_EXPIRED:"checkout.session.expired",
+
     
 
 };
 export const PAYMENT_MESSAGES={
-  PAYMENT_NOT_FOUND:"Payment not found for provider session"
+  PAYMENT_NOT_FOUND:"Payment not found for provider session",
+  MISSING_STRIPE_SIGNATURE:"Missing stripe signature",
+  INVALID_WEBHOOK_SIGNATURE:"Invalid webhook signature",
+  STRIPE_FAILED_TO_CREATE_CHECKOUT_URL:"Stripe failed to create checkout URL"
 };
 export const HEALTH_METRICS_MESSAGES={
   HEALTH_METRICS_SAVED:"Health metrics saved successfully"
+};
+
+export const ADVERTISEMENT_MESSAGES={
+  ADS_BANNER_IMAGE_IS_REQUIRED:"Advertisement banner image is required",
+  ADS_CREATED:"Advertisement created successfully",
+  NO_IMAGES_UPLOADED:"No images uploaded" ,
+  ADS_NOT_FOUND:"Ads not found ",
+  ADS_UPDATED:"updated sucessfully",
+  ADS_ID_MISSING:"Ad id is missing",
+  ADVERTISEMENT_STATUS_UPDATED: (status: string) => `Advertisement status successfully updated to ${status}`,
+
 };

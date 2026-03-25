@@ -1,9 +1,13 @@
 import { SpecializationStatus } from "@/domain/constants/auth.constants";
 
 
-export  interface GetSpecializationRequest {
-    page:number;
-    limit:number;
-    search?:string;
-    status?:SpecializationStatus;
+export class GetSpecializationRequest {
+  page!: number;
+  limit!: number;
+  search?: string;
+  status?: SpecializationStatus;
+
+  constructor(data: GetSpecializationRequest) {
+    Object.assign(this, data);
+  }
 }

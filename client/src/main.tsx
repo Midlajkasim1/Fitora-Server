@@ -6,7 +6,10 @@ import App from './App';
 import './index.css';
 import { AuthProvider } from './providers/AuthProvider';
 import { ToastProvider } from './providers/ToastProvider';
+import api from './api/axios';
+import { attachLogicToApi } from './api/interceptor';
 
+attachLogicToApi(api);
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
     <QueryProvider> 

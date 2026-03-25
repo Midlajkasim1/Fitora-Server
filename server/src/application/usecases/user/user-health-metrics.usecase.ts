@@ -19,8 +19,8 @@ export class SaveHealthMetricsUseCase implements IBaseUseCase<SaveHealthMetricsR
             primaryGoal:dto.primaryGoal
         });
         await this._healthMetricsRepository.save(healthmetrics);
-        return {
+        return new SaveHealthMetricsResponseDTO({
             message:HEALTH_METRICS_MESSAGES.HEALTH_METRICS_SAVED
-        };
+        });
     }
 }

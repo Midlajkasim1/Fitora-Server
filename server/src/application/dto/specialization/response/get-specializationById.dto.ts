@@ -1,11 +1,15 @@
 import { SpecializationStatus } from "@/domain/constants/auth.constants";
 
-export interface GetSpecializationByIdResponseDTO {
-  id: string;
-  name: string;
+export class GetSpecializationByIdResponseDTO {
+  id!: string;
+  name!: string;
   description?: string;
   imageUrl?: string;
-  status: SpecializationStatus;
-  createdAt: Date;
-  updatedAt: Date;
+  status!: SpecializationStatus;
+  createdAt!: Date;
+  updatedAt!: Date;
+
+  constructor(data: GetSpecializationByIdResponseDTO) {
+    Object.assign(this, data);
+  }
 }

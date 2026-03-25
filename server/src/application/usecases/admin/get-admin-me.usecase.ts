@@ -13,10 +13,10 @@ export class GetAdminMeUseCase implements IBaseUseCase<string, GetAdminMeRespons
       throw new Error(AUTH_MESSAGES.ADMIN_NOT_FOUND);
     }
 
-    return {
+    return new GetAdminMeResponseDTO({
       id: admin.id!,
       email: admin.email,
       role: admin.role, 
-    };
+    });
   }
 }

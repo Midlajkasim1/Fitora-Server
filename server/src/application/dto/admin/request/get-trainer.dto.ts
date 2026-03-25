@@ -1,8 +1,11 @@
-
-export interface GetTrainersRequestDTO {
-  page: number;
-  limit: number;
+export class GetTrainersRequestDTO {
+  page!: number;
+  limit!: number;
   search?: string;
   status?: string;
-  specialization?:string;
+  specialization?: string;
+
+  constructor(data: GetTrainersRequestDTO) {
+    Object.assign(this, data);
+  }
 }

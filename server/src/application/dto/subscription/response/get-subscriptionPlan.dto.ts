@@ -1,7 +1,11 @@
 import { SubscriptionPlanManagementListDTO } from "./subscriptionManagementPlan.dto";
 
 
-export interface GetSubscriptionPlanResponseDTO{
-    subscriptions:SubscriptionPlanManagementListDTO[];
-    totals:number;
+export class GetSubscriptionPlanResponseDTO {
+  subscriptions!: SubscriptionPlanManagementListDTO[];
+  totals!: number;
+
+  constructor(data: GetSubscriptionPlanResponseDTO) {
+    Object.assign(this, data);
+  }
 }

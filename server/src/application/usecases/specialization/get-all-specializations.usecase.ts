@@ -11,24 +11,24 @@ export class GetAllSpecializationUsecase implements IBaseUseCase<GetSpecializati
         private readonly _specializationRepository:ISpecialization
     ){}
     async execute(dto: GetSpecializationRequest): Promise<GetSpecializationResponseDTO> {
-      const {specializations, total} = await this._specializationRepository.findAll(dto);
+      const {data, total} = await this._specializationRepository.findAllSP(dto);
 
-      const specializationListItem : SpecializationManagementDTO[] = specializations.map((specialization)=>{
+      const specializationListItem : SpecializationManagementDTO[] = data.map((specialization)=>{
       if(!specialization.id){
       throw new Error(SPECIALIZATION_MESSAGES.SPECIALIZATION_ID_MISSING);
       }
-      return {
+      return new SpecializationManagementDTO({
         id:specialization.id, 
         name:specialization.name,
         description:specialization.description,
         imageUrl:specialization.imageUrl,
         status:specialization.status
 
-      };
       });
-   return {
+      });
+   return new GetSpecializationResponseDTO({
    specialization:specializationListItem,
     total
-   };
+   });
     }
 }

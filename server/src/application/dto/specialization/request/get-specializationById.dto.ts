@@ -1,4 +1,8 @@
 
-export interface GetSpecializationByIdRequestDTO {
-    id:string;
+export class GetSpecializationByIdRequestDTO {
+  id!: string;
+
+  constructor(data: GetSpecializationByIdRequestDTO) {
+    Object.assign(this, data);
+  }
 }

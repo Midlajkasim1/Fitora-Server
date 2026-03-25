@@ -64,12 +64,12 @@ export class SpecializationController {
     }
 
   async getAllSpecialization(req:Request,res:Response):Promise<Response>{
-      const dto:GetSpecializationRequest ={
+      const dto = new GetSpecializationRequest({
         page:Number(req.query.page) || 1,
         limit:Number(req.query.limit) ||10,
         search:req.query.search as string,
         status:req.query.status as SpecializationStatus.ACTIVE |SpecializationStatus.BLOCKED | undefined
-      };
+      });
       const result = await this._getAllSpecializationUseCase.execute(dto);
       return res.status(HttpStatus.OK).json({
         success:true,
@@ -78,7 +78,7 @@ export class SpecializationController {
         
   }
   async BlockSpecialization(req:Request,res:Response):Promise<Response>{
-    const dto:UpdateStatusRequestDTO = {specializationId:req.params.specializationId};
+    const dto=new UpdateStatusRequestDTO({specializationId:req.params.specializationId});
     const result = await this._blockSpecializationUseCase.execute(dto);
     return res.status(HttpStatus.OK).json({
 
@@ -87,8 +87,8 @@ export class SpecializationController {
     });
   }
 async GetSingleSpecialization(req:Request,res:Response):Promise<Response>{
-  const id = req.params.id;
-  const result =await this._getSpecializationByIdUseCase.execute({id});
+  const dto = new GetSpecializationByIdRequestDTO({id:req.params.id});
+  const result =await this._getSpecializationByIdUseCase.execute(dto);
   return res.status(HttpStatus.OK).json({
     success:true,
     data:result

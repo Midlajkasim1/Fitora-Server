@@ -42,7 +42,7 @@ export class RegisterUseCase implements IBaseUseCase<RegisterDTO, RegisterRespon
     );
     logger.info(`OTP generated: ${otp}`);
     await this._emailService.sendOtp(dto.email, otp);
-    return { message: AUTH_MESSAGES.OTP_RESENT };
+    return new RegisterResponseDTO({ message: AUTH_MESSAGES.OTP_RESENT });
 
 
   }

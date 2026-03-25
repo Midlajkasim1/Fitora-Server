@@ -1,3 +1,4 @@
+import { AdvertisementMapper } from "@/infrastructure/database/mappers/advertisement.mapper";
 import { HealthMetricsMapper } from "@/infrastructure/database/mappers/client-health-metrics.mapper";
 import { ClientPreferenceMapper } from "@/infrastructure/database/mappers/client-preference.mapper";
 import { PaymentMapper } from "@/infrastructure/database/mappers/payment.mapper";
@@ -7,6 +8,7 @@ import { SubscriptionPlanMapper } from "@/infrastructure/database/mappers/subscr
 import { TrainerDetailsMapper } from "@/infrastructure/database/mappers/trainer-details.mapper";
 import { UserMapper } from "@/infrastructure/database/mappers/user.mapper";
 import { WorkoutMapper } from "@/infrastructure/database/mappers/workout.mapper";
+import { AdvertisementRepository } from "@/infrastructure/database/repositories/advertisement.repository";
 import { HealthMetricsRepository } from "@/infrastructure/database/repositories/client-health-metrics";
 import { ClientPreferenceRepository } from "@/infrastructure/database/repositories/client-preference.repository";
 import { PaymentRepository } from "@/infrastructure/database/repositories/paymentRepository";
@@ -25,6 +27,7 @@ const subscriptionPlanMapper = new SubscriptionPlanMapper();
 const subscriptionMapper= new SubscriptionMapper();
 const paymentMapper = new PaymentMapper();
 const clientHealthMetrics = new HealthMetricsMapper();
+const advertisementMapper = new AdvertisementMapper();
 
 export const userRepositories = {
   userRepository: new UserRepository(userMapper) ,
@@ -35,7 +38,8 @@ export const userRepositories = {
    subscriptionPlanRepository:new SubscriptionplanRepository(subscriptionPlanMapper),
    subscriptionRepository:new SubscriptionRepository(subscriptionMapper),
    paymentRepository:new PaymentRepository(paymentMapper),
-   clientHealthMetricRepository:new HealthMetricsRepository(clientHealthMetrics)
+   clientHealthMetricRepository:new HealthMetricsRepository(clientHealthMetrics),
+   advertisementRepository:new AdvertisementRepository(advertisementMapper)
    
   
   

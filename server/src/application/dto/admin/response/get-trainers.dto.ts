@@ -1,6 +1,10 @@
 import { TrainerManagementDTO } from "./trainer-management.dto";
 
-export interface GetTrainersResponseDTO {
-  trainers: TrainerManagementDTO[]; 
-  total: number;
+export class GetTrainersResponseDTO {
+  trainers!: TrainerManagementDTO[];
+  total!: number;
+
+  constructor(data: GetTrainersResponseDTO) {
+    Object.assign(this, data);
+  }
 }

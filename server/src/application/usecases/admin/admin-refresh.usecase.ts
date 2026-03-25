@@ -22,9 +22,10 @@ export class AdminRefreshUseCase implements IBaseUseCase<RefreshTokenRequestDTO,
     const accessToken = this._tokenService.generateAccessToken({
       userId: admin.id!,
       email: admin.email,
+      name:"Admin",
       role: AdminRole.ADMIN,
     });
 
-    return { accessToken };
+    return new AdminRefreshResponseDTO({ accessToken });
   }
 }

@@ -31,20 +31,16 @@ export class UpdateSpecializationUsecase implements IBaseUseCase<UpdateSpecializ
         imageUrl= await this._storageProvider.uploadImage(file.buffer,file.originalname,file.mimetype);
        }
 
-       const updatedSpecialization = SpecializationEntity.create({
-        id:existing.id ,
-        name: dto.name ||   existing.name,
-        description: dto.description ??  existing.description,
-        imageUrl:imageUrl,
-        status:existing.status,
-        createdAt:existing.createdAt,
-        updatedAt:new Date()
+       const updateData: Partial<SpecializationEntity> = {
+      name: dto.name,
+      description: dto.description,
+      imageUrl: imageUrl,
+      updatedAt: new Date()
+    };
+       await this._specializationRepository.update!(dto.id,updateData);
 
-       });
-       await this._specializationRepository.update(updatedSpecialization);
-
-       return {
+       return new UpdateSpecializationResponseDTO({
         message:SPECIALIZATION_MESSAGES.SPECIALIZATION_UPDATED
-       };
+       });
     }
 }

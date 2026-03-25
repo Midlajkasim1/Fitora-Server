@@ -39,18 +39,19 @@ export class VerifyOtpUseCase implements IBaseUseCase<VerifyOtpDTO,VerifyOtpResp
       isEmailVerified: true,
     });
 
-  const createdUser = await this._userRepository.create(userEntity, stored.password);
+  const createdUser = await this._userRepository.createWithPassword(userEntity, stored.password);
 
     const accessToken = this._tokenService.generateAccessToken({ 
       userId: createdUser.id!, 
       email: createdUser.email, 
+      name:createdUser.firstName,
       role: createdUser.role 
     });
     const refreshToken = this._tokenService.generateRefreshToken({ userId: createdUser.id! });
 
     await this._otpStore.delete(redisKey);
 
-    return {
+    return new VerifyOtpResponseDTO({
       message: AUTH_MESSAGES.VERIFICATION_SUCCESS,
       accessToken,
       refreshToken,
@@ -60,7 +61,7 @@ export class VerifyOtpUseCase implements IBaseUseCase<VerifyOtpDTO,VerifyOtpResp
         role: createdUser.role,
         isOnboardingRequired: true 
       }
-    };
+    });
 
   }
 }

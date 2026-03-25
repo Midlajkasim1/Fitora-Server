@@ -1,6 +1,10 @@
 import { WorkoutBySpecializationListDTO } from "./get-workoutBySpList.dto";
 
-export interface GetWorkoutsBySpecializationResponseDTO {
-  workouts: WorkoutBySpecializationListDTO[];
-  total: number;
+export class GetWorkoutsBySpecializationResponseDTO {
+  workouts!: WorkoutBySpecializationListDTO[];
+  total!: number;
+
+  constructor(data: GetWorkoutsBySpecializationResponseDTO) {
+    Object.assign(this, data);
+  }
 }

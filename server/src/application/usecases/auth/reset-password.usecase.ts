@@ -28,6 +28,6 @@ export class ResetPasswordUseCase implements IBaseUseCase<ResetPasswordDTO, Rese
     await this._userRepository.updatePassword(user.id!, hashedPassword); 
     await this._otpStore.delete(sessionKey);
 
-    return { message: AUTH_MESSAGES.PASSWORD_UPDATE,success:true };
+    return new ResetPasswordResponseDTO({ message: AUTH_MESSAGES.PASSWORD_UPDATE,success:true });
   }
 }

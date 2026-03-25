@@ -1,14 +1,14 @@
+import { Ban, Eye } from "lucide-react";
 import { useState } from "react";
-import { AdminLayout } from "../../layout/admin/AdminLayout";
 import { DataTable } from "../../components/admin/DataTable";
 import { ManagementHeader } from "../../components/admin/ManagementHeader";
 import { Pagination } from "../../components/admin/Pagination";
+import { useSpecializationsForFilter } from "../../hooks/admin/specialization/use-admin-specializationFilter";
+import { useTrainerManagmenet } from "../../hooks/admin/use-admin-trainer-management";
+import { useToggleTrainerBlock } from "../../hooks/admin/use-trainerToggleBlock";
+import { AdminLayout } from "../../layout/admin/AdminLayout";
 import { ConfirmModal } from "../../shared/ConfirmModal";
 import type { User } from "../../type/auth.types";
-import { Ban, Eye } from "lucide-react";
-import { useTrainerManagmenet } from "../../hooks/admin/use-admin-trainer-management";
-import { useSpecializationsForFilter } from "../../hooks/admin/use-admin-specializationFilter";
-import { useToggleTrainerBlock } from "../../hooks/admin/use-trainerToggleBlock";
 
 export default function TrainerManagement() {
   const [page, setPage] = useState(1);

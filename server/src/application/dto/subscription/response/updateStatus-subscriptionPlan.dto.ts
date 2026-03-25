@@ -1,5 +1,9 @@
 
 
-export interface UpdateSubscriptionPlanStatusResponseDTO{
-    message:string;
+export class UpdateSubscriptionPlanStatusResponseDTO {
+  message!: string;
+
+  constructor(data: UpdateSubscriptionPlanStatusResponseDTO) {
+    Object.assign(this, data);
+  }
 }

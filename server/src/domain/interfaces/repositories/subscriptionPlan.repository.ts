@@ -5,14 +5,8 @@ import { IBaseRepository } from "./base.repository";
 
 
 export interface ISubscriptionPlanRepository extends IBaseRepository<SubscriptionPlanEntity> {
-    create(subscription:SubscriptionPlanEntity):Promise<SubscriptionPlanEntity>;
     findByName(name:string):Promise<SubscriptionPlanEntity | null>;
-    findAll(params:{
-        page:number,
-        limit:number,
-        search?:string,
-        status?:SubscriptionPlanStatus
-    }):Promise<{subscriptions:SubscriptionPlanEntity[];totals:number}>
-    update(subscription:SubscriptionPlanEntity):Promise<SubscriptionPlanEntity | null>;
     updataStatus(id:string,status:SubscriptionPlanStatus):Promise<void>;
+    updatePurchasedCount(planId:string):Promise<void>;
+    findAllSPlan(params: { page: number; limit: number; search?: string; status?: SubscriptionPlanStatus; }): Promise<{ data: SubscriptionPlanEntity[]; total: number; }>
 }

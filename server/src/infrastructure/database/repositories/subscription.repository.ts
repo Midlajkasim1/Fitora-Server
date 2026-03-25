@@ -3,9 +3,14 @@ import { SubscriptionEntity } from "@/domain/entities/subscription/subscription.
 import { SubscriptionMapper } from "../mappers/subscription.mapper";
 import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
 import { SubscriptionModel } from "../models/subscription.model";
+import { Model } from "mongoose";
+import { ISubscriptionDocument } from "../interfaces/ISubscription.document";
+import { BaseRepository } from "./base.repository";
 
-export class SubscriptionRepository implements ISubscriptionRepository {
-    constructor(private readonly _subscriptionMapper: SubscriptionMapper) {}
+export class SubscriptionRepository extends BaseRepository<SubscriptionEntity,ISubscriptionDocument> implements ISubscriptionRepository {
+    constructor(private readonly _subscriptionMapper: SubscriptionMapper) {
+        super(SubscriptionModel as unknown as Model<ISubscriptionDocument>,_subscriptionMapper );
+    }
 
     async create(subscription: SubscriptionEntity): Promise<SubscriptionEntity> {
         const data = this._subscriptionMapper.toMongo(subscription);
@@ -19,7 +24,7 @@ export class SubscriptionRepository implements ISubscriptionRepository {
     }
 
     async updateStatus(id: string, status: SubscriptionStatus): Promise<void> {
-        await SubscriptionModel.findByIdAndUpdate(id, { $set: { status } }).exec();
+        await SubscriptionModel.findByIdAndUpdate(id, { $set: { status } },{new:true}).exec();
     }
 
     async findActiveByUserId(userId: string): Promise<SubscriptionEntity | null> {

@@ -22,21 +22,19 @@ export class UpdateSubscriptionPlanUseCase implements IBaseUseCase<UpdateSubscri
                 throw new Error(SUBSCRIPTION_MESSAGES.SUBSCRIPTION_ALREADY_EXISTS);
             }
         }
-        const updatedSubscription = SubscriptionPlanEntity.create({
-            id:existing.id!,
-            name:dto.name || existing.name,
-            price:dto.price || existing.price,
-            billingCycle:dto.billingCycle || existing.billingCycle,
-            description:dto.description || existing.description,
-            sessionType:dto.sessionType || existing.sessionType,
-            sessionCredits:dto.sessionCredits || existing.sessionCredits,
-            aiWorkoutLimit:dto.aiWorkoutLimit || existing.aiWorkoutLimit,
-            aiDietLimit:dto.aiDietLimit || existing.aiDietLimit
-
-        });
-      await this._subscriptionRepository.update(updatedSubscription);
-      return{
+        const updateData: Partial<SubscriptionPlanEntity> = {
+      name: dto.name,
+      price: dto.price,
+      billingCycle: dto.billingCycle,
+      description: dto.description,
+      sessionType: dto.sessionType,
+      sessionCredits: dto.sessionCredits,
+      aiWorkoutLimit: dto.aiWorkoutLimit,
+      aiDietLimit: dto.aiDietLimit,
+    };
+      await this._subscriptionRepository.update!(dto.id,updateData);
+      return new UpdateSubscriptionPlanResponseDTO({
         message:SUBSCRIPTION_MESSAGES.SUBSCRIPTION_PLAN_UPDATED
-      };
+      });
     }
 }

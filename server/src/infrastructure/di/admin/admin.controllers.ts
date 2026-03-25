@@ -5,6 +5,7 @@ import { AdminTrainerController } from "@/presentation/controllers/admin/admin-t
 import { SpecializationController } from "@/presentation/controllers/admin/specialization.controller";
 import { WorkoutController } from "@/presentation/controllers/admin/admin-workout.controller";
 import { AdminSubscriptionController } from "@/presentation/controllers/admin/admin-subscription.controller";
+import { AdvertisementController } from "@/presentation/controllers/admin/admin-advertisement.controller";
 
 export const adminControllers = {
   adminAuthController: new AdminAuthController(
@@ -48,6 +49,13 @@ export const adminControllers = {
     adminUseCases.updateSubscriptionPlanUseCase,
     adminUseCases.updateSubscriptionPlanStatus,
     adminUseCases.getSubscriptionPlanByIdUseCase
+  ),
+  advertisementController:new AdvertisementController(
+    adminUseCases.createAdvertisementUseCase,
+    adminUseCases.updateAdvertisementUseCase,
+    adminUseCases.getAllAdvertisementUseCase,
+    adminUseCases.updateStatusAdvertisement,
+    adminUseCases.getAdvertisementById
   )
  
 };

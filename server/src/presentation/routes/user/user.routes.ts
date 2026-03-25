@@ -6,43 +6,54 @@ import { Request, Response, Router } from "express";
 
 const router = Router();
 
-router.get("/profile",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.get("/profile",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userController.userProfile(req,res)
 ));
-router.put("/profile",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.put("/profile",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userController.userProfileUpdate(req,res)
 ));
-router.put("/profileImage",userMiddlewares.authMiddleware,upload.single("profileImage"),asyncHandler((req:Request,res:Response)=>
+router.put("/profileImage",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,upload.single("profileImage"),asyncHandler((req:Request,res:Response)=>
     userControllers.userController.uploadProfileImage(req,res)
 ));
-router.put("/change-password",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.put("/change-password",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userController.ChangePassword(req,res)
 ));
-router.get("/specializations",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.get("/specializations",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userSpecializationController.getActiveSpecializations(req,res)
 ));
-router.get("/specializations/:id",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.get("/specializations/:id",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userSpecializationController.getSpecializationDetails(req,res)
 ));
-router.get("/specializations/:id/start",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.get("/specializations/:id/start",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userSpecializationController.getStartSession(req,res)
 ));
-router.get("/subscriptions",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.get("/subscriptions",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userSubscriptionController.getUserSubscriptionPlan(req,res)
 ));
-router.get("/active-user-plan",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.get("/active-user-plan",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userSubscriptionController.checkActiveSubcriptionStatus(req,res)
 ));
 
 
-router.get("/subscriptions/:id",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.get("/subscriptions/:id",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userSubscriptionController.getPlanDetails(req,res)
 ));
-router.post("/purchase",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.post("/purchase",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userSubscriptionController.purchasePlan(req,res)
 ));
-router.post("/health-metrics",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.patch("/subscriptions/cancel",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSubscriptionController.CancelSubscription(req,res)
+));
+router.get("/subscriptions-history",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSubscriptionController.getPurchaseHistory(req,res)
+));
+router.post("/health-metrics",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userHealthMetricsController.saveMetrics(req,res)
 ));
-
+router.get("/health-metrics/check",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userHealthMetricsController.checkHealthMetrics(req,res)
+));
+router.get("/advertisement",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userAdvertisementController.getAdvertisement(req,res)
+));
 export default router;

@@ -19,11 +19,11 @@ export class UserBlockUsecase implements IBaseUseCase<BlockUserRequestDTO, Block
 
     await this._userRepository.updateStatus(user.id!, newStatus);
 
-    return {
+    return new BlockUserResponseDTO({
       id: user.id!,
       email: user.email,
       status: newStatus,
       message: AUTH_MESSAGES.USER_STATUS_UPDATED(newStatus),
-    };
+    });
   }
 }

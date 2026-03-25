@@ -5,15 +5,17 @@ import { ClientPreferenceMapper } from "@/infrastructure/database/mappers/client
 import { TrainerDetailsMapper } from "@/infrastructure/database/mappers/trainer-details.mapper";
 import { SpecializationRepository } from "@/infrastructure/database/repositories/specialization.repository";
 import { SpecializationMapper } from "@/infrastructure/database/mappers/specialization.mapper";
+import { UserMapper } from "@/infrastructure/database/mappers/user.mapper";
 
 const clientPreferenceMapper = new ClientPreferenceMapper();
 const trainerMapper = new TrainerDetailsMapper();
 const specialistaionMapper = new SpecializationMapper();
+const userMapper = new UserMapper();
 
 export const onboardingRepositories = {
   userRepository: userRepositories.userRepository, 
   clientPreferenceRepository: new ClientPreferenceRepository(clientPreferenceMapper),
-  trainerRepository: new TrainerRepository(trainerMapper),
+  trainerRepository: new TrainerRepository(trainerMapper,userMapper),
     specialisatonRepository: new SpecializationRepository(specialistaionMapper),
   
 };

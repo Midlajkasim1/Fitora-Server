@@ -5,8 +5,8 @@ import { useStartWorkout } from "../../../hooks/user/workout/use-user-startWorko
 export default function WorkoutConfiguration() {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const [difficulty, setDifficulty] = useState("beginner");
+type WorkoutDifficulty = "beginner" | "intermediate" | "advanced";
+  const [difficulty, setDifficulty] = useState<WorkoutDifficulty>("beginner");
   const [duration, setDuration] = useState(5);
 
   const { isFetching, isError, error, refetch } = useStartWorkout(

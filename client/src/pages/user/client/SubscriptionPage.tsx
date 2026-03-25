@@ -1,16 +1,36 @@
 import { Loader2, TrendingUp, Zap, ShieldCheck } from "lucide-react";
+import { useState } from "react";
 import { useUserSubscriptions } from "../../../hooks/user/subscription/use-user-subscription";
 import { usePurchasePlan } from "../../../hooks/user/subscription/use-purchase-plan";
+import { useCancelSubscription } from "../../../hooks/user/subscription/use-cancel-subscription";
+import { useSubscriptionStatus } from "../../../hooks/user/subscription/check-plan-status";
 import { SubscriptionCard } from "../../../components/user/SubscriptionCard";
+import { ConfirmModal } from "../../../shared/ConfirmModal";
+import { Pagination } from "../../../components/admin/Pagination";
 
 export default function SubscriptionPage() {
-  const { data, isLoading } = useUserSubscriptions();
-  const { mutate, isPending, variables } = usePurchasePlan();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
+  // Data Hooks
+  const { data, isLoading } = useUserSubscriptions(currentPage);
+  const { data: statusData, isLoading: isStatusLoading } = useSubscriptionStatus();
+  
+  // Mutation Hooks
+  const { mutate: purchasePlan, isPending: isPurchasing, variables: purchasingId } = usePurchasePlan();
+  const { mutate: cancelPlan, isPending: isCancelling } = useCancelSubscription();
+
+  const resultsPerPage = 1; // Match your current pagination setup
+  const totalResults = data?.totals || 0;
+  const totalPages = Math.ceil(totalResults / resultsPerPage);
   const plans = data?.subscriptions ?? [];
+  
+  // const isPremium = statusData?.isPremium;
+  const activePlanId = statusData?.subscription?.planId;
 
   return (
     <div className="max-w-7xl mx-auto py-12 px-6">
+      {/* Header Section */}
       <div className="text-center mb-20">
         <span className="bg-[#00ff94]/10 text-[#00ff94] text-[10px] font-black uppercase italic tracking-widest px-4 py-1.5 rounded-full border border-[#00ff94]/20">
           Pricing Plans
@@ -20,8 +40,9 @@ export default function SubscriptionPage() {
         </h1>
       </div>
 
+      {/* Plans Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
-        {isLoading ? (
+        {isLoading || isStatusLoading ? (
           <div className="col-span-3 flex justify-center py-20">
             <Loader2 className="w-10 h-10 text-[#00ff94] animate-spin" />
           </div>
@@ -30,15 +51,33 @@ export default function SubscriptionPage() {
             <SubscriptionCard 
               key={plan.id} 
               plan={plan} 
-              onSubscribe={(id) => mutate(id)}
-              // isPending is true while waiting for the checkoutUrl
-              // variables is the plan.id that was passed to mutate()
-              isPurchasing={isPending && variables === plan.id}
+              onSubscribe={(id) => purchasePlan(id)}
+              onCancel={() => setIsCancelModalOpen(true)}
+              isPurchasing={isPurchasing && purchasingId === plan.id}
+              isCancelling={isCancelling}
+              isCurrentPlan={activePlanId === plan.id}
             />
           ))
         )}
       </div>
 
+      {/* Pagination Section */}
+      {totalResults > 0 && (
+        <div className="pt-12 border-t border-white/5">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={(page) => {
+              setCurrentPage(page);
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          />
+        </div>
+      )}
+
+      {/* Feature Section */}
       <section className="border-t border-white/5 pt-20 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
           <div className="space-y-4">
@@ -57,7 +96,7 @@ export default function SubscriptionPage() {
             </div>
             <h3 className="text-white font-black italic uppercase text-lg">Exclusive Content</h3>
             <p className="text-gray-500 text-xs italic leading-relaxed">
-              Access workout specializations designed by Olympic-level trainers not available in the free tier.
+              Access workout specializations designed by Olympic-level trainers.
             </p>
           </div>
 
@@ -67,11 +106,21 @@ export default function SubscriptionPage() {
             </div>
             <h3 className="text-white font-black italic uppercase text-lg">Cancel Anytime</h3>
             <p className="text-gray-500 text-xs italic leading-relaxed">
-              No hidden contracts. Manage your billing easily through your dashboard with a single click.
+              No hidden contracts. Manage your billing easily through your dashboard.
             </p>
           </div>
         </div>
       </section>
+
+      {/* Modal - Place at the bottom for accessibility */}
+      <ConfirmModal
+        isOpen={isCancelModalOpen}
+        onClose={() => setIsCancelModalOpen(false)}
+        onConfirm={() => cancelPlan()}
+        title="Stop Your Progress?"
+        message="Cancelling your plan will remove your access to AI tracking and premium content at the end of this billing cycle."
+        confirmText={isCancelling ? "Cancelling..." : "Confirm Cancellation"}
+      />
     </div>
   );
 }

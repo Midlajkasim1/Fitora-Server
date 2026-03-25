@@ -1,5 +1,9 @@
 
 
-export interface UpdateTrainerApprovalResponseDTO {
-    message:string;
+export class UpdateTrainerApprovalResponseDTO {
+  message!: string;
+
+  constructor(data: UpdateTrainerApprovalResponseDTO) {
+    Object.assign(this, data);
+  }
 }

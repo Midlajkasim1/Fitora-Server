@@ -1,12 +1,15 @@
-import { IHealthMetricsRepository } from "@/domain/interfaces/repositories/onboarding/iclient-health-metrics.interface";
-import { Types } from "mongoose";
+import { Model, Types } from "mongoose";
 import { HealthMetricsMapper } from "../mappers/client-health-metrics.mapper";
 import { HealthMetricsEntity } from "@/domain/entities/user/client-health-metrics.entity";
 import { HealthMetricsModel } from "../models/client-health-metrics.models";
 import { IHealthMetricsDocument } from "../interfaces/health-metrics.documetn.interface";
+import { IHealthMetricsRepository } from "@/domain/interfaces/repositories/onboarding/iclient-health-metrics.interface";
+import { BaseRepository } from "./base.repository";
 
-export class HealthMetricsRepository implements IHealthMetricsRepository{
-  constructor(private readonly mapper: HealthMetricsMapper) {}
+export class HealthMetricsRepository extends BaseRepository<HealthMetricsEntity,IHealthMetricsDocument> implements IHealthMetricsRepository{
+  constructor(private readonly _healthMetricsmapper: HealthMetricsMapper) {
+    super(HealthMetricsModel as unknown as Model<IHealthMetricsDocument>,_healthMetricsmapper);
+  }
 
   async save(metrics: HealthMetricsEntity): Promise<void> {
     const data = this.mapper.toMongo(metrics);

@@ -1,4 +1,7 @@
+export class AdminRefreshRequestDTO {
+  refreshToken!: string;
 
-export interface AdminRefreshRequestDTO{
-    refreshToken:string;
+  constructor(data: AdminRefreshRequestDTO) {
+    Object.assign(this, data);
+  }
 }

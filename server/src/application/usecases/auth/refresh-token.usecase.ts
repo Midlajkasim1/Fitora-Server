@@ -23,9 +23,10 @@ export class RefreshTokenUseCase implements IBaseUseCase<RefreshTokenRequestDTO,
     const accessToken = this._tokenService.generateAccessToken({
       userId: user.id!,
       email: user.email,
+      name:user.firstName,
       role: user.role
     });
 
-    return { accessToken };
+    return new RefreshTokenResponseDTO({ accessToken });
   }
 }

@@ -27,9 +27,9 @@ export class CreateSubscriptionPlanUseCase implements IBaseUseCase<CreateSubscri
 
     });
        await this._subscriptionRepository.create(subscription);
-    return {
+    return new CreateSubscriptionPlanResponseDTO({
         message:SUBSCRIPTION_MESSAGES.SUBSCRIPTION_PLAN_CREATED
-    };
+    });
 
     }
 }

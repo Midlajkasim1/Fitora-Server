@@ -18,13 +18,13 @@ export class BlockSpecializationUSeCase implements IBaseUseCase<UpdateStatusRequ
       specialization.toggleStatus();
       const newStatus = specialization.status;
       await this._specializationRepository.updateStatus(specialization.id!,newStatus);
-    return {
+    return new UpdateStatusResponseDTO({
        specializationId:specialization.id!,
        name:specialization.name,
        status:newStatus,
        message:SPECIALIZATION_MESSAGES.SPECIALIZATION_STATUS_UPDATED(newStatus)
 
-    };
+    });
 
     }
 }

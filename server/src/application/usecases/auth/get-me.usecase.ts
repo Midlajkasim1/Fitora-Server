@@ -1,6 +1,6 @@
 import { GetMeResponseDTO } from "@/application/dto/auth/response/get-me.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { UserRole } from "@/domain/constants/auth.constants";
+import { ApprovalStatus, UserRole } from "@/domain/constants/auth.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
@@ -19,14 +19,14 @@ export class GetMeUseCase implements IBaseUseCase<string, GetMeResponseDTO> {
     if (!user) {
       throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
     }
-    let approvalStatus: string | undefined ;
+    let approvalStatus: ApprovalStatus = ApprovalStatus.PENDING ;
     if(user.role === UserRole.TRAINER){
       const trainer = await this._trainerRepository.findByUserId(user.id!);
-      approvalStatus = trainer?.approvalStatus;
+      approvalStatus = trainer?.approvalStatus as ApprovalStatus;
     }
     
 
-    return {
+    return new GetMeResponseDTO( {
       id: user.id!,
       email: user.email,
       firstName: user.firstName,
@@ -36,6 +36,6 @@ export class GetMeUseCase implements IBaseUseCase<string, GetMeResponseDTO> {
       isOnboardingRequired: user.isOnboardingRequired,
       profileImage: user.profileImage,
       approval_status: approvalStatus
-    };
+    });
   }
 }

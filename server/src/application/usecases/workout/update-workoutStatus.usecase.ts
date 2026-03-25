@@ -20,9 +20,9 @@ export class UpdateWorkoutStatusUseCase implements IBaseUseCase<UpdateWorkoutSta
             dto.id,
             workout.status
         );
-        return {
+        return new UpdateWorkoutStatusResponseDTO({
             message:WORKOUT_MESSAGES.WORKOUT_STATUS_UPDATED
-        };
+        });
     }
 }
 

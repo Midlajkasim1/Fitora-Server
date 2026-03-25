@@ -14,13 +14,13 @@ export class GetWorkoutSelectionUseCase implements IBaseUseCase<GetWorkoutSelect
         if(!workout){
             throw new Error(WORKOUT_MESSAGES.WORKOUT_NOT_MATCH);
         }
-        return {
+        return new GetWorkoutSelectionResponseDTO({
             id:workout.id!,
             title:workout.title,
             videoUrl:workout.videoUrl,
             duration:workout.duration,
             caloriesBurn:workout.caloriesBurn,
             description:workout.description
-        };
+        });
     }
 }

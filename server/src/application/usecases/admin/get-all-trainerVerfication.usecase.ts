@@ -12,14 +12,14 @@ export class GetTrainerVerificationUseCase implements IBaseUseCase<GetTrainerVer
         private readonly _userRepository:IUserRepository
     ){}
   async  execute(dto: GetTrainerVerificationRequestDTO): Promise<GetTrainerVerificationResponseDTO> {
-        const {trainers,total} = await this._trainerRepository.findAllTrainerVerification(dto);
+        const {data,total} = await this._trainerRepository.findAllTrainerVerification(dto);
     const result: TrainerVerificationListDTO[] = [];
 
-    for (const trainer of trainers) {
+    for (const trainer of data) {
       const user = await this._userRepository.findById(trainer.userId);
       if (!user) continue;
 
-      result.push({
+      result.push(new TrainerVerificationListDTO({
         id: trainer.id!,
         userId: trainer.userId,
         trainerName: `${user.firstName} ${user.lastName}`,
@@ -27,12 +27,12 @@ export class GetTrainerVerificationUseCase implements IBaseUseCase<GetTrainerVer
         experienceYear: trainer.experienceYear,
         approvalStatus: trainer.approvalStatus,
         createdAt: user.createdAt!,
-      });
+      }));
     }
 
-     return{
+     return new GetTrainerVerificationResponseDTO({
         trainers:result,
         total
-     };
+     });
     }
 }

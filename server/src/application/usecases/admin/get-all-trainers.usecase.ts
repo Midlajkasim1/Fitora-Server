@@ -13,13 +13,13 @@ export class GetAllTrainersUseCase implements IBaseUseCase<GetTrainersRequestDTO
   ) {}
 
   async execute(dto: GetTrainersRequestDTO): Promise<GetTrainersResponseDTO> {
-    const { trainers, total } = await this.trainerRepository.findAllTrainers(dto);
+    const { data, total } = await this.trainerRepository.findAllTrainers(dto);
  
 
-    const trainerList: TrainerManagementDTO[] = trainers.map((trainer:UserEntity) => {
+    const trainerList: TrainerManagementDTO[] = data.map((trainer:UserEntity) => {
       if (!trainer.id) throw new Error(AUTH_MESSAGES.ENTITY_ID_MISSING);
 
-      return {
+      return new TrainerManagementDTO({
         id: trainer.id,
         email: trainer.email,
         firstName: trainer.firstName,
@@ -27,12 +27,12 @@ export class GetAllTrainersUseCase implements IBaseUseCase<GetTrainersRequestDTO
         profileImage: trainer.profileImage,
         status: trainer.status,
         createdAt: trainer.createdAt || new Date(),
-      };
+      });
     });
 
-    return {
+    return new GetTrainersResponseDTO({
       trainers: trainerList,
       total
-    };
+    });
   }
 }

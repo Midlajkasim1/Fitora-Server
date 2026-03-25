@@ -1,3 +1,7 @@
-export interface UpdateStatusRequestDTO {
-    specializationId:string;
+export class UpdateStatusRequestDTO {
+  specializationId!: string;
+
+  constructor(data: UpdateStatusRequestDTO) {
+    Object.assign(this, data);
+  }
 }

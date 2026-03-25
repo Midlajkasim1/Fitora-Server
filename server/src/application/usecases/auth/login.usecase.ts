@@ -36,7 +36,7 @@ let approvalStatus;
       const trainer = await this._trainerRepository.findByUserId(user.id!);
       approvalStatus = trainer?.approvalStatus; 
     }
-  return {
+  return new LoginResponseDTO( {
    accessToken: this._tokenService.generateAccessToken({
         userId: user.id!,  
         email: user.email,
@@ -49,7 +49,7 @@ let approvalStatus;
       isOnboardingRequired: user.isOnboardingRequired,
       approval_status: approvalStatus,
 
-  };
+  });
 }
 
 }

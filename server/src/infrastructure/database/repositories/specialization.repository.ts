@@ -3,12 +3,17 @@ import { SpecializationMapper } from "../mappers/specialization.mapper";
 import { SpecializationEntity } from "@/domain/entities/specialization/specialization.entity";
 import { SpecializationModel } from "../models/specialization.model";
 import { SpecializationStatus } from "@/domain/constants/auth.constants";
+import { BaseRepository } from "./base.repository";
+import { ISpecializationDocument } from "../interfaces/specialization-interface";
+import { Model } from "mongoose";
 
 
 
-export class SpecializationRepository implements ISpecialization {
+export class SpecializationRepository extends BaseRepository<SpecializationEntity,ISpecializationDocument> implements ISpecialization {
 
-    constructor(private readonly  specializationMapper:SpecializationMapper){}
+    constructor(private readonly  specializationMapper:SpecializationMapper){
+      super(SpecializationModel as unknown as Model<ISpecializationDocument>,specializationMapper);
+    }
 
     async create(entity: SpecializationEntity): Promise<SpecializationEntity> {
         const  data = this.specializationMapper.toMongo(entity);
@@ -23,9 +28,9 @@ export class SpecializationRepository implements ISpecialization {
       return doc ? this.specializationMapper.toEntity(doc) : null;
     }
 
-  async update(entity: SpecializationEntity): Promise<SpecializationEntity | null> {
-      const data = await SpecializationModel.findByIdAndUpdate(entity.id,
-        {$set:this.specializationMapper.toMongo(entity)},{new:true}
+  async update(id: string,entity:Partial<SpecializationEntity>): Promise<SpecializationEntity | null> {
+      const data = await SpecializationModel.findByIdAndUpdate(id,
+        {$set:this.specializationMapper.toMongo(entity as SpecializationEntity)},{new:true}
       ).lean();
    if(!data)return null;
     return this.specializationMapper.toEntity(data);
@@ -36,12 +41,12 @@ export class SpecializationRepository implements ISpecialization {
         return this.specializationMapper.toEntity(data);
 
   }
-  async findAll(params: {
+  async findAllSP(params: {
         page: number; 
         limit: number;
          search?: string; 
          status?: SpecializationStatus;
-         }): Promise<{ specializations: SpecializationEntity[]; total: number; }> {
+         }): Promise<{ data: SpecializationEntity[]; total: number; }> {
      
         const {page,limit,search,status}= params;
         const skip = (page - 1) * limit;
@@ -65,7 +70,7 @@ export class SpecializationRepository implements ISpecialization {
      ]);
 
      return {
-       specializations:docs.map((doc)=>this.specializationMapper.toEntity(doc)),
+       data:docs.map((doc)=>this.specializationMapper.toEntity(doc)),
        total
      };
 

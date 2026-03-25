@@ -34,9 +34,9 @@ export class CompleteUserOnboardingUseCase implements IBaseUseCase<UserOnboardin
 
     await this._preferenceRepo.save(preference);
 
-    return {
+    return new OnboardingResponseDTO({
       success: true,
       message: ONBOARDING_MESSAGES.CLIENT_COMPLETE
-    };
+    });
   }
 }

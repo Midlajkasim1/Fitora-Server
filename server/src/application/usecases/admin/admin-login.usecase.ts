@@ -31,7 +31,7 @@ export class AdminLoginUseCase implements IBaseUseCase<AdminLoginDTO,AdminLoginR
 
     if (!isMatch) throw new Error(AUTH_MESSAGES.INVALID_CREDENTIALS);
 
-    return {
+    return new AdminLoginResponseDTO({
       accessToken: this._tokenService.generateAccessToken({
         userId: admin.id!,
         email: admin.email,
@@ -41,6 +41,6 @@ export class AdminLoginUseCase implements IBaseUseCase<AdminLoginDTO,AdminLoginR
       refreshToken:this._tokenService.generateRefreshToken({
         userId:admin.id!,
       }),
-    };
+    });
   }
 }

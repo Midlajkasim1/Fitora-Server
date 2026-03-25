@@ -15,14 +15,18 @@ export class GetSubscriptionPlanByIdUseCase implements IBaseUseCase<GetSubscript
         if(!subscription){
             throw new Error(SUBSCRIPTION_MESSAGES.SUBSCRIPTION_NOT_FOUND);
         }
-        return {
+        return new GetSubscriptionPlanByIdResponseDTO({
             id:subscription.id!,
             name:subscription.name,
-            price:subscription.price,
+            price:Number(subscription.price),
             billingCycle:subscription.billingCycle,
             description:subscription.description,
             status:subscription.status,
+            sessionType:subscription.sessionType,
+            sessionCredits:subscription.sessionCredits,
+            aiWorkoutLimit:subscription.aiWorkoutLimit,
+            aiDietLimit:subscription.aiDietLimit,
             createdAt:subscription.createdAt!
-        };
+        });
     }
 }

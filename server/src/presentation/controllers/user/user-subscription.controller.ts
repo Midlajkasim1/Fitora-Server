@@ -1,14 +1,20 @@
+import { CancelSubscriptionRequestDTO } from "@/application/dto/subscription/request/cancel-subscription.dto";
 import { CheckActiveSubscriptionRequestDTO } from "@/application/dto/subscription/request/check-active-subscriptionUser.dto";
+import { GetPurchaseHistoryRequestDTO } from "@/application/dto/subscription/request/get-purchaseHistory.dto";
 import { GetSubscriptionPlanByIdRequestDTO } from "@/application/dto/subscription/request/get-subscriptionByIdPlan.dto";
 import { GetSubscriptionPlanRequestDTO } from "@/application/dto/subscription/request/get-subscriptionPlan.dto";
+import { HandleWebhookRequestDTO } from "@/application/dto/subscription/request/handle-webhook.dto";
 import { PurchaseSubscriptionRequestDTO } from "@/application/dto/subscription/request/purchase-subscription.dto";
+import { CancelSubscriptionResponseDTO } from "@/application/dto/subscription/response/cancel-subscription.dto";
 import { ActiveSubscriptionResponseDTO } from "@/application/dto/subscription/response/check-active-subscriptionUser.dto";
+import { GetPurchaseHistoryResponseDTO } from "@/application/dto/subscription/response/get-purchaseHistory.dto";
 import { GetSubscriptionPlanByIdResponseDTO } from "@/application/dto/subscription/response/get-subscriptionById.dto";
 import { GetSubscriptionPlanResponseDTO } from "@/application/dto/subscription/response/get-subscriptionPlan.dto";
+import { HandleWebhookResponseDTO } from "@/application/dto/subscription/response/handle-webhook.dto";
 import { PurchaseSubscriptionResponseDTO } from "@/application/dto/subscription/response/purchaseSubscription.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
-import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { AUTH_MESSAGES, PAYMENT_MESSAGES } from "@/domain/constants/messages.constants";
 import { SubscriptionPlanStatus } from "@/domain/constants/subscription.constants";
 import { IPaymentProvider } from "@/domain/interfaces/services/paymentProvider.interface";
 import { Request, Response } from "express";
@@ -21,9 +27,11 @@ export class UserSubscriptionController{
         private readonly _getSubscriptionUseCase:IBaseUseCase<GetSubscriptionPlanRequestDTO,GetSubscriptionPlanResponseDTO>,
         private readonly _getSubscriptionByIdUseCase: IBaseUseCase<GetSubscriptionPlanByIdRequestDTO,GetSubscriptionPlanByIdResponseDTO>,
         private readonly _purchaseSubscriptionUseCase: IBaseUseCase<PurchaseSubscriptionRequestDTO,PurchaseSubscriptionResponseDTO>,
-        private readonly _webhookUseCase:IBaseUseCase<string,void>,
+        private readonly _webhookUseCase:IBaseUseCase<HandleWebhookRequestDTO, HandleWebhookResponseDTO>,
         private readonly _paymentProvider:IPaymentProvider,
-        private readonly _checkActiveSubscriptionUserUseCase: IBaseUseCase<CheckActiveSubscriptionRequestDTO,ActiveSubscriptionResponseDTO>
+        private readonly _checkActiveSubscriptionUserUseCase: IBaseUseCase<CheckActiveSubscriptionRequestDTO,ActiveSubscriptionResponseDTO>,
+        private readonly _cancelSubscriptionUseCase : IBaseUseCase<CancelSubscriptionRequestDTO,CancelSubscriptionResponseDTO>,
+        private readonly _getPurchaseHistoryUseCase:IBaseUseCase<GetPurchaseHistoryRequestDTO,GetPurchaseHistoryResponseDTO>
     ){}
     async getUserSubscriptionPlan(req:Request,res:Response):Promise<Response>{
      const dto:GetSubscriptionPlanRequestDTO={
@@ -71,15 +79,18 @@ export class UserSubscriptionController{
     });
   }
   async handlewebhook(req:Request,res:Response):Promise<Response>{
-    const signature = req.headers["stripe-signature"] as string;
-    if(!signature){
-      return res.status(HttpStatus.BAD_REQUEST).json({success: false, message: "No signature"});
-    }
-    const event = this._paymentProvider.verifyWebhook(req.body,signature);
-    if(event.type === "checkout.session.completed"){
-      await this._webhookUseCase.execute(event.sessionId);
-    }
-    return res.status(HttpStatus.OK).json({recieved:true});
+    
+    const event =  this._paymentProvider.verifyWebhook(req.body,req.headers);
+    const dto = new HandleWebhookRequestDTO({
+      sessionId:event.sessionId,
+      type:event.type,
+      metadata:{
+        userId:event.metadata?.userId,
+        planId:event.metadata?.planId,
+      }
+    });
+    const result = await this._webhookUseCase.execute(dto);
+    return res.status(HttpStatus.OK).json(result);
   }
 async checkActiveSubcriptionStatus(req:Request,res:Response):Promise<Response>{
   const userId = req.user?.userId;
@@ -91,5 +102,32 @@ async checkActiveSubcriptionStatus(req:Request,res:Response):Promise<Response>{
     success:true,
     data:result
   });
+}
+async CancelSubscription(req:Request,res:Response):Promise<Response>{
+  const userId = req.user?.userId;
+  const dto = new CancelSubscriptionRequestDTO({
+    userId:userId!
+  });
+  const result = await this._cancelSubscriptionUseCase.execute(dto);
+  return res.status(HttpStatus.OK).json({
+    success:true,
+    data:result
+  });
+}
+async getPurchaseHistory(req:Request,res:Response):Promise<Response>{
+   const userId = req.user?.userId;
+   if(!userId){
+    throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
+   }
+   const dto = new GetPurchaseHistoryRequestDTO({
+    userId:userId,
+    page:Number(req.query.page) || 1,
+    limit:Number(req.query.limit) || 10
+   });
+   const result = await this._getPurchaseHistoryUseCase.execute(dto);
+   return res.status(HttpStatus.OK).json({
+    success:true,
+    data:result
+   });
 }
 }

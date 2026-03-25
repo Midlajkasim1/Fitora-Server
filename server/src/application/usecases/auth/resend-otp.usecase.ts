@@ -42,7 +42,7 @@ const otp = randomInt(100000, 1000000).toString();
 
     await this._otpStore.save(resendKey, true, 60);
     await this._emailService.sendOtp(dto.email, otp);
-    return { message: AUTH_MESSAGES.OTP_SENT };
+    return new ResendOtpResponseDTO({ message: AUTH_MESSAGES.OTP_SENT });
 
   }
 }

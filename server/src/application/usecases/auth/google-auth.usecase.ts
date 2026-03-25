@@ -1,7 +1,7 @@
 import { GoogleDTO } from "@/application/dto/auth/request/google.dto";
 import { GoogleLoginResponseDTO } from "@/application/dto/auth/response/google-login.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { AuthProvider, UserRole } from "@/domain/constants/auth.constants"; //
+import { UserRole } from "@/domain/constants/auth.constants"; //
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
@@ -32,10 +32,7 @@ export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginRes
         isEmailVerified: true,
       });
 
-      user = await this._userRepository.create(newUser, "", {
-        authProvider: AuthProvider.GOOGLE,
-        googleId: googleUser.googleId,
-      });
+      user = await this._userRepository.createWithGoogle(newUser, googleUser.googleId);
     }
     if(!user.isActive()){
       throw new Error(AUTH_MESSAGES.ACCOUNT_BLOCKED);
@@ -47,10 +44,12 @@ export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginRes
       const trainer = await this._trainerRepository.findByUserId(user.id!);
       approvalStatus = trainer?.approvalStatus;
     }
-    const onboardingRequired = user.isOnboardingRequired; return {
+    const onboardingRequired = user.isOnboardingRequired;
+     return new GoogleLoginResponseDTO( {
       accessToken: this._tokenService.generateAccessToken({
         userId: user.id!,
         email: user.email,
+        name:user.firstName,
         role: user.role,
       }),
       refreshToken: this._tokenService.generateRefreshToken({
@@ -65,6 +64,6 @@ export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginRes
         isOnboardingRequired: onboardingRequired,
         approval_status: approvalStatus,
       }
-    };
+    });
   }
 }

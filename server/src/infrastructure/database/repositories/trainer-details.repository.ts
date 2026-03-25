@@ -3,17 +3,21 @@ import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.ent
 import { TrainerDetailsModel } from "../models/trainer-details.model";
 import { TrainerDetailsMapper } from "../mappers/trainer-details.mapper";
 import { UserMapper } from "../mappers/user.mapper";
-import { Types } from "mongoose";
+import { Model, Types } from "mongoose";
 import { ApprovalStatus } from "@/domain/constants/auth.constants";
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { TrainerWithUser } from "@/domain/interfaces/repositories/onboarding/approveTrainer.interface";
 import { UserModel } from "../models/user.models";
+import { BaseRepository } from "./base.repository";
+import { ITrainerDetailsDocument } from "../interfaces/trainer-details-document.interface";
 
-export class TrainerRepository implements ITrainerRepository {
+export class TrainerRepository extends BaseRepository<TrainerDetailsEntity,ITrainerDetailsDocument> implements ITrainerRepository {
   constructor(
     private readonly trainerMapper: TrainerDetailsMapper,
     private readonly userMapper:UserMapper
-  ) { }
+  ) {
+    super(TrainerDetailsModel as unknown as Model<ITrainerDetailsDocument>,trainerMapper);
+   }
   
 
   async save(details: TrainerDetailsEntity): Promise<void> {
@@ -41,7 +45,7 @@ async findAllTrainers(params: {
   search?: string;
   status?: string;
   specialization?: string;
-}): Promise<{ trainers: UserEntity[]; total: number }> {
+}): Promise<{ data: UserEntity[]; total: number }> {
   const { page, limit, search, status, specialization } = params;
   const skip = (page - 1) * limit;
 
@@ -80,7 +84,7 @@ async findAllTrainers(params: {
     .map(doc => this.userMapper.toEntity(doc.user_id!));
 
   return {
-    trainers:users,
+    data:users,
     total: users.length
   };
 }
@@ -90,7 +94,7 @@ async findAllTrainers(params: {
     const doc = await TrainerDetailsModel.findById(id).lean();
     return doc ? this.trainerMapper.toEntity(doc) : null;
   }
-  async findAllTrainerVerification(params: { page: number; limit: number; search?:string; approvalStatus?: string; }): Promise<{ trainers: TrainerDetailsEntity[]; total: number; }> {
+  async findAllTrainerVerification(params: { page: number; limit: number; search?:string; approvalStatus?: string; }): Promise<{ data: TrainerDetailsEntity[]; total: number; }> {
     const { page, limit,search, approvalStatus } = params;
     const skip = (page - 1) * limit;
 
@@ -120,7 +124,7 @@ async findAllTrainers(params: {
       TrainerDetailsModel.countDocuments(filter)
     ]);
     return {
-      trainers: docs.map((doc) => this.trainerMapper.toEntity(doc)),
+      data: docs.map((doc) => this.trainerMapper.toEntity(doc)),
       total
     };
   }

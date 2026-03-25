@@ -1,12 +1,13 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 
+import { GlobalLoader } from "../shared/GlobalLoader";
 import { AdminGuard } from "./guards/AdminGuard";
 import { AuthGuard } from "./guards/AuthGuard";
 import { GuestGuard } from "./guards/GuestGuard";
+import { HealthMetricsGuard } from "./guards/HealthMetricsGuard";
 import { OnboardingGuard } from "./guards/OnbaordingGuard";
 import { SubscriptionGuard } from "./guards/SubscriptionGuard";
-import { GlobalLoader } from "../shared/GlobalLoader";
 
 /* Auth Pages */
 const LandingPage = lazy(() => import("../pages/user/LandingPage"));
@@ -34,6 +35,7 @@ const UserSpecializationDetails = lazy(() => import("../pages/user/client/Specia
 const UserWorkoutTimeSelectionPage = lazy(() => import("../pages/user/client/WorkoutTimeSelectionPage"));
 const WorkoutCompletedPage = lazy(()=>import("../pages/user/client/WorkoutCompletePage"));
 const SubscriptionListPage = lazy(()=>import("../pages/user/client/SubscriptionPage"));
+const PurchaseHistoryPage = lazy(()=>import("../pages/user/client/PurchaseHistoryPage"));
 const PaymentSuccessPage =lazy(()=>import("../pages/user/client/PaymentSucessPage"));
 const PaymentFailedPage = lazy(()=>import("../pages/user/client/PaymentFailedPage"));
 const ClientHealthMetrics = lazy(()=>import("../pages/user/client/ClientHealthMetricsPage"));
@@ -50,17 +52,21 @@ const AdminLoginPage = lazy(() => import("../pages/admin/AdminLogin"));
 const AdminDashboard = lazy(() => import("../pages/admin/AdminDashboard"));
 const UserManagement = lazy(() => import("../pages/admin/UserManagement"));
 const TrainerManagement = lazy(() => import("../pages/admin/TrainerMangement"));
-const SpecializationManagement = lazy(() => import("../pages/admin/SpecializationManagement"));
-const CreateSpecialization = lazy(() => import("../pages/admin/CreateSpecialization"));
-const EditSpecialization = lazy(() => import("../pages/admin/EditSpecialization"));
+const SpecializationManagement = lazy(() => import("../pages/admin/specialization/SpecializationManagement"));
+const CreateSpecialization = lazy(() => import("../pages/admin/specialization/CreateSpecialization"));
+const EditSpecialization = lazy(() => import("../pages/admin/specialization/EditSpecialization"));
 const TrainerVerificationManagement = lazy(() => import("../pages/admin/TrainerVerificationManagement"));
 const TrainerVerificationDetails = lazy(() => import("../pages/admin/TrainerVerificationDetails"));
-const WorkoutManagement = lazy(() => import("../pages/admin/WorkoutManagement"));
-const CreateWorkoutPage = lazy(() => import("../pages/admin/CreateWorkout"));
-const EditWorkoutPage = lazy(() => import("../pages/admin/EditWorkout"));
+const WorkoutManagement = lazy(() => import("../pages/admin/workout/WorkoutManagement"));
+const CreateWorkoutPage = lazy(() => import("../pages/admin/workout/CreateWorkout"));
+const EditWorkoutPage = lazy(() => import("../pages/admin/workout/EditWorkout"));
 const SubscriptionManagement = lazy(()=>import("../pages/admin/subscription/SubscriptionManagement"));
 const CreateSpecializationPage = lazy(()=>import("../pages/admin/subscription/CreateSubscription"));
 const EditSpecializationPage = lazy(()=>import("../pages/admin/subscription/EditSubscriptionPage"));
+const AdvertisementManagementPage = lazy(()=>import("../pages/admin/advertisement/AdvertisementManagement"));
+const CreateAdvertisementPage = lazy(()=>import("../pages/admin/advertisement/CreateAdvertisement"));
+const EditAdvertisementPage = lazy(()=>import("../pages/admin/advertisement/EditAdvertisementPage"));
+
 
 
 
@@ -101,13 +107,16 @@ export default function AppRoutes() {
           <Route path="/select-workouts/:id" element={<UserWorkoutTimeSelectionPage />} />
           <Route path="/workouts/completed" element={<WorkoutCompletedPage />} />
           <Route path="/subscription" element={<SubscriptionListPage />} />
-          <Route  path="/health-metrics"  element={<AuthGuard><ClientHealthMetrics /></AuthGuard>} />  
-         <Route path="/payment/success" element={<AuthGuard><PaymentSuccessPage /></AuthGuard>} />
-        <Route path="/payment/cancel" element={<AuthGuard><PaymentFailedPage /></AuthGuard>} />
+           <Route path="/purchase-history" element={<PurchaseHistoryPage />} />
+          <Route  path="/health-metrics"  element={<ClientHealthMetrics />} />  
+         <Route path="/payment/success" element={<PaymentSuccessPage />} />
+        <Route path="/payment/cancel" element={<PaymentFailedPage />} />
          <Route element={<SubscriptionGuard />}>
-        <Route path="/premium-dashboard" element={<PremiumDashboardPage />} />
-        </Route>
-        </Route>
+    <Route element={<HealthMetricsGuard />}>
+      <Route path="/premium-dashboard" element={<PremiumDashboardPage />} />
+    </Route>
+  </Route>
+</Route>
 
         {/* Admin  */}
         <Route path="/admin-portal" element={<AdminLoginPage />} />
@@ -129,6 +138,11 @@ export default function AppRoutes() {
           <Route path="subscriptions" element={<SubscriptionManagement/>}/>
           <Route path="create-subscriptions" element={<CreateSpecializationPage/>}/>
           <Route path="edit-subscriptions/:id" element={<EditSpecializationPage/>}/>
+          <Route path="advertisements" element={<AdvertisementManagementPage/>}/>
+           <Route path="create-advertisement" element={<CreateAdvertisementPage/>}/>
+           <Route path="edit-advertisement/:id" element={<EditAdvertisementPage/>}/>
+
+
 
 
         </Route>

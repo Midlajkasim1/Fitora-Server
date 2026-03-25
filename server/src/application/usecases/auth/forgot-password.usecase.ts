@@ -26,6 +26,6 @@ if (!user) {
     await this._otpStore.save(redisKey, { email: dto.email, otp }, 600);
     await this._emailService.sendOtp(dto.email, otp);
 
-    return { message: AUTH_MESSAGES.FORGOT_PASSWORD_SUCCESS };
+    return new ForgotPasswordResponseDTO( { message: AUTH_MESSAGES.FORGOT_PASSWORD_SUCCESS });
   }
 }

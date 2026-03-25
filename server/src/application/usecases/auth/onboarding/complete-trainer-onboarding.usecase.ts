@@ -38,9 +38,9 @@ export class CompleteTrainerOnboardingUseCase implements IBaseUseCase<TrainerOnb
 
     await this._trainerRepo.save(trainerDetails);
 
-    return {
+    return new OnboardingResponseDTO({
       success: true,
       message: ONBOARDING_MESSAGES.TRAINER_SUBMITTED
-    };
+    });
   }
 }

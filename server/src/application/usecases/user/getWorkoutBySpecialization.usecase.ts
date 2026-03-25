@@ -1,5 +1,6 @@
 import { GetWorkoutBySpecializationRequestDTO } from "@/application/dto/user/request/get-workoutBy-Specialization.dto";
 import { GetWorkoutsBySpecializationResponseDTO } from "@/application/dto/user/response/get-workoutBy-specialization.dto";
+import { WorkoutBySpecializationListDTO } from "@/application/dto/user/response/get-workoutBySpList.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { WORKOUT_MESSAGES } from "@/domain/constants/messages.constants";
 import { IWorkoutRepository } from "@/domain/interfaces/repositories/workout.repository";
@@ -17,21 +18,22 @@ async execute(dto: GetWorkoutBySpecializationRequestDTO): Promise<GetWorkoutsByS
     if(!workout){
         throw new Error(WORKOUT_MESSAGES.WORKOUT_NOT_FOUND);
     }
-    return {
-        workouts:workout.map(w=>({
-        id:w.id!,
-        title:w.title,
-        description:w.description,
-        duration:w.duration,
-        caloriesBurn:w.caloriesBurn,
-        bodyFocus:w.bodyFocus,
-        difficulty:w.difficulty,
-        thumbnailUrl:w.thumbnailUrl!,
-        createdAt:w.createdAt
-        
-        })),
-        total:workout.length
-    };
+  const workoutListItems = workout.map(w => new WorkoutBySpecializationListDTO({
+      id: w.id!,
+      title: w.title,
+      description: w.description,
+      duration: w.duration,
+      caloriesBurn: w.caloriesBurn,
+      bodyFocus: w.bodyFocus,
+      difficulty: w.difficulty,
+      thumbnailUrl: w.thumbnailUrl!,
+      createdAt: w.createdAt
+    }));
+
+    return new GetWorkoutsBySpecializationResponseDTO({
+      workouts: workoutListItems,
+      total: workout.length
+    });
 }
     
 }

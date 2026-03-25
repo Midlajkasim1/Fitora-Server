@@ -91,6 +91,7 @@ export const useAuth = () => {
       navigate("/login");
     },
   });
+  
 
   return {
     register: registerMutation.mutate,

@@ -3,12 +3,17 @@ import { SubscriptionPlanEntity } from "@/domain/entities/subscription/subscript
 import { ISubscriptionPlanRepository } from "@/domain/interfaces/repositories/subscriptionPlan.repository";
 import { SubscriptionPlanMapper } from "../mappers/subscriptionPlan.mapper";
 import { SubscriptionPlanModel } from "../models/subscriptionPlan.models";
+import { BaseRepository } from "./base.repository";
+import { ISubscriptionDocument } from "../interfaces/ISubscriptionPlan.document";
+import { Model } from "mongoose";
 
 
-export class SubscriptionplanRepository implements ISubscriptionPlanRepository{
+export class SubscriptionplanRepository extends BaseRepository<SubscriptionPlanEntity,ISubscriptionDocument> implements ISubscriptionPlanRepository{
     constructor(
         private readonly subscriptionPlanMapper:SubscriptionPlanMapper
-    ){}
+    ){
+        super(SubscriptionPlanModel as unknown as Model<ISubscriptionDocument>,subscriptionPlanMapper);
+    }
     async create(subscription: SubscriptionPlanEntity): Promise<SubscriptionPlanEntity> {
        const data = this.subscriptionPlanMapper.toMongo(subscription);
        const created = await SubscriptionPlanModel.create(data);
@@ -20,7 +25,7 @@ export class SubscriptionplanRepository implements ISubscriptionPlanRepository{
         return this.subscriptionPlanMapper.toEntity(data);
 
     }
-   async  findAll(params: { page: number; limit: number; search?: string; status?: SubscriptionPlanStatus; }): Promise<{ subscriptions: SubscriptionPlanEntity[]; totals: number; }> {
+   async  findAllSPlan(params: { page: number; limit: number; search?: string; status?: SubscriptionPlanStatus; }): Promise<{ data: SubscriptionPlanEntity[]; total: number; }> {
         const {page,limit,search,status} = params;
          const skip = (page -  1) * limit;
          const filter:Record<string,unknown>={};
@@ -30,7 +35,7 @@ export class SubscriptionplanRepository implements ISubscriptionPlanRepository{
          if(search){
             filter.name={$regex:search,$options:"i"};
          }
-         const [docs,totals]= await Promise.all([
+         const [docs,total]= await Promise.all([
             SubscriptionPlanModel.find(filter)
             .sort({createdAt:-1})
             .skip(skip)
@@ -40,17 +45,17 @@ export class SubscriptionplanRepository implements ISubscriptionPlanRepository{
 
          ]);
          return {
-            subscriptions:docs.map((doc)=>this.subscriptionPlanMapper.toEntity(doc)),
-            totals
+            data:docs.map((doc)=>this.subscriptionPlanMapper.toEntity(doc)),
+            total,
          };
     }
    async findById(id: string): Promise<SubscriptionPlanEntity | null> {
         const doc =  await SubscriptionPlanModel.findById(id).lean();
         return doc ? this.subscriptionPlanMapper.toEntity(doc) : null;
     }
-    async update(subscription: SubscriptionPlanEntity): Promise<SubscriptionPlanEntity | null> {
-        const  data = await SubscriptionPlanModel.findByIdAndUpdate(subscription.id,
-            {$set:this.subscriptionPlanMapper.toMongo(subscription)},{new:true}
+    async update(id:string,entity:Partial<SubscriptionPlanEntity>): Promise<SubscriptionPlanEntity | null> {
+        const  data = await SubscriptionPlanModel.findByIdAndUpdate(id,
+            {$set:this.subscriptionPlanMapper.toMongo(entity as SubscriptionPlanEntity)},{new:true}
         ).lean();
         if(!data)return null;
         return this.subscriptionPlanMapper.toEntity(data);
@@ -59,6 +64,11 @@ export class SubscriptionplanRepository implements ISubscriptionPlanRepository{
         await SubscriptionPlanModel.findByIdAndUpdate(id,
             {$set:{status:status}}
         ).exec();
+    }
+    async updatePurchasedCount(planId: string): Promise<void> {
+        await SubscriptionPlanModel.findByIdAndUpdate(planId,
+            {$inc:{totalPurchaseUser:1}}
+        );
     }
  
 }

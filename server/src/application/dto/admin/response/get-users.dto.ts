@@ -1,6 +1,11 @@
 import { UserManagementDTO } from "./user-management.dto";
 
-export interface GetUsersResponseDTO {
-  users: UserManagementDTO[]; 
-  total: number;
+
+export class GetUsersResponseDTO {
+  users!: UserManagementDTO[];
+  total!: number;
+
+  constructor(data: GetUsersResponseDTO) {
+    Object.assign(this, data);
+  }
 }

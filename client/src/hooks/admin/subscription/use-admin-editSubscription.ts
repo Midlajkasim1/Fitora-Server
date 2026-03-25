@@ -11,9 +11,10 @@ export const useUpdateSubscriptionPlan = () => {
       const res = await api.put(`/admin/subscriptions/${id}`, data);
       return res.data;
     },
-    onSuccess: (res) => {
+    onSuccess: (res,variables) => {
       toast.success(res.message || "Plan updated successfully");
       queryClient.invalidateQueries({ queryKey: ["admin-subscriptions"] });
+      queryClient.invalidateQueries({ queryKey: ["subscription", variables.id] });
     },
   });
 };

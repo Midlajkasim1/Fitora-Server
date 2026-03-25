@@ -2,7 +2,6 @@ import { PurchaseSubscriptionRequestDTO } from "@/application/dto/subscription/r
 import { PurchaseSubscriptionResponseDTO } from "@/application/dto/subscription/response/purchaseSubscription.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { SUBSCRIPTION_MESSAGES } from "@/domain/constants/messages.constants";
-import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
 import { PaymentEntity } from "@/domain/entities/payment/payment.entity";
 import { SubscriptionEntity } from "@/domain/entities/subscription/subscription.entity";
 import { IPaymentRepository } from "@/domain/interfaces/repositories/payment.repository";
@@ -21,10 +20,8 @@ export class PurchaseSubscriptionUseCase implements IBaseUseCase<PurchaseSubscri
     async execute(dto: PurchaseSubscriptionRequestDTO): Promise<PurchaseSubscriptionResponseDTO> {
         const activePlan = await this._subscriptionRepository.findActiveByUserId(dto.userId);
         if(activePlan){
-            if(activePlan.planId === dto.planId){
            throw new Error(SUBSCRIPTION_MESSAGES.SUBSCRIPTION_ALREADY_HAVE);
-            }
-           await this._subscriptionRepository.updateStatus(activePlan.id!,SubscriptionStatus.CANCELLED);
+            
         }
         const plan = await this._subscriptionPlanRepository.findById(dto.planId);
         if(!plan){
@@ -39,11 +36,12 @@ export class PurchaseSubscriptionUseCase implements IBaseUseCase<PurchaseSubscri
             amount: Number(plan.price),
             interval:plan.billingCycle
         });
-       const endDate= new Date();
-       endDate.setDate(endDate.getDate()+30);
+       const startDate= new Date();
+       const endDate= SubscriptionEntity.calculateExpireDate(startDate,plan.billingCycle);
        const subscription = SubscriptionEntity.create({
         planId:plan.id!,
         userId:dto.userId,
+        startDate:startDate,
         endDate:endDate
        });
        const savedSub = await this._subscriptionRepository.create(subscription);
@@ -55,9 +53,9 @@ export class PurchaseSubscriptionUseCase implements IBaseUseCase<PurchaseSubscri
         providerPaymentId:session.sessionId
        });
        await this._paymentRepository.create(payment);
-       return {
+       return new PurchaseSubscriptionResponseDTO({
         checkoutUrl:session.url
-       };
+       });
     }
     
 }

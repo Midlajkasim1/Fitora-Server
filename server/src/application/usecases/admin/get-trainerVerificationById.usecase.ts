@@ -25,7 +25,7 @@ export class GetTrainerVerificationByIdUseCase implements IBaseUseCase<GetTraine
             throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
         }
         const specializations = await this._specializationRepository.findByIds(trainer.specializations);
-        return {
+        return new GetTrainerVerificationByIdResponseDTO({
             id:trainer.id!,
             userId:trainer.userId,
             trainerName:`${user.firstName} ${user.lastName}`,
@@ -41,6 +41,6 @@ export class GetTrainerVerificationByIdUseCase implements IBaseUseCase<GetTraine
 
             })),
             rejectionReason:trainer.rejectionReason ?? null
-        };
+        });
     }
 }

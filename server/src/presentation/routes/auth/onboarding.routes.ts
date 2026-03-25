@@ -8,14 +8,14 @@ const router = Router();
 
 router.post(
   "/trainer/complete",
-  upload.array("certificates"), userMiddlewares.authMiddleware, asyncHandler((req: Request, res: Response) =>
+  upload.array("certificates"), userMiddlewares.authMiddleware,userMiddlewares.blockGuard, asyncHandler((req: Request, res: Response) =>
   onboardingControllers.onboardingController.completeTrainer(req, res))
 );
 
-router.post("/user/complete", userMiddlewares.authMiddleware, asyncHandler((req: Request, res: Response) =>
+router.post("/user/complete", userMiddlewares.authMiddleware,userMiddlewares.blockGuard, asyncHandler((req: Request, res: Response) =>
   onboardingControllers.onboardingController.completeUser(req, res))
 );
-router.get("/active-specialization",userMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
+router.get("/active-specialization",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
   onboardingControllers.onboardingController.getActiveSpecializations(req,res)
 ));
 

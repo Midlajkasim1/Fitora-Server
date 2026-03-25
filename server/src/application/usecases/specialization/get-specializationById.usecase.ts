@@ -15,7 +15,7 @@ export class GetSpecializationByIdUseCase implements IBaseUseCase<GetSpecializat
         if(!specializationId){
             throw new Error(SPECIALIZATION_MESSAGES.SPECIALIZATION_NOT_FOUND);
         }
-        return {
+        return new GetSpecializationByIdResponseDTO({
             id:specializationId.id!,
             name:specializationId.name,
             description:specializationId.description,
@@ -23,6 +23,6 @@ export class GetSpecializationByIdUseCase implements IBaseUseCase<GetSpecializat
             status:specializationId.status,
             createdAt:specializationId.createdAt!,
             updatedAt:specializationId.updatedAt!
-        };
+        });
     }
 }

@@ -24,15 +24,30 @@ export class SubscriptionEntity {
         this._endDate = props.endDate;
     }
 
+    public static calculateExpireDate(startDate:Date,billingCycle:string): Date {
+        const endDate = new Date(startDate);
+        const cycle = billingCycle.toLowerCase();
+        if(cycle.includes("year")){
+            endDate.setFullYear(endDate.getFullYear()+1);
+        }else if(cycle.includes("6 months")){
+            endDate.setMonth(endDate.getMonth()+6);
+        }else if (cycle.includes("month")){
+            endDate.setMonth(endDate.getMonth()+1);
+        }else{
+            const days = parseInt(cycle);
+            endDate.setDate(endDate.getDate()+ (isNaN(days) ? 30 : days));
+        }
+        return endDate;
+    }
     static create(props: { 
         planId: string;
         userId: string;
+        startDate:Date;
         endDate: Date 
         }): SubscriptionEntity {
         return new SubscriptionEntity({
             ...props,
-            status: SubscriptionStatus.ACTIVE,
-            startDate: new Date(),
+            status: SubscriptionStatus.PENDING,
         });
     }
 

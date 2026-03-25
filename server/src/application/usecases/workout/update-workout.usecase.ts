@@ -51,11 +51,11 @@ async execute(dto: UpdateWorkoutRequestDTO,files?:UpdateWorkoutFiles): Promise<U
         );
         updateData.thumbnailUrl = newthumbnail;
       }
-      await this._workoutRepository.update(id,updateData);
+      await this._workoutRepository.update!(id,updateData);
 
-    return {
+    return  new UpdatedWorkoutResponseDTO({
       message:WORKOUT_MESSAGES.WORKOUT_UPDATED,
-    };
+    });
 }
 
 

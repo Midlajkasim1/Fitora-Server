@@ -44,8 +44,8 @@ export class UpdateApprovalStatusUseCase implements IBaseUseCase<UpdateTrainerAp
                 dto.reason!
             );
         }
-        return {
+        return new UpdateTrainerApprovalResponseDTO({
             message:ADMIN_MESSAGES.TRAINER_APPROVAL_DONE
-        };
+        });
     }
 }

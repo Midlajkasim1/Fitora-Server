@@ -19,3 +19,8 @@ export const uploadProfileImage = (formdata:FormData)=>{
 export const ChangePassword =(data:IChangePassword)=>{
     return api.put("/user/change-password",data)
 }
+
+export const getActiveAdvertisement = async ()=>{
+    const res = await api.get("/user/advertisement");
+    return res.data.data;
+}

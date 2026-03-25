@@ -1,4 +1,8 @@
-export interface AdminLoginDTO {
-  email: string;
-  password: string;
+export class AdminLoginDTO {
+  email!: string;
+  password!: string;
+
+  constructor(data: AdminLoginDTO) {
+    Object.assign(this, data);
+  }
 }

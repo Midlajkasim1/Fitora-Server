@@ -1,5 +1,8 @@
+export class AdminLoginResponseDTO {
+  accessToken!: string;
+  refreshToken!: string;
 
-export interface AdminLoginResponseDTO {
-  accessToken: string;
-  refreshToken:string;
+  constructor(data: AdminLoginResponseDTO) {
+    Object.assign(this, data);
+  }
 }

@@ -1,4 +1,8 @@
 
-export interface UploadImageRequest{
-    userId:string;
+export class UploadImageRequest {
+  userId!: string;
+
+  constructor(data: UploadImageRequest) {
+    Object.assign(this, data);
+  }
 }

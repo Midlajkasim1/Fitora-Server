@@ -131,12 +131,17 @@ export interface TrainerVerificationList {
   createdAt: Date;
 }
 
+export type WorkoutDifficulty = "beginner" | "intermediate" | "advanced";
+
 
 export interface WorkoutQuery {
   page: number;
   search?: string;
   status?: string;
+  difficulty?:string
+
 }
+
 
 export interface WorkoutManagement {
   id: string;
@@ -183,3 +188,31 @@ export interface CreateSubscriptionRequest {
   description: string;
 }
 
+////
+export type AdvertisementStatus = "active" | "blocked" 
+export interface AdvertisementQuery {
+  page: number;
+  search?: string;
+  status?: string;
+}
+
+export interface AdvertisementManagement {
+  id: string;
+  brandName: string;
+  startDate?: string;
+  expiryDate: string;
+  status: "active" | "blocked";
+  bannerImages: string[];
+  brandLink?:string;
+  description?:string;
+}
+
+export interface GetAllAdsResponse {
+  Advertisement: AdvertisementManagement[];
+  total: number;
+}
+
+export interface UpdateParams {
+  id: string;
+  data: FormData;
+}

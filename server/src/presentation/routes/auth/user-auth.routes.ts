@@ -32,10 +32,10 @@ router.post("/verify-reset-otp", asyncHandler((req: Request, res: Response) =>
 router.post("/reset-password", asyncHandler((req: Request, res: Response) => 
   userControllers.authController.resetPassword(req, res))
 );
-router.get("/me", userMiddlewares.authMiddleware, asyncHandler((req:Request, res:Response) => 
+router.get("/me", userMiddlewares.authMiddleware,userMiddlewares.blockGuard, asyncHandler((req:Request, res:Response) => 
   userControllers.authController.getMe(req, res))
 );
-router.post("/logout", userMiddlewares.authMiddleware, asyncHandler((req, res) => 
+router.post("/logout", userMiddlewares.authMiddleware,userMiddlewares.blockGuard, asyncHandler((req, res) => 
   userControllers.authController.logout(req, res))
 );
 

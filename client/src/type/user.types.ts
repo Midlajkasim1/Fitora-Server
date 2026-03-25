@@ -11,7 +11,7 @@ export interface UserProfile {
   preferredWorkouts: string[];
   experienceLevel: string;
   profileImage?: string | null;
-
+ 
 }
 
 export interface UserProfileResponse {
@@ -44,6 +44,21 @@ export interface SpResponse {
 
 export interface StartWorkout{
   id: string;
-  difficulty: string;
+  difficulty: "beginner" | "intermediate" | "advanced";
   duration: number;
+}
+
+export interface PurchaseHistoryItem {
+  paymentId: string;
+  planName: string;
+  amount: number;
+  status: string;           
+  subscriptionStatus: string; 
+  date: string;
+  paymentMethod: string;
+}
+
+export interface PurchaseHistoryResponse {
+  history: PurchaseHistoryItem[];
+  total: number;
 }

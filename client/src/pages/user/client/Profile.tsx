@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, Phone, Dumbbell, Target, Lock, Edit3 } from "lucide-react";
+import { User, Phone, Dumbbell, Target, Lock, Edit3,Receipt } from "lucide-react";
 import { UserHeader } from "../../../layout/client/ClientHeader";
 import { useUpdateUser, useUploadProfileImage, useUser } from "../../../hooks/user/use-user";
 import { ProfileField } from "../../../components/user/UserProfileInput";
@@ -7,7 +7,6 @@ import { UserFooter } from "../../../layout/client/ClientFooter";
 import { useSpecializations } from "../../../hooks/user/use-specialization";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-
 
 export default function UserProfile() {
   const { user, isLoading } = useUser();
@@ -146,19 +145,34 @@ export default function UserProfile() {
               </div>
             </div>
 
-            <button
-              onClick={() => {
-                if (isEditing) {
-                  handleSave();
-                } else {
-                  handleEditToggle();
-                }
-              }}
-              disabled={isPending}
-              className="w-full md:w-auto bg-[#00ff94] text-[#0d1f17] px-8 py-4 rounded-2xl font-black uppercase italic text-xs hover:shadow-[0_0_30px_rgba(0,255,148,0.3)] transition-all disabled:opacity-50"
-            >
-              {isEditing ? "Save Changes" : "Edit Profile"}
-            </button>
+           <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
+    
+    {/* Billing History Link (Always Visible) */}
+    {!isEditing && (
+      <Link
+        to="/purchase-history"
+        className="flex items-center justify-center gap-2 w-full sm:w-auto bg-white/5 border border-white/10 text-white px-6 py-4 rounded-2xl font-black uppercase italic text-xs hover:bg-white/10 transition-all group"
+      >
+        <Receipt size={14} className="text-[#00ff94] group-hover:scale-110 transition-transform" />
+        Billing History
+      </Link>
+    )}
+
+    {/* Edit / Save Button */}
+    <button
+      onClick={() => {
+        if (isEditing) {
+          handleSave();
+        } else {
+          handleEditToggle();
+        }
+      }}
+      disabled={isPending}
+      className="w-full sm:w-auto bg-[#00ff94] text-[#0d1f17] px-8 py-4 rounded-2xl font-black uppercase italic text-xs hover:shadow-[0_0_30px_rgba(0,255,148,0.3)] transition-all disabled:opacity-50"
+    >
+      {isEditing ? "Save Changes" : "Edit Profile"}
+    </button>
+  </div>
           </div>
 
           {/* Container */}

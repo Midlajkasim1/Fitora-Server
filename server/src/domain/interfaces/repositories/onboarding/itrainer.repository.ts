@@ -11,14 +11,14 @@ export interface ITrainerRepository extends IBaseRepository<TrainerDetailsEntity
     limit: number;
     search?: string;
     status?: string;
-    specialization?: string;}):Promise<{trainers:UserEntity[],total:number}>
+    specialization?: string;}):Promise<{data:UserEntity[],total:number}>
   findByUserId(userId: string): Promise<TrainerDetailsEntity | null>;
   findAllTrainerVerification(params:{
     page:number;
     limit:number;
     search?:string,
     approvalStatus?:string
-  }):Promise<{trainers:TrainerDetailsEntity[],total:number}>
+  }):Promise<{data:TrainerDetailsEntity[],total:number}>
   updateApprovalStatus(id:string,status:ApprovalStatus,reason?:string):Promise<void>;
   findApprovedTrainer(): Promise<string[]>;
 }

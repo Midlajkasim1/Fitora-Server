@@ -37,9 +37,9 @@ export class UploadProfileImageUseCase implements IBaseUseCase<UploadImageReques
               createdAt: user.createdAt
          });
      await this._userRepository.updateUserProfile(updateUser);
-    return {
+    return new UploadImageResponse({
         profileImage:imageUrl,
         message:AUTH_MESSAGES.PROFILE_IMAGE_UPDATED
-    };
+    });
     }
 }

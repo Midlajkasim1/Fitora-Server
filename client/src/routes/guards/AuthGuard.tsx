@@ -9,6 +9,7 @@ export const AuthGuard = ({ children }: { children: React.ReactNode }) => {
   if (!isAuthenticated || !user) {
     return <Navigate to="/" replace />;
   }
+  
 
   const path = window.location.pathname;
 

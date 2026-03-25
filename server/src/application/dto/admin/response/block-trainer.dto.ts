@@ -1,8 +1,12 @@
 import { UserStatus } from "@/domain/constants/auth.constants";
 
-export interface BlockTrainerResponseDTO {
-  id: string;
-  email: string;
-  status: UserStatus;
-  message: string;
+export class BlockTrainerResponseDTO {
+  id!: string;
+  email!: string;
+  status!: UserStatus;
+  message!: string;
+
+  constructor(data: BlockTrainerResponseDTO) {
+    Object.assign(this, data);
+  }
 }

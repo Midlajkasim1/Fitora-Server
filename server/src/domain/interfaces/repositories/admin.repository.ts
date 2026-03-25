@@ -6,6 +6,6 @@ export interface AdminWithPassword {
   passwordHash: string;
 }
 
-export interface IAdminRepository extends IBaseRepository<AdminEntity> {
+export interface IAdminRepository extends Pick<IBaseRepository<AdminEntity>,"findById"> {
   findByEmail(email: string): Promise<AdminWithPassword | null>;
 }

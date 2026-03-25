@@ -30,6 +30,11 @@ import { StripePaymentProvider } from "@/infrastructure/providers/payment/stripe
 import { HandleWebhookUseCase } from "@/application/usecases/subscription/handle-webhook.usecase";
 import { SaveHealthMetricsUseCase } from "@/application/usecases/user/user-health-metrics.usecase";
 import { CheckActiveSubscriptionUserUseCase } from "@/application/usecases/subscription/check-activeSubscriptionUser.usecase";
+import { CancelSubscriptionUseCase } from "@/application/usecases/subscription/cancel-subscription.usecase";
+import { GetPurchaseHistoryUseCase } from "@/application/usecases/subscription/get-purchaseHistory.usecase";
+import { CheckHealthMetricsUseCase } from "@/application/usecases/user/check-health-metrics.usecase";
+import { CheckUserBlockUseCase } from "@/application/usecases/auth/check-user-block.usecase";
+import { GetActiveAdvertisementUseCase } from "@/application/usecases/user/get-activeAdvertisement.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -95,6 +100,9 @@ export const useCases = {
 
     
   ),
+  checkUserBlockUseCase:new CheckUserBlockUseCase(
+    userRepositories.userRepository
+  ),
   getUserProfileUseCase:new GetUserProfileUseCase(
     userRepositories.userRepository,
     userRepositories.clientPreferenceRepository
@@ -139,7 +147,8 @@ export const useCases = {
   ),
   handleWebhookUseCase:new HandleWebhookUseCase(
     userRepositories.paymentRepository,
-    userRepositories.subscriptionRepository
+    userRepositories.subscriptionRepository,
+    userRepositories.subscriptionPlanRepository
   ),
   clientHealthMetricsUseCase:new SaveHealthMetricsUseCase(
     userRepositories.clientHealthMetricRepository
@@ -147,7 +156,20 @@ export const useCases = {
   checkActiveSubscriptionUser:new CheckActiveSubscriptionUserUseCase(
     userRepositories.subscriptionRepository,
     userRepositories.subscriptionPlanRepository
+  ),
+  cancelSubscriptionUseCase: new CancelSubscriptionUseCase(
+    userRepositories.subscriptionRepository
+  ),
+  getPurchaseHistoryUseCase: new GetPurchaseHistoryUseCase(
+    userRepositories.paymentRepository
+  ),
+  checkHealthMetricsUseCase:new CheckHealthMetricsUseCase(
+    userRepositories.clientHealthMetricRepository
+  ),
+  getActiveAdvertisementUseCase: new GetActiveAdvertisementUseCase(
+    userRepositories.advertisementRepository
   )
+
   
 };
 

@@ -18,11 +18,11 @@ export class TrainerBlockUseCase implements IBaseUseCase<BlockUserRequestDTO, Bl
     
     await this._userRepository.updateStatus(trainer.id!, trainer.status);
 
-    return {
+    return new BlockTrainerResponseDTO({
       id: trainer.id!,
       email: trainer.email,
       status: trainer.status,
       message: AUTH_MESSAGES.TRAINER_STATUS_UPDATED(trainer.status),
-    };
+    });
   }
 }

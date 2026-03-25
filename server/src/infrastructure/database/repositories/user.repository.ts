@@ -1,17 +1,36 @@
-import { UserRole, UserStatus } from "@/domain/constants/auth.constants";
+import { AuthProvider, UserRole, UserStatus } from "@/domain/constants/auth.constants";
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IUserRepository, UserWithPassword } from "@/domain/interfaces/repositories/user.repository";
 import { IUserDocument } from "../interfaces/user-document.interface";
 import { UserMapper } from "../mappers/user.mapper";
 import { UserModel } from "../models/user.models";
-export class UserRepository implements IUserRepository {
+import { BaseRepository } from "./base.repository";
+import mongoose, { Model } from "mongoose";
+export class UserRepository extends BaseRepository<UserEntity,IUserDocument> implements IUserRepository {
 
-  constructor(private readonly userMapper: UserMapper) {}
+  constructor(private readonly userMapper: UserMapper) {
+    super(UserModel as unknown as Model<IUserDocument>,userMapper);
+  }
+async createWithGoogle(user: UserEntity, googleId: string): Promise<UserEntity> {
+    const data = this.userMapper.toMongo(user);
+    const doc = await UserModel.create({ 
+      ...data, 
+      googleId, 
+      authProvider: AuthProvider.GOOGLE 
+    } as mongoose.AnyKeys<IUserDocument>);
+    return this.userMapper.toEntity(doc as unknown as IUserDocument);
+  }
 
-  async create(user: UserEntity, hashedPassword: string, options?: Record<string,unknown>): Promise<UserEntity> {
-    const data = this.userMapper.toMongo(user, hashedPassword, options);
+  async create(user: UserEntity): Promise<UserEntity> {
+    const data = this.userMapper.toMongo(user);
     const doc = await UserModel.create(data);
-    return this.userMapper.toEntity(doc as IUserDocument);
+    return this.userMapper.toEntity(doc as unknown as IUserDocument);
+  }
+
+  async createWithPassword(user: UserEntity, passwordHash: string): Promise<UserEntity> {
+    const data = this.userMapper.toMongo(user);
+    const doc = await UserModel.create({ ...data, password: passwordHash });
+    return this.userMapper.toEntity(doc as unknown as IUserDocument);
   }
 
   async findByEmail(email: string): Promise<UserWithPassword | null> {
@@ -50,13 +69,13 @@ async completeOnboarding(userId: string, data: {
     }).exec();
 
   }
-async findAll(params: {
+async findAllUsers(params: {
     page: number;
     limit: number;
     search?: string;
     status?: string;
     role?: UserRole; 
-  }): Promise<{ users: UserEntity[]; total: number }> {
+  }): Promise<{ data: UserEntity[]; total: number }> {
     const { page, limit, search, status, role} = params;
     const skip = (page - 1) * limit;
 
@@ -83,7 +102,7 @@ async findAll(params: {
     ]);
 
     return {
-      users: docs.map((doc) => this.userMapper.toEntity(doc)),
+      data: docs.map((doc) => this.userMapper.toEntity(doc)),
       total
     };
   }

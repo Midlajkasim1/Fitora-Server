@@ -18,9 +18,9 @@ export class UpdateSubscriptionPlanStatusUseCase implements IBaseUseCase<UpdateS
         }
         subscription.toggleStatus();
         await this._SubscriptionRepository.updataStatus(dto.id,subscription.status);
-        return {
+        return new UpdateSubscriptionPlanStatusResponseDTO({
             message:SUBSCRIPTION_MESSAGES.SUBSCRIPTION_PLAN_STATUS_UPDATED
-        };
+        });
     }
 
 }

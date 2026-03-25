@@ -12,15 +12,15 @@ export class GetAllUsersUseCase implements IBaseUseCase<GetUsersRequestDTO, GetU
 
   async execute(dto: GetUsersRequestDTO): Promise<GetUsersResponseDTO> {
 
-    const { users, total } = await this._userRepository.findAll({
+    const { data, total } = await this._userRepository.findAllUsers({
       ...dto,
       role:UserRole.USER
     });
 
-    const userListItems: UserManagementDTO[] = users.map((user: UserEntity) => {
+    const userListItems: UserManagementDTO[] = data.map((user: UserEntity) => {
       if (!user.id) throw new Error(AUTH_MESSAGES.ENTITY_ID_MISSING);
 
-      return {
+      return new UserManagementDTO({
         id: user.id,
         email: user.email,
         firstName: user.firstName,
@@ -28,12 +28,12 @@ export class GetAllUsersUseCase implements IBaseUseCase<GetUsersRequestDTO, GetU
         profileImage: user.profileImage,
         status: user.status,
         createdAt: user.createdAt|| new Date(), 
-      };
+      });
     });
 
-    return {
+    return new GetUsersResponseDTO({
       users: userListItems,
       total
-    };
+    });
   }
 }

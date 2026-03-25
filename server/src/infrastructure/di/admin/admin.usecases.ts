@@ -28,6 +28,11 @@ import { BcryptPasswordHasher } from "@/infrastructure/providers/crypto/bcrypt-p
 import { NodemailerEmailService } from "@/infrastructure/providers/email/nodemailer.service";
 import { S3StorageProvider } from "@/infrastructure/providers/storage/s3-storage.provider";
 import { adminRepositories } from "./admin.repositories";
+import { CreateAdvertisementUseCase } from "@/application/usecases/advertisement/create-advertisment.usecase";
+import { UpdateAdvertisementUseCase } from "@/application/usecases/advertisement/update-advertisement.usecase";
+import { GetAllAdvertisementUseCase } from "@/application/usecases/advertisement/get-All-advertisement.usecase";
+import { UpdateStatusAdvertisementUseCase } from "@/application/usecases/advertisement/updateStatus-advertisement.usecase";
+import { GetAdvertisementById } from "@/application/usecases/advertisement/get-advertisementById.usecase";
 
 const tokenService = new JwtTokenService();
 const passwordHasher = new BcryptPasswordHasher();
@@ -123,6 +128,23 @@ export const adminUseCases = {
   ),
   getSubscriptionPlanByIdUseCase : new GetSubscriptionPlanByIdUseCase(
     adminRepositories.subcriptionPlanRepository
+  ),
+  createAdvertisementUseCase:new CreateAdvertisementUseCase(
+    adminRepositories.advertisementRepository,
+    storageProvider
+  ),
+  updateAdvertisementUseCase:new UpdateAdvertisementUseCase(
+    adminRepositories.advertisementRepository,
+    storageProvider
+  ),
+  getAllAdvertisementUseCase:new GetAllAdvertisementUseCase(
+    adminRepositories.advertisementRepository
+  ),
+  updateStatusAdvertisement:new UpdateStatusAdvertisementUseCase(
+    adminRepositories.advertisementRepository
+  ),
+  getAdvertisementById:new GetAdvertisementById(
+    adminRepositories.advertisementRepository
   )
   
 

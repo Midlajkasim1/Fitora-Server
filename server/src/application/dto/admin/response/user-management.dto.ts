@@ -1,11 +1,15 @@
 import { UserStatus } from "@/domain/constants/auth.constants";
 
-export interface UserManagementDTO {
-  id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
+export class UserManagementDTO {
+  id!: string;
+  email!: string;
+  firstName!: string;
+  lastName!: string;
   profileImage?: string;
-  status: UserStatus;
-  createdAt: Date;
+  status!: UserStatus;
+  createdAt!: Date;
+
+  constructor(data: UserManagementDTO) {
+    Object.assign(this, data);
+  }
 }

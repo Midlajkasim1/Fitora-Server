@@ -14,5 +14,5 @@ export interface IPaymentProvider {
   }): Promise<CheckoutSessionURL>;
 
   getProviderName(): string;
-  verifyWebhook(rawBody:Buffer,signature:string):IWebhookEvent;
+  verifyWebhook(rawBody:Buffer,headers:Record<string,string | string[] | undefined>):IWebhookEvent;
 }

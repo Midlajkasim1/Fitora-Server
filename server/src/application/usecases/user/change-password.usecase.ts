@@ -25,8 +25,8 @@ export class ChangePasswordUseCase implements IBaseUseCase<ChangePasswordRequest
         }
         const newPassword = await this._passwordService.hash(dto.newPassword);
         await this._userRepository.updatePassword(dto.userId,newPassword);
-        return {
+        return new ChangePasswordResponse({
             message:AUTH_MESSAGES.PASSWORD_UPDATE
-        };
+        });
     }
 }

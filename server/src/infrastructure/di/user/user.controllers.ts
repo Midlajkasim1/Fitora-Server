@@ -4,6 +4,7 @@ import { UserController } from "@/presentation/controllers/user/user.controller"
 import { UserSpecializationController } from "@/presentation/controllers/user/userSpecialization.controller";
 import { UserSubscriptionController } from "@/presentation/controllers/user/user-subscription.controller";
 import { HealthMetricsController } from "@/presentation/controllers/user/user-health-metrics.controller";
+import { UserAdvertisementController } from "@/presentation/controllers/user/user-advertisement.controller";
 export const userControllers = {
   authController: new AuthController(
     useCases.registerUseCase,
@@ -38,12 +39,21 @@ export const userControllers = {
     useCases.purchaseSubscriptionPlan,
     useCases.handleWebhookUseCase,
     paymentProvider,
-    useCases.checkActiveSubscriptionUser
+    useCases.checkActiveSubscriptionUser,
+    useCases.cancelSubscriptionUseCase,
+    useCases.getPurchaseHistoryUseCase
+    
 
 
   ),
   userHealthMetricsController: new HealthMetricsController(
-    useCases.clientHealthMetricsUseCase
+    useCases.clientHealthMetricsUseCase,
+    useCases.checkHealthMetricsUseCase
+  ),
+  
+  userAdvertisementController:new UserAdvertisementController(
+    useCases.getActiveAdvertisementUseCase
   )
+
 
 };

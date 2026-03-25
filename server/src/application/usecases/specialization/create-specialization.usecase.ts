@@ -32,10 +32,10 @@ export class CreateSpecializationUseCase implements IBaseUseCase<CreateSpecializ
         status:SpecializationStatus.ACTIVE
       });
       await this._specializationRepository.create(specialization);
-      return {
+      return new CreateSpecializationResponseDTO({
         message:SPECIALIZATION_MESSAGES.SPECIALIZATION_CREATED
         
-      };
+      });
   }
   
 

@@ -6,5 +6,4 @@ export interface IClientPreferenceRepository extends IBaseRepository<ClientPrefe
   save(prefs: ClientPreferenceEntity): Promise<void>;
 
   findByUserId(userId: string): Promise<ClientPreferenceEntity | null>;
-  updateClientPreference(clientPreference:ClientPreferenceEntity):Promise<ClientPreferenceEntity | null>;
 }

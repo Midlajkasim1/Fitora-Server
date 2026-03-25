@@ -1,4 +1,7 @@
+export class BlockUserRequestDTO {
+  userId!: string;
 
-export interface BlockUserRequestDTO{
-    userId:string
+  constructor(data: BlockUserRequestDTO) {
+    Object.assign(this, data);
+  }
 }

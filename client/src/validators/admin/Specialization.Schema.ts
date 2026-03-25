@@ -1,31 +1,33 @@
-import { z } from "zod";
+import z from "zod";
 
-export const specializationSchema = z.object({
-  name: z
-    .string()
-    .min(3, "Name must be at least 3 characters")
-    .max(50, "Name cannot exceed 50 characters"),
-
-  description: z
-    .string()
-    .min(10, "Description must be at least 10 characters")
-    .max(300, "Description cannot exceed 300 characters")
-    .optional(),
-
-image: z
-  .instanceof(File, {
-    message: "Image is required",
+export const specializationSchema = z
+  .object({
+    mode: z.enum(["create", "edit"]),
+    name: z
+      .string()
+      .min(3, "Name must be at least 3 characters")
+      .max(50, "Name cannot exceed 50 characters"),
+    description: z
+      .string()
+      .min(10, "Description must be at least 10 characters")
+      .max(300, "Description cannot exceed 300 characters"),
+    image: z
+      .any() 
+      .optional()
+      .refine((file) => !file || (file instanceof File && file.size <= 5 * 1024 * 1024), "Max 5MB")
+      .refine(
+        (file) => !file || (file instanceof File && ["image/jpeg", "image/png", "image/jpg"].includes(file.type)),
+        "Only JPG/PNG allowed"
+      ),
   })
-  .refine((file) => file.size <= 5 * 1024 * 1024, {
-    message: "Image must be less than 5MB",
-  })
-  .refine(
-    (file) =>
-      ["image/jpeg", "image/jpg", "image/png"].includes(file.type),
-    {
-      message: "Only JPG, JPEG, or PNG allowed",
+  .superRefine((data, ctx) => {
+    if (data.mode === "create" && !(data.image instanceof File)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Image is required for new specializations",
+        path: ["image"],
+      });
     }
-  ),
-});
+  });
 
-   export  type SpecializationFormData = z.infer<typeof specializationSchema>;
+export type SpecializationFormData = z.infer<typeof specializationSchema>;

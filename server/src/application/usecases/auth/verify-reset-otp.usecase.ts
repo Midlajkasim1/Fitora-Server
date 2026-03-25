@@ -21,6 +21,6 @@ export class VerifyResetOtpUseCase implements IBaseUseCase<VerifyResetOtpDTO, Ve
     await this._otpStore.save(sessionKey, { email: dto.email }, 900); 
     await this._otpStore.delete(redisKey);
 
-    return { resetToken };
+    return new VerifyResetOtpResponseDTO({ resetToken });
   }
 }

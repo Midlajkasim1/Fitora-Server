@@ -3,6 +3,7 @@ import { env } from "@/infrastructure/config/env.config";
 import { IPaymentProvider } from "@/domain/interfaces/services/paymentProvider.interface";
 import { CheckoutSessionURL } from "@/domain/interfaces/services/paymentCheckouturl.interface";
 import { IWebhookEvent } from "@/domain/interfaces/services/webhook-event.interface";
+import { PAYMENT_MESSAGES } from "@/domain/constants/messages.constants";
 
 export class StripePaymentProvider implements IPaymentProvider {
   private readonly _stripe: Stripe;
@@ -50,7 +51,7 @@ export class StripePaymentProvider implements IPaymentProvider {
     });
 
     if (!session.url) {
-      throw new Error("Stripe failed to create checkout URL");
+      throw new Error(PAYMENT_MESSAGES.STRIPE_FAILED_TO_CREATE_CHECKOUT_URL);
     }
 
     return {
@@ -58,8 +59,9 @@ export class StripePaymentProvider implements IPaymentProvider {
       sessionId: session.id,
     };
   }
-   verifyWebhook(rawBody: Buffer, signature: string): IWebhookEvent {
+   verifyWebhook(rawBody: Buffer, headers: Record<string, string | string[] | undefined>): IWebhookEvent {
       try {
+        const signature = headers["stripe-signature"] as string;
         const event = this._stripe.webhooks.constructEvent(
             rawBody,
             signature,
@@ -75,7 +77,7 @@ export class StripePaymentProvider implements IPaymentProvider {
         }
         };
       } catch {
-        throw new Error("Invalid webhook signature");
+        throw new Error(PAYMENT_MESSAGES.INVALID_WEBHOOK_SIGNATURE);
       }
   }
 }

@@ -16,7 +16,7 @@ const navItems = [
   { name: "Verification", path: "/admin/trainer/verifications", icon: CheckCircle },
   { name: "Subscription", path: "/admin/subscriptions", icon: Zap },
   { name: "Finance Management", path: "", icon: Wallet },
-  { name: "Advertisements", path: "", icon: Megaphone },
+  { name: "Advertisements", path: "/admin/advertisements", icon: Megaphone },
   { name: "Report", path: "", icon: FileText },
   { name: "Workout", path: "/admin/workouts", icon: Dumbbell },
 ];

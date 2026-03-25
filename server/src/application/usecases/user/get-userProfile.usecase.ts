@@ -17,7 +17,7 @@ export class GetUserProfileUseCase implements IBaseUseCase<string, GetUserProfil
             throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
         }
         const preference = await this._clientPreferenceRepository.findByUserId(userId);
-        return {
+        return new GetUserProfileResponse({
             id: user.id!,
             firstName: user.firstName,
             lastName: user.lastName,
@@ -29,7 +29,7 @@ export class GetUserProfileUseCase implements IBaseUseCase<string, GetUserProfil
             experienceLevel: preference?.experienceLevel ,
    
 
-        };
+        });
     }
 
 }

@@ -15,7 +15,7 @@ export class GetWorkoutByIdUseCase implements IBaseUseCase<GetWorkoutByIdRequest
         if (!workout) {
             throw new Error(WORKOUT_MESSAGES.WORKOUT_NOT_FOUND);
         }
-        return {
+        return new GetWorkoutByIdResponseDTO({
             id: workout.id!,
             title: workout.title,
             description: workout.description,
@@ -29,7 +29,7 @@ export class GetWorkoutByIdUseCase implements IBaseUseCase<GetWorkoutByIdRequest
             status: workout.status,
             createdAt: workout.createdAt,
             updatedAt: workout.updatedAt,
-        };
+        });
     }
 
 }
