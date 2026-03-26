@@ -21,4 +21,5 @@ export interface ITrainerRepository extends IBaseRepository<TrainerDetailsEntity
   }):Promise<{data:TrainerDetailsEntity[],total:number}>
   updateApprovalStatus(id:string,status:ApprovalStatus,reason?:string):Promise<void>;
   findApprovedTrainer(): Promise<string[]>;
+  findTrainerIdsBySpecializations(specializationIds: string[]): Promise<string[]>;
 }

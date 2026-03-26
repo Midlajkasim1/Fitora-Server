@@ -12,6 +12,7 @@ export const useCancelSubscription = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["user-premium-status"] });
+      queryClient.invalidateQueries({ queryKey: ["purchase-history"] });
       queryClient.invalidateQueries({ queryKey: ["user-active-subscriptions"] });
       toast.success("Subscription cancelled successfully");
     }

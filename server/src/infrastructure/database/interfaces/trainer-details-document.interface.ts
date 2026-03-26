@@ -6,7 +6,7 @@ export interface ITrainerDetailsDocument  {
   bio: string; 
   experience_year: number; 
   certifications: string[]; 
-  specializations: string[]
+  specializations: Types.ObjectId[]
   approval_status: "pending" | "approved" | "rejected"; 
   verified: boolean; 
   rating: number;

@@ -22,7 +22,7 @@ export const TrainerDetailsSchema = new Schema(
             default: []
         },
        specializations: [
-  {
+    {
     type: Schema.Types.ObjectId,
     ref: "Specialization"
   }

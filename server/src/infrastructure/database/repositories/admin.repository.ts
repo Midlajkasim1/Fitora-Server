@@ -4,7 +4,7 @@ import { IAdminDocument } from "../interfaces/admin-document.interface";
 import { AdminMapper } from "../mappers/admin.mapper";
 import { AdminModel } from "../models/admin.models";
 
-export class AdminRepository implements IAdminRepository {
+export class AdminRepository  implements IAdminRepository {
   async findByEmail(email: string): Promise<AdminWithPassword | null> {
     const doc = await AdminModel.findOne({ email }).lean() as IAdminDocument | null;
     

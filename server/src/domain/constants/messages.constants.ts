@@ -38,7 +38,8 @@ export const AUTH_MESSAGES = {
   PROFILE_IMAGE_UPDATED:"Profile updated",
   FILE_NOT_FOUND:"No file uploaded",  
   USER_AUTHENTICATION_NOT_FOUND:"User authentication data is incomplete. Please log in again.",
-  AUTHENTICATION_REQUIRED:"Authentication is required"
+  AUTHENTICATION_REQUIRED:"Authentication is required",
+  TRAINER_ID_NOT_FOUND:"Trainer not found"
 
 
 };
@@ -117,5 +118,17 @@ export const ADVERTISEMENT_MESSAGES={
   ADS_UPDATED:"updated sucessfully",
   ADS_ID_MISSING:"Ad id is missing",
   ADVERTISEMENT_STATUS_UPDATED: (status: string) => `Advertisement status successfully updated to ${status}`,
+
+};
+
+export const SLOT_MESSAGES={
+  SLOT_IS_FULL:"Slot is full or not available",
+  USER_ALREADY_BOOKED:"User already booked this slot",
+  CANNOT_CREATE_SLOT_IN_PAST:"Cannot create a slot in the past",
+  SLOT_TIME_MUST_BE_AFTER_START_TIME:"End time must be after start time",
+  SESSION_SLOT_MUST_HOUR:"Each session slot must be exactly 1 hour (60 minutes)",
+  SINGLE_SESSION_CANNOT_SPAN_ACROSS_MULTIPLE_DAYS:"A single session cannot span across multiple days",
+  ALREADY_HAVE_A_SESSION_SCHEDULED_THAT_OVERLAPS_WITH_TIME:"You already have a session scheduled that overlaps with this time",
+  SLOT_CREATED_SUCESSFULLY:"workout slot created successfully"
 
 };

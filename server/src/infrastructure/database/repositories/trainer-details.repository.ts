@@ -146,5 +146,14 @@ async findAllTrainers(params: {
 
     return docs.map(doc => doc.user_id.toString());
   }
+  async findTrainerIdsBySpecializations(specializationIds: string[]): Promise<string[]> {
+    const mongoIds = specializationIds.map(id => new Types.ObjectId(id));
+    
+    const docs = await TrainerDetailsModel.find({
+        specializations: { $in: mongoIds },
+        approval_status: "approved"
+    }).select("user_id").lean().exec();
+    return docs.map(doc => doc.user_id.toString());
+}
 
 }
