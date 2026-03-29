@@ -11,7 +11,7 @@ export class ClientPreferenceMapper implements IMapper<ClientPreferenceEntity,IC
       sleepHours: doc.sleep_hours,
       waterIntake: doc.water_intake,
       primaryMotives: doc.primary_motives,
-      preferredWorkouts: doc.preferred_workouts,
+      preferredWorkouts: doc.preferred_workouts.map(id=>id.toString()),
       experienceLevel: doc.experience_level,
       dietPreference: doc.diet_preference,
       medicalConditions: doc.medical_conditions

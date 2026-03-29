@@ -56,4 +56,17 @@ router.get("/health-metrics/check",userMiddlewares.authMiddleware,userMiddleware
 router.get("/advertisement",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userAdvertisementController.getAdvertisement(req,res)
 ));
+
+router.get("/slots",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSlotsController.getAvailableSlot(req,res)
+));
+router.post("/slots/:slotId/book",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSlotsController.userBookSlot(req,res)
+));
+router.post("/slots/:slotId/cancel",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSlotsController.cancelBooking(req,res)
+));
+router.get("/upcoming-session",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSlotsController.UpcomingSessionSlots(req,res)
+));
 export default router;

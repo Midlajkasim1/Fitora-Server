@@ -7,6 +7,7 @@ export class SubscriptionEntity {
     private _status: SubscriptionStatus;
     private _startDate: Date;
     private _endDate: Date;
+    private _usedCredits:number;
 
     constructor(props: {
         id?: string;
@@ -15,6 +16,7 @@ export class SubscriptionEntity {
         status: SubscriptionStatus;
         startDate: Date;
         endDate: Date;
+        usedCredits?:number;
     }) {
         this._id = props.id;
         this._planId = props.planId;
@@ -22,6 +24,7 @@ export class SubscriptionEntity {
         this._status = props.status;
         this._startDate = props.startDate;
         this._endDate = props.endDate;
+        this._usedCredits = props.usedCredits ||0;
     }
 
     public static calculateExpireDate(startDate:Date,billingCycle:string): Date {
@@ -57,4 +60,5 @@ export class SubscriptionEntity {
     get status() { return this._status; }
     get startDate() { return this._startDate; }
     get endDate() { return this._endDate; }
+    get usedCredit(){return this._usedCredits;}
 }

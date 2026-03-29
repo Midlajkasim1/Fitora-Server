@@ -44,8 +44,13 @@ const PremiumDashboardPage = lazy(()=>import("../pages/user/client/PremiumDashbo
 /* Video Session Page - Positioned for Full Screen */
 const UserWorkoutSessionPage = lazy(() => import("../pages/user/client/VideoSessionPage"));
 
-/* User - Trainer */
+/*  Trainer */
 const TrainerDashboard = lazy(() => import("../pages/user/trainer/TrainerDashboard"));
+const TrainerCleintManagement = lazy(() => import("../pages/user/trainer/TrainerClientManagement"));
+const UpcomingSlotsPage = lazy(() => import("../pages/user/trainer/UpcomingSlotsPage"));
+// const CreateSessionSlotPage = lazy(() => import("../pages/user/trainer/CreateSessionSlotPage"));
+
+
 
 /* Admin */
 const AdminLoginPage = lazy(() => import("../pages/admin/AdminLogin"));
@@ -66,7 +71,7 @@ const EditSpecializationPage = lazy(()=>import("../pages/admin/subscription/Edit
 const AdvertisementManagementPage = lazy(()=>import("../pages/admin/advertisement/AdvertisementManagement"));
 const CreateAdvertisementPage = lazy(()=>import("../pages/admin/advertisement/CreateAdvertisement"));
 const EditAdvertisementPage = lazy(()=>import("../pages/admin/advertisement/EditAdvertisementPage"));
-
+const TrainerLayoutPage = lazy(() => import("../layout/trainer/TrainerLayout"));
 
 
 
@@ -101,7 +106,7 @@ export default function AppRoutes() {
           <Route element={<AuthGuard><UserLayoutPage /></AuthGuard>}>
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/change-password" element={<ChangePassword />} />
-          <Route path="/trainer/dashboard" element={<TrainerDashboard />} />
+         
           <Route path="/workouts" element={<UserSpecializationList />} />
           <Route path="/workouts/:id" element={<UserSpecializationDetails />} />
           <Route path="/select-workouts/:id" element={<UserWorkoutTimeSelectionPage />} />
@@ -117,6 +122,16 @@ export default function AppRoutes() {
     </Route>
   </Route>
 </Route>
+{/* trrainer */}
+       <Route path="/trainer" element={<AuthGuard><TrainerLayoutPage /></AuthGuard>}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<TrainerDashboard />} />
+          <Route path="clients" element={<TrainerCleintManagement/>}/>
+          <Route path="session" element={<UpcomingSlotsPage/>}/>
+          {/* <Route path="create-slot" element={<CreateSessionSlotPage/>}/> */}
+
+
+        </Route>
 
         {/* Admin  */}
         <Route path="/admin-portal" element={<AdminLoginPage />} />

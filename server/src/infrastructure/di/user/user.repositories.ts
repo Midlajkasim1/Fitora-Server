@@ -2,6 +2,7 @@ import { AdvertisementMapper } from "@/infrastructure/database/mappers/advertise
 import { HealthMetricsMapper } from "@/infrastructure/database/mappers/client-health-metrics.mapper";
 import { ClientPreferenceMapper } from "@/infrastructure/database/mappers/client-preference.mapper";
 import { PaymentMapper } from "@/infrastructure/database/mappers/payment.mapper";
+import { SlotMapper } from "@/infrastructure/database/mappers/slot.mapper";
 import { SpecializationMapper } from "@/infrastructure/database/mappers/specialization.mapper";
 import { SubscriptionMapper } from "@/infrastructure/database/mappers/subscription.mapper";
 import { SubscriptionPlanMapper } from "@/infrastructure/database/mappers/subscriptionPlan.mapper";
@@ -12,6 +13,7 @@ import { AdvertisementRepository } from "@/infrastructure/database/repositories/
 import { HealthMetricsRepository } from "@/infrastructure/database/repositories/client-health-metrics";
 import { ClientPreferenceRepository } from "@/infrastructure/database/repositories/client-preference.repository";
 import { PaymentRepository } from "@/infrastructure/database/repositories/paymentRepository";
+import { SlotRespository } from "@/infrastructure/database/repositories/slot.repository";
 import { SpecializationRepository } from "@/infrastructure/database/repositories/specialization.repository";
 import { SubscriptionRepository } from "@/infrastructure/database/repositories/subscription.repository";
 import { SubscriptionplanRepository } from "@/infrastructure/database/repositories/subscriptionPlan.repository";
@@ -28,6 +30,7 @@ const subscriptionMapper= new SubscriptionMapper();
 const paymentMapper = new PaymentMapper();
 const clientHealthMetrics = new HealthMetricsMapper();
 const advertisementMapper = new AdvertisementMapper();
+const slotMapper = new SlotMapper();
 
 export const userRepositories = {
   userRepository: new UserRepository(userMapper) ,
@@ -39,7 +42,8 @@ export const userRepositories = {
    subscriptionRepository:new SubscriptionRepository(subscriptionMapper),
    paymentRepository:new PaymentRepository(paymentMapper),
    clientHealthMetricRepository:new HealthMetricsRepository(clientHealthMetrics),
-   advertisementRepository:new AdvertisementRepository(advertisementMapper)
+   advertisementRepository:new AdvertisementRepository(advertisementMapper),
+   slotRepository:new SlotRespository(slotMapper)
    
   
   

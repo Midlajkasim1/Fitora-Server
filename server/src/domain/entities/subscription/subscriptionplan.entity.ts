@@ -60,7 +60,7 @@ export class SubscriptionPlanEntity{
             ...props,
             status: props.status ?? SubscriptionPlanStatus.ACTIVE,
             totalPurchaseUser: props.totalPurchaseUser ?? 0,
-            sessionType: props.sessionType ?? PlanSessionType.NONE,
+            sessionType: props.sessionType ?? PlanSessionType.GROUP,
             sessionCredits: props.sessionCredits ?? 0,
             aiWorkoutLimit: props.aiWorkoutLimit ?? 0,
             aiDietLimit: props.aiDietLimit ?? 0

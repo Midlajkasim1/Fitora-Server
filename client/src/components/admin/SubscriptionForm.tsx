@@ -100,7 +100,6 @@ export default function SubscriptionForm({ mode, initialData, onSubmit, isPendin
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">Session Access</label>
                 <div className="relative">
                   <select {...register("sessionType")} className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 px-6 text-white font-bold italic outline-none appearance-none cursor-pointer">
-                    <option className={optionStyle} value="none">None</option>
                     <option className={optionStyle} value="one_on_one">1-on-1 Only</option>
                     <option className={optionStyle} value="group">Group Only</option>
                   </select>

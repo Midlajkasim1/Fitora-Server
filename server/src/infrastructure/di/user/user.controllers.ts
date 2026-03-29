@@ -5,6 +5,7 @@ import { UserSpecializationController } from "@/presentation/controllers/user/us
 import { UserSubscriptionController } from "@/presentation/controllers/user/user-subscription.controller";
 import { HealthMetricsController } from "@/presentation/controllers/user/user-health-metrics.controller";
 import { UserAdvertisementController } from "@/presentation/controllers/user/user-advertisement.controller";
+import { UserSlotController } from "@/presentation/controllers/user/user-slot.controller";
 export const userControllers = {
   authController: new AuthController(
     useCases.registerUseCase,
@@ -53,6 +54,12 @@ export const userControllers = {
   
   userAdvertisementController:new UserAdvertisementController(
     useCases.getActiveAdvertisementUseCase
+  ),
+  userSlotsController:new UserSlotController(
+    useCases.getAvailableSlotsUseCase,
+    useCases.bookSlotUseCase,
+    useCases.cancelSlotUseCase,
+    useCases.getUserUpcomingUseCase
   )
 
 

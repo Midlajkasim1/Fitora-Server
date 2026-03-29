@@ -20,11 +20,11 @@
     "tsBuildInfoFile": ".tsbuildinfo",
     "noEmitOnError": false,
     "typeRoots": [
-      "./node_modules/@types",
+      "../node_modules/@types",
       "./src/shared/types" 
     ],
      "sourceMap": true,
-    "inlineSources": true
+    "inlineSources": true,
   },
   "include": ["src/**/*"], 
   "exclude": ["node_modules", "dist", ".tsbuildinfo"]

@@ -25,6 +25,10 @@ export const SubscriptionSchema =  new Schema({
     end_date:{
         type:Date,
         required:true 
+    },
+    usedCredits:{
+        type:Number,
+        default:0
     }
 
 },{timestamps:true});

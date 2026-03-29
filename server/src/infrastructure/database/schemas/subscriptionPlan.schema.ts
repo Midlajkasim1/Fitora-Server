@@ -29,7 +29,7 @@ export const SubscriptionPlanSchema = new Schema({
     sessionType:{
         type:String,
         enum:Object.values(PlanSessionType),
-        default:PlanSessionType.NONE
+        default:PlanSessionType.GROUP
     },
     sessionCredits:{
         type:Number,

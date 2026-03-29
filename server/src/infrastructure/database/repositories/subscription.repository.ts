@@ -6,6 +6,8 @@ import { SubscriptionModel } from "../models/subscription.model";
 import { Model } from "mongoose";
 import { ISubscriptionDocument } from "../interfaces/ISubscription.document";
 import { BaseRepository } from "./base.repository";
+import { SlotModel } from "../models/slots.models";
+import { SlotStatus } from "@/domain/constants/session.constants";
 
 export class SubscriptionRepository extends BaseRepository<SubscriptionEntity,ISubscriptionDocument> implements ISubscriptionRepository {
     constructor(private readonly _subscriptionMapper: SubscriptionMapper) {
@@ -33,7 +35,16 @@ export class SubscriptionRepository extends BaseRepository<SubscriptionEntity,IS
             status: SubscriptionStatus.ACTIVE,
             end_date: { $gt: new Date() } 
         }).lean();
+        if(!doc)return null;
+        const usedCreditsCount = await SlotModel.countDocuments({
+            participants:userId,
+            status:{$ne:SlotStatus.CANCELLED},
+            startTime:{$gte:doc.start_date,$lte:doc.end_date}
+        });
         
-        return doc ? this._subscriptionMapper.toEntity(doc) : null;
+        return this._subscriptionMapper.toEntity({
+            ...doc,
+            usedCredits:usedCreditsCount
+        });
     }
 }

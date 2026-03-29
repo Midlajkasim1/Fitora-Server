@@ -5,7 +5,6 @@ export enum SubscriptionPlanStatus {
 export enum PlanSessionType{
     ONE_ON_ONE="one_on_one",
     GROUP="group",
-    NONE="none"
 }
 
 export enum SubscriptionStatus{

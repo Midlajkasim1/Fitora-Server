@@ -1,0 +1,84 @@
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { 
+  LayoutDashboard, Users, Calendar, 
+  MessageSquare, DollarSign, LogOut, 
+  ActivityIcon 
+} from 'lucide-react';
+import { useAuthStore } from "../../store/use-auth-store"; // Adjust path
+// import { trainerLogout } from "../../api/trainer.api"; // If you have this
+
+const menuItems = [
+  { name: 'Dashboard', path: '/trainer/dashboard', icon: LayoutDashboard },
+  { name: 'Clients', path: '/trainer/clients', icon: Users },
+  { name: 'Sessions', path: '/trainer/session', icon: Calendar },
+  { name: 'Messages', path: '/trainer/messages', icon: MessageSquare },
+  { name: 'Earnings', path: '/trainer/earnings', icon: DollarSign },
+];
+
+const Sidebar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = async () => {
+    try {
+      // await trainerLogout(); 
+    } catch (error) {
+      console.error("Logout failed", error);
+    } finally {
+      logout();
+      navigate("/login", { replace: true });
+    }
+  };
+
+  return (
+    <aside className="w-64 h-screen bg-[#0d1f17] border-r border-white/5 flex flex-col fixed left-0 top-0 overflow-y-auto z-50">
+      {/* Logo Section */}
+      <div className="p-8 flex items-center gap-3">
+        <Link to="/trainer/dashboard" className="flex items-center gap-2">
+          <ActivityIcon className="w-6 h-6 text-[#00ff94]" />
+          <span className="text-white font-bold text-xl italic tracking-tighter uppercase">Fitora</span>
+        </Link>
+      </div>
+
+      {/* Navigation Links */}
+      <nav className="flex-1 px-4 space-y-1">
+        {menuItems.map((item) => {
+          const isActive = location.pathname === item.path;
+          return (
+            <Link
+              key={item.name}
+              to={item.path}
+              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
+                isActive 
+                ? "bg-[#00ff94] text-black shadow-[0_0_20px_rgba(0,255,148,0.2)]" 
+                : "text-gray-400 hover:text-white hover:bg-white/5"
+              }`}
+            >
+              <item.icon 
+                size={18} 
+                className={isActive ? "text-black" : "text-gray-500 group-hover:text-[#00ff94]"} 
+              />
+              <span className="text-[11px] font-bold uppercase tracking-wider italic">
+                {item.name}
+              </span>
+            </Link>
+          );
+        })}
+      </nav>
+
+      {/* Logout Section */}
+      <div className="p-6 border-t border-white/5">
+        <button 
+          onClick={handleLogout} 
+          className="flex items-center gap-3 px-4 py-3 w-full text-red-500 hover:bg-red-500/10 rounded-xl transition-all group"
+        >
+          <LogOut size={18} className="group-hover:translate-x-1 transition-transform" />
+          <span className="text-[11px] font-bold uppercase italic">Logout</span>
+        </button>
+      </div>
+    </aside>
+  );
+};
+
+export default Sidebar;

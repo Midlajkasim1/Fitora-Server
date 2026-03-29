@@ -35,6 +35,10 @@ import { GetPurchaseHistoryUseCase } from "@/application/usecases/subscription/g
 import { CheckHealthMetricsUseCase } from "@/application/usecases/user/check-health-metrics.usecase";
 import { CheckUserBlockUseCase } from "@/application/usecases/auth/check-user-block.usecase";
 import { GetActiveAdvertisementUseCase } from "@/application/usecases/user/get-activeAdvertisement.usecase";
+import { GetAvailableSlotsUseCase } from "@/application/usecases/slot/get-availableSlots.usecase";
+import { BookSlotUseCase } from "@/application/usecases/slot/book-slot.usecase";
+import { CancelBookingUseCase } from "@/application/usecases/slot/cancel-slot.usecase";
+import {  GetUserUpcomingSessionSlotsUseCase } from "@/application/usecases/slot/get-user-upcomingSessionSlot.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -168,6 +172,25 @@ export const useCases = {
   ),
   getActiveAdvertisementUseCase: new GetActiveAdvertisementUseCase(
     userRepositories.advertisementRepository
+  ),
+  getAvailableSlotsUseCase:new GetAvailableSlotsUseCase(
+    userRepositories.slotRepository,
+    userRepositories.clientPreferenceRepository,
+    userRepositories.trainerRepository,
+    userRepositories.subscriptionPlanRepository,
+    userRepositories.subscriptionRepository
+  ),
+  bookSlotUseCase:new BookSlotUseCase(
+    userRepositories.subscriptionRepository,
+    userRepositories.slotRepository,
+    userRepositories.subscriptionPlanRepository,
+
+  ),
+  cancelSlotUseCase:new CancelBookingUseCase(
+    userRepositories.slotRepository
+  ),
+  getUserUpcomingUseCase:new GetUserUpcomingSessionSlotsUseCase(
+    userRepositories.slotRepository
   )
 
   

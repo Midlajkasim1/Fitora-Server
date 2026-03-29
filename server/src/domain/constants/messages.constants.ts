@@ -96,6 +96,7 @@ export const SUBSCRIPTION_MESSAGES={
   SUBCRIPTION_UNHANDLED_TYPE:"Unhandled event type",
   SUBSCRIPTION_CHECKOUT_SESSION_COMPLETED:"checkout.session.completed",
   SUBSCRIPTION_CHECKOUT_SESSION_EXPIRED:"checkout.session.expired",
+  SUBSCRIPTION_PLAN_DETAILS_NOT_FOUND:"Subscription plan details not found"
 
     
 
@@ -129,6 +130,23 @@ export const SLOT_MESSAGES={
   SESSION_SLOT_MUST_HOUR:"Each session slot must be exactly 1 hour (60 minutes)",
   SINGLE_SESSION_CANNOT_SPAN_ACROSS_MULTIPLE_DAYS:"A single session cannot span across multiple days",
   ALREADY_HAVE_A_SESSION_SCHEDULED_THAT_OVERLAPS_WITH_TIME:"You already have a session scheduled that overlaps with this time",
-  SLOT_CREATED_SUCESSFULLY:"workout slot created successfully"
+  SLOT_CREATED_SUCESSFULLY:"workout slot created successfully",
+  ACTIVE_SUBSCRIPTION_NOT_FOUND:"No active subscription found",
+  LIMIT_REACHED_SESSION:(sessionCredits:number)=>`Limit reached: You only have ${sessionCredits} sessions.`,
+  SLOT_NOT_FOUND:"Slot not found",
+  ONLY_SUPPORT_GROUP:"Your plan only supports Group sessions",
+  SUPPORT_ONE_ON_ONE_SESSION:"Your plan providing personal session",
+  ALREADY_BOOKED:"Slot might be full or you are already booked",
+  SLOT_BOOKING_SUCCESS:"You booked slot successfully",
+  USER_SESSION_NOT_FOUND:"User session not found",
+  FAILED_TO_CANCEL:"Failed to cancel booking",
+  CANCELL_SUCCESS_BUT_LOSE_CREDIT:"Cancelled successfully,but loss your credits",
+  BOOKING_CANCELEED_SUCCESS:"Booking cancelled successfully",
+  ONLY_CANCEL_BEFORE_24_HOUR:"Cancellations are only allowed 24 hours before the session start time.",
+  CANNOT_CANCEL_ALREADY_START_SESSION:"Cannot cancel a session that has already started or passed.",
+  TRAINER_WHO_CREATE_SLOT_CAN_CANCEL:"ONLY TRAINER WHO CREATED THE SLOT CAN CANCEL",
+  TRAINER_CANCEL_SLOT_SUCCESSFULLY:"Slot cancel successfully"
+
+  
 
 };

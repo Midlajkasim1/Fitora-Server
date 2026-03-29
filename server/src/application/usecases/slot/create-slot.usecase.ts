@@ -4,11 +4,13 @@ import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { SLOT_MESSAGES } from "@/domain/constants/messages.constants";
 import { SlotEntity } from "@/domain/entities/slot/slot.entity";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
+import { IJobScheduler } from "@/domain/interfaces/services/job-scheduler.interface";
 
 
 export class TrainerCreateSlotUseCase implements IBaseUseCase<CreateSlotRequestDTO,CreateSlotResponseDTO>{
     constructor(
-        private readonly _slotRespository:ISlotRepository
+        private readonly _slotRespository:ISlotRepository,
+        private readonly _jobScheduler:IJobScheduler
     ){}
   async  execute(dto: CreateSlotRequestDTO): Promise<CreateSlotResponseDTO> {
          const start = new Date(dto.startTime);
@@ -46,6 +48,8 @@ export class TrainerCreateSlotUseCase implements IBaseUseCase<CreateSlotRequestD
 
     });
     const savedSlot = await this._slotRespository.create(slot);
+    const waitTime = new Date(savedSlot.endTime).getTime() -Date.now();
+    await this._jobScheduler.scheduleSessionExpiry(savedSlot.id!,waitTime);
 
     return new CreateSlotResponseDTO({
         id:savedSlot.id!,

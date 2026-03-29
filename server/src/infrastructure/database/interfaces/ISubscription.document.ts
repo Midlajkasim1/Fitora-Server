@@ -7,4 +7,5 @@ export interface ISubscriptionDocument {
     status: string;
     start_date: Date;
     end_date: Date;
+    usedCredits?:number;
 }
