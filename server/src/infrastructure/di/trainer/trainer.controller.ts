@@ -10,6 +10,7 @@ export const trainerController ={
    ),
    trainerSlotController: new TrainerSlotController(
     trainerUsecase.trainerCreateSlotUseCase,
+    trainerUsecase.trainerEditSlotUseCase,
     trainerUsecase.trainerCancelSlotUseCase,
     trainerUsecase.getPersonalUserUsecase,
     trainerUsecase.getGroupUsersUseCase,

@@ -1,5 +1,4 @@
-import type { CreateSlotResponse, TrainerClientsparams, TrainerClientsResponse, TrainerDashboardData, UpcomingSlotsParams, UpcomingSlotsResponse } from "../type/trainer.types";
-import type { CreateSlotInput } from "../validators/trainer/Slot.validator";
+import type { CreateSlotPayload, CreateSlotResponse, EditSlotPayload, TrainerClientsparams, TrainerClientsResponse, TrainerDashboardData, UpcomingSlotsParams, UpcomingSlotsResponse } from "../type/trainer.types";
 import api from "./axios";
 
 
@@ -23,7 +22,17 @@ export const getTrainerUpcomingSlots = async (params: UpcomingSlotsParams): Prom
   return res.data?.data;
 };
 
-export const createTrainerSlot = async (payload: CreateSlotInput): Promise<CreateSlotResponse> => {
+export const createTrainerSlot = async (payload: CreateSlotPayload): Promise<CreateSlotResponse> => {
   const res = await api.post(`trainer/create-slots`, payload);
   return res.data.data;
+};
+export const editTrainerSlot = async (payload: EditSlotPayload) => {
+  const { slotId, ...data } = payload;
+  const response = await api.put(`trainer/edit-slots/${slotId}`, data);
+  return response.data;
+};
+
+export const cancelTrainerSlot = async (slotId: string) => {
+  const res = await api.delete(`trainer/${slotId}/cancel`);
+  return res.data;
 };

@@ -39,9 +39,10 @@ const PurchaseHistoryPage = lazy(()=>import("../pages/user/client/PurchaseHistor
 const PaymentSuccessPage =lazy(()=>import("../pages/user/client/PaymentSucessPage"));
 const PaymentFailedPage = lazy(()=>import("../pages/user/client/PaymentFailedPage"));
 const ClientHealthMetrics = lazy(()=>import("../pages/user/client/ClientHealthMetricsPage"));
-const PremiumDashboardPage = lazy(()=>import("../pages/user/client/PremiumDashboardPage"));
+// const PremiumDashboardPage = lazy(()=>import("../pages/user/client/PremiumDashboardPage"));
+const UpcomingSessionPage = lazy(()=>import("../pages/user/client/slot/UpcomingSessions"))
+const CheckSlotsPage = lazy(()=>import("../pages/user/client/slot/CheckSlots"))
 
-/* Video Session Page - Positioned for Full Screen */
 const UserWorkoutSessionPage = lazy(() => import("../pages/user/client/VideoSessionPage"));
 
 /*  Trainer */
@@ -115,10 +116,14 @@ export default function AppRoutes() {
            <Route path="/purchase-history" element={<PurchaseHistoryPage />} />
           <Route  path="/health-metrics"  element={<ClientHealthMetrics />} />  
          <Route path="/payment/success" element={<PaymentSuccessPage />} />
-        <Route path="/payment/cancel" element={<PaymentFailedPage />} />
+         <Route path="/payment/cancel" element={<PaymentFailedPage />} />
          <Route element={<SubscriptionGuard />}>
-    <Route element={<HealthMetricsGuard />}>
-      <Route path="/premium-dashboard" element={<PremiumDashboardPage />} />
+        <Route element={<HealthMetricsGuard />}>
+      {/* <Route path="/premium-dashboard" element={<PremiumDashboardPage />} /> */}
+       <Route path="/upcoming-sessions" element={<UpcomingSessionPage />} />
+         <Route path="/check-slots" element={<CheckSlotsPage />} />
+
+
     </Route>
   </Route>
 </Route>

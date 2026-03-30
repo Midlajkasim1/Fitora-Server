@@ -5,10 +5,10 @@ import { SessionType, SlotStatus } from "@/domain/constants/session.constants";
 export class SlotEntity {
     private readonly _id?: string;
     private readonly _trainerId: string;
-    private readonly _startTime: Date;
-    private readonly _endTime: Date;
-    private readonly _type: SessionType;
-    private readonly _capacity: number;
+    private  _startTime: Date;
+    private  _endTime: Date;
+    private  _type: SessionType;
+    private  _capacity: number;
     private _participants: string[];
     private _status: SlotStatus;
 
@@ -54,6 +54,20 @@ export class SlotEntity {
             status: finalStatus,
         });
     }
+    public update(props: {
+        startTime: Date;
+        endTime: Date;
+        type: SessionType;
+        capacity: number;
+    }) {
+        const finalCapacity = props.type === SessionType.ONE_ON_ONE ? 1 : props.capacity;
+
+        this._startTime = props.startTime;
+        this._endTime = props.endTime;
+        this._type = props.type;
+        this._capacity = finalCapacity;
+    }
+
     get id() { return this._id; }
     get trainerId() { return this._trainerId; }
     get startTime() { return this._startTime; }

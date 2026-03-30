@@ -108,7 +108,8 @@ export const PAYMENT_MESSAGES={
   STRIPE_FAILED_TO_CREATE_CHECKOUT_URL:"Stripe failed to create checkout URL"
 };
 export const HEALTH_METRICS_MESSAGES={
-  HEALTH_METRICS_SAVED:"Health metrics saved successfully"
+  HEALTH_METRICS_SAVED:"Health metrics saved successfully",
+  HEALT_METRICS_NOT_FOUND:"Health metrics not found"
 };
 
 export const ADVERTISEMENT_MESSAGES={
@@ -145,7 +146,8 @@ export const SLOT_MESSAGES={
   ONLY_CANCEL_BEFORE_24_HOUR:"Cancellations are only allowed 24 hours before the session start time.",
   CANNOT_CANCEL_ALREADY_START_SESSION:"Cannot cancel a session that has already started or passed.",
   TRAINER_WHO_CREATE_SLOT_CAN_CANCEL:"ONLY TRAINER WHO CREATED THE SLOT CAN CANCEL",
-  TRAINER_CANCEL_SLOT_SUCCESSFULLY:"Slot cancel successfully"
+  TRAINER_CANCEL_SLOT_SUCCESSFULLY:"Slot cancel successfully",
+  CANNOT_EDIT_ALREADY_BOOKED_SLOT:"Cannot edit a slot that is already booked or completed"
 
   
 

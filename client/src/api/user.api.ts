@@ -1,4 +1,4 @@
-import type { EditProfile, IChangePassword, UserProfileResponse } from "../type/user.types"
+import type { EditProfile, IChangePassword, PremiumDashboardData, UpcomingSessionResponse, UserProfileResponse } from "../type/user.types"
 import api from "./axios"
 
 
@@ -24,3 +24,27 @@ export const getActiveAdvertisement = async ()=>{
     const res = await api.get("/user/advertisement");
     return res.data.data;
 }
+
+export const getPremiumDashboard = async (): Promise<PremiumDashboardData> => {
+  const res = await api.get("user/premium-dashboard");
+  return res.data.data;
+};
+
+export const fetchUpcomingSessions = async (page = 1, limit = 10): Promise<UpcomingSessionResponse> => {
+  const  res  = await api.get(`user/upcoming-session?page=${page}&limit=${limit}`);
+  return res.data.data;
+};
+export const getAvailableSlots = async () => {
+  const res = await api.get("user/slots");
+  return res?.data?.data; 
+};
+
+export const bookSlot = async (slotId: string) => {
+  const res= await api.post(`user/slots/${slotId}/book`);
+  return res?.data;
+}
+
+export const cancelBooking = async (slotId: string) => {
+  const res = await api.post(`user/slots/${slotId}/cancel`);
+  return res?.data;
+};

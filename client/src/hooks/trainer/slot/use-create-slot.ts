@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createTrainerSlot } from "../../api/trainer.api";
+import toast from "react-hot-toast";
+import { createTrainerSlot } from "../../../api/trainer.api";
 
 export const useCreateSlot = () => {
   const queryClient = useQueryClient();
@@ -7,6 +8,7 @@ export const useCreateSlot = () => {
     mutationFn: createTrainerSlot,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["trainer-upcoming-slots"] });
+      toast.success("Slot created successfully")
     },
   });
 }

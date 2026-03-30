@@ -14,8 +14,8 @@ export interface ISlotRepository extends IBaseRepository<SlotEntity>{
      getTrainerParticipants(params:{trainerId:string,type:SessionType,skip:number,limit:number,search?:string}):Promise<ITrainerParticipantsResult>;
      getTrainerUpcomingSlots(params:{trainerId:string,skip:number,limit:number}):Promise<ITrainerUpcomingResult>;
      getUserUpcomingSlots(params:{userId:string,skip:number;limit:number}):Promise<IUserUpcomingResult>;
-      getTotalClients(trainerId: string): Promise<number>
-
+     getTotalClients(trainerId: string): Promise<number>;
+    checkAvaliability(trainerId: string, startTime: Date, endTime: Date, excludeId?: string): Promise<SlotEntity | null>;
 }
 
 export interface IAggregateSlot{

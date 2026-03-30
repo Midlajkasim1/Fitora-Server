@@ -268,4 +268,18 @@ export class SlotRespository extends BaseRepository<SlotEntity, ISlotDocument> i
        ]);
        return result[0]?.total || 0;
    }
+   
+  async checkAvaliability(trainerId: string, startTime: Date, endTime: Date, excludeId?: string): Promise<SlotEntity | null> {
+       const data:Record<string,unknown>={
+        trainerId:new Types.ObjectId(trainerId),
+        status:{$ne:SlotStatus.CANCELLED},
+        startTime:{$lt:endTime},
+        endTime:{$gt:startTime}
+       };
+       if(excludeId){
+        data._id = {$ne:new Types.ObjectId(excludeId)};
+       }
+       const doc = await SlotModel.findOne(data).lean();
+       return doc ? this._slotMapper.toEntity(doc) : null;
+   }
 }

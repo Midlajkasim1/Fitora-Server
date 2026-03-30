@@ -6,6 +6,7 @@ import { GetTrainerOneOnOneUserUseCase } from "@/application/usecases/slot/get-t
 import { GetTrainerGroupUserUseCase } from "@/application/usecases/slot/get-trainer-groupUsersSlot.usecase";
 import { GetTrainerUpcomingSlotsUseCase } from "@/application/usecases/slot/get-trainer-upcomingSlot.usecase";
 import { GetTrainerDashboardUseCase } from "@/application/usecases/trainer/get-trainerDashboard.usecase";
+import { TrainerEditSlotUseCase } from "@/application/usecases/slot/edit-slot.usecase";
 
 const jobScheduler = new BullJobScheduler();
 
@@ -14,6 +15,10 @@ export const trainerUsecase ={
     trainerRepositories.slotRepository,
     jobScheduler
 
+   ),
+   trainerEditSlotUseCase:new TrainerEditSlotUseCase(
+      trainerRepositories.slotRepository,
+      jobScheduler
    ),
    trainerCancelSlotUseCase:new TrainerCancelSlotUseCase(
       trainerRepositories.slotRepository,

@@ -1,37 +1,87 @@
-// pages/trainer/UpcomingSessions.tsx
 import { useState } from "react";
 import { Plus, CalendarDays } from "lucide-react";
 
+// Components
 import { Pagination } from "../../../components/admin/Pagination";
-import { useTrainerUpcomingSlots } from "../../../hooks/trainer/use-upcomingSession";
 import { UpcomingSessionCard } from "../../../components/trainer/UpcomingSessionCard";
 import { CreateSlotModal } from "../../../components/trainer/SlotModal";
+import { ConfirmModal } from "../../../shared/ConfirmModal";
+
+// Hooks & Types
+import { useTrainerUpcomingSlots } from "../../../hooks/trainer/use-upcomingSession";
+import { useCancelSlot } from "../../../hooks/trainer/slot/use-cancel-slot"; // ✅ Added missing import
+import type { UpcomingSlot } from "../../../type/trainer.types";
 
 const UpcomingSessions = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const LIMIT = 10;
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   
+  const [slotToCancel, setSlotToCancel] = useState<string | null>(null);
+  const [selectedSlot, setSelectedSlot] = useState<UpcomingSlot | null>(null);
+  
+  const LIMIT = 10;
+
+  // Fetch Data
   const { data, isLoading } = useTrainerUpcomingSlots({
     page: currentPage,
-    limit: LIMIT
+    limit: LIMIT,
   });
-  console.log(data)
+
+  // Cancel Mutation
+  const { mutate: cancelSlot, isPending: isCancelling } = useCancelSlot();
 
   const totalPages = data ? Math.ceil(data.total / LIMIT) : 0;
 
+  // --- Handlers ---
+  
+  const handleCreateNew = () => {
+    setSelectedSlot(null);
+    setIsModalOpen(true);
+  };
+
+  const handleEditClick = (slot: UpcomingSlot) => {
+    setSelectedSlot(slot);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedSlot(null);
+  };
+
+  const handleCancelIntent = (slotId: string) => {
+    setSlotToCancel(slotId);
+    setIsCancelModalOpen(true);
+  };
+
+  const handleConfirmCancel = () => {
+    if (slotToCancel) {
+      cancelSlot(slotToCancel, {
+        onSuccess: () => {
+          setIsCancelModalOpen(false);
+          setSlotToCancel(null);
+        }
+      });
+    }
+  };
+
   return (
     <div className="p-8 space-y-8 bg-[#06110d] min-h-screen">
-      {/* Header with Create Button */}
+      {/* Header */}
       <header className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-white uppercase tracking-tighter italic">Schedule</h1>
-          <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest italic mt-1">Manage your future training slots</p>
+          <h1 className="text-3xl font-bold text-white uppercase tracking-tighter italic">
+            Schedule
+          </h1>
+          <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest italic mt-1">
+            Manage your future training slots
+          </p>
         </div>
-        
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 px-6 py-3 bg-[#00ff94] text-black font-black text-[11px] rounded-xl hover:bg-[#00e685] transition uppercase italic shadow-[0_0_20px_rgba(0,255,148,0.3)]"
+
+        <button
+          onClick={handleCreateNew}
+          className="flex items-center gap-2 px-6 py-3 bg-[#00ff94] text-black font-black text-[11px] rounded-xl hover:bg-[#00e685] transition-all uppercase italic shadow-[0_0_20px_rgba(0,255,148,0.3)] active:scale-95"
         >
           <Plus size={18} /> Create Session Slot
         </button>
@@ -49,23 +99,32 @@ const UpcomingSessions = () => {
       <div className="space-y-4">
         {isLoading ? (
           [...Array(5)].map((_, i) => (
-            <div key={i} className="h-20 bg-[#1a2c26]/50 animate-pulse rounded-2xl border border-white/5" />
+            <div
+              key={i}
+              className="h-24 bg-[#1a2c26]/50 animate-pulse rounded-2xl border border-white/5"
+            />
           ))
         ) : (
           <>
             {data?.slots.map((slot) => (
-              <UpcomingSessionCard key={slot.slotId} slot={slot} />
+              <UpcomingSessionCard
+                key={slot.slotId}
+                slot={slot}
+                onEdit={handleEditClick}
+                onCancel={handleCancelIntent} // ✅ Corrected prop name
+              />
             ))}
 
             {data?.slots.length === 0 && (
               <div className="py-20 text-center border-2 border-dashed border-white/5 rounded-3xl">
-                <p className="text-gray-600 text-xs font-black uppercase italic">No upcoming sessions found.</p>
+                <p className="text-gray-600 text-xs font-black uppercase italic">
+                  No upcoming sessions found.
+                </p>
               </div>
             )}
           </>
         )}
       </div>
-  
 
       {/* Pagination */}
       {data && data.total > 0 && (
@@ -79,9 +138,24 @@ const UpcomingSessions = () => {
           />
         </div>
       )}
-          <CreateSlotModal
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+
+      {/* MODALS */}
+
+      {/* Cancellation Confirmation */}
+      <ConfirmModal
+        isOpen={isCancelModalOpen}
+        onClose={() => !isCancelling && setIsCancelModalOpen(false)}
+        onConfirm={handleConfirmCancel}
+        title="Cancel Session?"
+        message="This action cannot be undone. All participants will be notified of the cancellation immediately."
+        confirmText={isCancelling ? "Processing..." : "Yes, Cancel"}
+      />
+
+      {/* Shared Create/Edit Modal */}
+      <CreateSlotModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        initialData={selectedSlot} 
       />
     </div>
   );

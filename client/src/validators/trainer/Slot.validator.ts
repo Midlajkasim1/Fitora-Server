@@ -1,18 +1,12 @@
 import { z } from "zod";
 
-// types/trainer.types.ts
 export const CreateSlotSchema = z.object({
-  startTime: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: "Invalid start date format",
-  }),
-  endTime: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: "Invalid end date format",
-  }),
   type: z.enum(["one_on_one", "group"]),
-  capacity: z.number().min(1),
-}).refine((data) => new Date(data.endTime) > new Date(data.startTime), {
-  message: "End time must be after start time",
-  path: ["endTime"],
+  capacity: z.number()
+    .min(1, "Capacity must be at least 1")
+    .max(20, "Maximum capacity is 20"),
+  date: z.string().min(1, "Date is required"),
+  time: z.string().min(1, "Time is required"),
 });
 
-export type CreateSlotInput = z.infer<typeof CreateSlotSchema>;
+export type CreateSlotFormData = z.infer<typeof CreateSlotSchema>;

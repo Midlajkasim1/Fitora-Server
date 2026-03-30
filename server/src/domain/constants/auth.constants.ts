@@ -52,3 +52,8 @@ export enum SpecializationStatus{
   ACTIVE = "active",
   BLOCKED ="blocked"
 }
+
+export enum GenderType {
+  MALE = "male",
+  FEMALE = "female"
+}

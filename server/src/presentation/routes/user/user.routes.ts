@@ -69,4 +69,7 @@ router.post("/slots/:slotId/cancel",userMiddlewares.authMiddleware,userMiddlewar
 router.get("/upcoming-session",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userSlotsController.UpcomingSessionSlots(req,res)
 ));
+router.get("/premium-dashboard",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userController.getUserPremiumDashboard(req,res)
+));
 export default router;

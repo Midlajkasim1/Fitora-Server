@@ -39,6 +39,7 @@ import { GetAvailableSlotsUseCase } from "@/application/usecases/slot/get-availa
 import { BookSlotUseCase } from "@/application/usecases/slot/book-slot.usecase";
 import { CancelBookingUseCase } from "@/application/usecases/slot/cancel-slot.usecase";
 import {  GetUserUpcomingSessionSlotsUseCase } from "@/application/usecases/slot/get-user-upcomingSessionSlot.usecase";
+import { GetDashboardUseCase } from "@/application/usecases/user/get-dashboard.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -190,6 +191,11 @@ export const useCases = {
     userRepositories.slotRepository
   ),
   getUserUpcomingUseCase:new GetUserUpcomingSessionSlotsUseCase(
+    userRepositories.slotRepository
+  ),
+  getUserPremiumDashboard:new GetDashboardUseCase(
+    userRepositories.userRepository,
+    userRepositories.clientHealthMetricRepository,
     userRepositories.slotRepository
   )
 

@@ -10,6 +10,9 @@ const router = Router();
 router.post("/create-slots",userMiddlewares.authMiddleware,asyncHandler((req: Request, res: Response) =>
     trainerController.trainerSlotController.createSlot(req, res)
   ));
+  router.put("/edit-slots/:slotId",userMiddlewares.authMiddleware,asyncHandler((req: Request, res: Response) =>
+    trainerController.trainerSlotController.editSlot(req, res)
+  ));
 router.delete("/:slotId/cancel",userMiddlewares.authMiddleware,asyncHandler((req: Request, res: Response) =>
     trainerController.trainerSlotController.cancelSlot(req, res)
   ));

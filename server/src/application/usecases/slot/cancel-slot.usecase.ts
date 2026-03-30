@@ -5,11 +5,15 @@ import { SLOT_MESSAGES } from "@/domain/constants/messages.constants";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
 
 export class CancelBookingUseCase implements IBaseUseCase<CancelBookingRequestDTO, CancelBookingResponseDTO> {
-  constructor(private readonly _slotRepository: ISlotRepository) {}
+  constructor(
+    private readonly _slotRepository: ISlotRepository,
+
+
+  ) {}
 
   async execute(dto: CancelBookingRequestDTO): Promise<CancelBookingResponseDTO> {
     const slot = await this._slotRepository.findById(dto.slotId);
-    if (!slot) throw new Error("Slot not found.");
+    if (!slot) throw new Error(SLOT_MESSAGES.SLOT_NOT_FOUND);
 
     const now = new Date();
     const startTime = new Date(slot.startTime);
@@ -26,7 +30,6 @@ export class CancelBookingUseCase implements IBaseUseCase<CancelBookingRequestDT
 
     const success = await this._slotRepository.cancelBooking(dto.slotId, dto.userId);
     if (!success) throw new Error(SLOT_MESSAGES.FAILED_TO_CANCEL);
-
     return { 
     
       message: SLOT_MESSAGES.BOOKING_CANCELEED_SUCCESS

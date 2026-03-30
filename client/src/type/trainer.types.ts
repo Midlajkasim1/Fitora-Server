@@ -64,3 +64,19 @@ export interface CreateSlotResponse {
   status: string;
   message: string;
 }
+export interface CreateSlotPayload {
+  slotId: string;
+  type: 'one_on_one' | 'group';
+  capacity: number;
+  startTime: string;
+  endTime: string;
+}
+
+
+export interface EditSlotPayload {
+  slotId: string;
+  type: 'one_on_one' | 'group';
+  capacity: number;
+  startTime: string;
+  endTime: string;
+}

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { SessionType } from "@/domain/constants/session.constants";
 
-export const createSlotSchema = z
+export const SlotSchema = z
   .object({
     startTime: z.string().datetime({ message: "Invalid start time format" }),
     endTime: z.string().datetime({ message: "Invalid end time format" }),

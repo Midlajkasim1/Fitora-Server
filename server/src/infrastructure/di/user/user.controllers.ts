@@ -24,6 +24,7 @@ export const userControllers = {
   useCases.updateUserProfileUseCase,
   useCases.uploadProfileImageUseCase,
   useCases.changePasswordUseCase,
+  useCases.getUserPremiumDashboard
   
   ),
   userSpecializationController:new UserSpecializationController(
