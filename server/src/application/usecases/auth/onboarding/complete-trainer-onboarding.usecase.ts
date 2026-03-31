@@ -5,7 +5,7 @@ import { OnboardingResponseDTO } from "@/application/dto/auth/onboarding/respons
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { ONBOARDING_MESSAGES } from "@/domain/constants/messages.constants";
 import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.entity";
-import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
+import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { IStorageProvider } from "@/domain/interfaces/services/storage-provider.interface";
 export class CompleteTrainerOnboardingUseCase implements IBaseUseCase<TrainerOnboardingDTO, OnboardingResponseDTO,UploadFileDTO[]> {

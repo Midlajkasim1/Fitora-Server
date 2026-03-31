@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { getAvailableSlots } from "../../../api/user.api";
 
-export const useAvailableSlots = () => {
+export const useAvailableSlots = (page: number, limit: number, search?: string,trainerId?:string) => {
   return useQuery({
-    queryKey: ["available-slots"],
-    queryFn: getAvailableSlots,
+    queryKey: ["available-slots", page, limit, search,trainerId],
+    queryFn: () => getAvailableSlots(page, limit, search,trainerId),
+    placeholderData: (previousData) => previousData,
   });
 };

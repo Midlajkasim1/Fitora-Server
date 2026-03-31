@@ -1,8 +1,8 @@
 
 import { ApprovalStatus } from "@/domain/constants/auth.constants";
-import { IBaseRepository } from "../base.repository";
 import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.entity";
 import { UserEntity } from "@/domain/entities/user/user.entity";
+import { IBaseRepository } from "./base.repository";
 export interface ITrainerRepository extends IBaseRepository<TrainerDetailsEntity> {
 
   save(details: TrainerDetailsEntity): Promise<void>;
@@ -22,4 +22,6 @@ export interface ITrainerRepository extends IBaseRepository<TrainerDetailsEntity
   updateApprovalStatus(id:string,status:ApprovalStatus,reason?:string):Promise<void>;
   findApprovedTrainer(): Promise<string[]>;
   findTrainerIdsBySpecializations(specializationIds: string[]): Promise<string[]>;
+  findTrainerForBooking(params:{trainerIds:string[];search?:string;skip:number;limit:number}):Promise<{data:Record<string,unknown>[];total:number}>;
+  
 }

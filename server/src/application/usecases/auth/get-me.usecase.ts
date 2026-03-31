@@ -2,7 +2,7 @@ import { GetMeResponseDTO } from "@/application/dto/auth/response/get-me.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { ApprovalStatus, UserRole } from "@/domain/constants/auth.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
-import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
+import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 
 export class GetMeUseCase implements IBaseUseCase<string, GetMeResponseDTO> {

@@ -6,7 +6,7 @@ import { SessionType, SlotStatus } from "@/domain/constants/session.constants";
 
 export interface ISlotRepository extends IBaseRepository<SlotEntity>{
     findOverlappingSlot(trainerId:string,startTime:Date,endTime:Date):Promise<SlotEntity | null>;
-    findAvailableSlotsByTrainers(trainerIds: string[]): Promise<ISlotWithTrainer[]>;
+    findAvailableSlotsByTrainers(params:{trainerIds: string[];skip:number;limit:number;search?:string,type?:SessionType}): Promise<{slots:ISlotWithTrainer[],total:number}>;
     bookSlot(slotId:string,userId:string):Promise<boolean>;
     cancelBooking(slotId:string,userId:string):Promise<boolean>;
     completeSession(slotId: string): Promise<boolean>

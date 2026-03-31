@@ -11,3 +11,7 @@ export interface AvailableSlotResponseDTO {
   availableSeats: number;
   status: SlotStatus;
 }
+export interface AvailableSlotsPagedResponseDTO {
+    slots: AvailableSlotResponseDTO[];
+    total: number;
+}

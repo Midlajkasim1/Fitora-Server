@@ -42,7 +42,7 @@ const ClientHealthMetrics = lazy(()=>import("../pages/user/client/ClientHealthMe
 // const PremiumDashboardPage = lazy(()=>import("../pages/user/client/PremiumDashboardPage"));
 const UpcomingSessionPage = lazy(()=>import("../pages/user/client/slot/UpcomingSessions"))
 const CheckSlotsPage = lazy(()=>import("../pages/user/client/slot/CheckSlots"))
-
+const BrowseTrainersPage = lazy(() => import("../pages/user/client/slot/BrowserTrainersPage"));
 const UserWorkoutSessionPage = lazy(() => import("../pages/user/client/VideoSessionPage"));
 
 /*  Trainer */
@@ -119,6 +119,7 @@ export default function AppRoutes() {
          <Route path="/payment/cancel" element={<PaymentFailedPage />} />
          <Route element={<SubscriptionGuard />}>
         <Route element={<HealthMetricsGuard />}>
+        <Route path="/browse-trainers" element={<BrowseTrainersPage />} />
       {/* <Route path="/premium-dashboard" element={<PremiumDashboardPage />} /> */}
        <Route path="/upcoming-sessions" element={<UpcomingSessionPage />} />
          <Route path="/check-slots" element={<CheckSlotsPage />} />

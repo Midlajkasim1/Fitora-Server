@@ -10,7 +10,8 @@ interface SlotCardProps {
 
 export const AvailableSlotCard = ({ slot, onBook, isBooking }: SlotCardProps) => {
   const start = new Date(slot.startTime);
-  const isFull = slot.availableSeats === 0;
+  const isFull = Number(slot.availableSeats) <= 0;
+  const isGroup = slot.type?.toLowerCase().includes('group')
 
   return (
     <div className="bg-[#132a1e] border border-white/5 p-6 rounded-[2.5rem] flex items-center justify-between group hover:border-[#00ff94]/30 transition-all duration-300">
@@ -49,12 +50,13 @@ export const AvailableSlotCard = ({ slot, onBook, isBooking }: SlotCardProps) =>
         </div>
       </div>
 
-      <button
-        disabled={isFull || isBooking}
+     <button
+        // ✅ Combined disabling logic
+        disabled={isFull || isBooking || isGroup}
         onClick={() => onBook(slot.id)}
         className={`px-8 py-4 rounded-2xl font-black uppercase italic text-[11px] transition-all active:scale-95 ${
           isFull 
-          ? "bg-white/5 text-gray-600 cursor-not-allowed" 
+          ? "bg-white/10 text-gray-500 cursor-not-allowed opacity-50" // High visibility for disabled state
           : "bg-[#00ff94] text-black shadow-[0_0_20px_rgba(0,255,148,0.2)] hover:bg-[#00e685]"
         }`}
       >

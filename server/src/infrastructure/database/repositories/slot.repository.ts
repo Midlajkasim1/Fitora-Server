@@ -24,17 +24,57 @@ export class SlotRespository extends BaseRepository<SlotEntity, ISlotDocument> i
     }
 
 
-    async findAvailableSlotsByTrainers(trainerIds: string[]): Promise<ISlotWithTrainer[]> {
-        const trainerids = trainerIds.map(id => new Types.ObjectId(id));
+    // async findAvailableSlotsByTrainers(params:{trainerIds: string[];skip:number;limit:number;search?:string}): Promise<{slots:ISlotWithTrainer[],total:number}> {
+    //     const {trainerIds,skip,limit,search} = params;
+    //     const trainerids = trainerIds.map(id => new Types.ObjectId(id));
+    //     const now = new Date();
+    //     const docs = await SlotModel.aggregate<IAggregateSlot>([
+    //         {
+    //             $match: {
+    //                 trainerId: { $in: trainerids },
+    //                 status: SlotStatus.AVAILABLE,
+    //                 startTime: { $gt: now }
+    //             }
+    //         },
+    //         {
+    //             $lookup: {
+    //                 from: "users",
+    //                 localField: "trainerId",
+    //                 foreignField: "_id",
+    //                 as: "trainerInfo"
+    //             }
+    //         },
+    //         { $unwind: { path: "$trainerInfo", preserveNullAndEmptyArrays: true } },
+
+
+    //     ]);
+    //     return docs.map((doc) => ({
+    //         id: doc._id.toString(),
+    //         trainerId: doc.trainerId.toString(),
+    //         trainerName: `${doc.trainerInfo.firstName} ${doc.trainerInfo.lastName}`,
+    //         startTime: doc.startTime,
+    //         endTime: doc.endTime,
+    //         type: doc.type,
+    //         capacity: doc.capacity,
+    //         participants: doc.participants.map(p => p.toString()),
+    //         status: doc.status
+    //     }));
+    // }
+    async findAvailableSlotsByTrainers(params: { trainerIds: string[]; skip: number; limit: number; search?: string;type?:SessionType }): Promise<{ slots: ISlotWithTrainer[]; total: number; }> {
+        const { trainerIds, skip, limit, search,type } = params;
+        const trainerobjIds = trainerIds.map(id => new Types.ObjectId(id));
         const now = new Date();
-        const docs = await SlotModel.aggregate<IAggregateSlot>([
-            {
-                $match: {
-                    trainerId: { $in: trainerids },
-                    status: SlotStatus.AVAILABLE,
-                    startTime: { $gt: now }
-                }
-            },
+        const filter: Record<string, unknown> = {
+            trainerId: { $in: trainerobjIds },
+            status: SlotStatus.AVAILABLE,
+            startTime: { $gt: now }
+        };
+        if (type) {
+        filter.type = type;
+    }
+        const total = await SlotModel.countDocuments(filter);
+        const pipeline: PipelineStage[] = [
+            { $match: filter },
             {
                 $lookup: {
                     from: "users",
@@ -43,11 +83,26 @@ export class SlotRespository extends BaseRepository<SlotEntity, ISlotDocument> i
                     as: "trainerInfo"
                 }
             },
-            { $unwind: { path: "$trainerInfo", preserveNullAndEmptyArrays: true } },
+            { $unwind: "$trainerInfo" }
+        ];
+        if (search) {
+            pipeline.push({
+                $match: {
+                    $or: [
+                        { "trainerInfo.firstName": { $regex: search, $options: "i" } },
+                        { "trainerInfo.lastName": { $regex: search, $options: "i" } }
+                    ]
+                }
+            });
+        }
+        pipeline.push(
+            { $sort: { startTime: 1 } },
+            { $skip: skip },
+            { $limit: limit }
+        );
+        const docs = await SlotModel.aggregate<IAggregateSlot>(pipeline);
 
-
-        ]);
-        return docs.map((doc) => ({
+        const slots = docs.map((doc) => ({
             id: doc._id.toString(),
             trainerId: doc.trainerId.toString(),
             trainerName: `${doc.trainerInfo.firstName} ${doc.trainerInfo.lastName}`,
@@ -58,6 +113,9 @@ export class SlotRespository extends BaseRepository<SlotEntity, ISlotDocument> i
             participants: doc.participants.map(p => p.toString()),
             status: doc.status
         }));
+
+        return { slots, total };
+
     }
     async bookSlot(slotId: string, userId: string): Promise<boolean> {
         const result = await SlotModel.updateOne(
@@ -229,7 +287,7 @@ export class SlotRespository extends BaseRepository<SlotEntity, ISlotDocument> i
             { $match: userUpcomingFilter },
             {
                 $lookup: {
-                    from: "users", 
+                    from: "users",
                     localField: "trainerId",
                     foreignField: "_id",
                     as: "trainerDetails"
@@ -260,26 +318,26 @@ export class SlotRespository extends BaseRepository<SlotEntity, ISlotDocument> i
         return { data, total };
     }
     async getTotalClients(trainerId: string): Promise<number> {
-       const result = await SlotModel.aggregate([
-        {$match:{trainerId:new Types.ObjectId(trainerId)}},
-        {$unwind:"$participants"},
-        {$group:{_id:"$participants"}},
-        {$count:"total"}
-       ]);
-       return result[0]?.total || 0;
-   }
-   
-  async checkAvaliability(trainerId: string, startTime: Date, endTime: Date, excludeId?: string): Promise<SlotEntity | null> {
-       const data:Record<string,unknown>={
-        trainerId:new Types.ObjectId(trainerId),
-        status:{$ne:SlotStatus.CANCELLED},
-        startTime:{$lt:endTime},
-        endTime:{$gt:startTime}
-       };
-       if(excludeId){
-        data._id = {$ne:new Types.ObjectId(excludeId)};
-       }
-       const doc = await SlotModel.findOne(data).lean();
-       return doc ? this._slotMapper.toEntity(doc) : null;
-   }
+        const result = await SlotModel.aggregate([
+            { $match: { trainerId: new Types.ObjectId(trainerId) } },
+            { $unwind: "$participants" },
+            { $group: { _id: "$participants" } },
+            { $count: "total" }
+        ]);
+        return result[0]?.total || 0;
+    }
+
+    async checkAvaliability(trainerId: string, startTime: Date, endTime: Date, excludeId?: string): Promise<SlotEntity | null> {
+        const data: Record<string, unknown> = {
+            trainerId: new Types.ObjectId(trainerId),
+            status: { $ne: SlotStatus.CANCELLED },
+            startTime: { $lt: endTime },
+            endTime: { $gt: startTime }
+        };
+        if (excludeId) {
+            data._id = { $ne: new Types.ObjectId(excludeId) };
+        }
+        const doc = await SlotModel.findOne(data).lean();
+        return doc ? this._slotMapper.toEntity(doc) : null;
+    }
 }

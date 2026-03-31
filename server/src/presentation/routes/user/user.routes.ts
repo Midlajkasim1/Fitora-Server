@@ -56,6 +56,9 @@ router.get("/health-metrics/check",userMiddlewares.authMiddleware,userMiddleware
 router.get("/advertisement",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userAdvertisementController.getAdvertisement(req,res)
 ));
+router.get("/booking/trainers",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSlotsController.getTrainer(req,res)
+));
 
 router.get("/slots",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userSlotsController.getAvailableSlot(req,res)

@@ -60,7 +60,8 @@ export const userControllers = {
     useCases.getAvailableSlotsUseCase,
     useCases.bookSlotUseCase,
     useCases.cancelSlotUseCase,
-    useCases.getUserUpcomingUseCase
+    useCases.getUserUpcomingUseCase,
+    useCases.getTrainerBookingUseCase
   )
 
 

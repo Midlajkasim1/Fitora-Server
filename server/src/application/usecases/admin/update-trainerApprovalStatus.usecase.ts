@@ -3,7 +3,7 @@ import { UpdateTrainerApprovalResponseDTO } from "@/application/dto/admin/respon
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { ApprovalStatus } from "@/domain/constants/auth.constants";
 import { ADMIN_MESSAGES, AUTH_MESSAGES } from "@/domain/constants/messages.constants";
-import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
+import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { IEmailService } from "@/domain/interfaces/services/email-service.interface";
 

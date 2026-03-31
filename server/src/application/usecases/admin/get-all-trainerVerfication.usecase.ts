@@ -2,7 +2,7 @@ import { GetTrainerVerificationRequestDTO } from "@/application/dto/admin/reques
 import { GetTrainerVerificationResponseDTO } from "@/application/dto/admin/response/get-trainerVerfication.dto";
 import { TrainerVerificationListDTO } from "@/application/dto/admin/response/trainer-verficationManagement.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
+import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 
 

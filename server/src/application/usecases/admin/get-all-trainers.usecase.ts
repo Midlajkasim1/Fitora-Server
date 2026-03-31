@@ -2,9 +2,9 @@ import { GetTrainersRequestDTO } from "@/application/dto/admin/request/get-train
 import { TrainerManagementDTO } from "@/application/dto/admin/response/trainer-management.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
-import { GetTrainersResponseDTO } from "../../dto/admin/response/get-trainers.dto";
-import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
 import { UserEntity } from "@/domain/entities/user/user.entity";
+import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
+import { GetTrainersResponseDTO } from "../../dto/admin/response/get-trainers.dto";
 
 export class GetAllTrainersUseCase implements IBaseUseCase<GetTrainersRequestDTO, GetTrainersResponseDTO> {
   constructor(

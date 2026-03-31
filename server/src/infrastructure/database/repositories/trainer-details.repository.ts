@@ -1,24 +1,24 @@
-import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
+import { ApprovalStatus } from "@/domain/constants/auth.constants";
 import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.entity";
-import { TrainerDetailsModel } from "../models/trainer-details.model";
+import { UserEntity } from "@/domain/entities/user/user.entity";
+import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
+import { TrainerWithUser } from "@/domain/interfaces/repositories/onboarding/approveTrainer.interface";
+import { Model, PipelineStage, Types } from "mongoose";
+import { ITrainerDetailsDocument } from "../interfaces/trainer-details-document.interface";
 import { TrainerDetailsMapper } from "../mappers/trainer-details.mapper";
 import { UserMapper } from "../mappers/user.mapper";
-import { Model, Types } from "mongoose";
-import { ApprovalStatus } from "@/domain/constants/auth.constants";
-import { UserEntity } from "@/domain/entities/user/user.entity";
-import { TrainerWithUser } from "@/domain/interfaces/repositories/onboarding/approveTrainer.interface";
+import { TrainerDetailsModel } from "../models/trainer-details.model";
 import { UserModel } from "../models/user.models";
 import { BaseRepository } from "./base.repository";
-import { ITrainerDetailsDocument } from "../interfaces/trainer-details-document.interface";
 
-export class TrainerRepository extends BaseRepository<TrainerDetailsEntity,ITrainerDetailsDocument> implements ITrainerRepository {
+export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITrainerDetailsDocument> implements ITrainerRepository {
   constructor(
     private readonly trainerMapper: TrainerDetailsMapper,
-    private readonly userMapper:UserMapper
+    private readonly userMapper: UserMapper
   ) {
-    super(TrainerDetailsModel as unknown as Model<ITrainerDetailsDocument>,trainerMapper);
-   }
-  
+    super(TrainerDetailsModel as unknown as Model<ITrainerDetailsDocument>, trainerMapper);
+  }
+
 
   async save(details: TrainerDetailsEntity): Promise<void> {
     const mongoData = this.trainerMapper.toMongo(details);
@@ -39,82 +39,82 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity,ITrai
     return doc ? this.trainerMapper.toEntity(doc) : null;
   }
 
-async findAllTrainers(params: {
-  page: number;
-  limit: number;
-  search?: string;
-  status?: string;
-  specialization?: string;
-}): Promise<{ data: UserEntity[]; total: number }> {
-  const { page, limit, search, status, specialization } = params;
-  const skip = (page - 1) * limit;
+  async findAllTrainers(params: {
+    page: number;
+    limit: number;
+    search?: string;
+    status?: string;
+    specialization?: string;
+  }): Promise<{ data: UserEntity[]; total: number }> {
+    const { page, limit, search, status, specialization } = params;
+    const skip = (page - 1) * limit;
 
-  const trainerFilter: Record<string, unknown> = {
-    approval_status: ApprovalStatus.APPROVED
-  };
+    const trainerFilter: Record<string, unknown> = {
+      approval_status: ApprovalStatus.APPROVED
+    };
 
-  if (specialization) {
-    trainerFilter.specializations = specialization;
+    if (specialization) {
+      trainerFilter.specializations = specialization;
+    }
+
+    const userMatch: Record<string, unknown> = {};
+
+    if (status) {
+      userMatch.status = status;
+    }
+
+    if (search) {
+      userMatch.$or = [
+        { email: { $regex: search, $options: "i" } },
+        { firstName: { $regex: search, $options: "i" } }
+      ];
+    }
+
+    const docs = await TrainerDetailsModel.find(trainerFilter)
+      .populate({
+        path: "user_id",
+        match: userMatch
+      })
+      .skip(skip)
+      .limit(limit)
+      .lean<TrainerWithUser[]>();
+
+    const users = docs
+      .filter(doc => doc.user_id !== null)
+      .map(doc => this.userMapper.toEntity(doc.user_id!));
+
+    return {
+      data: users,
+      total: users.length
+    };
   }
-
-  const userMatch: Record<string, unknown> = {};
-
-  if (status) {
-    userMatch.status = status;
-  }
-
-  if (search) {
-    userMatch.$or = [
-      { email: { $regex: search, $options: "i" } },
-      { firstName: { $regex: search, $options: "i" } }
-    ];
-  }
-
-  const docs = await TrainerDetailsModel.find(trainerFilter)
-    .populate({
-      path: "user_id",
-      match: userMatch
-    })
-    .skip(skip)
-    .limit(limit)
-    .lean<TrainerWithUser[]>();
-
-  const users = docs
-    .filter(doc => doc.user_id!==null)
-    .map(doc => this.userMapper.toEntity(doc.user_id!));
-
-  return {
-    data:users,
-    total: users.length
-  };
-}
 
 
   async findById(id: string): Promise<TrainerDetailsEntity | null> {
     const doc = await TrainerDetailsModel.findById(id).lean();
     return doc ? this.trainerMapper.toEntity(doc) : null;
   }
-  async findAllTrainerVerification(params: { page: number; limit: number; search?:string; approvalStatus?: string; }): Promise<{ data: TrainerDetailsEntity[]; total: number; }> {
-    const { page, limit,search, approvalStatus } = params;
+  async findAllTrainerVerification(params: { page: number; limit: number; search?: string; approvalStatus?: string; }): Promise<{ data: TrainerDetailsEntity[]; total: number; }> {
+    const { page, limit, search, approvalStatus } = params;
     const skip = (page - 1) * limit;
 
     const filter: Record<string, unknown> = {};
     if (approvalStatus) {
       filter.approval_status = approvalStatus;
     }
-     if (search) {
-    const users = await UserModel.find({
-      $or: [
-        { firstName: { $regex: search, $options: "i" } },
-        { lastName: { $regex: search, $options: "i" } },
-        { email: { $regex: search, $options: "i" } },
-      ],
-    }).select("_id");
+    if (search) {
+      const users = await UserModel.find({
+        $or: [
+          { firstName: { $regex: search, $options: "i" } },
+          { lastName: { $regex: search, $options: "i" } },
+          { email: { $regex: search, $options: "i" } },
+        ],
+      }).select("_id");
 
-    const userIds = users.map((u) => u._id);
+      const userIds = users.map((u) => u._id);
 
-    filter.user_id = { $in: userIds };
-  }
+      filter.user_id = { $in: userIds };
+    }
     const [docs, total] = await Promise.all([
       TrainerDetailsModel.find(filter)
         .sort({ created_at: -1 })
@@ -148,12 +148,66 @@ async findAllTrainers(params: {
   }
   async findTrainerIdsBySpecializations(specializationIds: string[]): Promise<string[]> {
     const mongoIds = specializationIds.map(id => new Types.ObjectId(id.toString()));
-    
+
     const docs = await TrainerDetailsModel.find({
-        specializations: { $in: mongoIds },
-        approval_status: "approved"
+      specializations: { $in: mongoIds },
+      approval_status: "approved"
     }).select("user_id").lean().exec();
     return docs.map(doc => doc.user_id.toString());
-}
+  }
+
+ async findTrainerForBooking(params: { trainerIds: string[]; search?: string; skip: number; limit: number; }): Promise<{ data: Record<string, unknown>[]; total: number; }> {
+   const { trainerIds, search, skip, limit } = params;
+  
+  const trainerObjectIds = trainerIds.map(id => new Types.ObjectId(id));
+
+  const filter: Record<string, unknown> = {
+    user_id: { $in: trainerObjectIds },
+    approval_status: "approved"
+  };
+
+  const pipeline: PipelineStage[] = [
+    { $match: filter },
+    {
+      $lookup: {
+        from: "users",
+        localField: "user_id",
+        foreignField: "_id",
+        as: "userInfo"
+      }
+    },
+    { $unwind: "$userInfo" }
+  ];
+
+  if (search) {
+    pipeline.push({
+      $match: {
+        $or: [
+          { "userInfo.firstName": { $regex: search, $options: "i" } },
+          { "userInfo.lastName": { $regex: search, $options: "i" } }
+        ]
+      }
+    });
+  }
+
+  const totalResults = await TrainerDetailsModel.aggregate([...pipeline, { $count: "total" }]);
+  const total = totalResults[0]?.total || 0;
+
+  pipeline.push({ $skip: skip }, { $limit: limit });
+
+  const docs = await TrainerDetailsModel.aggregate(pipeline);
+
+  const data = docs.map(doc => ({
+    trainerId: doc.user_id.toString(),
+    name: `${doc.userInfo.firstName} ${doc.userInfo.lastName}`,
+    profileImage: doc.userInfo.profileImage,
+    specializations: doc.specializations, 
+    experience: doc.experience,
+    rating: 4.8, 
+    bio: doc.bio 
+  }));
+
+  return { data, total };
+ }
 
 }

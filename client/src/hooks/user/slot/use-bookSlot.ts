@@ -12,4 +12,4 @@ export const useBookSlot = () => {
       toast.success(res.message);
     },
   });
-};
+};    

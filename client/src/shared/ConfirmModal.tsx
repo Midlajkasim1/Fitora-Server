@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { AlertTriangle, X } from "lucide-react";
+import { AlertTriangle, X, Info } from "lucide-react";
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -9,10 +9,27 @@ interface ConfirmModalProps {
   message?: string;
   confirmText?: string;
   children?: React.ReactNode;
-
+  variant?: "danger" | "warning"; 
 }
 
-export const ConfirmModal = ({ isOpen, onClose, onConfirm, title, message, confirmText = "Confirm",children }: ConfirmModalProps) => {
+export const ConfirmModal = ({ 
+  isOpen, 
+  onClose, 
+  onConfirm, 
+  title, 
+  message, 
+  confirmText = "Confirm", 
+  children,
+  variant = "danger"
+}: ConfirmModalProps) => {
+  
+  const isWarning = variant === "warning";
+  const accentColor = isWarning ? "text-yellow-500" : "text-red-500";
+  const bgColor = isWarning ? "bg-yellow-500/10" : "bg-red-500/10";
+  const buttonBg = isWarning 
+    ? "bg-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.3)] hover:bg-yellow-600" 
+    : "bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:bg-red-600";
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -34,26 +51,31 @@ export const ConfirmModal = ({ isOpen, onClose, onConfirm, title, message, confi
             </button>
 
             <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center text-red-500 mb-6">
-                <AlertTriangle size={32} />
+              {/* ✅ Dynamic Icon and Color */}
+              <div className={`w-16 h-16 ${bgColor} rounded-full flex items-center justify-center ${accentColor} mb-6`}>
+                {isWarning ? <Info size={32} /> : <AlertTriangle size={32} />}
               </div>
 
               <h3 className="text-xl font-black italic uppercase tracking-tight text-white mb-2">{title}</h3>
               {message && (
-                <p className="text-gray-400 text-sm italic mb-6">{message}</p>
+                <p className="text-gray-400 text-sm italic mb-6 leading-relaxed">{message}</p>
               )}
 
               {children}
+              
               <div className="flex w-full gap-4">
                 <button
                   onClick={onClose}
                   className="flex-1 py-4 rounded-xl border border-white/10 text-white font-bold uppercase italic text-xs hover:bg-white/5 transition-all"
                 >
-                  Cancel
+                  {isWarning ? "Close" : "Cancel"}
                 </button>
                 <button
-                  onClick={() => { onConfirm(); onClose(); }}
-                  className="flex-1 py-4 rounded-xl bg-red-500 text-white font-black uppercase italic text-xs shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:bg-red-600 transition-all"
+                  onClick={() => { 
+                    if (!isWarning) onConfirm(); // Only trigger confirm logic if it's a real action
+                    onClose(); 
+                  }}
+                  className={`flex-1 py-4 rounded-xl text-white font-black uppercase italic text-xs transition-all ${buttonBg}`}
                 >
                   {confirmText}
                 </button>

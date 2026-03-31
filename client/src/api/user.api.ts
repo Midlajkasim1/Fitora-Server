@@ -34,8 +34,15 @@ export const fetchUpcomingSessions = async (page = 1, limit = 10): Promise<Upcom
   const  res  = await api.get(`user/upcoming-session?page=${page}&limit=${limit}`);
   return res.data.data;
 };
-export const getAvailableSlots = async () => {
-  const res = await api.get("user/slots");
+
+export const getBookingTrainers = async (page: number, limit: number, search?: string) => {
+  const res = await api.get("user/booking/trainers", { params: { page, limit, search } });
+  return res?.data?.data; 
+};
+export const getAvailableSlots = async (page: number, limit: number, search?: string,trainerId?:string) => {
+  const res = await api.get("user/slots",{
+    params: { page, limit, search,trainerId }
+  });
   return res?.data?.data; 
 };
 

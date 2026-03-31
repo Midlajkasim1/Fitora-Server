@@ -2,7 +2,7 @@ import { GetTrainerVerificationByIdRequestDTO } from "@/application/dto/admin/re
 import { GetTrainerVerificationByIdResponseDTO } from "@/application/dto/admin/response/get-trainerVerificationById.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { ADMIN_MESSAGES, AUTH_MESSAGES } from "@/domain/constants/messages.constants";
-import { ITrainerRepository } from "@/domain/interfaces/repositories/onboarding/itrainer.repository";
+import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
 import { ISpecialization } from "@/domain/interfaces/repositories/specialization.interface";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 
