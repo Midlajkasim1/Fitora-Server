@@ -16,7 +16,8 @@ export class SaveHealthMetricsUseCase implements IBaseUseCase<SaveHealthMetricsR
             height:dto.height,
             weight:dto.weight,
             targetWeight:dto.targetWeight,
-            primaryGoal:dto.primaryGoal
+            primaryGoal:dto.primaryGoal,
+            updateAt:new Date()
         });
         await this._healthMetricsRepository.save(healthmetrics);
         return new SaveHealthMetricsResponseDTO({

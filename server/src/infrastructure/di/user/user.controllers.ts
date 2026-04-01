@@ -13,29 +13,29 @@ export const userControllers = {
     useCases.resendOtpUseCase,
     useCases.loginUseCase,
     useCases.googleAuthUseCase,
-    useCases.forgotPasswordUseCase, 
-    useCases.verifyResetOtpUseCase, 
+    useCases.forgotPasswordUseCase,
+    useCases.verifyResetOtpUseCase,
     useCases.resetPasswordUseCase,
     useCases.refreshTokenUseCase,
     useCases.getMeUseCase
   ),
   userController: new UserController(
-  useCases.getUserProfileUseCase,
-  useCases.updateUserProfileUseCase,
-  useCases.uploadProfileImageUseCase,
-  useCases.changePasswordUseCase,
-  useCases.getUserPremiumDashboard
-  
+    useCases.getUserProfileUseCase,
+    useCases.updateUserProfileUseCase,
+    useCases.uploadProfileImageUseCase,
+    useCases.changePasswordUseCase,
+    useCases.getUserPremiumDashboard
+
   ),
-  userSpecializationController:new UserSpecializationController(
+  userSpecializationController: new UserSpecializationController(
     useCases.getAllSpecializationUseCase,
     useCases.getUserSpecializationById,
     useCases.getWorkoutBySpecializationById,
     useCases.getWorkoutSelectionUseCase
 
-    
+
   ),
-  userSubscriptionController : new UserSubscriptionController(
+  userSubscriptionController: new UserSubscriptionController(
     useCases.getUserSubscriptionPlanUseCase,
     useCases.getUserSubscriptionPlanByIdUseCase,
     useCases.purchaseSubscriptionPlan,
@@ -44,24 +44,26 @@ export const userControllers = {
     useCases.checkActiveSubscriptionUser,
     useCases.cancelSubscriptionUseCase,
     useCases.getPurchaseHistoryUseCase
-    
+
 
 
   ),
   userHealthMetricsController: new HealthMetricsController(
     useCases.clientHealthMetricsUseCase,
-    useCases.checkHealthMetricsUseCase
+    useCases.checkHealthMetricsUseCase,
+    useCases.userWeightProgressUseCase
+
   ),
-  
-  userAdvertisementController:new UserAdvertisementController(
+
+  userAdvertisementController: new UserAdvertisementController(
     useCases.getActiveAdvertisementUseCase
   ),
-  userSlotsController:new UserSlotController(
+  userSlotsController: new UserSlotController(
     useCases.getAvailableSlotsUseCase,
     useCases.bookSlotUseCase,
     useCases.cancelSlotUseCase,
     useCases.getUserUpcomingUseCase,
-    useCases.getTrainerBookingUseCase
+    useCases.getTrainerBookingUseCase,
   )
 
 

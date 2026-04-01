@@ -60,7 +60,7 @@ const UpcomingSessions = () => {
       <header className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div className="flex items-center gap-4">
           <Link
-            to="/premium-dashboard"
+            to="/home"
             className="p-3 bg-white/5 rounded-xl text-gray-400 hover:text-[#00ff94] transition-colors"
           >
             <ArrowLeft size={20} />

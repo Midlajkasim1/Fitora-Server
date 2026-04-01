@@ -3,6 +3,7 @@ import { usePremiumDashboard } from "../../../hooks/user/use-premiumDashboard";
 import { BMIWidget } from "../../../components/user/BmiWidget";
 import { ProgressChart } from "../../../components/user/ProgressChart";
 import { useNavigate } from "react-router-dom";
+import { UpdateWeightModal } from "../../../components/user/UpdateWeightModal";
 
 export default function PremiumDashboardPage() {
   const { data, isLoading } = usePremiumDashboard();
@@ -16,6 +17,10 @@ export default function PremiumDashboardPage() {
   }
     return (
       <div className="space-y-10">
+        <UpdateWeightModal
+        isOpen={data.showWeightModal} 
+        currentWeight={data.metrics.weight} 
+      />
         {/* Top Section: Welcome & Button */}
         <div className="flex justify-between items-end">
           <div>
@@ -64,24 +69,35 @@ export default function PremiumDashboardPage() {
           <BMIWidget value={data.bmi.value} status={data.bmi.status} />
           <ProgressChart data={data.monthlyProgress} />
 
-          {/* Next Session Card */}
-          <div className="bg-gradient-to-br from-[#00ff94] to-[#00cc76] p-8 rounded-[2.5rem] text-black flex flex-col justify-between">
-            <div>
-              <h3 className="font-black uppercase italic tracking-tight">Next Session</h3>
-              {data.nextSession ? (
-                <div className="mt-8">
-                  <p className="text-[10px] font-black uppercase opacity-60">With {data.nextSession.trainerName}</p>
-                  <h2 className="text-3xl font-black uppercase italic leading-none mt-1">{new Date(data.nextSession.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</h2>
-                  <p className="mt-4 font-bold uppercase italic text-[11px]">{data.nextSession.type.replace('_', ' ')}</p>
-                </div>
-              ) : (
-                <p className="mt-8 font-bold italic opacity-60">No sessions booked</p>
-              )}
-            </div>
-            <button className="w-full bg-black text-white py-4 rounded-2xl font-black uppercase italic text-[10px] flex items-center justify-center gap-2">
-              <Video size={16} /> Start Class
-            </button>
+      <div className="bg-gradient-to-br from-[#00ff94] to-[#00cc76] p-8 rounded-[2.5rem] text-black flex flex-col justify-between">
+          <div>
+            <h3 className="font-black uppercase italic tracking-tight">Next Session</h3>
+            {data.nextSession ? (
+              <div className="mt-8">
+                <p className="text-[10px] font-black uppercase opacity-60">With {data.nextSession.trainerName}</p>
+                
+                <h2 className="text-3xl font-black uppercase italic leading-none mt-1">
+                  {new Date(data.nextSession.startTime).toLocaleTimeString('en-US', { 
+                    hour: 'numeric', 
+                    minute: '2-digit', 
+                    hour12: true 
+                  })}
+                </h2>
+
+                <p className="mt-4 font-bold uppercase italic text-[11px]">
+                  {data.nextSession.type.toLowerCase().includes('group') 
+                    ? "Group Session" 
+                    : "Personal Session"}
+                </p>
+              </div>
+            ) : (
+              <p className="mt-8 font-bold italic opacity-60">No sessions booked</p>
+            )}
           </div>
+          <button className="w-full bg-black text-white py-4 rounded-2xl font-black uppercase italic text-[10px] flex items-center justify-center gap-2 hover:bg-black/80 transition-colors">
+            <Video size={16} /> Start Class
+          </button>
+        </div>
         </div>
       </div>
     );

@@ -8,6 +8,7 @@ export const useCreateSlot = () => {
     mutationFn: createTrainerSlot,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["trainer-upcoming-slots"] });
+      queryClient.invalidateQueries({ queryKey: ["available-slots"] });
       toast.success("Slot created successfully")
     },
   });

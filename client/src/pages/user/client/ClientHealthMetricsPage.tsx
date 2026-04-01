@@ -1,15 +1,15 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { Target, Loader2, ArrowRight } from "lucide-react";
 import { healthMetricsSchema } from "../../../validators/user/health-metrics.validator";
 import type { HealthMetricsFormData } from "../../../validators/user/health-metrics.validator";
-import api from "../../../api/axios";
+import { useSaveHealthMetrics } from "../../../hooks/user/save-healthMetrics";
 
 export default function ClientHealthMetrics() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  
+  const { mutate, isPending } = useSaveHealthMetrics();
   
   const {
     register,
@@ -17,25 +17,21 @@ export default function ClientHealthMetrics() {
     formState: { errors },
   } = useForm<HealthMetricsFormData>({
     resolver: zodResolver(healthMetricsSchema) as any,
-    defaultValues: { height: 175, weight: 70, targetWeight: 60, primaryGoal: "Weight Loss" }
+    defaultValues: { 
+      height: 175, 
+      weight: 70, 
+      targetWeight: 60, 
+      primaryGoal: "Weight Loss" 
+    }
   });
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (data: HealthMetricsFormData) => {
-      const response = await api.post("/user/health-metrics", data);
-      return response.data;
-    },
-   onSuccess: (responseData) => {
-    queryClient.setQueryData(["user-health-metrics"], {
-      exists: true,
-      metrics: responseData.data 
+  const onSubmit = (data: HealthMetricsFormData) => {
+    mutate(data, {
+      onSuccess: () => {
+        navigate("/premium-dashboard", { replace: true });
+      }
     });
-
-    queryClient.invalidateQueries({ queryKey: ["user-health-metrics"] });
-
-    navigate("/premium-dashboard", { replace: true });
-  },
-  });
+  };
 
   return (
     <div className="min-h-screen text-white flex flex-col">
@@ -51,7 +47,7 @@ export default function ClientHealthMetrics() {
 
       <div className="flex-1 flex items-start justify-center p-6 pb-20">
         <form 
-          onSubmit={handleSubmit((data) => mutate(data))} 
+          onSubmit={handleSubmit(onSubmit)} 
           className="max-w-2xl w-full bg-[#132a1e]/40 border border-white/5 rounded-[2.5rem] p-10 space-y-8 backdrop-blur-xl shadow-2xl"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -60,7 +56,8 @@ export default function ClientHealthMetrics() {
               <label className="text-[10px] font-black uppercase italic text-gray-400 tracking-widest ml-1">Height</label>
               <div className="relative">
                 <input 
-                  {...register("height")}
+                  type="number"
+                  {...register("height", { valueAsNumber: true })}
                   className={`w-full bg-[#0a1810] border ${errors.height ? 'border-red-500' : 'border-white/5'} rounded-2xl py-5 px-6 text-xl font-black italic outline-none focus:border-[#00ff94]/50 transition-all`}
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 bg-[#00ff94] text-black text-[9px] font-black px-2 py-1 rounded italic">CM</span>
@@ -73,7 +70,8 @@ export default function ClientHealthMetrics() {
               <label className="text-[10px] font-black uppercase italic text-gray-400 tracking-widest ml-1">Weight</label>
               <div className="relative">
                 <input 
-                  {...register("weight")}
+                  type="number"
+                  {...register("weight", { valueAsNumber: true })}
                   className={`w-full bg-[#0a1810] border ${errors.weight ? 'border-red-500' : 'border-white/5'} rounded-2xl py-5 px-6 text-xl font-black italic outline-none focus:border-[#00ff94]/50 transition-all`}
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 bg-[#00ff94] text-black text-[9px] font-black px-2 py-1 rounded italic">KG</span>
@@ -112,7 +110,8 @@ export default function ClientHealthMetrics() {
               <label className="text-[10px] font-black uppercase italic text-gray-400 tracking-widest ml-1">Target weight</label>
               <div className="relative">
                 <input 
-                  {...register("targetWeight")}
+                  type="number"
+                  {...register("targetWeight", { valueAsNumber: true })}
                   className={`w-full bg-[#0a1810] border ${errors.targetWeight ? 'border-red-500' : 'border-white/5'} rounded-2xl py-5 px-6 text-xl font-black italic outline-none focus:border-[#00ff94]/50 transition-all`}
                 />
                 <span className="absolute right-6 top-1/2 -translate-y-1/2 text-[#00ff94]/40"><Target size={18} /></span>
@@ -126,7 +125,11 @@ export default function ClientHealthMetrics() {
             disabled={isPending}
             className="w-full py-6 bg-[#00ff94] text-black font-black uppercase italic text-sm tracking-[0.2em] rounded-2xl flex items-center justify-center gap-3 hover:shadow-[0_0_40px_rgba(0,255,148,0.3)] hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50 mt-4"
           >
-            {isPending ? <Loader2 className="animate-spin" /> : <>Complete Setup <ArrowRight size={20} /></>}
+            {isPending ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <>Complete Setup <ArrowRight size={20} /></>
+            )}
           </button>
 
           <p className="text-center text-[9px] text-gray-600 font-bold uppercase tracking-[0.15em] italic pt-4">

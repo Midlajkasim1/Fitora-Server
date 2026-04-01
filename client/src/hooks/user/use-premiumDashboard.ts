@@ -5,5 +5,7 @@ export const usePremiumDashboard = () => {
   return useQuery({
     queryKey: ["premium-dashboard"],
     queryFn: getPremiumDashboard,
+    staleTime:0, 
+    refetchOnWindowFocus: true,
   });
 };

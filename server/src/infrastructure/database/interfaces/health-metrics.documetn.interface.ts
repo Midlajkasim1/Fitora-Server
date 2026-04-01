@@ -7,5 +7,6 @@ export interface IHealthMetricsDocument  {
   weight: number;
   target_weight: number;
   primary_goal: string;
-  created_at: Date;
+  createdAt: Date;
+  updatedAt:Date;
 }

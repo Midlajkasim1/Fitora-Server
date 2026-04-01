@@ -1,4 +1,4 @@
-import type { EditProfile, IChangePassword, PremiumDashboardData, UpcomingSessionResponse, UserProfileResponse } from "../type/user.types"
+import type { EditProfile, HealthMetricsData, IChangePassword, PremiumDashboardData, UpcomingSessionResponse, UserProfileResponse } from "../type/user.types"
 import api from "./axios"
 
 
@@ -28,6 +28,18 @@ export const getActiveAdvertisement = async ()=>{
 export const getPremiumDashboard = async (): Promise<PremiumDashboardData> => {
   const res = await api.get("user/premium-dashboard");
   return res.data.data;
+};
+export const saveHealthMetrics = async (data: HealthMetricsData) => {
+  const response = await api.post("/user/health-metrics", data);
+  return response.data;
+};
+export const checkHealthMetrics = async () => {
+  const res = await api.get("user/health-metrics/check");
+  return res.data.data;
+};
+export const updateWeeklyWeight = async (weight: number) => {
+  const response = await api.patch("/user/health-metrics/weekly-update", { weight });
+  return response.data;
 };
 
 export const fetchUpcomingSessions = async (page = 1, limit = 10): Promise<UpcomingSessionResponse> => {

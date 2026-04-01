@@ -2,6 +2,7 @@ import { BMIStatus } from "@/domain/constants/health.metrics.constants";
 
 export interface UserDashboardResponseDTO {
     welcomeName: string;
+    showWeightModal: boolean;
     metrics: {
         weight: number;
         height: number;
@@ -28,4 +29,6 @@ export interface UserDashboardResponseDTO {
         trainerName: string;
         type: string;
     } | null;
+    
+    
 }

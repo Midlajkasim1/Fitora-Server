@@ -70,6 +70,7 @@ export class GetAvailableSlotsUseCase implements IBaseUseCase<GetAvailableSlotsR
             capacity: slot.capacity,
             availableSeats: slot.capacity - slot.participants.length,
             status: slot.status,
+            isBookedByUser:slot.participants.includes(userId)
         }));
         return {
             slots: mappedSlots,

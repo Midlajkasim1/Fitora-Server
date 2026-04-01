@@ -11,7 +11,8 @@ export class HealthMetricsMapper implements IMapper<HealthMetricsEntity, IHealth
       height: doc.height,
       weight: doc.weight,
       targetWeight: doc.target_weight,
-      primaryGoal: doc.primary_goal
+      primaryGoal: doc.primary_goal,
+      updateAt:doc.updatedAt || new Date()
     });
   }
 

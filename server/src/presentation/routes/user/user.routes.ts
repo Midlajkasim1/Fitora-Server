@@ -53,6 +53,11 @@ router.post("/health-metrics",userMiddlewares.authMiddleware,userMiddlewares.blo
 router.get("/health-metrics/check",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userHealthMetricsController.checkHealthMetrics(req,res)
 ));
+router.patch("/health-metrics/weekly-update",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userHealthMetricsController.updateWeeklyProgress(req,res)
+));
+
+
 router.get("/advertisement",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userAdvertisementController.getAdvertisement(req,res)
 ));

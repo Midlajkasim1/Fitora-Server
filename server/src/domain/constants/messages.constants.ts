@@ -109,7 +109,8 @@ export const PAYMENT_MESSAGES={
 };
 export const HEALTH_METRICS_MESSAGES={
   HEALTH_METRICS_SAVED:"Health metrics saved successfully",
-  HEALT_METRICS_NOT_FOUND:"Health metrics not found"
+  HEALT_METRICS_NOT_FOUND:"Health metrics not found",
+  WEIGHT_PROGRESS_UPDATED:"Weekly weight updated successfully"
 };
 
 export const ADVERTISEMENT_MESSAGES={

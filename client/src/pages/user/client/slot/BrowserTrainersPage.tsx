@@ -29,7 +29,7 @@ console.log(data)
           <input 
             type="text" 
             placeholder="Search by name..." 
-            className="w-full bg-[#132a1e] border border-white/5 rounded-2xl py-4 pl-12 text-white text-xs font-bold uppercase italic outline-none focus:border-[#00ff94]"
+            className="w-full bg-[#132a1e] border border-white/5 rounded-2xl py-4 pl-12 text-white text-xs font-bold  italic outline-none focus:border-[#00ff94]"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />

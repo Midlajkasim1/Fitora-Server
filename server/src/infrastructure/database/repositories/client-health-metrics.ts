@@ -13,7 +13,11 @@ export class HealthMetricsRepository extends BaseRepository<HealthMetricsEntity,
 
   async save(metrics: HealthMetricsEntity): Promise<void> {
     const data = this.mapper.toMongo(metrics);
-        await HealthMetricsModel.create(data);
+     await HealthMetricsModel.findOneAndUpdate(
+    { user_id: new Types.ObjectId(metrics.userId) },
+    { $set: data },
+    { upsert: true, new: true }
+  );
   }
 
   async findByUserId(userId: string): Promise<HealthMetricsEntity | null> {
@@ -28,4 +32,15 @@ export class HealthMetricsRepository extends BaseRepository<HealthMetricsEntity,
     const doc = await HealthMetricsModel.findById(id).lean<IHealthMetricsDocument>();
     return doc ? this.mapper.toEntity(doc) : null;
   }
+async updateProgressWeight(userId: string, weight: number): Promise<void> {
+    await HealthMetricsModel.findOneAndUpdate(
+        { user_id: new Types.ObjectId(userId) }, 
+        { 
+            $set: { weight: weight },           
+            $currentDate: { updatedAt: true }    
+        },
+       { upsert: true, new: true }
+    );
+}
+
 }

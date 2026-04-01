@@ -6,5 +6,7 @@ export const useAvailableSlots = (page: number, limit: number, search?: string,t
     queryKey: ["available-slots", page, limit, search,trainerId],
     queryFn: () => getAvailableSlots(page, limit, search,trainerId),
     placeholderData: (previousData) => previousData,
+    refetchInterval:10000,
+    refetchOnWindowFocus:true
   });
 };

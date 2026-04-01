@@ -5,4 +5,5 @@ import { IBaseRepository } from "../base.repository";
 export interface IHealthMetricsRepository extends IBaseRepository<HealthMetricsEntity>{
     save(metrics:HealthMetricsEntity):Promise<void>;
     findByUserId(userId:string):Promise<HealthMetricsEntity | null>
+    updateProgressWeight(userId:string,weight:number):Promise<void>;
 }

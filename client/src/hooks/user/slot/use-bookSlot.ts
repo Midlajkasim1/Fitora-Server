@@ -9,6 +9,7 @@ export const useBookSlot = () => {
     onSuccess: (res) => {
       queryClient.invalidateQueries({ queryKey: ["upcoming-sessions"] });
       queryClient.invalidateQueries({ queryKey: ["available-slots"] });
+      queryClient.invalidateQueries({ queryKey: ["premium-dashboard"] });
       toast.success(res.message);
     },
   });

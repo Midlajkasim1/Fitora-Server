@@ -65,6 +65,7 @@ export interface PurchaseHistoryResponse {
 
 export interface PremiumDashboardData {
   welcomeName: string;
+  showWeightModal:boolean
   metrics: {
     weight: number;
     height: number;
@@ -116,5 +117,12 @@ export interface AvailableSlotResponse{
   type: SessionType;      
   capacity: number;     
   availableSeats: number;  
-  status: string;         
+  status: string;  
+  isBookedByUser:boolean       
+}
+export interface HealthMetricsData {
+  height: number;
+  weight: number;
+  targetWeight: number;
+  primaryGoal: string;
 }

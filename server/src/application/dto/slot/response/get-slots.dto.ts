@@ -10,6 +10,7 @@ export interface AvailableSlotResponseDTO {
   capacity: number;
   availableSeats: number;
   status: SlotStatus;
+  isBookedByUser:boolean;
 }
 export interface AvailableSlotsPagedResponseDTO {
     slots: AvailableSlotResponseDTO[];

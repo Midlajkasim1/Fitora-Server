@@ -1,5 +1,4 @@
-// components/user/AvailableSlotCard.tsx
-import { Clock, Users } from "lucide-react";
+import { Clock, Users, User } from "lucide-react"; // Added User icon for personal sessions
 import type { AvailableSlotResponse } from "../../type/user.types";
 
 interface SlotCardProps {
@@ -10,17 +9,28 @@ interface SlotCardProps {
 
 export const AvailableSlotCard = ({ slot, onBook, isBooking }: SlotCardProps) => {
   const start = new Date(slot.startTime);
-  const isFull = Number(slot.availableSeats) <= 0;
-  const isGroup = slot.type?.toLowerCase().includes('group')
+  
+  const available = Number(slot.availableSeats);
+  const totalCapacity = Number(slot.capacity);
+  
+  const isFull = available <= 0;
+  const alreadyBooked = slot.isBookedByUser;
+  const isGroup = slot.type?.toLowerCase().includes('group');
+
+  const sessionLabel = isGroup ? "Group Session" : "Personal Session";
 
   return (
     <div className="bg-[#132a1e] border border-white/5 p-6 rounded-[2.5rem] flex items-center justify-between group hover:border-[#00ff94]/30 transition-all duration-300">
       <div className="flex items-center gap-6">
         {/* Time Pillar */}
-        <div className="flex flex-col items-center justify-center bg-black/20 rounded-2xl px-5 py-3 border border-white/5">
+        <div className="flex flex-col items-center justify-center bg-black/20 rounded-2xl px-5 py-3 border border-white/5 min-w-[110px]">
           <span className="text-[#00ff94] text-[10px] font-black uppercase italic">Starts</span>
-          <span className="text-white text-xl font-black italic">
-            {start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          <span className="text-white text-xl font-black italic whitespace-nowrap">
+            {start.toLocaleTimeString('en-US', { 
+              hour: 'numeric', 
+              minute: '2-digit', 
+              hour12: true 
+            })}
           </span>
         </div>
 
@@ -31,17 +41,26 @@ export const AvailableSlotCard = ({ slot, onBook, isBooking }: SlotCardProps) =>
               Coach {slot.trainerName}
             </h4>
             <span className={`text-[8px] font-black px-2 py-0.5 rounded italic uppercase ${
-              slot.type === 'group' ? 'bg-purple-500/20 text-purple-400' : 'bg-blue-500/20 text-blue-400'
+              isGroup ? 'bg-purple-500/20 text-purple-400' : 'bg-blue-500/20 text-blue-400'
             }`}>
-              {slot.type.replace('_', ' ')}
+              {sessionLabel}
             </span>
           </div>
           
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1 text-gray-500 text-[10px] font-bold uppercase italic">
-              <Users size={12} className="text-[#00ff94]" />
-              <span>{slot.availableSeats} / {slot.capacity} Seats Available</span>
-            </div>
+            {/* ✅ Conditional Rendering for Seats */}
+            {isGroup ? (
+              <div className={`flex items-center gap-1 text-[10px] font-bold uppercase italic ${isFull ? 'text-red-500' : 'text-gray-500'}`}>
+                <Users size={12} className={isFull ? 'text-red-500' : 'text-[#00ff94]'} />
+                <span>{isFull ? "No Seats Left" : `${available} / ${totalCapacity} Seats`}</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-1 text-gray-500 text-[10px] font-bold uppercase italic">
+                <User size={12} className="text-[#00ff94]" />
+                <span>1-on-1 Session</span>
+              </div>
+            )}
+
             <div className="flex items-center gap-1 text-gray-500 text-[10px] font-bold uppercase italic">
               <Clock size={12} className="text-[#00ff94]" />
               <span>60 Min</span>
@@ -50,17 +69,22 @@ export const AvailableSlotCard = ({ slot, onBook, isBooking }: SlotCardProps) =>
         </div>
       </div>
 
-     <button
-        // ✅ Combined disabling logic
-        disabled={isFull || isBooking || isGroup}
+      <button
+        disabled={isFull || alreadyBooked || isBooking}
         onClick={() => onBook(slot.id)}
         className={`px-8 py-4 rounded-2xl font-black uppercase italic text-[11px] transition-all active:scale-95 ${
-          isFull 
-          ? "bg-white/10 text-gray-500 cursor-not-allowed opacity-50" // High visibility for disabled state
+          (isFull || alreadyBooked) 
+          ? "bg-white/10 text-gray-500 cursor-not-allowed opacity-50" 
           : "bg-[#00ff94] text-black shadow-[0_0_20px_rgba(0,255,148,0.2)] hover:bg-[#00e685]"
         }`}
       >
-        {isBooking ? "Confirming..." : isFull ? "Fully Booked" : "Book Session"}
+        {isBooking 
+          ? "Confirming..." 
+          : alreadyBooked 
+            ? "Booked" 
+            : isFull 
+              ? "Full" 
+              : isGroup ? "Join Group" : "Book Now"}
       </button>
     </div>
   );

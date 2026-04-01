@@ -41,6 +41,7 @@ import { CancelBookingUseCase } from "@/application/usecases/slot/cancel-slot.us
 import {  GetUserUpcomingSessionSlotsUseCase } from "@/application/usecases/slot/get-user-upcomingSessionSlot.usecase";
 import { GetDashboardUseCase } from "@/application/usecases/user/get-dashboard.usecase";
 import { GetTrainerBookingUseCase } from "@/application/usecases/user/get-trainerBooking.usecase";
+import { UserWeightProgressUseCase } from "@/application/usecases/user/user-weight-progress.usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -203,6 +204,9 @@ export const useCases = {
     userRepositories.trainerRepository,
     userRepositories.subscriptionRepository,
     userRepositories.clientPreferenceRepository
+  ),
+  userWeightProgressUseCase:new UserWeightProgressUseCase(
+    userRepositories.clientHealthMetricRepository
   )
 
   
