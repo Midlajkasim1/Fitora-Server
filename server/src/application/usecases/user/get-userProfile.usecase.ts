@@ -28,7 +28,6 @@ export class GetUserProfileUseCase implements IBaseUseCase<string, GetUserProfil
             preferredWorkouts: preference?.preferredWorkouts,
             experienceLevel: preference?.experienceLevel ,
    
-
         });
     }
 

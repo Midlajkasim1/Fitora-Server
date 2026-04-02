@@ -7,14 +7,24 @@ import { GetTrainerGroupUserUseCase } from "@/application/usecases/slot/get-trai
 import { GetTrainerUpcomingSlotsUseCase } from "@/application/usecases/slot/get-trainer-upcomingSlot.usecase";
 import { GetTrainerDashboardUseCase } from "@/application/usecases/trainer/get-trainerDashboard.usecase";
 import { TrainerEditSlotUseCase } from "@/application/usecases/slot/edit-slot.usecase";
+import { GetTrainerProfileUseCase } from "@/application/usecases/trainer/get-trainerProfile.usecase";
+import { S3StorageProvider } from "@/infrastructure/providers/storage/s3-storage.provider";
+import { UploadTrainerImageUseCase } from "@/application/usecases/trainer/uploadTrainerImage.usecase";
+import { UpdateTrainerProfileUseCase } from "@/application/usecases/trainer/update-trainerProfile.usecase";
+import { ChangePasswordUseCase } from "@/application/usecases/user/change-password.usecase";
+import { BcryptPasswordHasher } from "@/infrastructure/providers/crypto/bcrypt-password.service";
+import { notificationServiceProxy } from "@/infrastructure/providers/notification/notification.provider";
 
 const jobScheduler = new BullJobScheduler();
+const storageProvider = new S3StorageProvider();
+const passwordHasher = new BcryptPasswordHasher();
+
 
 export const trainerUsecase ={
    trainerCreateSlotUseCase:new TrainerCreateSlotUseCase(
     trainerRepositories.slotRepository,
-    jobScheduler
-
+    jobScheduler,
+   notificationServiceProxy
    ),
    trainerEditSlotUseCase:new TrainerEditSlotUseCase(
       trainerRepositories.slotRepository,
@@ -35,5 +45,22 @@ export const trainerUsecase ={
    ),
    getTrainerDashboardUseCase:new GetTrainerDashboardUseCase(
       trainerRepositories.slotRepository
+   ),
+   getTrinerProfileUseCase:new GetTrainerProfileUseCase(
+    trainerRepositories.userRepository,
+    trainerRepositories.trainerRepository
+   ),
+   uploadTrainerImageUseCase: new UploadTrainerImageUseCase(
+      trainerRepositories.userRepository,
+      storageProvider
+
+   ),
+   updateTrainerProfileUseCase :new UpdateTrainerProfileUseCase(
+      trainerRepositories.userRepository,
+      trainerRepositories.trainerRepository
+   ),
+   trainerChangePasswordUseCase:new ChangePasswordUseCase(
+      trainerRepositories.userRepository,
+      passwordHasher
    )
 };

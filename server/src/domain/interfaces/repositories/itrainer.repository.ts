@@ -23,5 +23,6 @@ export interface ITrainerRepository extends IBaseRepository<TrainerDetailsEntity
   findApprovedTrainer(): Promise<string[]>;
   findTrainerIdsBySpecializations(specializationIds: string[]): Promise<string[]>;
   findTrainerForBooking(params:{trainerIds:string[];search?:string;skip:number;limit:number}):Promise<{data:Record<string,unknown>[];total:number}>;
-  
+  findByTrainerId(trainerId:string):Promise<TrainerDetailsEntity | null>
+
 }

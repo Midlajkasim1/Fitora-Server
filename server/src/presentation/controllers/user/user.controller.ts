@@ -8,9 +8,11 @@ import { GetUserProfileResponse } from "@/application/dto/user/response/get-user
 import { updateUserProfileResponse } from "@/application/dto/user/response/update-userProfile.dto";
 import { UploadImageResponse } from "@/application/dto/user/response/upload-profileImage.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { ExperienceLevel } from "@/domain/constants/auth.constants";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { changePasswordSchema } from "@/infrastructure/validators/user/change-password.validator";
+import { updateUserProfileSchema } from "@/infrastructure/validators/user/user-profile.validator";
 import { Request, Response } from "express";
 
 
@@ -41,19 +43,21 @@ export  class  UserController {
     }
 
     async userProfileUpdate(req:Request,res:Response):Promise<Response>{
+        const validatedata = updateUserProfileSchema.parse(req.body);
         const userId = req.user?.userId;
         if(!userId){
             throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
         }
-        const {firstName,lastName,phone,preferredWorkouts,experienceLevel}=req.body;
-        const result = await this._userProfileUpdateUseCase.execute({
+        const dto = new UpdateUserProfileRequest({
             id:userId,
-            firstName,
-            lastName,
-            phone,
-            preferredWorkouts,
-            experienceLevel
+            firstName:validatedata.firstName,
+            lastName:validatedata.lastName,
+            phone:validatedata.phone,
+            preferredWorkouts:validatedata.preferredWorkouts,
+            experienceLevel:validatedata.experienceLevel as ExperienceLevel
         });
+        const result = await this._userProfileUpdateUseCase.execute(dto);
+            
         return res.status(HttpStatus.OK).json({
             success:true,
             data:result

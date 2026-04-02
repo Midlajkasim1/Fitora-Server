@@ -9,7 +9,7 @@ import { ConfirmModal } from "../../../shared/ConfirmModal";
 
 // Hooks & Types
 import { useTrainerUpcomingSlots } from "../../../hooks/trainer/use-upcomingSession";
-import { useCancelSlot } from "../../../hooks/trainer/slot/use-cancel-slot"; // ✅ Added missing import
+import { useCancelSlot } from "../../../hooks/trainer/slot/use-cancel-slot"; 
 import type { UpcomingSlot } from "../../../type/trainer.types";
 
 const UpcomingSessions = () => {

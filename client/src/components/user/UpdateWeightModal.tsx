@@ -41,7 +41,7 @@ export const UpdateWeightModal = ({ isOpen, currentWeight }: UpdateWeightModalPr
           <form onSubmit={handleSubmit} className="w-full space-y-6">
             <div className="space-y-2 text-left">
               <label className="text-[10px] font-black text-gray-400 uppercase italic ml-2 tracking-widest">
-                New Weight (kg/lbs)
+                New Weight (kg)
               </label>
               <div className="relative">
                 <input 

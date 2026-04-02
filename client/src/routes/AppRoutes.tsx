@@ -49,6 +49,9 @@ const UserWorkoutSessionPage = lazy(() => import("../pages/user/client/VideoSess
 const TrainerDashboard = lazy(() => import("../pages/user/trainer/TrainerDashboard"));
 const TrainerCleintManagement = lazy(() => import("../pages/user/trainer/TrainerClientManagement"));
 const UpcomingSlotsPage = lazy(() => import("../pages/user/trainer/UpcomingSlotsPage"));
+const TrainerProfilePage = lazy(() => import("../pages/user/trainer/TrainerProfilePage"));
+const TrainerChangePassword = lazy(() => import("../pages/user/trainer/TrainerChangePassword"));
+
 // const CreateSessionSlotPage = lazy(() => import("../pages/user/trainer/CreateSessionSlotPage"));
 
 
@@ -134,6 +137,10 @@ export default function AppRoutes() {
           <Route path="dashboard" element={<TrainerDashboard />} />
           <Route path="clients" element={<TrainerCleintManagement/>}/>
           <Route path="session" element={<UpcomingSlotsPage/>}/>
+           <Route path="profile" element={<TrainerProfilePage/>}/>
+            <Route path="change-password" element={<TrainerChangePassword/>}/>
+
+
           {/* <Route path="create-slot" element={<CreateSessionSlotPage/>}/> */}
 
 

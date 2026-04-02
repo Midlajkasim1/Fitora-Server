@@ -209,5 +209,11 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
 
   return { data, total };
  }
+async findByTrainerId(trainerId: string): Promise<TrainerDetailsEntity | null> {
+   const doc = await TrainerDetailsModel.findOne({
+    user_id:new Types.ObjectId(trainerId)
+   }).lean<ITrainerDetailsDocument>();
+   return doc ? this.trainerMapper.toEntity(doc) : null ;
+}
 
 }

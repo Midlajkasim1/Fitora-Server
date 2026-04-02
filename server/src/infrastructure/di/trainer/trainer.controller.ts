@@ -4,9 +4,13 @@ import { TrainerController } from "@/presentation/controllers/user/trainer.contr
 
 
 
-export const trainerController ={
+export const trainerController = {
    trainerController:new TrainerController(
-     trainerUsecase.getTrainerDashboardUseCase
+     trainerUsecase.getTrainerDashboardUseCase,
+     trainerUsecase.getTrinerProfileUseCase,
+     trainerUsecase.uploadTrainerImageUseCase,
+     trainerUsecase.updateTrainerProfileUseCase,
+     trainerUsecase.trainerChangePasswordUseCase
    ),
    trainerSlotController: new TrainerSlotController(
     trainerUsecase.trainerCreateSlotUseCase,

@@ -2,15 +2,18 @@ import { CreateSlotRequestDTO } from "@/application/dto/slot/request/create-slot
 import { CreateSlotResponseDTO } from "@/application/dto/slot/response/create-slot.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { SLOT_MESSAGES } from "@/domain/constants/messages.constants";
+import { NotificationType } from "@/domain/constants/notification.constants";
 import { SlotEntity } from "@/domain/entities/slot/slot.entity";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
 import { IJobScheduler } from "@/domain/interfaces/services/job-scheduler.interface";
+import { INotificationService } from "@/domain/interfaces/services/notification-service.interface";
 
 
 export class TrainerCreateSlotUseCase implements IBaseUseCase<CreateSlotRequestDTO,CreateSlotResponseDTO>{
     constructor(
         private readonly _slotRespository:ISlotRepository,
-        private readonly _jobScheduler:IJobScheduler
+        private readonly _jobScheduler:IJobScheduler,
+        private readonly _notificationService: INotificationService
     ){}
   async  execute(dto: CreateSlotRequestDTO): Promise<CreateSlotResponseDTO> {
          const start = new Date(dto.startTime);
@@ -51,6 +54,13 @@ export class TrainerCreateSlotUseCase implements IBaseUseCase<CreateSlotRequestD
     const waitTime = new Date(savedSlot.endTime).getTime() -Date.now();
     await this._jobScheduler.scheduleSessionExpiry(savedSlot.id!,waitTime);
 
+
+    await this._notificationService.notify(dto.trainerId, {
+      title: "Slot Created",
+      message: `Your ${dto.type} session for ${start.toLocaleDateString()} at ${start.toLocaleTimeString()} has been published.`,
+      type: NotificationType.SLOT_CREATED
+    });
+    
     return new CreateSlotResponseDTO({
         id:savedSlot.id!,
         trainerId:savedSlot.trainerId,

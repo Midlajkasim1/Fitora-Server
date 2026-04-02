@@ -80,3 +80,29 @@ export interface EditSlotPayload {
   startTime: string;
   endTime: string;
 }
+export interface TrainerProfile {
+  id: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  experience_year: number;
+  status: string;
+  profileImage?: string;
+}
+
+export interface UpdateTrainerProfilePayload {
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  experience_year?: number;
+}
+
+export interface ChangePasswordPayload {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export interface TrainerProfileResponse {
+  success: boolean;
+  data: TrainerProfile;
+}

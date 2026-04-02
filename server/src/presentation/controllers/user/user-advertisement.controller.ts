@@ -6,7 +6,7 @@ import { Request, Response } from "express";
 
 export class UserAdvertisementController{
 constructor(
-    private readonly _getActiveAdvertisementUseCase:IBaseUseCase<void,GetActiveAdversitsementResponsetDTO>
+    private readonly _getActiveAdvertisementUseCase:IBaseUseCase<void,GetActiveAdversitsementResponsetDTO>,
 ){}
  async getAdvertisement(req:Request,res:Response):Promise<Response>{
     const result = await this._getActiveAdvertisementUseCase.execute();
@@ -15,4 +15,5 @@ constructor(
         data:result
     });
  }
+
 }

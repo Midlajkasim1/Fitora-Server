@@ -1,4 +1,4 @@
-import type { CreateSlotPayload, CreateSlotResponse, EditSlotPayload, TrainerClientsparams, TrainerClientsResponse, TrainerDashboardData, UpcomingSlotsParams, UpcomingSlotsResponse } from "../type/trainer.types";
+import type { ChangePasswordPayload, CreateSlotPayload, CreateSlotResponse, EditSlotPayload, TrainerClientsparams, TrainerClientsResponse, TrainerDashboardData, TrainerProfile, UpcomingSlotsParams, UpcomingSlotsResponse, UpdateTrainerProfilePayload } from "../type/trainer.types";
 import api from "./axios";
 
 
@@ -35,4 +35,25 @@ export const editTrainerSlot = async (payload: EditSlotPayload) => {
 export const cancelTrainerSlot = async (slotId: string) => {
   const res = await api.delete(`trainer/${slotId}/cancel`);
   return res.data;
+};
+
+
+export const getTrainerProfile = async (): Promise<TrainerProfile> => {
+  const res = await api.get("/trainer/profile");
+  return res.data.data;
+};
+
+export const updateTrainerProfile = async (payload: UpdateTrainerProfilePayload): Promise<void> => {
+  await api.put("/trainer/edit-profile", payload);
+};
+
+export const uploadTrainerAvatar = async (formData: FormData): Promise<{ profileImage: string }> => {
+  const res = await api.put("/trainer/profileImage", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+  return res.data.data;
+};
+
+export const changeTrainerPassword = async (payload: ChangePasswordPayload): Promise<void> => {
+  await api.put("/trainer/change-password", payload);
 };

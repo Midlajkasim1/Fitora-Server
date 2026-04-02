@@ -17,11 +17,7 @@ export default function PremiumDashboardPage() {
   }
     return (
       <div className="space-y-10">
-        <UpdateWeightModal
-        isOpen={data.showWeightModal} 
-        currentWeight={data.metrics.weight} 
-      />
-        {/* Top Section: Welcome & Button */}
+     
         <div className="flex justify-between items-end">
           <div>
             <h1 className="text-5xl font-black italic uppercase tracking-tighter text-white">
@@ -99,6 +95,10 @@ export default function PremiumDashboardPage() {
           </button>
         </div>
         </div>
+         <UpdateWeightModal
+        isOpen={data.showWeightModal} 
+        currentWeight={data.metrics.weight} 
+      />
       </div>
     );
   }

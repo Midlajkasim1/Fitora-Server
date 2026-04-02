@@ -153,3 +153,8 @@ export const SLOT_MESSAGES={
   
 
 };
+
+export const TRAINER_MESSAGES={
+  PROFILE_UPLOADED:"Profile image uploaded successfully",
+  PROFILE_UPDATED:"Profile updated"
+};

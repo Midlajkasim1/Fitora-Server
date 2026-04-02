@@ -1,19 +1,102 @@
+import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer-upload-file.dto";
+import { UpdateTrainerProfileRequest } from "@/application/dto/trainer/request/update-trainer-profile.dto";
+import { UploadTrainerImageRequest } from "@/application/dto/trainer/request/upload-trainerProfile.dto";
+import { GetTrainerProfileResponse } from "@/application/dto/trainer/response/get-trainerProfile.dto";
 import { TrainerDashboardResponseDTO } from "@/application/dto/trainer/response/trainer-dashboard.dto";
+import { UpdateTrainerProfileResponseDTO } from "@/application/dto/trainer/response/update-trainerProfile.dto";
+import { UploadTrainerImageResponse } from "@/application/dto/trainer/response/upload-trainerProfileimage.dto";
+import { ChangePasswordRequest } from "@/application/dto/user/request/change-password.dto";
+import { ChangePasswordResponse } from "@/application/dto/user/response/change-password.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
+import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { changePasswordSchema } from "@/infrastructure/validators/user/change-password.validator";
+import { updateTrainerProfileSchema } from "@/infrastructure/validators/user/trainer/trainer-profile.validator";
 import { Request, Response } from "express";
 
 
-export class TrainerController{
+export class TrainerController {
     constructor(
-        private readonly _getTrainerDashboardUseCase:IBaseUseCase<string,TrainerDashboardResponseDTO>
-    ){}
-    async getTrainerDashboard(req:Request,res:Response):Promise<Response>{
+        private readonly _getTrainerDashboardUseCase: IBaseUseCase<string, TrainerDashboardResponseDTO>,
+        private readonly _getTrainerProfileUseCase: IBaseUseCase<string, GetTrainerProfileResponse>,
+        private readonly _uploadTrainerImageUseCase: IBaseUseCase<UploadTrainerImageRequest, UploadTrainerImageResponse, UploadFileDTO>,
+        private readonly _updateTrainerProfileUseCase: IBaseUseCase<UpdateTrainerProfileRequest, UpdateTrainerProfileResponseDTO>,
+        private readonly _changePasswordUseCase:IBaseUseCase<ChangePasswordRequest,ChangePasswordResponse>,
+        
+
+    ) { }
+    async getTrainerDashboard(req: Request, res: Response): Promise<Response> {
         const trainerId = req.user?.userId;
         const dashboarddata = await this._getTrainerDashboardUseCase.execute(trainerId!);
         return res.status(HttpStatus.OK).json({
-            success:true,
-            data:dashboarddata
+            success: true,
+            data: dashboarddata
         });
     }
+    async getTrainerProfile(req: Request, res: Response): Promise<Response> {
+        const userId = req?.user?.userId;
+        if (!userId) {
+            return res.status(HttpStatus.UNAUTHORIZED).json({
+                success: false,
+                message: AUTH_MESSAGES.UNAUTHORIZED
+            });
+        }
+        const result = await this._getTrainerProfileUseCase.execute(userId);
+        return res.status(HttpStatus.OK).json({
+            success: true,
+            data: result
+        });
+    }
+
+    async uploadProfileImage(req: Request, res: Response): Promise<Response> {
+        const userId = req.user?.userId;
+        if (!userId) {
+            throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
+        }
+        if (!req.file) {
+            throw new Error(AUTH_MESSAGES.FILE_NOT_FOUND);
+        }
+        const result = await this._uploadTrainerImageUseCase.execute(
+            { userId },
+            req.file
+        );
+        return res.status(HttpStatus.OK).json({
+            success: true,
+            data: result
+        });
+    }
+    async TrainerProfileUpdate(req: Request, res: Response): Promise<Response> {
+        const validatedata = updateTrainerProfileSchema.parse(req.body);
+        const userId = req.user?.userId;
+        if (!userId) {
+            throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
+        }
+        const dto = new UpdateTrainerProfileRequest({
+            id: userId,
+            firstName:validatedata.firstName as string,
+            lastName:validatedata.lastName as string,
+            phone:validatedata.phone,
+            experience_year:validatedata.experience_year
+        });
+        const result = await this._updateTrainerProfileUseCase.execute(dto);
+        return res.status(HttpStatus.OK).json({
+            success: true,
+            data: result
+        });
+    }
+        async ChangePassword(req:Request,res:Response):Promise<Response>{
+            const userId = req.user?.userId;
+            if(!userId){
+                throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
+            }
+           const validate = changePasswordSchema.parse(req.body);
+            const result = await this._changePasswordUseCase.execute({
+                userId,
+                ...validate
+            });
+            return res.status(HttpStatus.OK).json({
+                success:true,
+                data:result
+            });
+        }
 }
