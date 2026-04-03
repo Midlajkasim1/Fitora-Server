@@ -8,16 +8,19 @@ import { AuthProvider } from './providers/AuthProvider';
 import { ToastProvider } from './providers/ToastProvider';
 import api from './api/axios';
 import { attachLogicToApi } from './api/interceptor';
+import { NotificationProvider } from './providers/NotificationProvider';
 
 attachLogicToApi(api);
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
     <QueryProvider> 
       <AuthProvider>
+        <NotificationProvider>
         <ToastProvider/>
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
         <App />
       </GoogleOAuthProvider>
+      </NotificationProvider>
       </AuthProvider>
     </QueryProvider>
   /* </StrictMode> */

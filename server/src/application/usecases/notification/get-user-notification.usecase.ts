@@ -1,4 +1,4 @@
-import { GetNotificationsResponseDTO } from "@/application/dto/user/response/get-notifications.dto";
+import { GetNotificationsResponseDTO } from "@/application/dto/notification/response/get-notifications.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { INotificationRepository } from "@/domain/interfaces/repositories/notification.repository";
 

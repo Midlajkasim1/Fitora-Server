@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "target": "ESNext",
-    "module": "commonjs",
-    "moduleResolution": "node",
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "ignoreDeprecations": "6.0",   
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -12,19 +13,18 @@
     "emitDecoratorMetadata": true,
     "rootDir": "src",
     "outDir": "dist",
-    "baseUrl": "./src",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["./src/*"]        
     },
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "noEmitOnError": false,
     "typeRoots": [
-      "../node_modules/@types",
+      "./node_modules/@types",
       "./src/shared/types" 
     ],
-     "sourceMap": true,
-    "inlineSources": true,
+    "sourceMap": true,
+    "inlineSources": true
   },
   "include": ["src/**/*"], 
   "exclude": ["node_modules", "dist", ".tsbuildinfo"]

@@ -1,3 +1,4 @@
+import { notificationControllers } from "@/infrastructure/di/common/notification.controller";
 import { userControllers } from "@/infrastructure/di/user/user.controllers";
 import { userMiddlewares } from "@/infrastructure/di/user/user.middleware";
 import { asyncHandler } from "@/presentation/middleware/asyncHandler";
@@ -79,5 +80,13 @@ router.get("/upcoming-session",userMiddlewares.authMiddleware,userMiddlewares.bl
 ));
 router.get("/premium-dashboard",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userController.getUserPremiumDashboard(req,res)
+));
+
+//notify
+router.get("/notifications",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    notificationControllers.notificationController.getMyNotifications(req,res)
+));
+router.patch("/notifications/:id/read",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    notificationControllers.notificationController.markAsRead(req,res)
 ));
 export default router;
