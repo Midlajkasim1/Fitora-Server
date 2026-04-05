@@ -4,7 +4,7 @@ export interface TrainerBookingDTO {
     trainerId: string;
     name: string;
     profileImage?: string;
-    specializations: string[]; 
+    specializations: string; 
     experience: number;      
     rating: number;            
     bio: string;            

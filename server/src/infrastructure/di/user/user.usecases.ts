@@ -42,6 +42,10 @@ import {  GetUserUpcomingSessionSlotsUseCase } from "@/application/usecases/slot
 import { GetDashboardUseCase } from "@/application/usecases/user/get-dashboard.usecase";
 import { GetTrainerBookingUseCase } from "@/application/usecases/user/get-trainerBooking.usecase";
 import { UserWeightProgressUseCase } from "@/application/usecases/user/user-weight-progress.usecase";
+import { notificationServiceProxy } from "@/infrastructure/providers/notification/notification.provider";
+import { GeminiAiService } from "@/infrastructure/providers/ai-model/gemini-ai.service.provider";
+import { GenerateWorkoutPlanUseCase } from "@/application/usecases/ai-workout&diet/generate-workout-plan.usecase";
+import { GenerateDietPlanUseCase } from "@/application/usecases/ai-workout&diet/generate-diet-usecase";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -49,7 +53,10 @@ const passwordHasher = new BcryptPasswordHasher();
 const tokenService = new JwtTokenService();
 const googleTokenProvider = new GoogleTokenProvider();
 const storageProvider = new S3StorageProvider();
+
 export const paymentProvider = new StripePaymentProvider();
+const aiService = new GeminiAiService(process.env.GEMINI_API_KEY || "");
+
 
 export const useCases = {
   registerUseCase: new RegisterUseCase(
@@ -155,7 +162,8 @@ export const useCases = {
   handleWebhookUseCase:new HandleWebhookUseCase(
     userRepositories.paymentRepository,
     userRepositories.subscriptionRepository,
-    userRepositories.subscriptionPlanRepository
+    userRepositories.subscriptionPlanRepository,
+    notificationServiceProxy
   ),
   clientHealthMetricsUseCase:new SaveHealthMetricsUseCase(
     userRepositories.clientHealthMetricRepository
@@ -165,7 +173,8 @@ export const useCases = {
     userRepositories.subscriptionPlanRepository
   ),
   cancelSubscriptionUseCase: new CancelSubscriptionUseCase(
-    userRepositories.subscriptionRepository
+    userRepositories.subscriptionRepository,
+    notificationServiceProxy
   ),
   getPurchaseHistoryUseCase: new GetPurchaseHistoryUseCase(
     userRepositories.paymentRepository
@@ -187,10 +196,12 @@ export const useCases = {
     userRepositories.subscriptionRepository,
     userRepositories.slotRepository,
     userRepositories.subscriptionPlanRepository,
+    notificationServiceProxy
 
   ),
   cancelSlotUseCase:new CancelBookingUseCase(
-    userRepositories.slotRepository
+    userRepositories.slotRepository,
+    notificationServiceProxy
   ),
   getUserUpcomingUseCase:new GetUserUpcomingSessionSlotsUseCase(
     userRepositories.slotRepository
@@ -207,6 +218,22 @@ export const useCases = {
   ),
   userWeightProgressUseCase:new UserWeightProgressUseCase(
     userRepositories.clientHealthMetricRepository
+  ),
+  generateWorkoutPlanUseCase:new GenerateWorkoutPlanUseCase(
+    userRepositories.subscriptionRepository,
+    userRepositories.subscriptionPlanRepository,
+    aiService,
+    userRepositories.aiWorkoutPlanRepository,
+    userRepositories.clientPreferenceRepository,
+    userRepositories.specializationRepository
+  ),
+  generateDietPlanUseCase:new GenerateDietPlanUseCase(
+    userRepositories.subscriptionRepository,
+    userRepositories.subscriptionPlanRepository,
+    aiService,
+    userRepositories.aiDietPlanRepository,
+     userRepositories.clientPreferenceRepository,
+
   )
 
   

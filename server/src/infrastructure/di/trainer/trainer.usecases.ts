@@ -28,11 +28,13 @@ export const trainerUsecase ={
    ),
    trainerEditSlotUseCase:new TrainerEditSlotUseCase(
       trainerRepositories.slotRepository,
-      jobScheduler
+      jobScheduler,
+      notificationServiceProxy
    ),
    trainerCancelSlotUseCase:new TrainerCancelSlotUseCase(
       trainerRepositories.slotRepository,
-      jobScheduler
+      jobScheduler,
+      notificationServiceProxy
    ),
    getPersonalUserUsecase:new GetTrainerOneOnOneUserUseCase(
       trainerRepositories.slotRepository

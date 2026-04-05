@@ -2,7 +2,7 @@
 export type ClientStepOne = {
   dob: string;
   gender: "male" | "female" | "other";
-  preferredWorkouts: string[];
+  preferredWorkouts: string;
   experienceLevel: string;
   primaryMotives: string[];
 };
@@ -30,14 +30,14 @@ export interface TrainerStepOneData {
 export interface TrainerStepTwoData {
   specializations: string[];
 }
-
+  
 // This matches the schema expected by your backend trainerOnboardingSchema
 export interface TrainerOnboardingPayload {
   userId: string;
   bio: string;
   experience_year: number;
   gender: string;
-  specializations: string[]; // Sent as JSON string via FormData
+  specializations: string; // Sent as JSON string via FormData
   certificates?: File[]; // The Multer 'certificates' field
 }
 export type TrainerApprovalStatus = "pending" | "approved" | "rejected";

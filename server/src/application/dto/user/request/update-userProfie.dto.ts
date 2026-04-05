@@ -6,7 +6,7 @@ export class UpdateUserProfileRequest {
   firstName?: string;
   lastName?: string;
   phone?: string;
-  preferredWorkouts?: string[];
+  preferredWorkouts?: string;
   experienceLevel?: ExperienceLevel;
 
   constructor(data: UpdateUserProfileRequest) {

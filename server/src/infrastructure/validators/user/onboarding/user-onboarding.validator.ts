@@ -8,7 +8,7 @@ export const userOnboardingSchema = z.object({
   primary_motives: z.array(z.string()),
   experience_level: z.string(),
   diet_preference: z.string(),
-  preferred_workouts: z.array(z.string()),
+  preferred_workouts: z.string().min(1, "Select a workout"),
   sleep_hours: z.coerce.number(),
   medical_conditions: z.array(z.string()),
   water_intake: z.coerce.number().optional().default(2500)

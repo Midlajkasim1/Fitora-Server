@@ -6,7 +6,7 @@ export class TrainerDetailsEntity {
   private readonly _bio: string;
   private readonly _experienceYear: number;
   private readonly _certifications: string[];
-  private readonly _specializations: string[];
+  private readonly _specializations: string;
   private readonly _approvalStatus: ApprovalStatus;
   private readonly _rejectionReason?: string | null;
   private readonly _createdAt?: Date;
@@ -17,7 +17,7 @@ export class TrainerDetailsEntity {
     bio: string;
     experienceYear: number;
     certifications: string[];
-    specializations: string[];
+    specializations: string;
     approvalStatus: ApprovalStatus;
     rejectionReason?:string | null;
     createdAt?:Date;
@@ -38,7 +38,7 @@ export class TrainerDetailsEntity {
     bio: string;
     experienceYear: number;
     certifications: string[];
-    specializations: string[];
+    specializations: string;
   }): TrainerDetailsEntity {
     return new TrainerDetailsEntity({
       ...props,

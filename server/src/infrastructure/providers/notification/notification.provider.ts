@@ -4,19 +4,14 @@ import { SocketNotificationService } from "./socket-service";
 import { INotificationService } from "@/domain/interfaces/services/notification-service.interface";
 import { logger } from "../loggers/logger";
 
-// 1. This holds the "real" service once the server starts
 let notificationServiceInstance: SocketNotificationService | null = null;
 
-/**
- * Called in index.ts inside startServer()
- */
+
 export const initNotificationService = (io: Server, repo: INotificationRepository): void => {
   notificationServiceInstance = new SocketNotificationService(io, repo);
 };
 
-/**
- * Internal helper to get the real instance
- */
+
 const getNotificationService = (): SocketNotificationService | null => {
   return notificationServiceInstance;
 };

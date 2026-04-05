@@ -2,15 +2,18 @@ import { TrainerEditSlotRequestDTO } from "@/application/dto/slot/request/traine
 import { EditSlotResponseDTO } from "@/application/dto/slot/response/trainer-edit-slot.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { SLOT_MESSAGES } from "@/domain/constants/messages.constants";
+import { NotificationType } from "@/domain/constants/notification.constants";
 import { SlotStatus } from "@/domain/constants/session.constants";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
 import { IJobScheduler } from "@/domain/interfaces/services/job-scheduler.interface";
+import { INotificationService } from "@/domain/interfaces/services/notification-service.interface";
 
 
 export class TrainerEditSlotUseCase implements IBaseUseCase<TrainerEditSlotRequestDTO, EditSlotResponseDTO> {
     constructor(
         private readonly _slotRespository: ISlotRepository,
-        private readonly _jobScheduler: IJobScheduler
+        private readonly _jobScheduler: IJobScheduler,
+        private readonly _notificationService: INotificationService
     ) { }
     async execute(dto: TrainerEditSlotRequestDTO): Promise<EditSlotResponseDTO> {
         const start = new Date(dto.startTime);
@@ -29,7 +32,7 @@ export class TrainerEditSlotUseCase implements IBaseUseCase<TrainerEditSlotReque
         }
 
         const isSameDay = start.toDateString() === end.toDateString();
-        const isMidnightNextDay = end.getHours() === 0 && end.getMinutes() === 0 &&(end.getTime() - start.getTime() === 3600000); 
+        const isMidnightNextDay = end.getHours() === 0 && end.getMinutes() === 0 && (end.getTime() - start.getTime() === 3600000);
 
         if (!isSameDay && !isMidnightNextDay) {
             throw new Error(SLOT_MESSAGES.SINGLE_SESSION_CANNOT_SPAN_ACROSS_MULTIPLE_DAYS);
@@ -64,11 +67,30 @@ export class TrainerEditSlotUseCase implements IBaseUseCase<TrainerEditSlotReque
             capacity: dto.capacity
         });
         if (!updatedSlot) throw new Error("Failed to update slot");
+
+        const participants = existingSlot.participants || [];
+
+        if (participants.length > 0) {
+            const startTimeString = new Date(updatedSlot.startTime).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit"
+            });
+
+            for (const userId of participants) {
+                await this._notificationService.notify(userId, {
+                    title: "Session Time Changed 🕒",
+                    message: `Your booked ${updatedSlot.type} session has been rescheduled to ${startTimeString}. Please check your updated schedule.`,
+                    type: NotificationType.SLOT_CREATED 
+                });
+            }
+        }
         await this._jobScheduler.cancelScheduledExpiry(updatedSlot.id!);
         const waitTime = new Date(updatedSlot.endTime).getTime() - Date.now();
         if (waitTime > 0) {
             await this._jobScheduler.scheduleSessionExpiry(updatedSlot.id!, waitTime);
         }
+
+
         return {
             id: updatedSlot.id!,
             startTime: updatedSlot.startTime,

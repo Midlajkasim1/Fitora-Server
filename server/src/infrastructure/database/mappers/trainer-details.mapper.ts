@@ -3,7 +3,6 @@ import { ITrainerDetailsDocument } from "../interfaces/trainer-details-document.
 import { Types } from "mongoose";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
 import { ApprovalStatus } from "@/domain/constants/auth.constants";
-import { types } from "node:util";
 
 export class TrainerDetailsMapper implements IMapper<TrainerDetailsEntity,ITrainerDetailsDocument> {
    toEntity(doc: ITrainerDetailsDocument): TrainerDetailsEntity {
@@ -13,7 +12,7 @@ export class TrainerDetailsMapper implements IMapper<TrainerDetailsEntity,ITrain
       bio: doc.bio,
       experienceYear: doc.experience_year,
       certifications: doc.certifications,
-      specializations: doc.specializations.map((id) => id.toString()),
+      specializations: doc.specializations,
       approvalStatus: doc.approval_status as ApprovalStatus
     });
   }
@@ -24,7 +23,7 @@ export class TrainerDetailsMapper implements IMapper<TrainerDetailsEntity,ITrain
       bio: entity.bio,
       experience_year: entity.experienceYear,
       certifications: entity.certifications,
-      specializations: entity.specializations.map((id)=>new Types.ObjectId(id)),
+      specializations: entity.specializations,
       approval_status: entity.approvalStatus as "pending" | "approved" | "rejected"
     };
   }

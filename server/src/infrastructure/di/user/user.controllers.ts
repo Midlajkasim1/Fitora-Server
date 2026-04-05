@@ -6,6 +6,7 @@ import { UserSubscriptionController } from "@/presentation/controllers/user/user
 import { HealthMetricsController } from "@/presentation/controllers/user/user-health-metrics.controller";
 import { UserAdvertisementController } from "@/presentation/controllers/user/user-advertisement.controller";
 import { UserSlotController } from "@/presentation/controllers/user/user-slot.controller";
+import { AiPlanController } from "@/presentation/controllers/user/ai-plan.controller";
 export const userControllers = {
   authController: new AuthController(
     useCases.registerUseCase,
@@ -64,6 +65,10 @@ export const userControllers = {
     useCases.cancelSlotUseCase,
     useCases.getUserUpcomingUseCase,
     useCases.getTrainerBookingUseCase,
+  ),
+  aiPlanController:new AiPlanController(
+    useCases.generateWorkoutPlanUseCase,
+    useCases.generateDietPlanUseCase
   )
 
 

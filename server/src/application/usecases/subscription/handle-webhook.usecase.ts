@@ -2,17 +2,20 @@ import { HandleWebhookRequestDTO } from "@/application/dto/subscription/request/
 import { HandleWebhookResponseDTO } from "@/application/dto/subscription/response/handle-webhook.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { PAYMENT_MESSAGES, SUBSCRIPTION_MESSAGES } from "@/domain/constants/messages.constants";
+import { NotificationType } from "@/domain/constants/notification.constants";
 import { PaymentStatus } from "@/domain/constants/payment.constants";
 import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
 import { IPaymentRepository } from "@/domain/interfaces/repositories/payment.repository";
 import { ISubscriptionRepository } from "@/domain/interfaces/repositories/subscription.repository";
 import { ISubscriptionPlanRepository } from "@/domain/interfaces/repositories/subscriptionPlan.repository";
+import { INotificationService } from "@/domain/interfaces/services/notification-service.interface";
 
 export class HandleWebhookUseCase implements IBaseUseCase<HandleWebhookRequestDTO, HandleWebhookResponseDTO> {
     constructor(
         private readonly _paymentRepository: IPaymentRepository,
         private readonly _subscriptionRepository: ISubscriptionRepository,
-        private readonly _subscriptionPlanRepository: ISubscriptionPlanRepository 
+        private readonly _subscriptionPlanRepository: ISubscriptionPlanRepository ,
+        private readonly _notificationService:INotificationService
     ) {}
 
     async execute(dto: HandleWebhookRequestDTO): Promise<HandleWebhookResponseDTO> {
@@ -24,6 +27,11 @@ export class HandleWebhookUseCase implements IBaseUseCase<HandleWebhookRequestDT
             await this._subscriptionRepository.updateStatus(payment.subscriptionId,SubscriptionStatus.ACTIVE);
             const sub = await this._subscriptionRepository.findById(payment.subscriptionId);
             if(sub) await this._subscriptionPlanRepository.updatePurchasedCount(sub.planId);
+            await this._notificationService.notify(payment.userId, {
+                        title: "Subscription Activated!",
+                        message: "Welcome to the Fitora family! Your subscription is now active. Let's hit those goals!",
+                        type: NotificationType.SUBSCRIPTION_ACTIVE
+                    });
            }
            return new HandleWebhookResponseDTO({success:true,message:SUBSCRIPTION_MESSAGES.SUBSCRIPTION_ACTIVATED,recieved:true});
 
@@ -32,6 +40,11 @@ export class HandleWebhookUseCase implements IBaseUseCase<HandleWebhookRequestDT
             await this._paymentRepository.updateStatus(dto.sessionId,PaymentStatus.FAILED);
             if(payment.subscriptionId){
                 await this._subscriptionRepository.updateStatus(payment.subscriptionId,SubscriptionStatus.CANCELLED);
+                await this._notificationService.notify(payment.userId, {
+                        title: "Subscription Activated! 🚀",
+                        message: "Welcome to the Pro family! Your subscription is now active. Let's hit those goals!",
+                        type: NotificationType.SYSTEM_ALERT
+                    });
 
             }
             return new HandleWebhookResponseDTO({success:true,message:SUBSCRIPTION_MESSAGES.SUBSCRIPTION_SESSION_EXPIRED,recieved:true});

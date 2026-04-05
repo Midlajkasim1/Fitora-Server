@@ -7,7 +7,7 @@ export class UserOnboardingDTO {
   experience_level!: string;
   water_intake!: number;
   diet_preference!: string;
-  preferred_workouts!: string[];
+  preferred_workouts!: string;
   sleep_hours!: number;
   medical_conditions!: string[];
 

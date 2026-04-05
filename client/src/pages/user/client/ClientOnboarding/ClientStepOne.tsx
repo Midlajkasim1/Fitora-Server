@@ -23,7 +23,7 @@ const schema = z.object({
       return year > 1920 && year <= 2012
     }, "Please enter a realistic year"),
   gender: z.enum(["male", "female", "other"]),
-  preferredWorkouts: z.array(z.string()).min(1, "Select at least one workout"),
+  preferredWorkouts: z.string().min(1, "Select at least one workout"),
   experienceLevel: z.string().min(1, "Select experience level"),
   primaryMotives: z.array(z.string()).min(1, "Select at least one motive"),
 });
@@ -36,11 +36,11 @@ export default function ClientStepOnePage() {
 
   const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<ClientStepOne>({
     resolver: zodResolver(schema),
-    defaultValues: { preferredWorkouts: [], primaryMotives: [] },
+    defaultValues: { preferredWorkouts: "", primaryMotives: [] },
   });
 
   const selectedGender = watch("gender");
-  const selectedWorkouts = watch("preferredWorkouts") || [];
+  const selectedWorkout= watch("preferredWorkouts");
   const selectedMotives = watch("primaryMotives") || [];
 
   const onSubmit = (data: ClientStepOne) => {
@@ -95,9 +95,9 @@ const toggleSelection = (field: keyof ClientStepOne, val: string) => {
           </div>
           {errors.gender && <p className="text-red-500 text-[10px] italic font-bold ml-1">{errors.gender.message}</p>}
         </div>
-       <div className="space-y-3">
+  <div className="space-y-3">
   <label className="text-gray-400 text-[10px] font-bold uppercase tracking-widest ml-1 italic">
-    Preferred Workouts
+    Preferred Workout
   </label>
 
   {isLoading ? (
@@ -105,13 +105,17 @@ const toggleSelection = (field: keyof ClientStepOne, val: string) => {
   ) : (
     <div className="grid grid-cols-2 gap-3">
       {specialization.map((spec: any) => {
-        const isActive = selectedWorkouts.includes(spec.id);
+        const isActive = selectedWorkout === spec.id;
 
         return (
           <button
             key={spec.id}
             type="button"
-            onClick={() => toggleSelection("preferredWorkouts", spec.id)}
+            onClick={() =>
+              setValue("preferredWorkouts", spec.id, {
+                shouldValidate: true,
+              })
+            }
             className={`relative p-5 rounded-2xl border transition-all flex items-center gap-4 ${
               isActive
                 ? "bg-[#00ff94] border-[#00ff94]"
@@ -147,7 +151,6 @@ const toggleSelection = (field: keyof ClientStepOne, val: string) => {
     </p>
   )}
 </div>
-
         <div className="space-y-3">
           <label className="text-gray-400 text-[10px] font-bold uppercase tracking-widest ml-1 italic">Primary Motives</label>
           <div className="grid grid-cols-2 gap-3">

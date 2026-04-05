@@ -1,4 +1,6 @@
 import { AdvertisementMapper } from "@/infrastructure/database/mappers/advertisement.mapper";
+import { AiDietPlanMapper } from "@/infrastructure/database/mappers/ai-diet-plan.mapper";
+import { AiWorkoutPlanMapper } from "@/infrastructure/database/mappers/ai-workout-plan.mapper";
 import { HealthMetricsMapper } from "@/infrastructure/database/mappers/client-health-metrics.mapper";
 import { ClientPreferenceMapper } from "@/infrastructure/database/mappers/client-preference.mapper";
 import { PaymentMapper } from "@/infrastructure/database/mappers/payment.mapper";
@@ -10,6 +12,8 @@ import { TrainerDetailsMapper } from "@/infrastructure/database/mappers/trainer-
 import { UserMapper } from "@/infrastructure/database/mappers/user.mapper";
 import { WorkoutMapper } from "@/infrastructure/database/mappers/workout.mapper";
 import { AdvertisementRepository } from "@/infrastructure/database/repositories/advertisement.repository";
+import { AiDietPlanRepository } from "@/infrastructure/database/repositories/ai-diet-plan.repository";
+import { AiWorkoutPlanRepository } from "@/infrastructure/database/repositories/ai-workout-plan.repository";
 import { HealthMetricsRepository } from "@/infrastructure/database/repositories/client-health-metrics";
 import { ClientPreferenceRepository } from "@/infrastructure/database/repositories/client-preference.repository";
 import { PaymentRepository } from "@/infrastructure/database/repositories/paymentRepository";
@@ -31,6 +35,8 @@ const paymentMapper = new PaymentMapper();
 const clientHealthMetrics = new HealthMetricsMapper();
 const advertisementMapper = new AdvertisementMapper();
 const slotMapper = new SlotMapper();
+const aiWorkoutMapper = new AiWorkoutPlanMapper();
+const aiDietMapper = new AiDietPlanMapper();
 
 export const userRepositories = {
   userRepository: new UserRepository(userMapper) ,
@@ -43,7 +49,9 @@ export const userRepositories = {
    paymentRepository:new PaymentRepository(paymentMapper),
    clientHealthMetricRepository:new HealthMetricsRepository(clientHealthMetrics),
    advertisementRepository:new AdvertisementRepository(advertisementMapper),
-   slotRepository:new SlotRespository(slotMapper)
+   slotRepository:new SlotRespository(slotMapper),
+   aiWorkoutPlanRepository:new AiWorkoutPlanRepository(aiWorkoutMapper),
+   aiDietPlanRepository:new AiDietPlanRepository(aiDietMapper)
    
   
   

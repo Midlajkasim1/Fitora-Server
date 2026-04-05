@@ -5,7 +5,7 @@ export class TrainerOnboardingDTO {
   experience_year!: number;
   gender!: string;
   certifications!: string[];
-  specializations!: string[];
+  specializations!: string;
 
   constructor(data: TrainerOnboardingDTO) {
     Object.assign(this, data);

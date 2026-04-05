@@ -2,11 +2,14 @@ import { CancelBookingRequestDTO } from "@/application/dto/slot/request/cancel-s
 import { CancelBookingResponseDTO } from "@/application/dto/slot/response/cancel-slot";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { SLOT_MESSAGES } from "@/domain/constants/messages.constants";
+import { NotificationType } from "@/domain/constants/notification.constants";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
+import { INotificationService } from "@/domain/interfaces/services/notification-service.interface";
 
 export class CancelBookingUseCase implements IBaseUseCase<CancelBookingRequestDTO, CancelBookingResponseDTO> {
   constructor(
     private readonly _slotRepository: ISlotRepository,
+    private readonly _notificationService: INotificationService
 
 
   ) {}
@@ -30,6 +33,14 @@ export class CancelBookingUseCase implements IBaseUseCase<CancelBookingRequestDT
 
     const success = await this._slotRepository.cancelBooking(dto.slotId, dto.userId);
     if (!success) throw new Error(SLOT_MESSAGES.FAILED_TO_CANCEL);
+    const sessionDate = new Date(slot.startTime).toLocaleDateString();
+    const sessionTime = new Date(slot.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+    await this._notificationService.notify(slot.trainerId, {
+      title: "Booking Cancelled ⚠️",
+      message: `A client cancelled their booking for the ${slot.type} session on ${sessionDate} at ${sessionTime}. The slot is now available for others.`,
+      type: NotificationType.SLOT_CANCELLED
+    });
     return { 
     
       message: SLOT_MESSAGES.BOOKING_CANCELEED_SUCCESS

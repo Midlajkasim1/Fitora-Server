@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNotificationsLogic } from "../../hooks/common/use-notify";
+import { Bell } from "lucide-react";
 
 export const NotificationBell = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,32 +8,38 @@ export const NotificationBell = () => {
 
   return (
     <div className="relative">
-      {/* Bell Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 rounded-full hover:bg-white/10 transition-all text-gray-400 hover:text-white"
+        className={`relative p-2.5 rounded-xl border transition-all group ${
+          isOpen 
+          ? "bg-[#00ff94]/10 border-[#00ff94] text-[#00ff94]" 
+          : "bg-white/5 border-white/10 text-gray-400 hover:text-[#00ff94] hover:border-[#00ff94]/50"
+        }`}
       >
-        <span className="text-2xl">🔔</span>
+        <Bell size={20} />
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-[10px] font-bold text-black border-2 border-[#0D1117]">
-            {unreadCount}
-          </span>
+          <span className="absolute top-2 right-2 w-2 h-2 bg-[#00ff94] rounded-full border-2 border-[#06110d] animate-pulse shadow-[0_0_10px_#00ff94]" />
         )}
       </button>
 
-      {/* Dropdown Menu */}
       {isOpen && (
         <>
-          <div className="fixed inset-0 z-40" onClick={() => setIsOpen(false)} />
-          <div className="absolute right-0 mt-3 w-80 max-h-[450px] overflow-hidden rounded-2xl bg-[#0D1117] border border-[#1F2937] shadow-2xl z-50 flex flex-col animate-in fade-in zoom-in duration-200">
-            <div className="p-4 border-b border-[#1F2937] flex justify-between items-center bg-[#161B22]">
-              <h3 className="text-white font-bold">Notifications</h3>
-              <button className="text-[10px] text-emerald-500 uppercase font-bold tracking-widest hover:underline">Mark all as read</button>
+          <div className="fixed inset-0 z-[90]" onClick={() => setIsOpen(false)} />
+          
+          <div className="absolute right-0 mt-4 w-80 max-h-[480px] bg-[#0a1810] border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] z-[100] flex flex-col overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+            
+            <div className="p-4 border-b border-white/5 bg-white/5 flex justify-between items-center">
+              <h3 className="text-[10px] font-black uppercase italic text-white tracking-widest">Recent Alerts</h3>
+              {unreadCount > 0 && (
+                <span className="text-[9px] bg-[#00ff94] text-black px-2 py-0.5 rounded-full font-bold uppercase">
+                  {unreadCount} New
+                </span>
+              )}
             </div>
 
-            <div className="overflow-y-auto max-h-[350px] scrollbar-hide">
+            <div className="overflow-y-auto max-h-[380px] custom-scrollbar scrollbar-hide">
               {notifications.length === 0 ? (
-                <div className="p-10 text-center text-gray-500 text-sm italic">No recent activity.</div>
+                <div className="p-10 text-center text-gray-500 text-[10px] uppercase italic font-bold italic">No data found</div>
               ) : (
                 notifications.map((n: any) => (
                   <div 
@@ -40,25 +47,27 @@ export const NotificationBell = () => {
                     onClick={() => {
                       if (!n.isRead) markRead(n.id);
                     }}
-                    className={`p-4 border-b border-[#1F2937] cursor-pointer transition-colors ${!n.isRead ? 'bg-emerald-500/[0.03] border-l-2 border-l-emerald-500' : 'hover:bg-white/[0.02]'}`}
+                    className={`p-4 border-b border-white/5 cursor-pointer transition-all hover:bg-white/5 ${!n.isRead ? 'bg-[#00ff94]/5 border-l-2 border-l-[#00ff94]' : ''}`}
                   >
-                    <div className="flex justify-between items-start">
-                      <p className={`text-sm ${!n.isRead ? 'text-white font-semibold' : 'text-gray-400'}`}>
+                    <div className="flex justify-between items-start gap-2">
+                      <p className={`text-[11px] uppercase italic tracking-tight leading-tight ${!n.isRead ? 'text-[#00ff94] font-black' : 'text-gray-300 font-bold'}`}>
                         {n.title}
                       </p>
-                      {!n.isRead && <div className="h-2 w-2 bg-emerald-500 rounded-full shadow-[0_0_8px_rgba(16,185,129,0.6)]" />}
+                      {!n.isRead && <div className="w-1.5 h-1.5 bg-[#00ff94] rounded-full shadow-[0_0_8px_#00ff94] mt-1 shrink-0" />}
                     </div>
-                    <p className="text-xs text-gray-500 mt-1 leading-relaxed">{n.message}</p>
-                    <p className="text-[10px] text-gray-600 mt-2 uppercase font-medium">
-                      {new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {new Date(n.createdAt).toLocaleDateString()}
+                    <p className="text-[10px] text-gray-400 mt-1 font-medium leading-relaxed">
+                      {n.message}
+                    </p>
+                    <p className="text-[8px] text-gray-600 mt-2 font-black uppercase italic">
+                      {new Date(n.createdAt).toLocaleTimeString()} • {new Date(n.createdAt).toLocaleDateString()}
                     </p>
                   </div>
                 ))
               )}
             </div>
             
-            <div className="p-3 bg-[#161B22] border-t border-[#1F2937] text-center">
-                <button className="text-xs text-gray-400 hover:text-white transition-colors">View All Notifications</button>
+            <div className="p-3 bg-[#06110d] border-t border-white/5 text-center">
+                <button className="text-[9px] font-black uppercase italic text-gray-500 hover:text-white transition-colors">View All Notifications</button>
             </div>
           </div>
         </>
