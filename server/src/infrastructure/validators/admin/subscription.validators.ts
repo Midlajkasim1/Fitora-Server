@@ -21,13 +21,16 @@ export const SubscriptionSchema = z.object({
   description: z
     .string()
     .min(10, "Description should be at least 10 characters")
-    .max(500, "Description is too long"),
+    .max(800, "Description is too long"),
 
 sessionType: z.nativeEnum(PlanSessionType),
   sessionCredits: z.coerce.number().min(0, "Credits cannot be negative"),
+hasAiWorkout: z.boolean({
+    message: "Please specify if AI Workout is included",
+  }).default(false),
 
-  aiWorkoutLimit: z.coerce.number().int().describe("-1 for unlimited"),
-
-  aiDietLimit: z.coerce.number().int().describe("-1 for unlimited"),
+  hasAiDiet: z.boolean({
+    message: "Please specify if AI Diet is included",
+  }).default(false),
 });
 

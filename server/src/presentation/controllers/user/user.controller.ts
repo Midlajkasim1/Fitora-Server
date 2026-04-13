@@ -46,10 +46,13 @@ export  class  UserController {
         const validatedata = updateUserProfileSchema.parse(req.body);
         const userId = req.user?.userId;
         if(!userId){
-            throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
+            res.status(HttpStatus.UNAUTHORIZED).json({
+                success:false,
+                message:AUTH_MESSAGES.UNAUTHORIZED
+            });
         }
         const dto = new UpdateUserProfileRequest({
-            id:userId,
+            id:userId!,
             firstName:validatedata.firstName,
             lastName:validatedata.lastName,
             phone:validatedata.phone,

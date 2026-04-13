@@ -17,8 +17,8 @@ export const createSubscriptionSchema = z.object({
   sessionType: z.enum(["one_on_one", "group", "both", "none"]),
   
   sessionCredits: z.coerce.number().min(0, "Credits cannot be negative"),
-  aiWorkoutLimit: z.coerce.number().min(-1, "Use -1 for unlimited"),
-  aiDietLimit: z.coerce.number().min(-1, "Use -1 for unlimited"),
+  hasAiWorkout: z.boolean().default(false),
+  hasAiDiet: z.boolean().default(false),
 });
 
 export type CreateSubscriptionFormData = z.infer<typeof createSubscriptionSchema>;

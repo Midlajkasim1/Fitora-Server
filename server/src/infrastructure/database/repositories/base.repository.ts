@@ -42,11 +42,11 @@ export abstract class BaseRepository<TEntity, TDocument> implements IBaseReposit
     filter: Record<string, unknown>, 
     options: { skip: number; limit: number }
   ): Promise<TEntity[]> {
-    const sortCriteria: { [key: string]: SortOrder } = { createdAt: -1 };
+    const sort: { [key: string]: SortOrder } = { createdAt: -1 };
 
     const docs = await this.model
       .find(filter)
-      .sort(sortCriteria) 
+      .sort(sort) 
       .skip(options.skip)
       .limit(options.limit)
       .lean()

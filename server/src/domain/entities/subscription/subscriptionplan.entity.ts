@@ -13,8 +13,8 @@ export class SubscriptionPlanEntity{
     private _createdAt?: Date;
     private _sessionType: PlanSessionType;
     private _sessionCredits: number;
-    private _aiWorkoutLimit: number;
-    private _aiDietLimit: number;
+    private _hasAiWorkout: boolean;
+    private _hasAiDiet: boolean;
     private constructor(props:{
         id?:string;
         name:string;
@@ -26,8 +26,8 @@ export class SubscriptionPlanEntity{
         createdAt?: Date;
         sessionType:PlanSessionType;
         sessionCredits: number;
-        aiWorkoutLimit: number;
-        aiDietLimit: number;
+        hasAiWorkout: boolean;
+        hasAiDiet: boolean;
     }){
         this._id=props.id;
         this._name = props.name;
@@ -39,8 +39,8 @@ export class SubscriptionPlanEntity{
         this._createdAt = props.createdAt || new Date();
         this._sessionType = props.sessionType;
         this._sessionCredits = props.sessionCredits;
-        this._aiWorkoutLimit = props.aiWorkoutLimit;
-        this._aiDietLimit = props.aiDietLimit;
+        this._hasAiWorkout = props.hasAiWorkout;
+        this._hasAiDiet = props.hasAiDiet;
     }
     static create(props:{
         id?:string;
@@ -53,8 +53,8 @@ export class SubscriptionPlanEntity{
         createdAt?: Date;
         sessionType:PlanSessionType;
         sessionCredits: number;
-        aiWorkoutLimit: number;
-        aiDietLimit: number
+        hasAiWorkout: boolean;
+        hasAiDiet: boolean
     }):SubscriptionPlanEntity{
         return new SubscriptionPlanEntity({
             ...props,
@@ -62,8 +62,8 @@ export class SubscriptionPlanEntity{
             totalPurchaseUser: props.totalPurchaseUser ?? 0,
             sessionType: props.sessionType ?? PlanSessionType.GROUP,
             sessionCredits: props.sessionCredits ?? 0,
-            aiWorkoutLimit: props.aiWorkoutLimit ?? 0,
-            aiDietLimit: props.aiDietLimit ?? 0
+            hasAiWorkout: props.hasAiWorkout ?? false,
+            hasAiDiet: props.hasAiDiet ?? false
         });
     }
     get id(){return this._id;}
@@ -75,8 +75,8 @@ export class SubscriptionPlanEntity{
     get status() { return this._status; }
     get sessionType() { return this._sessionType; }
     get sessionCredits() { return this._sessionCredits; }
-    get aiWorkoutLimit() { return this._aiWorkoutLimit; }
-    get aiDietLimit() { return this._aiDietLimit; }
+    get hasAiWorkout() { return this._hasAiWorkout; }
+    get hasAiDiet() { return this._hasAiDiet; }
     get createdAt() { return this._createdAt; }
 
     toggleStatus():void {
@@ -85,4 +85,14 @@ export class SubscriptionPlanEntity{
             ? SubscriptionPlanStatus.INACTIVE
             : SubscriptionPlanStatus.ACTIVE;
       }
+    //   public canAccessAiDiet(): boolean {
+    //     return this._hasAiDiet > 0;
+    // }
+
+    // /**
+    //  * Check if plan allows workout scheduling
+    //  */
+    // public canAccessAiWorkout(): boolean {
+    //     return this._aiWorkoutLimit > 0;
+    // }
 }

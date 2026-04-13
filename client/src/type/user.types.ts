@@ -8,7 +8,7 @@ export interface UserProfile {
   gender?: string;
   status: "active" | "blocked";
   role?:UserRole;
-  preferredWorkouts: string[];
+  preferredWorkouts: string;
   experienceLevel: string;
   profileImage?: string | null;
  
@@ -22,7 +22,7 @@ export interface EditProfile {
   firstName?: string;
   lastName?: string;
   phone?: string;
-  preferredWorkouts?: string[];
+  preferredWorkouts?: string;
   experienceLevel?: string;
 }
 
@@ -125,4 +125,62 @@ export interface HealthMetricsData {
   weight: number;
   targetWeight: number;
   primaryGoal: string;
+}
+
+
+// types/ai-plan.ts
+export interface Exercise {
+  name: string;
+  sets: number;
+  reps: string | number;
+  restTime: string;
+  notes?: string;
+  _id?: string;
+}
+
+export interface WorkoutDay {
+  day: string;
+  focus: string;
+  exercises: Exercise[];
+  warmup?: string;
+  cooldown?: string;
+}
+
+export interface Meal {
+  name: string;
+  time: string;
+  foods: string[];
+  calories: number;
+  protein: number;
+  carbs: number;
+  fats: number;
+  _id?: string;
+}
+
+export interface DietDay {
+  day: string;
+  meals: Meal[];
+  totalCalories: number;
+  totalProtein: number;
+  totalCarbs: number;
+  totalFats: number;
+  waterIntake: number;
+}
+
+export interface AiPlanResponse<T> {
+  success: boolean;
+  message: string;
+  planId: string;
+  title: string;
+  weeklyPlan: T[];
+}
+
+export interface GeneratePlanRequest {
+  metrics?: {
+    goal?: string;
+    level?: string;
+    equipment?: string[];
+    days?: number;
+    
+  };
 }

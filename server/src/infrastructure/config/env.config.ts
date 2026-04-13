@@ -24,7 +24,7 @@ const envSchema = z.object({
     REFRESH_TOKEN_MAX_AGE: z.coerce.number().default(604800000),
     STRIPE_SECRET_KEY: z.string().startsWith("sk_test_"),
     STRIPE_WEBHOOK_SECRET: z.string().startsWith("whsec_").optional(),
-    GEMINI_API_KEY: z.string().min(20, "Gemini API Key is too short"),
+    MISTRAL_API_KEY: z.string().min(30, "MISTRAL API Key is too short"),
    
 });
 

@@ -21,4 +21,7 @@ export class AiWorkoutPlanRepository extends BaseRepository<AiWorkoutPlanEntity,
     const doc = await WorkoutPlanModel.findOne({ userId }).sort({ createdAt: -1 }).exec();
     return doc ? this._aiWorkoutMapper.toEntity(doc) : null;
   }
+  async count(filter: Record<string, unknown>): Promise<number> {
+    return await WorkoutPlanModel.countDocuments(filter);
+  }
 }

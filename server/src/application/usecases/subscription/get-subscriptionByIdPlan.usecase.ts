@@ -24,8 +24,8 @@ export class GetSubscriptionPlanByIdUseCase implements IBaseUseCase<GetSubscript
             status:subscription.status,
             sessionType:subscription.sessionType,
             sessionCredits:subscription.sessionCredits,
-            aiWorkoutLimit:subscription.aiWorkoutLimit,
-            aiDietLimit:subscription.aiDietLimit,
+            hasAiWorkout:subscription.hasAiWorkout,
+            hasAiDiet:subscription.hasAiDiet,
             createdAt:subscription.createdAt!
         });
     }

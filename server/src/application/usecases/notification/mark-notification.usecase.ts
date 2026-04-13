@@ -1,6 +1,7 @@
 import { MarkReadRequestDTO } from "@/application/dto/notification/request/mark-as-read.dto";
 import { MarkReadResponseDTO } from "@/application/dto/notification/response/mark-as-read.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { NOTIFICATION_MESSAGES } from "@/domain/constants/messages.constants";
 import { INotificationRepository } from "@/domain/interfaces/repositories/notification.repository";
 
 export class MarkNotificationReadUseCase implements IBaseUseCase<MarkReadRequestDTO, MarkReadResponseDTO> {
@@ -11,7 +12,7 @@ export class MarkNotificationReadUseCase implements IBaseUseCase<MarkReadRequest
     
     return {
       success: true,
-      message: "Notification marked as read successfully"
+      message: NOTIFICATION_MESSAGES.NOTIFICATION_MARKED_SUCCESS
     };
   }
 }

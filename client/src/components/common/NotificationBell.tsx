@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { useNotificationsLogic } from "../../hooks/common/use-notify";
-import { Bell } from "lucide-react";
+import { Bell, CheckCheck, Trash2 } from "lucide-react";
 
 export const NotificationBell = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { notifications, unreadCount, markRead } = useNotificationsLogic();
+  const { 
+    notifications, 
+    unreadCount, 
+    markRead, 
+    markAllRead, 
+    clearAll 
+  } = useNotificationsLogic();
 
   return (
     <div className="relative">
@@ -28,18 +34,30 @@ export const NotificationBell = () => {
           
           <div className="absolute right-0 mt-4 w-80 max-h-[480px] bg-[#0a1810] border border-white/10 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] z-[100] flex flex-col overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
             
+            {/* HEADER */}
             <div className="p-4 border-b border-white/5 bg-white/5 flex justify-between items-center">
               <h3 className="text-[10px] font-black uppercase italic text-white tracking-widest">Recent Alerts</h3>
-              {unreadCount > 0 && (
+              
+              <div className="flex items-center gap-3">
+                {unreadCount > 0 && (
+                  <button 
+                    onClick={() => markAllRead()}
+                    className="flex items-center gap-1 text-[9px] font-black uppercase italic text-[#00ff94] hover:text-white transition-colors"
+                  >
+                    <CheckCheck size={12} />
+                    Read All
+                  </button>
+                )}
                 <span className="text-[9px] bg-[#00ff94] text-black px-2 py-0.5 rounded-full font-bold uppercase">
                   {unreadCount} New
                 </span>
-              )}
+              </div>
             </div>
 
+            {/* NOTIFICATIONS LIST */}
             <div className="overflow-y-auto max-h-[380px] custom-scrollbar scrollbar-hide">
               {notifications.length === 0 ? (
-                <div className="p-10 text-center text-gray-500 text-[10px] uppercase italic font-bold italic">No data found</div>
+                <div className="p-10 text-center text-gray-500 text-[10px] uppercase italic font-bold">No data found</div>
               ) : (
                 notifications.map((n: any) => (
                   <div 
@@ -66,9 +84,18 @@ export const NotificationBell = () => {
               )}
             </div>
             
-            <div className="p-3 bg-[#06110d] border-t border-white/5 text-center">
-                <button className="text-[9px] font-black uppercase italic text-gray-500 hover:text-white transition-colors">View All Notifications</button>
-            </div>
+            {/* FOOTER */}
+            {notifications.length > 0 && (
+              <div className="p-3 bg-[#06110d] border-t border-white/5 text-center">
+                  <button 
+                    onClick={() => clearAll()}
+                    className="flex items-center justify-center w-full gap-2 text-[9px] font-black uppercase italic text-red-500/60 hover:text-red-500 transition-colors"
+                  >
+                    <Trash2 size={12} />
+                    Clear All Notifications
+                  </button>
+              </div>
+            )}
           </div>
         </>
       )}

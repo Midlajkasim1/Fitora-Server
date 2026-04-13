@@ -29,8 +29,8 @@ export class UpdateSubscriptionPlanUseCase implements IBaseUseCase<UpdateSubscri
       description: dto.description,
       sessionType: dto.sessionType,
       sessionCredits: dto.sessionCredits,
-      aiWorkoutLimit: dto.aiWorkoutLimit,
-      aiDietLimit: dto.aiDietLimit,
+      hasAiWorkout: dto.hasAiWorkout,
+      hasAiDiet: dto.hasAiDiet,
     };
       await this._subscriptionRepository.update!(dto.id,updateData);
       return new UpdateSubscriptionPlanResponseDTO({

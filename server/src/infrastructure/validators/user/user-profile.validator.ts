@@ -21,10 +21,7 @@ export const updateUserProfileSchema = z.object({
     }, {
       message: "Please enter a valid phone number, not repeating digits"
     })
-    .optional()
-    ,
-  preferredWorkouts: z
-    .array(z.string())
-    .min(1, "Select at least one workout type")
     .optional(),
-experienceLevel: z.string().optional(),});
+  preferredWorkouts: z.string().min(1, "Select a workout").optional(),
+  experienceLevel: z.string().optional(),
+});

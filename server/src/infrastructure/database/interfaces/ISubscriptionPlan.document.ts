@@ -11,7 +11,7 @@ export interface ISubscriptionDocument {
     totalPurchaseUser: number;
     sessionType: PlanSessionType;
     sessionCredits: number;
-    aiWorkoutLimit: number;
-    aiDietLimit: number;
+    hasAiWorkout: boolean;
+    hasAiDiet: boolean;
     createdAt: Date;
 }

@@ -1,96 +1,107 @@
-import { AiDietPlanEntity } from "@/domain/entities/ai-workout&diet/ai-diet-plan";
-import { AiWorkoutPlanEntity } from "@/domain/entities/ai-workout&diet/ai-workout-plan.entity";
-import { IAiService, IUserDietMetrics, IUserFitnessMetrics } from "@/domain/interfaces/services/ai-generate.service.interface";
-import { GoogleGenerativeAI, GenerativeModel } from "@google/generative-ai";
-import { logger } from "../loggers/logger";
+// import { AiDietPlanEntity } from "@/domain/entities/ai-workout&diet/ai-diet-plan.entity";
+// import { AiWorkoutPlanEntity } from "@/domain/entities/ai-workout&diet/ai-workout-plan.entity";
+// import { IAiService, IUserDietMetrics, IUserFitnessMetrics } from "@/domain/interfaces/services/ai-generate.service.interface";
+// import { GoogleGenerativeAI } from "@google/generative-ai";
+// import { logger } from "../loggers/logger";
 
-export class GeminiAiService implements IAiService {
-  private _genAI: GoogleGenerativeAI;
-  private _model: GenerativeModel;
+// export class GeminiAiService implements IAiService {
+//   private readonly _genAI: GoogleGenerativeAI;
+  
+//   /**
+//    * REFINED MODEL STACK
+//    * We use only the two most stable strings to avoid 404/429 loops.
+//    */
+//  private readonly _modelStack = [
+//   "gemini-1.5-flash",
+//   "gemini-1.0-pro"
+// ];
 
-  constructor(apiKey: string) {
-    this._genAI = new GoogleGenerativeAI(apiKey);
-    this._model = this._genAI.getGenerativeModel({
-      model: "gemini-2.5-flash-lite",
-      generationConfig: { responseMimeType: "application/json" },
-      systemInstruction: `You are a professional Fitness & Nutrition AI coach. 
-      You MUST ONLY generate valid JSON.
-      
-      WORKOUT RULES:
-      Every exercise MUST include: "name" (string), "sets" (number), "reps" (string/number), "restTime" (string).
+//   constructor(apiKey: string) {
+//     this._genAI = new GoogleGenerativeAI(apiKey);
+//   }
 
-      DIET RULES:
-      1. "waterIntake" MUST be a NUMBER representing milliliters (e.g., 2000, not "2L").
-      2. Every meal in "meals" MUST include:
-         - "name": (string, e.g., "Breakfast")
-         - "time": (string, e.g., "08:00 AM")
-         - "foods": (array of strings)
-         - "calories", "protein", "carbs", "fats": (ALL must be numbers)
-      3. Daily totals (totalCalories, totalProtein, etc.) MUST be numbers.`
-    });
-        logger.info(`AI Service initialized with model: ${this._model.model}`);
+//   async generateWorkoutPlan(userId: string, metrics: IUserFitnessMetrics): Promise<AiWorkoutPlanEntity> {
+//     const prompt = `You are a fitness coach. Generate a 7-day workout plan for a ${metrics.level} user. 
+//     Goal: ${metrics.goal}. Specialization: ${metrics.specializations}. 
+//     Return ONLY JSON: {"weeklyPlan": [{"day": "string", "focus": "string", "exercises": [{"name": "string", "sets": 3, "reps": "12", "restTime": "60s", "notes": "string"}], "warmup": "string", "cooldown": "string"}]}`;
 
-  }
+//     const rawResponse = await this._executeWithFailover(prompt);
+//     const cleanedJson = await this._cleanAndRepair(rawResponse);
+//     const parsed = JSON.parse(cleanedJson);
 
-  async generateWorkoutPlan(userId: string, metrics: IUserFitnessMetrics): Promise<AiWorkoutPlanEntity> {
-    const prompt = `Generate a 7-day workout plan for a ${metrics.level} level user. 
-    Goal: ${metrics.goal}. Equipment: ${metrics.equipment.join(", ")}. 
-    Return JSON with a 'weeklyPlan' array.`;
+//     return AiWorkoutPlanEntity.create({
+//       userId,
+//       title: `${metrics.level} ${metrics.specializations} Plan`,
+//       description: `Targeting ${metrics.goal}`,
+//       weeklyPlan: parsed.weeklyPlan
+//     });
+//   }
 
-    const rawJson = await this._retryRequest(prompt);
-    const cleanedJson = await this._repairJson(rawJson); 
-    const parsed = JSON.parse(cleanedJson);
+//   async generateDietPlan(userId: string, metrics: IUserDietMetrics): Promise<AiDietPlanEntity> {
+//     const prompt = `You are a nutritionist. Generate a 7-day diet plan for a ${metrics.weight}kg user. 
+//     Goal: ${metrics.goal}. Preference: ${metrics.preference}.
+//     Return ONLY JSON: {"weeklyPlan": [{"day": "string", "meals": [{"name": "string", "time": "string", "foods": ["string"], "calories": 400, "protein": 20, "carbs": 40, "fats": 10}], "totalCalories": 2000, "totalProtein": 150, "totalCarbs": 200, "totalFats": 60, "waterIntake": 2000}]}`;
 
-    return AiWorkoutPlanEntity.create({
-      userId,
-      title: `${metrics.level} ${metrics.goal} Plan`,
-      description: `Tailored workout for ${metrics.goal}`,
-      weeklyPlan: parsed.weeklyPlan
-    });
-  }
+//     const rawResponse = await this._executeWithFailover(prompt);
+//     const cleanedJson = await this._cleanAndRepair(rawResponse);
+//     const parsed = JSON.parse(cleanedJson);
 
-  async generateDietPlan(userId: string, metrics: IUserDietMetrics): Promise<AiDietPlanEntity> {
-    const prompt = `Generate a 7-day diet plan. Target: ${metrics.targetCalories} calories. 
-    Preference: ${metrics.preference}. Limitations: ${metrics.limitations.join(", ")}. 
-    Return JSON with a 'weeklyPlan' array.`;
+//     return AiDietPlanEntity.create({
+//       userId,
+//       title: `${metrics.preference} Diet Plan`,
+//       description: `Custom nutrition for ${metrics.goal}`,
+//       weeklyPlan: parsed.weeklyPlan
+//     });
+//   }
+// private async _executeWithFailover(prompt: string, stackIndex = 0, retryAttempt = 0): Promise<string> {
+//   if (stackIndex >= this._modelStack.length) {
+//     throw new Error("AI Service currently unavailable. Please check API Key permissions.");
+//   }
 
-    const rawJson = await this._retryRequest(prompt);
-    const cleanedJson = await this._repairJson(rawJson); 
-    const parsed = JSON.parse(cleanedJson);
+//   const currentModel = this._modelStack[stackIndex];
 
-    return AiDietPlanEntity.create({
-      userId,
-      title: `${metrics.preference} Diet Plan`,
-      description: `Daily target: ${metrics.targetCalories} kcal`,
-      weeklyPlan: parsed.weeklyPlan
-    });
-  }
+//   try {
+//     // We do NOT pass a version here, let the SDK use the default stable v1
+//     const model = this._genAI.getGenerativeModel({ model: currentModel });
 
+//     // Remove responseMimeType temporarily to see if it bypasses the 404
+//     const result = await model.generateContent(prompt);
+//     const response = await result.response;
+//     const text = response.text();
 
-  private async _repairJson(raw: string): Promise<string> {
-    try {
-      const { jsonrepair } = await import("jsonrepair");
-      
-      const cleaned = raw.replace(/```json|```/g, "").trim();
-      
-      return jsonrepair(cleaned);
-    } catch (error) {
-      logger.error("JSON Repair Error:", error);
-      throw new Error("Failed to process AI response. Please try again.");
-    }
-  }
+//     if (!text) throw new Error("Empty Response");
+//     return text;
 
-  private async _retryRequest(prompt: string, retries = 3): Promise<string> {
-    try {
-      const result = await this._model.generateContent(prompt);
-      const text = result.response.text();
-      if (!text) throw new Error("Empty AI response");
-      return text;
-    } catch (error) {
-      if (retries > 0) {
-        return this._retryRequest(prompt, retries - 1);
-      }
-      throw error;
-    }
-  }
-}
+//   } catch (error: any) {
+//     console.error(`--- STABLE API ERROR ---`);
+//     console.error(`Model: ${currentModel} | Status: ${error.status}`);
+//     console.error(`Message: ${error.message}`);
+
+//     if (error.status === 404 || error.status === 400) {
+//       // If 1.5-flash fails, try the next one
+//       return this._executeWithFailover(prompt, stackIndex + 1, 0);
+//     }
+
+//     if (error.status === 429 && retryAttempt < 1) {
+//       await new Promise(r => setTimeout(r, 15000));
+//       return this._executeWithFailover(prompt, stackIndex, retryAttempt + 1);
+//     }
+
+//     throw error;
+//   }
+// }
+
+//   private async _cleanAndRepair(raw: string): Promise<string> {
+//     const { jsonrepair } = await import("jsonrepair");
+//     let cleaned = raw.replace(/```json|```/g, "").trim();
+//     const start = cleaned.indexOf('{');
+//     const end = cleaned.lastIndexOf('}');
+//     if (start !== -1 && end !== -1) cleaned = cleaned.substring(start, end + 1);
+    
+//     try {
+//       return jsonrepair(cleaned);
+//     } catch {
+//       return cleaned; // Fallback to raw if repair fails
+//     }
+//   }
+// }

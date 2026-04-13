@@ -41,7 +41,7 @@ export default function UserProfile() {
         firstName: user.firstName || "",
         lastName: user.lastName || "",
         phone: user.phone || "",
-        preferredWorkouts: user.preferredWorkouts?.[0] || "",
+        preferredWorkouts: user.preferredWorkouts || "",
         experienceLevel: user.experienceLevel || ""
       });
     }
@@ -58,15 +58,13 @@ export default function UserProfile() {
       firstName: formData.firstName,
       lastName: formData.lastName,
       phone: formData.phone,
-      preferredWorkouts: formData.preferredWorkouts
-        ? [formData.preferredWorkouts]
-        : undefined,
+      preferredWorkouts: formData.preferredWorkouts,
       experienceLevel: formData.experienceLevel,
     });
 
     setIsEditing(false);
   };
-  const preferredWorkoutId = user?.preferredWorkouts?.[0];
+  const preferredWorkoutId = user?.preferredWorkouts;
 
   const preferredWorkoutName = specialization.find(
     (s: any) => s.id === preferredWorkoutId

@@ -1,4 +1,4 @@
-import { IDietDay } from "@/domain/entities/ai-workout&diet/ai-diet-plan";
+import { IDietDay } from "@/domain/entities/ai-workout&diet/ai-diet-plan.entity";
 
 export interface GenerateDietResponseDTO {
   success: boolean;

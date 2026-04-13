@@ -40,13 +40,12 @@ export class UpdateUserProfileUseCase implements IBaseUseCase<UpdateUserProfileR
         await this._userRepository.updateUserProfile(updatedUser);
 
         const clientPreference = await this._clientPreferenceRepository.findByUserId(dto.id);
-
         const updatedPreference = ClientPreferenceEntity.create({
             userId: dto.id,
             sleepHours: clientPreference?.sleepHours ?? 8,
             waterIntake: clientPreference?.waterIntake ?? 3,
             primaryMotives: clientPreference?.primaryMotives ?? [],
-            preferredWorkouts: dto.preferredWorkouts ?? clientPreference?.preferredWorkouts ?? [],
+            preferredWorkouts: dto.preferredWorkouts ?? clientPreference?.preferredWorkouts ?? "",
             experienceLevel: dto.experienceLevel ?? clientPreference?.experienceLevel ?? ExperienceLevel.BEGINNER,
             dietPreference: clientPreference?.dietPreference ?? DietPreference.KETO,
             medicalConditions: clientPreference?.medicalConditions ?? []

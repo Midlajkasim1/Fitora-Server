@@ -89,10 +89,22 @@ router.get("/notifications",userMiddlewares.authMiddleware,userMiddlewares.block
 router.patch("/notifications/:id/read",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     notificationControllers.notificationController.markAsRead(req,res)
 ));
+router.patch("/notifications/mark-all-read",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    notificationControllers.notificationController.markAllAsRead(req,res)
+));
+router.delete("/notifications/clear-all",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    notificationControllers.notificationController.clearAllNotifcation(req,res)
+));
 router.post("/generate-workout",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.aiPlanController.generateWorkout(req,res)
 ));
 router.post("/generate-diet",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.aiPlanController.generateDiet(req,res)
+));
+router.get("/workout-plan",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.aiPlanController.getWorkoutPlan(req,res)
+));
+router.get("/diet-plan",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.aiPlanController.getDietPlan(req,res)
 ));
 export default router;

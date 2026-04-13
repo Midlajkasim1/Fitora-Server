@@ -1,7 +1,7 @@
 import { HandleWebhookRequestDTO } from "@/application/dto/subscription/request/handle-webhook.dto";
 import { HandleWebhookResponseDTO } from "@/application/dto/subscription/response/handle-webhook.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { PAYMENT_MESSAGES, SUBSCRIPTION_MESSAGES } from "@/domain/constants/messages.constants";
+import { NOTIFICATION_TEMPLATES, PAYMENT_MESSAGES, SUBSCRIPTION_MESSAGES } from "@/domain/constants/messages.constants";
 import { NotificationType } from "@/domain/constants/notification.constants";
 import { PaymentStatus } from "@/domain/constants/payment.constants";
 import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
@@ -41,8 +41,8 @@ export class HandleWebhookUseCase implements IBaseUseCase<HandleWebhookRequestDT
             if(payment.subscriptionId){
                 await this._subscriptionRepository.updateStatus(payment.subscriptionId,SubscriptionStatus.CANCELLED);
                 await this._notificationService.notify(payment.userId, {
-                        title: "Subscription Activated! 🚀",
-                        message: "Welcome to the Pro family! Your subscription is now active. Let's hit those goals!",
+                        title: NOTIFICATION_TEMPLATES.SUBSCRIPTION_ACTIVATED.TITLE,
+                        message: NOTIFICATION_TEMPLATES.SUBSCRIPTION_ACTIVATED.MESSAGE,
                         type: NotificationType.SYSTEM_ALERT
                     });
 

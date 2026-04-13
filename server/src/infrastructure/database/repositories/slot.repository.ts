@@ -24,42 +24,7 @@ export class SlotRespository extends BaseRepository<SlotEntity, ISlotDocument> i
     }
 
 
-    // async findAvailableSlotsByTrainers(params:{trainerIds: string[];skip:number;limit:number;search?:string}): Promise<{slots:ISlotWithTrainer[],total:number}> {
-    //     const {trainerIds,skip,limit,search} = params;
-    //     const trainerids = trainerIds.map(id => new Types.ObjectId(id));
-    //     const now = new Date();
-    //     const docs = await SlotModel.aggregate<IAggregateSlot>([
-    //         {
-    //             $match: {
-    //                 trainerId: { $in: trainerids },
-    //                 status: SlotStatus.AVAILABLE,
-    //                 startTime: { $gt: now }
-    //             }
-    //         },
-    //         {
-    //             $lookup: {
-    //                 from: "users",
-    //                 localField: "trainerId",
-    //                 foreignField: "_id",
-    //                 as: "trainerInfo"
-    //             }
-    //         },
-    //         { $unwind: { path: "$trainerInfo", preserveNullAndEmptyArrays: true } },
 
-
-    //     ]);
-    //     return docs.map((doc) => ({
-    //         id: doc._id.toString(),
-    //         trainerId: doc.trainerId.toString(),
-    //         trainerName: `${doc.trainerInfo.firstName} ${doc.trainerInfo.lastName}`,
-    //         startTime: doc.startTime,
-    //         endTime: doc.endTime,
-    //         type: doc.type,
-    //         capacity: doc.capacity,
-    //         participants: doc.participants.map(p => p.toString()),
-    //         status: doc.status
-    //     }));
-    // }
     async findAvailableSlotsByTrainers(params: { trainerIds: string[]; skip: number; limit: number; search?: string;type?:SessionType }): Promise<{ slots: ISlotWithTrainer[]; total: number; }> {
         const { trainerIds, skip, limit, search,type } = params;
         const trainerobjIds = trainerIds.map(id => new Types.ObjectId(id));

@@ -66,9 +66,13 @@ export const userControllers = {
     useCases.getUserUpcomingUseCase,
     useCases.getTrainerBookingUseCase,
   ),
-  aiPlanController:new AiPlanController(
+  aiPlanController: new AiPlanController(
+
     useCases.generateWorkoutPlanUseCase,
-    useCases.generateDietPlanUseCase
+    useCases.generateDietPlanUseCase,
+    useCases.getWorkoutPlanUsecase,
+    useCases.getDietPlanUseCase,
+
   )
 
 

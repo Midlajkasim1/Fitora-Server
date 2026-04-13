@@ -1,4 +1,4 @@
-import { GetAdvertisementByIdRequest } from "@/application/dto/advertisement/request/get-AdvertisementByid.dto";
+import { GetAdvertisementByIdRequest } from "@/application/dto/advertisement/request/get-advertisementById.dto";
 import { GetAdvertisementByIdResponse } from "@/application/dto/advertisement/response/get-advertisementById.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { ADVERTISEMENT_MESSAGES } from "@/domain/constants/messages.constants";

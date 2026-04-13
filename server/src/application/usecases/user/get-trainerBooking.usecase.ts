@@ -24,9 +24,7 @@ export class GetTrainerBookingUseCase implements IBaseUseCase<GetTrainersBooking
             return {trainers:[],total:0};
         }
         const trainerIds= await this._trainerRepository.findTrainerIdsBySpecializations(pref.preferredWorkouts);
-        if(!trainerIds.length){
-            return {trainers:[],total:0};
-        }
+    
         const result = await this._trainerRepository.findTrainerForBooking({
             trainerIds:trainerIds,
             search:dto.search,
@@ -37,7 +35,7 @@ export class GetTrainerBookingUseCase implements IBaseUseCase<GetTrainersBooking
         trainerId: trainer.trainerId as string,
         name: trainer.name as string,
         profileImage: trainer.profileImage as string | undefined,
-        specializations: trainer.specializations as string[],
+        specializations: trainer.specializations as string,
         experience: trainer.experience as number,
         rating: trainer.rating as number,
         bio: trainer.bio as string

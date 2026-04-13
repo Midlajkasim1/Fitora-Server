@@ -45,6 +45,7 @@ export const ProfileField: React.FC<ProfileFieldProps> = ({
             onChange={(e) => onChange?.(e.target.value)}
             className="w-full bg-[#0d1f17] border border-white/5 px-6 py-4 rounded-2xl text-white font-bold italic text-sm appearance-none outline-none focus:border-[#00ff94]/30 transition-all"
           >
+            {!value && <option value="">Select Specialization</option>}
             {options?.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}

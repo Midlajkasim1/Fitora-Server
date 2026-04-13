@@ -5,4 +5,5 @@ export interface ISubscriptionRepository extends IBaseRepository<SubscriptionEnt
     create(subscription: SubscriptionEntity): Promise<SubscriptionEntity>;
     updateStatus(id: string, status: string): Promise<void>;
     findActiveByUserId(userId: string): Promise<SubscriptionEntity | null>;
+    findEveryActive(): Promise<{ userId: string }[]>;
 }

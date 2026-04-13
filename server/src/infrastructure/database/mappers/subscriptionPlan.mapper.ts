@@ -15,8 +15,8 @@ export class SubscriptionPlanMapper implements IMapper<SubscriptionPlanEntity,IS
             status: doc.status,
             sessionType: doc.sessionType,
             sessionCredits: doc.sessionCredits,
-            aiWorkoutLimit: doc.aiWorkoutLimit,
-            aiDietLimit: doc.aiDietLimit,
+            hasAiWorkout: doc.hasAiWorkout,
+            hasAiDiet: doc.hasAiDiet,
             totalPurchaseUser: doc.totalPurchaseUser,
             createdAt: doc.createdAt
         });
@@ -30,8 +30,8 @@ export class SubscriptionPlanMapper implements IMapper<SubscriptionPlanEntity,IS
             status: entity.status,
             sessionType: entity.sessionType,
             sessionCredits: entity.sessionCredits,
-            aiWorkoutLimit: entity.aiWorkoutLimit,
-            aiDietLimit: entity.aiDietLimit,
+            hasAiWorkout: entity.hasAiWorkout,
+            hasAiDiet: entity.hasAiDiet,
             totalPurchaseUser: entity.totalPurchaseUser
         };
     }

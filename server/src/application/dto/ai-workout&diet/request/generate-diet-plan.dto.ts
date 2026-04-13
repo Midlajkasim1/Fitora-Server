@@ -2,7 +2,7 @@ import { IUserDietMetrics } from "@/domain/interfaces/services/ai-generate.servi
 
 export class GenerateDietRequestDTO {
   userId!: string;
-  metrics!: IUserDietMetrics;
+  metrics?: Partial<IUserDietMetrics>;
 
   constructor(data: GenerateDietRequestDTO) {
     Object.assign(this, data);

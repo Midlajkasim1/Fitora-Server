@@ -6,10 +6,18 @@ import { initNotificationService } from "@/infrastructure/providers/notification
 import http from "http";
 import { Server as SocketServer } from "socket.io";
 import app from "./app";
+import { PlanRegenerationScheduler } from "@/infrastructure/providers/scheduler/plan.regeneration.scheduler";
+import { userRepositories } from "@/infrastructure/di/user/user.repositories";
+import { redisCacheService } from "@/infrastructure/di/user/user.usecases";
 
 const PORT = env.PORT || 4000;
 const startServer = async () => {
   await DatabaseService.connect();
+  const scheduler = new PlanRegenerationScheduler(
+      userRepositories.subscriptionRepository,
+      redisCacheService
+    );
+    scheduler.init();
 
   const httpServer = http.createServer(app);
 

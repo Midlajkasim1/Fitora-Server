@@ -1,4 +1,4 @@
-import type { EditProfile, HealthMetricsData, IChangePassword, PremiumDashboardData, UpcomingSessionResponse, UserProfileResponse } from "../type/user.types"
+import type { AiPlanResponse, DietDay, EditProfile, GeneratePlanRequest, HealthMetricsData, IChangePassword, PremiumDashboardData, UpcomingSessionResponse, UserProfileResponse, WorkoutDay } from "../type/user.types"
 import api from "./axios"
 
 
@@ -66,4 +66,23 @@ export const bookSlot = async (slotId: string) => {
 export const cancelBooking = async (slotId: string) => {
   const res = await api.post(`user/slots/${slotId}/cancel`);
   return res?.data;
+};
+
+export const generateAiWorkout = async (data: GeneratePlanRequest): Promise<AiPlanResponse<WorkoutDay>> => {
+  const res = await api.post<AiPlanResponse<WorkoutDay>>("user/generate-workout", data);
+  return res.data; // This now returns the full object with success, message, and weeklyPlan
+};
+
+export const generateAiDiet = async (data: GeneratePlanRequest): Promise<AiPlanResponse<DietDay>> => {
+  const res = await api.post<AiPlanResponse<DietDay>>("user/generate-diet", data);
+  return res.data;
+};
+export const fetchAiWorkout = async (): Promise<AiPlanResponse<WorkoutDay>> => {
+  const res = await api.get<AiPlanResponse<WorkoutDay>>("user/workout-plan");
+  return res.data;
+};
+
+export const fetchAiDiet = async (): Promise<AiPlanResponse<DietDay>> => {
+  const res = await api.get<AiPlanResponse<DietDay>>("user/diet-plan");
+  return res.data;
 };

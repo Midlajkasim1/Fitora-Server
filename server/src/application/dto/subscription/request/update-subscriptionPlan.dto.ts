@@ -8,8 +8,8 @@ export class UpdateSubscriptionPlanRequestDTO {
   description?: string;
   sessionType?: PlanSessionType;
   sessionCredits?: number;
-  aiWorkoutLimit?: number;
-  aiDietLimit?: number;
+  hasAiWorkout?: boolean;
+  hasAiDiet?: boolean;
 
   constructor(data: UpdateSubscriptionPlanRequestDTO) {
     Object.assign(this, data);

@@ -158,3 +158,56 @@ export const TRAINER_MESSAGES={
   PROFILE_UPLOADED:"Profile image uploaded successfully",
   PROFILE_UPDATED:"Profile updated"
 };
+
+ export const ONE_WEEK_IN_SECONDS = 7 * 24 * 60 * 60;
+
+
+ export const NOTIFICATION_MESSAGES={
+  MARK_ALL_READ:"All notifications marked as read",
+  CLEAR_ALL_NOTIFICATION:"All notifications have been cleared",
+  NOTIFICATION_MARKED_SUCCESS:"Notification marked as read successfully",
+  SLOT_UPDATED_SUCESS:"Slot updated successfully"
+ };
+
+ export const NOTIFICATION_TEMPLATES = {
+  SUBSCRIPTION_CANCELLED: {
+    TITLE: "Subscription Cancelled",
+    MESSAGE: "Your premium subscription has been cancelled. You will still have access until the end of your current billing period."
+  },
+  SUBSCRIPTION_ACTIVATED: {
+    TITLE: "Subscription Activated! ",
+    MESSAGE: "Welcome to the Fitora family! Your subscription is now active. Let's hit those goals!"
+  },
+  SLOT_BOOKED: {
+    TITLE: "New Session Booked! ",
+    MESSAGE: (time: string) => `You have successfully booked a session for ${time}. Prepare for greatness!`
+  },
+  SLOT_CANCELLED: {
+    TITLE: "Session Cancelled",
+    MESSAGE: (time: string) => `The session scheduled for ${time} has been cancelled.`
+  },
+  PAYMENT_SUCCESS: {
+    TITLE: "Payment Received!",
+    MESSAGE: "Thank you! Your payment was processed successfully."
+  },
+  SLOT_BOOKED_TRAINER: {
+    TITLE: "New Booking Received! ",
+    MESSAGE: (type: string, time: string) => `A client has booked your ${type} session at ${time}. Check your schedule for details.`
+  },
+  SLOT_CANCELLED_TRAINER: {
+    TITLE: "Booking Cancelled ",
+    MESSAGE: (type: string, date: string, time: string) => `A client cancelled their booking for the ${type} session on ${date} at ${time}. The slot is now available.`
+  },
+  SLOT_CREATED_TRAINER: {
+    TITLE: "Slot Created",
+    MESSAGE: (type: string, date: string, time: string) => `Your ${type} session for ${date} at ${time} has been published.`
+  },
+  SLOT_UPDATED_PARTICIPANT: {
+    TITLE: "Session Time Changed ",
+    MESSAGE: (type: string, time: string) => `Your booked ${type} session has been rescheduled to ${time}. Please check your updated schedule.`
+  },
+  SLOT_CANCELLED_PARTICIPANT: {
+    TITLE: "Session Cancelled ",
+    MESSAGE: (type: string, date: string, time: string) => `The trainer has cancelled the ${type} session scheduled for ${date} at ${time}. Your credits will be managed accordingly.`
+  }
+};

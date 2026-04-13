@@ -11,8 +11,8 @@ export class GetSubscriptionPlanByIdResponseDTO {
   status?: SubscriptionPlanStatus;
   sessionType!: PlanSessionType;
   sessionCredits!: number;
-  aiWorkoutLimit!: number;
-  aiDietLimit!: number;
+  hasAiWorkout!: boolean;
+  hasAiDiet!: boolean;
   createdAt!: Date;
 
   constructor(data: GetSubscriptionPlanByIdResponseDTO) {

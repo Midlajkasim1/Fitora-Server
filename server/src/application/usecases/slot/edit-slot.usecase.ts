@@ -1,7 +1,7 @@
 import { TrainerEditSlotRequestDTO } from "@/application/dto/slot/request/trainer-edit-slot.dto";
 import { EditSlotResponseDTO } from "@/application/dto/slot/response/trainer-edit-slot.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { SLOT_MESSAGES } from "@/domain/constants/messages.constants";
+import { NOTIFICATION_MESSAGES, NOTIFICATION_TEMPLATES, SLOT_MESSAGES } from "@/domain/constants/messages.constants";
 import { NotificationType } from "@/domain/constants/notification.constants";
 import { SlotStatus } from "@/domain/constants/session.constants";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
@@ -78,8 +78,8 @@ export class TrainerEditSlotUseCase implements IBaseUseCase<TrainerEditSlotReque
 
             for (const userId of participants) {
                 await this._notificationService.notify(userId, {
-                    title: "Session Time Changed 🕒",
-                    message: `Your booked ${updatedSlot.type} session has been rescheduled to ${startTimeString}. Please check your updated schedule.`,
+                    title: NOTIFICATION_TEMPLATES.SLOT_UPDATED_PARTICIPANT.TITLE,
+                    message: NOTIFICATION_TEMPLATES.SLOT_UPDATED_PARTICIPANT.MESSAGE(updatedSlot.type,startTimeString),
                     type: NotificationType.SLOT_CREATED 
                 });
             }
@@ -98,7 +98,7 @@ export class TrainerEditSlotUseCase implements IBaseUseCase<TrainerEditSlotReque
             type: updatedSlot.type,
             capacity: updatedSlot.capacity,
             status: updatedSlot.status,
-            message: "Slot updated successfully"
+            message: NOTIFICATION_MESSAGES.SLOT_UPDATED_SUCESS
         };
     }
 }

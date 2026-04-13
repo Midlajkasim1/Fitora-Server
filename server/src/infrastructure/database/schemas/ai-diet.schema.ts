@@ -1,6 +1,6 @@
-import { IDietDay, IMeal } from "@/domain/entities/ai-workout&diet/ai-diet-plan";
-import { IDietPlanDocument } from "../interfaces/ai-diet-plan.document";
+import { IDietDay, IMeal } from "@/domain/entities/ai-workout&diet/ai-diet-plan.entity";
 import { Schema } from "mongoose";
+import { IDietPlanDocument } from "../interfaces/ai-diet-plan.document";
 
 const MealSchema = new Schema<IMeal>({
   name: { type: String, required: true },

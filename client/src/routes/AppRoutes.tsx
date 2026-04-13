@@ -45,6 +45,10 @@ const CheckSlotsPage = lazy(()=>import("../pages/user/client/slot/CheckSlots"))
 const BrowseTrainersPage = lazy(() => import("../pages/user/client/slot/BrowserTrainersPage"));
 const UserWorkoutSessionPage = lazy(() => import("../pages/user/client/VideoSessionPage"));
 
+const AiSelectionPage = lazy(() => import("../pages/user/client/ai-workout&diet/AiSelection"));
+const AiWorkoutPage = lazy(() => import("../pages/user/client/ai-workout&diet/AiWorkoutPage"));
+const AiDietPage = lazy(() => import("../pages/user/client/ai-workout&diet/AiDietPage"));
+
 /*  Trainer */
 const TrainerDashboard = lazy(() => import("../pages/user/trainer/TrainerDashboard"));
 const TrainerCleintManagement = lazy(() => import("../pages/user/trainer/TrainerClientManagement"));
@@ -120,6 +124,9 @@ export default function AppRoutes() {
           <Route  path="/health-metrics"  element={<ClientHealthMetrics />} />  
          <Route path="/payment/success" element={<PaymentSuccessPage />} />
          <Route path="/payment/cancel" element={<PaymentFailedPage />} />
+           <Route path="/ai-selection" element={<AiSelectionPage />} />
+          <Route path="/ai-workout" element={<AiWorkoutPage />} />
+          <Route path="/ai-diet" element={<AiDietPage />} />
          <Route element={<SubscriptionGuard />}>
         <Route element={<HealthMetricsGuard />}>
         <Route path="/browse-trainers" element={<BrowseTrainersPage />} />

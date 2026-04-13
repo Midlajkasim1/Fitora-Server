@@ -11,7 +11,7 @@ export class ClientPreferenceMapper implements IMapper<ClientPreferenceEntity,IC
       sleepHours: doc.sleep_hours,
       waterIntake: doc.water_intake,
       primaryMotives: doc.primary_motives,
-      preferredWorkouts: doc.preferred_workouts,
+      preferredWorkouts: doc.preferred_workouts.toString(),
       experienceLevel: doc.experience_level,
       dietPreference: doc.diet_preference,
       medicalConditions: doc.medical_conditions
@@ -24,7 +24,7 @@ export class ClientPreferenceMapper implements IMapper<ClientPreferenceEntity,IC
       sleep_hours: entity.sleepHours,
       water_intake: entity.waterIntake, 
       primary_motives: entity.primaryMotives,
-      preferred_workouts: entity.preferredWorkouts,
+      preferred_workouts: new Types.ObjectId(entity.preferredWorkouts),
       experience_level: entity.experienceLevel,
       diet_preference: entity.dietPreference,
       medical_conditions: entity.medicalConditions

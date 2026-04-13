@@ -5,7 +5,7 @@ export class GetUserProfileResponse {
   phone?: string;
   profileImage?: string;
   gender?: string;
-  preferredWorkouts?: string[];
+  preferredWorkouts?: string;
   experienceLevel?: string;
   status?: string;
 

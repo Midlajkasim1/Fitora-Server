@@ -22,8 +22,8 @@ export class CreateSubscriptionPlanUseCase implements IBaseUseCase<CreateSubscri
         description:dto.description,
         sessionType:dto.sessionType,
         sessionCredits:dto.sessionCredits,
-        aiWorkoutLimit:dto.aiWorkoutLimit,
-        aiDietLimit:dto.aiDietLimit
+        hasAiWorkout:dto.hasAiWorkout,
+        hasAiDiet:dto.hasAiDiet
 
     });
        await this._subscriptionRepository.create(subscription);

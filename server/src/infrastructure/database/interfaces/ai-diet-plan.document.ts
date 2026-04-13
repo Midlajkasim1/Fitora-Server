@@ -1,4 +1,4 @@
-import { IDietDay } from "@/domain/entities/ai-workout&diet/ai-diet-plan";
+import { IDietDay } from "@/domain/entities/ai-workout&diet/ai-diet-plan.entity";
 import { Types } from "mongoose";
 
 export interface IDietPlanDocument extends Document {

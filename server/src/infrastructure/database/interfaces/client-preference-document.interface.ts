@@ -7,7 +7,7 @@ export interface IClientPreferenceDocument  {
   sleep_hours: number; 
   water_intake: number; 
   primary_motives: string[]; 
-  preferred_workouts: string; 
+  preferred_workouts: Types.ObjectId; 
   experience_level: ExperienceLevel; 
   diet_preference: DietPreference; 
   medical_conditions: string[];

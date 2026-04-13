@@ -69,15 +69,18 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
         { firstName: { $regex: search, $options: "i" } }
       ];
     }
+    const matchedUsers = await UserModel.find(userMatch).select("_id").lean();
+    const matchedUserIds = matchedUsers.map(u => u._id);
+    trainerFilter.user_id = { $in: matchedUserIds };
 
-    const docs = await TrainerDetailsModel.find(trainerFilter)
-      .populate({
-        path: "user_id",
-        match: userMatch
-      })
-      .skip(skip)
-      .limit(limit)
-      .lean<TrainerWithUser[]>();
+    const [docs, totalCount] = await Promise.all([
+      TrainerDetailsModel.find(trainerFilter)
+        .populate("user_id")
+        .skip(skip)
+        .limit(limit)
+        .lean<TrainerWithUser[]>(),
+      TrainerDetailsModel.countDocuments(trainerFilter)
+    ]);
 
     const users = docs
       .filter(doc => doc.user_id !== null)
@@ -85,7 +88,7 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
 
     return {
       data: users,
-      total: users.length
+      total: totalCount
     };
   }
 
@@ -146,74 +149,73 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
 
     return docs.map(doc => doc.user_id.toString());
   }
-  async findTrainerIdsBySpecializations(specializationIds: string[]): Promise<string[]> {
-    const mongoIds = specializationIds.map(id => new Types.ObjectId(id.toString()));
+  async findTrainerIdsBySpecializations(specializationIds: string): Promise<string[]> {
 
     const docs = await TrainerDetailsModel.find({
-      specializations: { $in: mongoIds },
+      specializations: specializationIds,
       approval_status: "approved"
     }).select("user_id").lean().exec();
     return docs.map(doc => doc.user_id.toString());
   }
 
- async findTrainerForBooking(params: { trainerIds: string[]; search?: string; skip: number; limit: number; }): Promise<{ data: Record<string, unknown>[]; total: number; }> {
-   const { trainerIds, search, skip, limit } = params;
-  
-  const trainerObjectIds = trainerIds.map(id => new Types.ObjectId(id));
+  async findTrainerForBooking(params: { trainerIds: string[]; search?: string; skip: number; limit: number; }): Promise<{ data: Record<string, unknown>[]; total: number; }> {
+    const { trainerIds, search, skip, limit } = params;
 
-  const filter: Record<string, unknown> = {
-    user_id: { $in: trainerObjectIds },
-    approval_status: "approved"
-  };
+    const trainerObjectIds = trainerIds.map(id => new Types.ObjectId(id));
 
-  const pipeline: PipelineStage[] = [
-    { $match: filter },
-    {
-      $lookup: {
-        from: "users",
-        localField: "user_id",
-        foreignField: "_id",
-        as: "userInfo"
-      }
-    },
-    { $unwind: "$userInfo" }
-  ];
+    const filter: Record<string, unknown> = {
+      user_id: { $in: trainerObjectIds },
+      approval_status: "approved"
+    };
 
-  if (search) {
-    pipeline.push({
-      $match: {
-        $or: [
-          { "userInfo.firstName": { $regex: search, $options: "i" } },
-          { "userInfo.lastName": { $regex: search, $options: "i" } }
-        ]
-      }
-    });
+    const pipeline: PipelineStage[] = [
+      { $match: filter },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "userInfo"
+        }
+      },
+      { $unwind: "$userInfo" }
+    ];
+
+    if (search) {
+      pipeline.push({
+        $match: {
+          $or: [
+            { "userInfo.firstName": { $regex: search, $options: "i" } },
+            { "userInfo.lastName": { $regex: search, $options: "i" } }
+          ]
+        }
+      });
+    }
+
+    const totalResults = await TrainerDetailsModel.aggregate([...pipeline, { $count: "total" }]);
+    const total = totalResults[0]?.total || 0;
+
+    pipeline.push({ $skip: skip }, { $limit: limit });
+
+    const docs = await TrainerDetailsModel.aggregate(pipeline);
+
+    const data = docs.map(doc => ({
+      trainerId: doc.user_id.toString(),
+      name: `${doc.userInfo.firstName} ${doc.userInfo.lastName}`,
+      profileImage: doc.userInfo.profileImage,
+      specializations: doc.specializations,
+      experience: doc.experience,
+      rating: 4.8,
+      bio: doc.bio
+    }));
+
+    return { data, total };
   }
-
-  const totalResults = await TrainerDetailsModel.aggregate([...pipeline, { $count: "total" }]);
-  const total = totalResults[0]?.total || 0;
-
-  pipeline.push({ $skip: skip }, { $limit: limit });
-
-  const docs = await TrainerDetailsModel.aggregate(pipeline);
-
-  const data = docs.map(doc => ({
-    trainerId: doc.user_id.toString(),
-    name: `${doc.userInfo.firstName} ${doc.userInfo.lastName}`,
-    profileImage: doc.userInfo.profileImage,
-    specializations: doc.specializations, 
-    experience: doc.experience,
-    rating: 4.8, 
-    bio: doc.bio 
-  }));
-
-  return { data, total };
- }
-async findByTrainerId(trainerId: string): Promise<TrainerDetailsEntity | null> {
-   const doc = await TrainerDetailsModel.findOne({
-    user_id:new Types.ObjectId(trainerId)
-   }).lean<ITrainerDetailsDocument>();
-   return doc ? this.trainerMapper.toEntity(doc) : null ;
-}
+  async findByTrainerId(trainerId: string): Promise<TrainerDetailsEntity | null> {
+    const doc = await TrainerDetailsModel.findOne({
+      user_id: new Types.ObjectId(trainerId)
+    }).lean<ITrainerDetailsDocument>();
+    return doc ? this.trainerMapper.toEntity(doc) : null;
+  }
 
 }

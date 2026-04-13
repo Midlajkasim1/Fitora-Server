@@ -35,13 +35,13 @@ export const SubscriptionPlanSchema = new Schema({
         type:Number,
         default:0
     },
-    aiWorkoutLimit:{
-        type:Number,
-        default:0
+    hasAiWorkout:{
+        type:Boolean,
+        default:false
     },
-    aiDietLimit:{
-        type:Number,
-        default:0
+    hasAiDiet:{
+        type:Boolean,
+        default:false
     },
     totalPurchaseUser:{
         type:Number,

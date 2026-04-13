@@ -47,4 +47,16 @@ export class SubscriptionRepository extends BaseRepository<SubscriptionEntity,IS
             usedCredits:usedCreditsCount
         });
     }
+    async findEveryActive(): Promise<{ userId: string; }[]> {
+        const docs = await SubscriptionModel.find({
+            status: SubscriptionStatus.ACTIVE,
+            end_date: { $gt: new Date() }
+        })
+        .select("user_id") 
+        .lean();
+
+        return docs.map(doc => ({
+            userId: doc.user_id.toString()
+        }));
+    }
 }

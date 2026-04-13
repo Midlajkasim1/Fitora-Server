@@ -9,7 +9,7 @@ import { Loader2, CheckCircle, FileText, User } from "lucide-react";
 export default function TrainerVerificationDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
-    
+
     const { data, isLoading } = useTrainerVerificationById(id!);
     const updateMutation = useUpdateTrainerApproval();
 
@@ -38,7 +38,7 @@ export default function TrainerVerificationDetails() {
 
     const handleReject = () => {
         if (!rejectReason.trim()) return;
-        
+
         updateMutation.mutate(
             {
                 id: data.id,
@@ -99,7 +99,7 @@ export default function TrainerVerificationDetails() {
                                 <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] font-bold text-gray-400 uppercase italic">
                                     {data.experienceYear} Years Experience
                                 </span>
-                             
+
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@ export default function TrainerVerificationDetails() {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                         {/* LEFT: INFO */}
                         <div className="space-y-8">
-                            <SectionHeader icon={<User size={16}/>} title="Personal Profile" />
+                            <SectionHeader icon={<User size={16} />} title="Personal Profile" />
                             <InfoBlock label="Email Address" value={data.email} />
                             <InfoBlock label="Submission Date" value={new Date(data.createdAt).toLocaleDateString()} />
                             <InfoBlock label="Biography" value={data.bio} />
@@ -116,16 +116,17 @@ export default function TrainerVerificationDetails() {
 
                         {/* RIGHT: CREDENTIALS */}
                         <div className="space-y-8">
-                            <SectionHeader icon={<CheckCircle size={16}/>} title="Professional Credentials" />
-                            
+                            <SectionHeader icon={<CheckCircle size={16} />} title="Professional Credentials" />
+
                             <div className="space-y-3">
                                 <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest italic">Specializations</p>
                                 <div className="flex flex-wrap gap-2">
-                                    {data.specializations.map((sp) => (
-                                        <span key={sp.id} className="px-3 py-1 bg-[#00ff94]/5 border border-[#00ff94]/10 text-[#00ff94] text-[10px] font-bold uppercase italic rounded-md">
-                                            {sp.name}
+                                    {data.specializations && data.specializations.length > 0 && (
+                                        <span className="px-3 py-1 bg-[#00ff94]/5 border border-[#00ff94]/10 text-[#00ff94] text-[10px] font-bold uppercase italic rounded-md">
+                                            {/* Access index 0 */}
+                                            {data.specializations[0].name}
                                         </span>
-                                    ))}
+                                    )}
                                 </div>
                             </div>
 

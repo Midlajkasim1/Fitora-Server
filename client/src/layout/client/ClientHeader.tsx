@@ -40,7 +40,7 @@ export const UserHeader = () => {
   const navLinks = [
     { name: "Dashboard", path: "/home" },
     { name: "Workouts", path: "/workouts" },
-    { name: "AI Diet & Workout", path: "/diet" },
+    { name: "AI Diet & Workout", path: "/ai-selection" },
     { name: "Subscription", path: "/subscription" },
     { name: "Support", path: "/support" },
   ];

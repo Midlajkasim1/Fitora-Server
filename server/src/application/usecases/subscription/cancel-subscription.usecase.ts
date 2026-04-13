@@ -1,7 +1,7 @@
 import { CancelSubscriptionRequestDTO } from "@/application/dto/subscription/request/cancel-subscription.dto";
 import { CancelSubscriptionResponseDTO } from "@/application/dto/subscription/response/cancel-subscription.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { SUBSCRIPTION_MESSAGES } from "@/domain/constants/messages.constants";
+import { NOTIFICATION_TEMPLATES, SUBSCRIPTION_MESSAGES } from "@/domain/constants/messages.constants";
 import { NotificationType } from "@/domain/constants/notification.constants";
 import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
 import { ISubscriptionRepository } from "@/domain/interfaces/repositories/subscription.repository";
@@ -21,8 +21,8 @@ export class CancelSubscriptionUseCase implements IBaseUseCase<CancelSubscriptio
         }
         await this._subscriptionRepository.updateStatus(activesub.id!,SubscriptionStatus.CANCELLED);
         await this._notificationService.notify(dto.userId, {
-      title: "Subscription Cancelled ",
-      message: "Your premium subscription has been cancelled. You will still have access until the end of your current billing period.",
+      title: NOTIFICATION_TEMPLATES.SUBSCRIPTION_CANCELLED.TITLE,
+      message: NOTIFICATION_TEMPLATES.SUBSCRIPTION_CANCELLED.MESSAGE,
       type: NotificationType.SUBSCRIPTION_CANCEL 
     });
         return new CancelSubscriptionResponseDTO({

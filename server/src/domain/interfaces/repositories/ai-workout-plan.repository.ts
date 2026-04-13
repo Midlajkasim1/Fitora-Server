@@ -4,4 +4,5 @@ import { IBaseRepository } from "./base.repository";
 export interface IAiWorkoutPlanRepository extends IBaseRepository<AiWorkoutPlanEntity> {
     findByUserId(userId: string): Promise<AiWorkoutPlanEntity[]>;
     findLatestByUserId(userId: string): Promise<AiWorkoutPlanEntity | null>;
+    count(filter:Record<string,unknown>):Promise<number>;
 }

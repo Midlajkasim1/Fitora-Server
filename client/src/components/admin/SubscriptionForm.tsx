@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { FileText, Loader2, Save, Zap, ChevronDown } from "lucide-react";
+import { FileText, Loader2, Save, Zap, ChevronDown, CheckCircle2 } from "lucide-react";
 import { AdminLayout } from "../../layout/admin/AdminLayout";
 import { createSubscriptionSchema, type CreateSubscriptionFormData } from "../../validators/admin/Subcription.Schema";
+import { useEffect } from "react";
 
 interface Props {
   mode: "create" | "edit";
@@ -16,14 +17,30 @@ export default function SubscriptionForm({ mode, initialData, onSubmit, isPendin
   const navigate = useNavigate();
 
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreateSubscriptionFormData>({
-    resolver: zodResolver(createSubscriptionSchema),
-    values: initialData, 
-  });
+  register,
+  handleSubmit,
+  formState: { errors },
+  reset // Use reset to update values when initialData arrives
+} = useForm<CreateSubscriptionFormData>({
+  resolver: zodResolver(createSubscriptionSchema),
+  defaultValues: {
+    name: "",
+    price: "",
+    description: "",
+    sessionCredits: 0,
+    hasAiWorkout: false, 
+    hasAiDiet: false,
+    ...initialData
+  },
+});
 
+// If initialData is loaded asynchronously (common in Edit mode), 
+// use a useEffect to reset the form with the new data
+useEffect(() => {
+  if (initialData) {
+    reset(initialData);
+  }
+}, [initialData, reset]);
   const optionStyle = "bg-[#0d1f17] text-white font-bold italic";
 
   return (
@@ -86,13 +103,13 @@ export default function SubscriptionForm({ mode, initialData, onSubmit, isPendin
 
           <div className="h-px bg-white/5 w-full" />
 
-          {/* SECTION 2: QUOTAS */}
+          {/* SECTION 2: PERMISSIONS & FEATURES */}
           <div className="space-y-6">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-[#00ff94]/10 rounded-lg">
                 <Zap className="text-[#00ff94]" size={20} />
               </div>
-              <h3 className="text-white font-black text-lg italic uppercase">Quotas & AI Access</h3>
+              <h3 className="text-white font-black text-lg italic uppercase">Features & AI Access</h3>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -110,20 +127,25 @@ export default function SubscriptionForm({ mode, initialData, onSubmit, isPendin
               <div className="space-y-2">
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">Credits</label>
                 <input type="number" {...register("sessionCredits", { valueAsNumber: true })} className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 px-6 text-white outline-none focus:border-[#00ff94]/50 font-bold italic" />
-                {errors.sessionCredits && <p className="text-red-500 text-[10px] italic font-bold uppercase mt-1">{errors.sessionCredits.message}</p>}
               </div>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">AI Workout Limit/Day</label>
-                <input type="number" {...register("aiWorkoutLimit", { valueAsNumber: true })} className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 px-6 text-white outline-none focus:border-[#00ff94]/50 font-bold italic" />
-                {errors.aiWorkoutLimit && <p className="text-red-500 text-[10px] italic font-bold uppercase mt-1">{errors.aiWorkoutLimit.message}</p>}
-              </div>
+              {/* AI WORKOUT TOGGLE */}
+              <label className="flex items-center justify-between p-6 bg-black/20 border border-white/5 rounded-3xl cursor-pointer hover:border-[#00ff94]/30 transition-all group">
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs font-black text-white uppercase italic">AI Workout Scheduling</span>
+                  <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest">Enable Weekly AI Workouts</span>
+                </div>
+                <input type="checkbox" {...register("hasAiWorkout")} className="w-6 h-6 accent-[#00ff94] bg-black border-white/10 rounded cursor-pointer" />
+              </label>
 
-              <div className="space-y-2">
-                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">AI Diet Limit/Day</label>
-                <input type="number" {...register("aiDietLimit", { valueAsNumber: true })} className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 px-6 text-white outline-none focus:border-[#00ff94]/50 font-bold italic" />
-                {errors.aiDietLimit && <p className="text-red-500 text-[10px] italic font-bold uppercase mt-1">{errors.aiDietLimit.message}</p>}
-              </div>
+              {/* AI DIET TOGGLE */}
+              <label className="flex items-center justify-between p-6 bg-black/20 border border-white/5 rounded-3xl cursor-pointer hover:border-[#00ff94]/30 transition-all group">
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs font-black text-white uppercase italic">AI Diet Scheduling</span>
+                  <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest">Enable Weekly AI Diets</span>
+                </div>
+                <input type="checkbox" {...register("hasAiDiet")} className="w-6 h-6 accent-[#00ff94] bg-black border-white/10 rounded cursor-pointer" />
+              </label>
             </div>
           </div>
 

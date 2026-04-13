@@ -1,7 +1,7 @@
 import { TrainerCancelSlotRequestDTO } from "@/application/dto/slot/request/trainer-cancel-slot.dto";
 import { TrainerCancelSlotResponseDTO } from "@/application/dto/slot/response/trainer-cancel-slot";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { SLOT_MESSAGES } from "@/domain/constants/messages.constants";
+import { NOTIFICATION_TEMPLATES, SLOT_MESSAGES } from "@/domain/constants/messages.constants";
 import { NotificationType } from "@/domain/constants/notification.constants";
 import { SlotStatus } from "@/domain/constants/session.constants";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
@@ -37,8 +37,8 @@ export class TrainerCancelSlotUseCase implements IBaseUseCase<TrainerCancelSlotR
 
             for (const userId of bookedUsers) {
                 await this._notificationService.notify(userId, {
-                    title: "Session Cancelled ❌",
-                    message: `The trainer has cancelled the ${slot.type} session scheduled for ${sessionDate} at ${sessionTime}. Your credits will be managed accordingly.`,
+                    title: NOTIFICATION_TEMPLATES.SLOT_CANCELLED_PARTICIPANT.TITLE,
+                    message: NOTIFICATION_TEMPLATES.SLOT_CANCELLED_PARTICIPANT.MESSAGE(slot.type,sessionDate,sessionTime),
                     type: NotificationType.SLOT_CANCELLED
                 });
             }

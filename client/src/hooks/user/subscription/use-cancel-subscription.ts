@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../../../api/axios";
-import toast from "react-hot-toast";
 
 export const useCancelSubscription = () => {
   const queryClient = useQueryClient();
@@ -14,7 +13,6 @@ export const useCancelSubscription = () => {
       queryClient.invalidateQueries({ queryKey: ["user-premium-status"] });
       queryClient.invalidateQueries({ queryKey: ["purchase-history"] });
       queryClient.invalidateQueries({ queryKey: ["user-active-subscriptions"] });
-      toast.success("Subscription cancelled successfully");
     }
   
   });

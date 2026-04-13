@@ -52,7 +52,6 @@ export class GetDashboardUseCase implements IBaseUseCase<string, UserDashboardRe
             progressPercentage = Math.min(Math.max(Math.round(progressPercentage), 0), 100);
         }
         const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
-        //  const SEVEN_DAYS_MS = 1 * 60 * 1000;
         const lastUpdate = metrics.updatedAt ? new Date(metrics.updatedAt).getTime() : 0;
         const showWeightModal = (Date.now() - lastUpdate) > SEVEN_DAYS_MS;
 

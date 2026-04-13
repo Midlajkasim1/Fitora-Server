@@ -43,9 +43,14 @@ import { GetDashboardUseCase } from "@/application/usecases/user/get-dashboard.u
 import { GetTrainerBookingUseCase } from "@/application/usecases/user/get-trainerBooking.usecase";
 import { UserWeightProgressUseCase } from "@/application/usecases/user/user-weight-progress.usecase";
 import { notificationServiceProxy } from "@/infrastructure/providers/notification/notification.provider";
-import { GeminiAiService } from "@/infrastructure/providers/ai-model/gemini-ai.service.provider";
+// import { GeminiAiService } from "@/infrastructure/providers/ai-model/gemini-ai.service.provider";
 import { GenerateWorkoutPlanUseCase } from "@/application/usecases/ai-workout&diet/generate-workout-plan.usecase";
 import { GenerateDietPlanUseCase } from "@/application/usecases/ai-workout&diet/generate-diet-usecase";
+import { RedisCacheService } from "@/infrastructure/providers/redis/redis-cache.service";
+import { MistralAiService } from "@/infrastructure/providers/ai-model/mistral-ai.provider";
+import { GetWorkoutPlanUseCase } from "@/application/usecases/ai-workout&diet/get-workout-plan.usecase";
+import { GetDietPlanUseCase } from "@/application/usecases/ai-workout&diet/get-diet-plan.usecase";
+// import { GrokAiService } from "@/infrastructure/providers/ai-model/grok-ai.service.provider";
 
 const otpStore = new RedisOtpStore();
 const emailService = new NodemailerEmailService();
@@ -55,7 +60,8 @@ const googleTokenProvider = new GoogleTokenProvider();
 const storageProvider = new S3StorageProvider();
 
 export const paymentProvider = new StripePaymentProvider();
-const aiService = new GeminiAiService(process.env.GEMINI_API_KEY || "");
+const aiService = new MistralAiService(process.env.MISTRAL_API_KEY!);
+export const redisCacheService = new RedisCacheService();
 
 
 export const useCases = {
@@ -225,7 +231,9 @@ export const useCases = {
     aiService,
     userRepositories.aiWorkoutPlanRepository,
     userRepositories.clientPreferenceRepository,
-    userRepositories.specializationRepository
+    userRepositories.specializationRepository,
+    userRepositories.clientHealthMetricRepository,
+    redisCacheService
   ),
   generateDietPlanUseCase:new GenerateDietPlanUseCase(
     userRepositories.subscriptionRepository,
@@ -233,7 +241,17 @@ export const useCases = {
     aiService,
     userRepositories.aiDietPlanRepository,
      userRepositories.clientPreferenceRepository,
+     userRepositories.clientHealthMetricRepository,
+     redisCacheService
 
+  ),
+  getWorkoutPlanUsecase:new GetWorkoutPlanUseCase(
+    userRepositories.aiWorkoutPlanRepository,
+    redisCacheService
+  ),
+  getDietPlanUseCase:new GetDietPlanUseCase(
+    userRepositories.aiDietPlanRepository,
+    redisCacheService
   )
 
   
