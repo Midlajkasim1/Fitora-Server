@@ -20,7 +20,6 @@ export class MistralAiService implements IAiService {
   }
 
  async generateWorkoutPlan(userId: string, metrics: IUserFitnessMetrics): Promise<AiWorkoutPlanEntity> {
-  // STRENGTHENED PROMPT: Explicitly demanding 7 days
   const prompt = `You are an elite fitness coach. Generate a STOIC 7-day workout plan for a ${metrics.level} athlete.
   GOAL: ${metrics.goal}. SPECIALIZATION: ${metrics.specializations}.
   

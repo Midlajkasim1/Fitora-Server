@@ -33,6 +33,7 @@ const removeFile = (index: number) => {
     setError("root.serverError", { message: "You must upload at least one certification." });
   }
 };
+ // eslint-disable-next-line @typescript-eslint/no-explicit-any
  const onSubmit = (data: any) => {
     let hasError = false;
 

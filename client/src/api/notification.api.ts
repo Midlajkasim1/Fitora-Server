@@ -1,8 +1,9 @@
+import { NOTIFICATION_ROUTES } from "../constants/api.constants";
 import api from "./axios";
 
 
-export const getNotifications = () => api.get("user/notifications");
-export const markAsRead = (id: string) => api.patch(`user/notifications/${id}/read`);
+export const getNotifications = () => api.get(NOTIFICATION_ROUTES.GET_ALL);
+export const markAsRead = (id: string) => api.patch(NOTIFICATION_ROUTES.MARK_READ(id));
 
-export const markAllAsRead=()=>api.patch("user/notifications/mark-all-read");
-export const clearAllNotifications = () => api.delete("user/notifications/clear-all");
+export const markAllAsRead=()=>api.patch(NOTIFICATION_ROUTES.MARK_ALL_READ);
+export const clearAllNotifications = () => api.delete(NOTIFICATION_ROUTES.CLEAR_ALL);

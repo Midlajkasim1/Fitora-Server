@@ -14,6 +14,7 @@ export default function EditWorkoutPage() {
     const mutation = useUpdateWorkout(id!);
     const { data: specializations } = useSpecializationsForFilter();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onSubmit = (formData: any) => {
         toast.loading("Saving changes...", { id: "update" });
         mutation.mutate(formData, {

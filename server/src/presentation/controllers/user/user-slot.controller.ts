@@ -4,13 +4,14 @@ import { GetAvailableSlotsRequestDTO } from "@/application/dto/slot/request/get-
 import { GetUserUpcomingRequestDTO } from "@/application/dto/slot/request/user-get-upcomingSlot.dto";
 import { BookSlotResponseDTO } from "@/application/dto/slot/response/book-slot";
 import { CancelBookingResponseDTO } from "@/application/dto/slot/response/cancel-slot";
-import { AvailableSlotResponseDTO, AvailableSlotsPagedResponseDTO } from "@/application/dto/slot/response/get-slots.dto";
+import {  AvailableSlotsPagedResponseDTO } from "@/application/dto/slot/response/get-slots.dto";
 import { UserUpcomingResponseDTO } from "@/application/dto/slot/response/user-upcomingSlot.dto";
 import { GetTrainersBookingRequestDTO } from "@/application/dto/user/request/get-trainerBooking.dto";
 import { GetTrainersBookingResponseDTO } from "@/application/dto/user/response/get-trainerBooking.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { AUTH_MESSAGES, SLOT_MESSAGES } from "@/domain/constants/messages.constants";
+import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
 
 
@@ -26,10 +27,7 @@ export class UserSlotController {
     async getAvailableSlot(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
         if (!userId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
+            return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
         const dto = new GetAvailableSlotsRequestDTO({
             userId: userId,
@@ -40,41 +38,30 @@ export class UserSlotController {
         });
 
         const result = await this._getAvailableSlotsUseCase.execute(dto);
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            data: result
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
     }
     async userBookSlot(req: Request, res: Response): Promise<Response> {
         const { slotId } = req.params;
         const userId = req.user?.userId;
-        if (!userId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.USER_NOT_FOUND
-            });
+       if (!userId) {
+            return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
-        await this._bookSlotUseCase.execute({ slotId, userId });
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            message: SLOT_MESSAGES.SLOT_BOOKING_SUCCESS,
-
-        });
+      const result = await this._bookSlotUseCase.execute({ slotId, userId });
+        return res.status(HttpStatus.OK).json(
+            ApiResponse.success(result, SLOT_MESSAGES.SLOT_BOOKING_SUCCESS)
+        );
 
 
     }
     async cancelBooking(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
-        if (!userId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
+         if (!userId) {
+            return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
         const { slotId } = req.params;
         const result = await this._cancelSlotUseCase.execute({ slotId, userId });
-        return res.status(HttpStatus.OK).json(result);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
     async UpcomingSessionSlots(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
@@ -84,18 +71,12 @@ export class UserSlotController {
             limit: Number(req.query.limit) || 10
         });
         const result = await this._getUsersUpcomingUseCase.execute(dto);
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            data: result
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
     async getTrainer(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
-        if (!userId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
+         if (!userId) {
+            return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
         const dto = new GetTrainersBookingRequestDTO({
             userId,
@@ -104,10 +85,7 @@ export class UserSlotController {
             search: req.query.search as string | undefined
         });
         const result = await this._getTrainerBookingUseCase.execute(dto);
-        return res.status(HttpStatus.OK).json({
-            success:true,
-            data:result
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
 
 

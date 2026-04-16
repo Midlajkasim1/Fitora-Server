@@ -1,4 +1,3 @@
-import { ExperienceLevel } from "@/domain/constants/auth.constants";
 import { z } from "zod";
 
 export const updateUserProfileSchema = z.object({

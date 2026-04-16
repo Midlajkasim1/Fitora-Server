@@ -103,6 +103,7 @@ export default function PremiumDashboardPage() {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const MetricCard = ({ icon: Icon, label, value, unit }: any) => (
     <div className="bg-[#132a1e] border border-white/5 p-6 rounded-[2rem] flex flex-col items-center justify-center text-center gap-3 hover:border-[#00ff94]/20 transition-colors group">
       {/* Icon Container with subtle glow on hover */}

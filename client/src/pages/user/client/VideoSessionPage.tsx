@@ -42,6 +42,7 @@ export default function VideoSessionPage() {
   }, [isActive]);
   
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let interval: any = null;
     if (isActive && secondsLeft > 0) {
       interval = setInterval(() => {

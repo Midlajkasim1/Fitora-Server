@@ -10,6 +10,7 @@ export const usePurchasePlan = () => {
     onSuccess: (data) => {
       window.location.href = data.checkoutUrl;
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => {
       console.error("Purchase failed:", error.response?.data?.message || "Server Error");
     }

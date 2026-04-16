@@ -9,18 +9,19 @@ import { GetWorkoutSelectionResponseDTO } from "@/application/dto/user/response/
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { SpecializationStatus } from "@/domain/constants/auth.constants";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
+import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
 
 
 export class UserSpecializationController {
   constructor(
     private readonly _getAllSpecializationUseCase: IBaseUseCase<GetSpecializationRequest, GetSpecializationResponseDTO>,
-    private readonly _getSpecializationByIdUseCase:IBaseUseCase<GetSpecializationByIdRequestDTO,GetSpecializationByIdResponseDTO>,
-    private readonly _getWorkoutBySpecializationUseCase:IBaseUseCase<GetWorkoutBySpecializationRequestDTO,GetWorkoutsBySpecializationResponseDTO>,
-    private readonly _getWorkoutSelectionUseCase: IBaseUseCase<GetWorkoutSelectionRequestDTO,GetWorkoutSelectionResponseDTO>
-  ) {}
+    private readonly _getSpecializationByIdUseCase: IBaseUseCase<GetSpecializationByIdRequestDTO, GetSpecializationByIdResponseDTO>,
+    private readonly _getWorkoutBySpecializationUseCase: IBaseUseCase<GetWorkoutBySpecializationRequestDTO, GetWorkoutsBySpecializationResponseDTO>,
+    private readonly _getWorkoutSelectionUseCase: IBaseUseCase<GetWorkoutSelectionRequestDTO, GetWorkoutSelectionResponseDTO>
+  ) { }
 
-  async getActiveSpecializations(req: Request, res: Response):Promise<Response> {
+  async getActiveSpecializations(req: Request, res: Response): Promise<Response> {
     const dto = {
       page: Number(req.query.page) || 1,
       limit: Number(req.query.limit) || 10,
@@ -30,34 +31,26 @@ export class UserSpecializationController {
 
     const result = await this._getAllSpecializationUseCase.execute(dto);
 
-    return res.json({
-      success: true,
-      data: result,
-    });
+    return res.json(ApiResponse.success(result));
   }
-  async getSpecializationDetails(req:Request,res:Response):Promise<Response>{
-     const id = req.params.id;
-      const specializations =await this._getSpecializationByIdUseCase.execute({id});
-      const workouts = await this._getWorkoutBySpecializationUseCase.execute({id});
-      return res.status(HttpStatus.OK).json({
-        success:true,
-        data:{
-            specializations,
-            workouts
-        }
-    
-      });
+  async getSpecializationDetails(req: Request, res: Response): Promise<Response> {
+    const id = req.params.id;
+    const specializations = await this._getSpecializationByIdUseCase.execute({ id });
+    const workouts = await this._getWorkoutBySpecializationUseCase.execute({ id });
+    return res.status(HttpStatus.OK).json(
+      ApiResponse.success({
+        specializations,
+        workouts
+      })
+    );
   }
-  async getStartSession(req:Request,res:Response):Promise<Response>{
-    const dto:GetWorkoutSelectionRequestDTO={
-        id:req.params.id,
-        difficulty:req.query.difficulty as string,
-        duration:Number(req.query.duration)
+  async getStartSession(req: Request, res: Response): Promise<Response> {
+    const dto: GetWorkoutSelectionRequestDTO = {
+      id: req.params.id,
+      difficulty: req.query.difficulty as string,
+      duration: Number(req.query.duration)
     };
     const result = await this._getWorkoutSelectionUseCase.execute(dto);
-    return res.status(HttpStatus.OK).json({
-        success:true,
-        data:result
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
   }
 }

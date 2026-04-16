@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Pagination } from "../../../components/admin/Pagination";
 import { format } from "date-fns";
-import { Receipt, CheckCircle2, XCircle, Clock, Ban } from "lucide-react";
+ 
+import { Receipt, CheckCircle2, XCircle, Clock } from "lucide-react";
 import { usePurchaseHistory } from "../../../hooks/user/subscription/use-purchaseHistory";
 import { useCancelSubscription } from "../../../hooks/user/subscription/use-cancel-subscription";
 import { ConfirmModal } from "../../../shared/ConfirmModal";

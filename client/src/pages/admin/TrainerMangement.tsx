@@ -40,6 +40,7 @@ export default function TrainerManagement() {
   const columns = [
     {
       header: "#",
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       render: (_: any, index: number) => (
         <span className="text-gray-600 font-medium">{(page - 1) * 10 + (index + 1)}</span>
       )
@@ -116,6 +117,7 @@ export default function TrainerManagement() {
             },
             {
               label: "Filter Specialization",
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               options: specializations.map((s: any) => ({
                 label: s.name,
                 value: s.id

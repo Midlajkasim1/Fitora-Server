@@ -27,21 +27,17 @@ export class GenerateDietPlanUseCase implements IBaseUseCase<GenerateDietRequest
  const { userId } = dto;
     const cacheKey = `diet_plan:${userId}`;
 
-    // --- STEP 1: STRICT SUBSCRIPTION CHECK FIRST ---
-    // We check this before even looking at the cache
     const activeSub = await this._subRepo.findActiveByUserId(userId);
     
     if (!activeSub) {
       throw new Error("AI Diet Plans are a Pro feature. Please subscribe to unlock your personalized nutrition guide!");
     }
 
-    // --- STEP 2: PLAN CAPABILITY CHECK ---
     const plan = await this._planRepo.findById(activeSub.planId);
     if (!plan || !plan.hasAiDiet) {
       throw new Error("Your current plan does not include AI Diet features. Please upgrade to Pro.");
     }
 
-    // --- STEP 3: CACHE CHECK (Only for authorized users) ---
     const cached = await this._cacheService.get<AiDietPlanEntity>(cacheKey);
     if (cached &&  cached.weeklyPlan && cached.weeklyPlan.length >0) {
       return {
@@ -53,7 +49,6 @@ export class GenerateDietPlanUseCase implements IBaseUseCase<GenerateDietRequest
       };
     }
 
-    // --- STEP 4: GENERATION LOGIC (Locking) ---
     const lockAcquired = await this._cacheService.acquireLock(cacheKey, 60);
     if (!lockAcquired) {
       throw new Error("We are currently building your plan. Please wait a moment.");
@@ -66,7 +61,6 @@ export class GenerateDietPlanUseCase implements IBaseUseCase<GenerateDietRequest
       const dbMetrics = await this._healthRepo.findByUserId(userId);
       if (!dbMetrics) throw new Error("Please add your height and weight to your profile to get an accurate meal plan.");
 
-      // Anti-spam check
       const startOfToday = new Date();
       startOfToday.setHours(0, 0, 0, 0);
       const generatedToday = await this._aiDietRepo.count({ 

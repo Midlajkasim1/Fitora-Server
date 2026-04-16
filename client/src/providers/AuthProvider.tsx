@@ -18,6 +18,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (response.data?.data) {
           setAuth(response.data.data);
         }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
        
         if (err.response?.status === 401) {

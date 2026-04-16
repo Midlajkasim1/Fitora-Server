@@ -5,6 +5,7 @@ interface TrainerProfileFieldProps {
     label: string;
     value: string | number | undefined;
     isEditing: boolean;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register: any;
     name: string;
     error?: string;

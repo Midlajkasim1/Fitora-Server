@@ -8,6 +8,7 @@ import { OnboardingResponseDTO } from "@/application/dto/auth/onboarding/respons
 import { TrainerOnboardingDTO } from "@/application/dto/auth/onboarding/request/trainer-onboarding.dto";
 import { GetActiveSpecializationResponse } from "@/application/dto/specialization/response/getActive-specialization.dto";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
+import { ApiResponse } from "@/shared/utils/response.handler";
 export class OnboardingController {
   constructor(
     private readonly _userOnboardingUseCase: IBaseUseCase<UserOnboardingDTO,OnboardingResponseDTO>,
@@ -20,7 +21,7 @@ async completeUser(req: Request, res: Response): Promise<Response> {
     const validatedData = userOnboardingSchema.parse(req.body);
     const result = await this._userOnboardingUseCase.execute(validatedData);
     
-    return res.status(200).json(result);
+    return res.status(200).json(ApiResponse.success(result));
 
 }
 
@@ -37,14 +38,11 @@ async completeUser(req: Request, res: Response): Promise<Response> {
       }));
       const result = await this._trainerOnboardingUseCase.execute(validatedData, uploadedFiles);
 
-      return res.status(200).json(result);
+      return res.status(200).json(ApiResponse.success(result));
  
   }
   async getActiveSpecializations(req:Request,res:Response):Promise<Response>{
     const result = await this._getActiveSpecializationUseCase.execute();
-    return res.status(HttpStatus.OK).json({
-      success:true,
-      data:result
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
   }
 }

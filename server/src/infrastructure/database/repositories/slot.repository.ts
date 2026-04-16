@@ -305,4 +305,5 @@ export class SlotRespository extends BaseRepository<SlotEntity, ISlotDocument> i
         const doc = await SlotModel.findOne(data).lean();
         return doc ? this._slotMapper.toEntity(doc) : null;
     }
+  
 }

@@ -14,7 +14,11 @@ export const registerSchema = z.object({
   message: "Passwords do not match",
   path: ["confirmPassword"],
 })
-.transform((data) => {
-  const { confirmPassword, ...rest } = data;
-  return rest;
-});
+.transform(({ email, password, firstName, lastName, phone, role }) => ({
+  email,
+  password,
+  firstName,
+  lastName,
+  phone,
+  role,
+}));

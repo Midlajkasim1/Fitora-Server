@@ -9,6 +9,7 @@ import { GetWorkoutPlanResponseDTO } from "@/application/dto/ai-workout&diet/res
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
 
 export class AiPlanController {
@@ -22,56 +23,54 @@ export class AiPlanController {
         const userId = req.user?.userId;
 
         if (!userId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
         const dto = new GetWorkoutPlanRequestDTO({
             userId: userId
         });
         const result = await this._getWorkoutPlanUseCase.execute(dto);
-        return res.status(200).json(result);
+        return res.status(200).json(ApiResponse.success(result));
     }
     async getDietPlan(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
-        if (!userId){
-        return res.status(HttpStatus.UNAUTHORIZED).json({ success: false, message: AUTH_MESSAGES.UNAUTHORIZED });
-
-        } 
+        if (!userId) {
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
+        }
 
         const dto = new GetDietPlanRequestDTO({ userId });
         const result = await this._getDietPlanUseCase.execute(dto);
-        return res.status(HttpStatus.OK).json(result);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
     async generateWorkout(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
         const metrics = req.body.metrics;
         if (!userId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
         const dto = new GenerateWorkoutRequestDTO({ userId, metrics });
         const result = await this._generateWorkoutPlanUseCase.execute(dto);
-        return res.status(HttpStatus.OK).json(result);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
     async generateDiet(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
         const metrics = req.body.metrics;
-        if (!userId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
+         if (!userId) {
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
         const dto = new GenerateDietRequestDTO({
             userId,
             metrics: metrics
         });
         const result = await this._generateDietPlanUseCase.execute(dto);
-        return res.status(HttpStatus.OK).json(result);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
 
 

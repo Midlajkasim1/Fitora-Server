@@ -6,6 +6,7 @@ import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { GetUsersResponseDTO } from "@/application/dto/admin/response/get-users.dto";
 import { BlockUserResponseDTO } from "@/application/dto/admin/response/block-user.dto";
 import { UserStatus } from "@/domain/constants/auth.constants";
+import { ApiResponse } from "@/shared/utils/response.handler";
 
 export class AdminUserController {
   constructor(
@@ -24,10 +25,7 @@ export class AdminUserController {
 
       const result = await this._getAllUsersUseCase.execute(dto);
 
-      return res.status(HttpStatus.OK).json({
-        success: true,
-        data: result,
-      });
+      return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
   }
   async blockUser(req: Request, res: Response):Promise<Response> {
@@ -35,10 +33,7 @@ export class AdminUserController {
       const dto: BlockUserRequestDTO = { userId: req.params.id };
       const result = await this._userBlockUsecase.execute(dto);
 
-      return res.status(HttpStatus.OK).json({
-        success: true,
-        data: result,
-      });
+      return res.status(HttpStatus.OK).json(ApiResponse.success(result));
  
   }
 

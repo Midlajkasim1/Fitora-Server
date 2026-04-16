@@ -1,12 +1,13 @@
 import api from "./axios";
 import type { ClientOnboardingPayload, TrainerOnboardingPayload } from "../type/onboarding.types";
 import {useAuthStore} from '../store/use-auth-store'
+import { ONBOARDING_ROUTES } from "../constants/api.constants";
 
 export const completeClientOnboarding = (data: ClientOnboardingPayload) => {
 
   const { user } = useAuthStore.getState();
 
-  return api.post("/onboarding/user/complete", {
+  return api.post(ONBOARDING_ROUTES.CLIENT_COMPLETE, {
     userId: user?.id, 
     dob: data.dob,
     gender: data.gender,
@@ -34,7 +35,7 @@ export const completeTrainerOnboarding = async (data: TrainerOnboardingPayload) 
     });
   }
 
-  return api.post("/onboarding/trainer/complete", formData, {
+  return api.post(ONBOARDING_ROUTES.TRAINER_COMPLETE, formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
@@ -42,5 +43,5 @@ export const completeTrainerOnboarding = async (data: TrainerOnboardingPayload) 
 };
 
 export const getSpecializations=()=>{
-  return api.get("/onboarding/active-specialization");
+  return api.get(ONBOARDING_ROUTES.GET_SPECIALIZATIONS);
 }

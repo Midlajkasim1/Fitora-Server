@@ -22,7 +22,7 @@ export class NotificationRepository
       .lean()
       .exec();
 
-    return docs.map((doc) => this.mapper.toEntity(doc as INotificationDocument));
+    return docs.map((doc) => this._notificationMapper.toEntity(doc as INotificationDocument));
   }
 
   async markAsRead(notificationId: string): Promise<void> {

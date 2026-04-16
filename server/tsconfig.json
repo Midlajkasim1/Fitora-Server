@@ -3,7 +3,6 @@
     "target": "ESNext",
     "module": "Node16",
     "moduleResolution": "Node16",
-    "ignoreDeprecations": "6.0",   
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -16,6 +15,17 @@
     "paths": {
       "@/*": ["./src/*"]        
     },
+    "types": [
+      "node",
+      "express",
+      "multer",
+      "jsonwebtoken",
+      "bcrypt",
+      "cookie-parser",
+      "cors",
+      "morgan",
+      "nodemailer"
+    ],
     "incremental": true,
     "tsBuildInfoFile": ".tsbuildinfo",
     "noEmitOnError": false,

@@ -50,6 +50,7 @@ export default function ClientStepTwoPage() {
   const selectedDiet = watch("dietPreference");
 
   const toggleCondition = (val: string) => {
+    // eslint-disable-next-line react-hooks/incompatible-library
     const current = watch("medicalConditions") || [];
     let next: string[];
 
@@ -81,6 +82,7 @@ export default function ClientStepTwoPage() {
       updateOnboardingStatus(false);
       clearClient();
       navigate("/home", { replace: true });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error("Submission failed", error);
     }

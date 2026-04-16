@@ -90,6 +90,7 @@ export default function TrainerStepTwo() {
         {isLoading ? (
           <p className="text-gray-500">Loading specializations...</p>
         ) : (
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           specialization.map((spec: any) => {
             const isActive = selected === spec.id;
             return (

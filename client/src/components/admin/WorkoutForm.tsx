@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload, Save } from "lucide-react";
 import { useEffect, useMemo } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { createWorkoutSchema } from "../../validators/admin/workout.Schema";
@@ -22,15 +22,15 @@ export default function WorkoutForm({ mode, initialData, specializations, onSubm
         register,
         handleSubmit,
         setValue,
-        watch,
+        control,
         formState: { errors },
     } = useForm({
         resolver: zodResolver(createWorkoutSchema),
         values: initialData,
     });
 
-    const videoFile = watch("video");
-    const thumbnailFile = watch("thumbnail");
+    const videoFile = useWatch({ control, name: "video" });
+    const thumbnailFile = useWatch({ control, name: "thumbnail" });
 
     const videoPreview = useMemo(() => {
         if (videoFile instanceof File) return URL.createObjectURL(videoFile);
@@ -49,6 +49,7 @@ export default function WorkoutForm({ mode, initialData, specializations, onSubm
         };
     }, [videoPreview, thumbnailPreview]);
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onInvalid = (errors: any) => {
         console.error("Form Validation Errors:", errors);
         toast.error("Please fill all required fields correctly", { id: "val-error" });

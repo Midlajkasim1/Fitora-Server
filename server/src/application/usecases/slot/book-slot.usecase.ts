@@ -37,6 +37,8 @@ export class BookSlotUseCase implements IBaseUseCase<BookSlotRequestDTO,BookSlot
         if(plan.sessionType === PlanSessionType.GROUP && slot.type === SessionType.ONE_ON_ONE){
             throw new Error(SLOT_MESSAGES.ONLY_SUPPORT_GROUP);
         }
+
+       
        
         const isSuccess = await this._slotRepository.bookSlot(dto.slotId,dto.userId);
         if(!isSuccess){

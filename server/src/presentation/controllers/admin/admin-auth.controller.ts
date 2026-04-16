@@ -8,6 +8,7 @@ import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { CookieManager } from "@/infrastructure/security/cookie-manager";
 import { adminLoginSchema } from "@/infrastructure/validators/admin/admin-login.validators";
+import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
 
 export class AdminAuthController {
@@ -23,24 +24,25 @@ export class AdminAuthController {
     const dto = adminLoginSchema.parse(req.body);
     const result = await this._adminLoginUseCase.execute(dto);
     CookieManager.setAuthCookies(res, result.accessToken, result.refreshToken);
-    return res.status(HttpStatus.OK).json({ success: true, data: result });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result,AUTH_MESSAGES.LOGINSUCCESS));
 
   }
 
   async refreshToken(req: Request, res: Response): Promise<Response> {
 
     const token = req.cookies.refreshToken;
-    if (!token) throw new Error(AUTH_MESSAGES.REFRESH_TOKEN_MISSING);
+    if (!token) {
+      return res
+        .status(HttpStatus.UNAUTHORIZED)
+        .json(ApiResponse.error(AUTH_MESSAGES.REFRESH_TOKEN_MISSING));
+    }
     const result = await this._adminRefreshTokenUseCase.execute({
       refreshToken:token
     });
 
     CookieManager.setAccessCookie(res, result.accessToken);
 
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      accessToken: result.accessToken
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success({accessToken: result.accessToken}));
 
   }
 
@@ -55,19 +57,13 @@ export class AdminAuthController {
 
     const result = await this._getAdminMeUsecase.execute(adminId);
 
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      data: result,
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
   }
 
   async logout(req: Request, res: Response): Promise<Response> {
     CookieManager.clearAuthCookies(res);
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      message: AUTH_MESSAGES.ADMIN_LOGIN
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(null,AUTH_MESSAGES.ADMIN_LOGOUT));
   }
 
 

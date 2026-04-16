@@ -36,10 +36,10 @@ type WorkoutDifficulty = "beginner" | "intermediate" | "advanced";
 
       {/* DIFFICULTY SELECTION */}
       <div className="flex flex-wrap justify-center gap-4 mb-10">
-        {["Easy", "Intermediate", "Advanced"].map((level) => (
+        {(["Beginner", "Intermediate", "Advanced"] as const).map((level) => (
           <button
             key={level}
-            onClick={() => setDifficulty(level.toLowerCase())}
+            onClick={() => setDifficulty(level.toLowerCase() as WorkoutDifficulty)}
             className={`px-8 py-6 rounded-2xl border-2 font-bold uppercase italic transition-all ${
               difficulty === level.toLowerCase()
                 ? "border-[#00ff94] bg-[#00ff94]/10 text-[#00ff94]"
@@ -78,7 +78,7 @@ type WorkoutDifficulty = "beginner" | "intermediate" | "advanced";
       {/* ERROR HANDLING */}
       {isError && (
         <p className="mt-6 text-red-500 font-bold italic bg-red-500/10 px-4 py-2 rounded-lg">
-          {(error as any)?.response?.data?.message || "No workout found for this selection."}
+          {(error as { response?: { data?: { message?: string } } })?.response?.data?.message || "No workout found for this selection."}
         </p>
       )}
     </div>

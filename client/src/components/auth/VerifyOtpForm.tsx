@@ -21,6 +21,7 @@ export const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({ onSubmit, isLoadin
     defaultValues: { otp: '' }
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const otpValue = watch('otp');
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
 

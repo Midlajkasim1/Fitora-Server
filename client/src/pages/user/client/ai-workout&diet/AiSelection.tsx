@@ -72,6 +72,7 @@ const AiSelectionPage = () => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const SelectionCard = ({ icon, title, subtitle, onClick }: any) => (
   <button 
     onClick={onClick} 

@@ -8,57 +8,52 @@ import { MarkReadResponseDTO } from "@/application/dto/notification/response/mar
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
 
 export class NotificationController {
     constructor(
         private readonly _getUserNotifications: IBaseUseCase<string, GetNotificationsResponseDTO[]>,
-        private readonly _markAsReadUseCase:  IBaseUseCase<MarkReadRequestDTO, MarkReadResponseDTO>,
-        private readonly _markAllReadUseCase:IBaseUseCase<MarkAllReadRequestDTO,MarkAllReadResponseDTO>,
-        private readonly _clearAllNotificationUseCase: IBaseUseCase<ClearAllNotificationRequestDTO,ClearAllNotificationsResponseDTO>
+        private readonly _markAsReadUseCase: IBaseUseCase<MarkReadRequestDTO, MarkReadResponseDTO>,
+        private readonly _markAllReadUseCase: IBaseUseCase<MarkAllReadRequestDTO, MarkAllReadResponseDTO>,
+        private readonly _clearAllNotificationUseCase: IBaseUseCase<ClearAllNotificationRequestDTO, ClearAllNotificationsResponseDTO>
 
     ) { }
 
     async getMyNotifications(req: Request, res: Response) {
         const userId = req.user?.userId;
         if (!userId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
         const notifications = await this._getUserNotifications.execute(userId);
 
-        return res.status(200).json({
-            success: true,
-            data: notifications
-        });
+        return res.status(200).json(ApiResponse.success(notifications));
     };
-    async markAsRead(req:Request,res:Response):Promise<Response>{
-        const {id} = req.params;
-        const result = await this._markAsReadUseCase.execute({notificationId:id});
-        return res.status(HttpStatus.OK).json(result);
+    async markAsRead(req: Request, res: Response): Promise<Response> {
+        const { id } = req.params;
+        const result = await this._markAsReadUseCase.execute({ notificationId: id });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
-    async markAllAsRead(req:Request,res:Response):Promise<Response>{
+    async markAllAsRead(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
         if (!userId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
-        const result = await this._markAllReadUseCase.execute({userId});
-        return res.status(HttpStatus.OK).json(result);
+        const result = await this._markAllReadUseCase.execute({ userId });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
-    async clearAllNotifcation(req:Request,res:Response):Promise<Response>{
+    async clearAllNotifcation(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
-         if (!userId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
+        if (!userId) {
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
-        const result = await this._clearAllNotificationUseCase.execute({userId});
-        return res.status(HttpStatus.OK).json(result);
+        const result = await this._clearAllNotificationUseCase.execute({ userId });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
 }

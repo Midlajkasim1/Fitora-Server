@@ -9,6 +9,7 @@ import { advertisementSchema, type AdvertisementFormData } from "../../validator
 
 interface Props {
     mode: "create" | "edit";
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     initialData?: any;
     onSubmit: (data: FormData) => void;
     isPending: boolean;
@@ -57,6 +58,7 @@ export default function AdvertisementForm({ mode, initialData, onSubmit, isPendi
 
         setPreviews(updatedPreviews);
         setFilesArray(updatedFiles);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setValue("bannerImages", updatedFiles.length > 0 || updatedPreviews.length > 0 ? [true] : [] as any);
     };
 

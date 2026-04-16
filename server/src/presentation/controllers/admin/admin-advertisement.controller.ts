@@ -1,5 +1,5 @@
 import { CreateAdvertismentRequest } from "@/application/dto/advertisement/request/create-advertisement.dto";
-import { GetAdvertisementByIdRequest } from "@/application/dto/advertisement/request/get-AdvertisementByid.dto";
+import { GetAdvertisementByIdRequest } from "@/application/dto/advertisement/request/get-advertisementById.dto";
 import { GetAllAdvertismentRequest } from "@/application/dto/advertisement/request/get-allAdvertisement.dto";
 import { UpdateAdvertismentRequest } from "@/application/dto/advertisement/request/update-advertisement.dto";
 import { UpdateStatusAdvertisementRequestDTO } from "@/application/dto/advertisement/request/updateStatus-advertisement.dto";
@@ -15,6 +15,7 @@ import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { ADVERTISEMENT_MESSAGES } from "@/domain/constants/messages.constants";
 import { CreateAdvertisementSchema } from "@/infrastructure/validators/admin/advertisement.validator";
 import { UpdateAdvertisementSchema } from "@/infrastructure/validators/admin/update-advertisement.validators";
+import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
 
 
@@ -40,7 +41,7 @@ export class AdvertisementController{
         
        }));
         const result = await this._createAdvertisementUseCase.execute(dto,uploadFiles);
-        return res.status(HttpStatus.OK).json(result);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result,ADVERTISEMENT_MESSAGES.ADS_CREATED));
     }
     async updateAdvertisement(req:Request,res:Response):Promise<Response>{
    const updateinput = {
@@ -57,7 +58,7 @@ export class AdvertisementController{
     size:file.size
    }));
    const result = await this._updateAdvertisementUseCase.execute(dto,uploadfiles);
-   return res.status(HttpStatus.OK).json(result);
+   return res.status(HttpStatus.OK).json(ApiResponse.success(result,ADVERTISEMENT_MESSAGES.ADS_UPDATED));
     }
  async  getAllAdvertisement(req:Request,res:Response):Promise<Response>{
     const dto = new GetAllAdvertismentRequest({
@@ -67,10 +68,7 @@ export class AdvertisementController{
         status:req.query.status as AdvertisementStatus
     });
     const result = await this._getAllAdvertisementUseCase.execute(dto);
-    return res.status(HttpStatus.OK).json({
-        success:true,
-        data:result
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
  }
  async updateStatusAdvertisement(req:Request,res:Response):Promise<Response>{
 
@@ -79,18 +77,12 @@ export class AdvertisementController{
         adId:req.params.adId
     });
     const result = await this._updateStatusAdvertisementUseCase.execute(dto);
-    return res.status(HttpStatus.OK).json({
-        success:true,
-        data:result
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result,ADVERTISEMENT_MESSAGES.ADVERTISEMENT_STATUS_UPDATED(result.status)));
  };
  async getAdvertisementById(req:Request,res:Response):Promise<Response>{
     const dto =new GetAdvertisementByIdRequest({adId:req.params.id});
     const result = await this._getAdvertisementByIdUseCase.execute(dto);
-    return res.status(HttpStatus.OK).json({
-        success:true,
-        data:result
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
  }
 }

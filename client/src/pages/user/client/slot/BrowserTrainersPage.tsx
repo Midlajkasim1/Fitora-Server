@@ -38,7 +38,8 @@ console.log(data)
 
       <main className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {data?.trainers.map((trainer: any) => (
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          {data?.trainers.map((trainer: unknown) => (
             <div key={trainer.trainerId} className="bg-[#132a1e] border border-white/5 rounded-[2.5rem] p-6 group hover:border-[#00ff94]/30 transition-all">
               <div className="relative mb-6">
                 <div className="w-20 h-20 bg-black/40 rounded-3xl flex items-center justify-center overflow-hidden border border-white/5">

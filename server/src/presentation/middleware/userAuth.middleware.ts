@@ -31,7 +31,7 @@ export const authenticateUser = () => {
 
       res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
       next();
-    } catch (error) {
+    } catch {
       return res.status(HttpStatus.UNAUTHORIZED).json({
         success: false,
         message: AUTH_MESSAGES.UNAUTHORIZED

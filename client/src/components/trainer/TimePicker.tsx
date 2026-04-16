@@ -1,5 +1,6 @@
 // components/trainer/TimePicker12h.tsx
 interface TimePickerProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: any;
   period: "AM" | "PM";
   setPeriod: (p: "AM" | "PM") => void;

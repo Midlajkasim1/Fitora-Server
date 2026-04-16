@@ -40,6 +40,7 @@ export const useNotificationsLogic = () => {
     },
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const unreadCount = notifications.filter((n: any) => !n.isRead).length;
 
   return {

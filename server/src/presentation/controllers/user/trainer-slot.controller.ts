@@ -10,8 +10,9 @@ import { GetTrainerStudentResponseDTO } from "@/application/dto/slot/response/tr
 import { TrainerUpcomingResponseDTO } from "@/application/dto/slot/response/trainer-get-upcomingSlot.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
-import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { AUTH_MESSAGES, SLOT_MESSAGES } from "@/domain/constants/messages.constants";
 import { SlotSchema } from "@/infrastructure/validators/user/trainer/trainer-slot.validator";
+import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
 
 
@@ -29,10 +30,9 @@ export class TrainerSlotController {
         const validateData = SlotSchema.parse(req.body);
         const trainerId = req.user?.userId;
         if (!trainerId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.TRAINER_ID_NOT_FOUND
-            });
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.TRAINER_ID_NOT_FOUND));
         }
         const dto: CreateSlotRequestDTO = {
             trainerId: trainerId,
@@ -42,21 +42,16 @@ export class TrainerSlotController {
             capacity: validateData.capacity
         };
         const result = await this._createSlotUseCase.execute(dto);
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            data: result
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result, SLOT_MESSAGES.SLOT_CREATED_SUCESSFULLY));
 
     }
     async editSlot(req: Request, res: Response): Promise<Response> {
         const { slotId } = req.params;
         const trainerId = req.user?.userId;
         if (!trainerId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
-
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.TRAINER_ID_NOT_FOUND));
         }
         const validateData = SlotSchema.parse(req.body);
 
@@ -66,35 +61,24 @@ export class TrainerSlotController {
             startTime: new Date(validateData.startTime),
             endTime: new Date(validateData.endTime),
             type: validateData.type,
-            capacity: validateData.capacity as number 
+            capacity: validateData.capacity as number
         });
 
-        // 3. Execute UseCase
         const result = await this._editSlotUseCase.execute(dto);
 
-        // 4. Return Response
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            message: result.message,
-            data: result
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result,result.message));
     }
 
     async cancelSlot(req: Request, res: Response): Promise<Response> {
         const { slotId } = req.params;
         const trainerId = req.user?.userId;
-        if (!trainerId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
+         if (!trainerId) {
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.TRAINER_ID_NOT_FOUND));
         }
         const result = await this._cancelSlotUseCase.execute({ slotId, trainerId });
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            data: result
-
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
     async getPersonalUsers(req: Request, res: Response): Promise<Response> {
         const trainerId = req.user?.userId;
@@ -105,10 +89,7 @@ export class TrainerSlotController {
             search: req.query.search as string
         });
         const result = await this._getOneOnOneUserUseCase.execute(dto);
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            data: result
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
 
     }
@@ -122,10 +103,7 @@ export class TrainerSlotController {
             search: req.query.search as string
         });
         const result = await this._getGroupUsersUseCase.execute(dto);
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            data: result
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
     async getTrainerUpcomingSlots(req: Request, res: Response): Promise<Response> {
         const trainerId = req.user?.userId;
@@ -135,10 +113,7 @@ export class TrainerSlotController {
             limit: Number(req.query.limit) || 10
         });
         const result = await this._getTrainerUpcomingUseCase.execute(dto);
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            data: result
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
     }
 

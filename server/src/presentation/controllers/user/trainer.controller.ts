@@ -9,9 +9,10 @@ import { ChangePasswordRequest } from "@/application/dto/user/request/change-pas
 import { ChangePasswordResponse } from "@/application/dto/user/response/change-password.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
-import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { AUTH_MESSAGES, TRAINER_MESSAGES } from "@/domain/constants/messages.constants";
 import { changePasswordSchema } from "@/infrastructure/validators/user/change-password.validator";
 import { updateTrainerProfileSchema } from "@/infrastructure/validators/user/trainer/trainer-profile.validator";
+import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
 
 
@@ -27,31 +28,29 @@ export class TrainerController {
     ) { }
     async getTrainerDashboard(req: Request, res: Response): Promise<Response> {
         const trainerId = req.user?.userId;
+        if (!trainerId) {
+            return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
+        }
         const dashboarddata = await this._getTrainerDashboardUseCase.execute(trainerId!);
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            data: dashboarddata
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(dashboarddata));
     }
     async getTrainerProfile(req: Request, res: Response): Promise<Response> {
         const userId = req?.user?.userId;
         if (!userId) {
-            return res.status(HttpStatus.UNAUTHORIZED).json({
-                success: false,
-                message: AUTH_MESSAGES.UNAUTHORIZED
-            });
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
         const result = await this._getTrainerProfileUseCase.execute(userId);
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            data: result
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
 
     async uploadProfileImage(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
-        if (!userId) {
-            throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
+       if (!userId) {
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
         if (!req.file) {
             throw new Error(AUTH_MESSAGES.FILE_NOT_FOUND);
@@ -60,16 +59,15 @@ export class TrainerController {
             { userId },
             req.file
         );
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            data: result
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result,TRAINER_MESSAGES.PROFILE_UPLOADED));
     }
     async TrainerProfileUpdate(req: Request, res: Response): Promise<Response> {
         const validatedata = updateTrainerProfileSchema.parse(req.body);
         const userId = req.user?.userId;
         if (!userId) {
-            throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
         const dto = new UpdateTrainerProfileRequest({
             id: userId,
@@ -79,24 +77,20 @@ export class TrainerController {
             experience_year:validatedata.experience_year
         });
         const result = await this._updateTrainerProfileUseCase.execute(dto);
-        return res.status(HttpStatus.OK).json({
-            success: true,
-            data: result
-        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result,TRAINER_MESSAGES.PROFILE_UPDATED));
     }
         async ChangePassword(req:Request,res:Response):Promise<Response>{
             const userId = req.user?.userId;
-            if(!userId){
-                throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
-            }
+           if (!userId) {
+            return res
+                .status(HttpStatus.UNAUTHORIZED)
+                .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
+        }
            const validate = changePasswordSchema.parse(req.body);
             const result = await this._changePasswordUseCase.execute({
                 userId,
                 ...validate
             });
-            return res.status(HttpStatus.OK).json({
-                success:true,
-                data:result
-            });
+            return res.status(HttpStatus.OK).json(ApiResponse.success(result,AUTH_MESSAGES.PASSWORD_UPDATE));
         }
 }

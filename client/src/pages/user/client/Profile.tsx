@@ -67,6 +67,7 @@ export default function UserProfile() {
   const preferredWorkoutId = user?.preferredWorkouts;
 
   const preferredWorkoutName = specialization.find(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (s: any) => s.id === preferredWorkoutId
   )?.name;
 
@@ -112,6 +113,7 @@ export default function UserProfile() {
 
                       const previewUrl = URL.createObjectURL(file);
 
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       queryClient.setQueryData(["user-profile"], (oldData: any) => {
                         if (!oldData) return oldData;
 
@@ -211,6 +213,7 @@ export default function UserProfile() {
                 label="Preferred Workout"
                 value={isEditing ? formData.preferredWorkouts : preferredWorkoutName}
                 isEditing={isEditing}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 options={specialization.map((s: any) => ({
 
                   label: s.name,

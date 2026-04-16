@@ -17,7 +17,7 @@ export const AUTH_MESSAGES = {
   SESSION_EXPIRED: "Your session has expired. Please log in again",
   REGISTER_FAIL:"Registration failed",
   SIGNUP_INVALID:"Invalid registration session. Please sign up again",
-  ADMIN_LOGIN:"Admin logged out successfully",
+  ADMIN_LOGOUT:"Admin logged out successfully",
   ADMIN_SESSION_EXPIRED:"Admin session expired",
   FORGOT_PASSWORD_SUCCESS: "OTP sent successfully to your email",
   FAILED_FETCH_USER:"Failed to fetch users",
@@ -76,6 +76,7 @@ export const  ADMIN_MESSAGES={
 export const WORKOUT_MESSAGES={
   WORKOUT_NOT_FOUND:"Workout not found",
   FILES_MUST_REQUIRED:"Video and thumbnail are required",
+  WORKOUT_CREATED:"Workout Created successfully",
   WORKOUT_UPDATED:"Workout updated successfully",
   WORKOUT_ALREADY_EXIST:"Workout already exists",
   WORKOUT_STATUS_UPDATED:"Workout status updated",

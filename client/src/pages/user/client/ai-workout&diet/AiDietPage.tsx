@@ -128,6 +128,7 @@ const MealCard = ({ meal }: { meal: Meal }) => (
   </div>
 );
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
 const MacroProgress = ({ label, color, value }: any) => (
   <div className="flex flex-col items-center">
     <span className={`text-[8px] font-black text-${color}-500`}>{value}G</span>
@@ -137,6 +138,7 @@ const MacroProgress = ({ label, color, value }: any) => (
   </div>
 );
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const StatCard = ({ label, value, unit, icon }: any) => (
   <div className="bg-black/20 border border-white/5 p-5 rounded-2xl flex items-center justify-between group hover:bg-[#0E2419] transition-all">
     <div>

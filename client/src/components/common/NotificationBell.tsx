@@ -59,6 +59,7 @@ export const NotificationBell = () => {
               {notifications.length === 0 ? (
                 <div className="p-10 text-center text-gray-500 text-[10px] uppercase italic font-bold">No data found</div>
               ) : (
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 notifications.map((n: any) => (
                   <div 
                     key={n.id}

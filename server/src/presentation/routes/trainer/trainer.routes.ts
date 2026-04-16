@@ -1,7 +1,6 @@
 import { trainerController } from "@/infrastructure/di/trainer/trainer.controller";
 import { userMiddlewares } from "@/infrastructure/di/user/user.middleware";
 import { asyncHandler } from "@/presentation/middleware/asyncHandler";
-import { BlockGuard } from "@/presentation/middleware/block-guard.middleware";
 import { upload } from "@/presentation/middleware/multer.middleware";
 import { Request, Response, Router } from "express";
 

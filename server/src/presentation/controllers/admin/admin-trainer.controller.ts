@@ -13,6 +13,7 @@ import { UpdateTrainerApprovalRequestDTO } from "@/application/dto/admin/request
 import { ADMIN_MESSAGES } from "@/domain/constants/messages.constants";
 import { GetTrainerVerificationByIdRequestDTO } from "@/application/dto/admin/request/get-TrainerverificationById.dto";
 import { GetTrainerVerificationByIdResponseDTO } from "@/application/dto/admin/response/get-trainerVerificationById.dto";
+import { ApiResponse } from "@/shared/utils/response.handler";
 
 export class AdminTrainerController {
   constructor(
@@ -34,7 +35,7 @@ export class AdminTrainerController {
       };
 
       const result = await this._getAllTrainersUseCase.execute(dto);
-      return res.status(HttpStatus.OK).json({ success: true, data: result });
+      return res.status(HttpStatus.OK).json(ApiResponse.success(result));
    
   }
 
@@ -43,10 +44,7 @@ async blockTrainer(req: Request, res: Response):Promise<Response> {
       const dto: BlockTrainerRequestDTO = { userId: req.params.id };
       const result = await this._trainerBlockUseCase.execute(dto);
 
-      return res.status(HttpStatus.OK).json({
-        success: true,
-        data: result,
-      });
+      return res.status(HttpStatus.OK).json(ApiResponse.success(result));
   
   };
   async getTrainerVerifications(req: Request, res: Response):Promise<Response> {
@@ -60,10 +58,7 @@ async blockTrainer(req: Request, res: Response):Promise<Response> {
 
   const result = await this._getTrainerVerificationUseCase.execute(dto);
 
-  return res.status(200).json({
-    success: true,
-    data: result
-  });
+  return res.status(200).json(ApiResponse.success(result));
 }
 async updateTrainerApprovalStatus(req:Request,res:Response):Promise<Response>{
   const dto ={
@@ -72,18 +67,12 @@ async updateTrainerApprovalStatus(req:Request,res:Response):Promise<Response>{
     reason:req.body.reason
   };
   await this._updateTrainerApprovalStatusUseCase.execute(dto);
- return  res.status(HttpStatus.OK).json({
-    success:true,
-    message:ADMIN_MESSAGES.TRAINER_APPROVAL_DONE
-  });
+ return  res.status(HttpStatus.OK).json(ApiResponse.success(null,ADMIN_MESSAGES.TRAINER_APPROVAL_DONE));
 }
 async getSingleTrainerVerification(req:Request,res:Response):Promise<Response>{
   const id = req.params.id;
   const result = await this._getTrainerVerificationByIdUseCase.execute({id});
-  return res.status(HttpStatus.OK).json({
-    success:true,
-    data:result
-  });
+  return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
 }
 

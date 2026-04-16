@@ -29,6 +29,7 @@ import { resendOtpSchema } from "@/infrastructure/validators/user/resend-otp.val
 import { resetPasswordSchema } from "@/infrastructure/validators/user/reset-password.validator";
 import { verifyOtpSchema } from "@/infrastructure/validators/user/verify-otp.validator";
 import { verifyResetOtpSchema } from "@/infrastructure/validators/user/verify-reset-otp.validator";
+import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
 
 export class AuthController {
@@ -48,12 +49,9 @@ export class AuthController {
 
   async register(req: Request, res: Response): Promise<Response> {
     const dto = registerSchema.parse(req.body);
-    await this._registerUseCase.execute(dto);
+    const result = await this._registerUseCase.execute(dto);
 
-    return res.status(HttpStatus.CREATED).json({
-      success: true,
-      message: AUTH_MESSAGES.OTP_SENT,
-    });
+    return res.status(HttpStatus.CREATED).json(ApiResponse.success(result));
 
   }
   async verifyOtp(req: Request, res: Response): Promise<Response> {
@@ -62,26 +60,24 @@ export class AuthController {
     const result = await this._verifyOtpUseCase.execute(dto);
     CookieManager.setAuthCookies(res, result.accessToken, result.refreshToken);
 
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      message: result.message,
-      data: {
-        user: result.user
-      }
-    });
+    return res
+      .status(HttpStatus.OK)
+      .json(ApiResponse.success({ user: result.user }, result.message));
 
   }
 
   async refreshToken(req: Request, res: Response): Promise<Response> {
 
     const token = req.cookies.refreshToken;
-    if (!token) throw new Error(AUTH_MESSAGES.REFRESH_TOKEN_MISSING);
-    const result = await this._refreshTokenUseCase.execute({ refreshToken: token });
+    if (!token) {
+      return res
+        .status(HttpStatus.UNAUTHORIZED)
+        .json(ApiResponse.error(AUTH_MESSAGES.REFRESH_TOKEN_MISSING));
+    } const result = await this._refreshTokenUseCase.execute({ refreshToken: token });
     CookieManager.setAccessCookie(res, result.accessToken);
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      accessToken: result.accessToken
-    });
+    return res
+      .status(HttpStatus.OK)
+      .json(ApiResponse.success({ accessToken: result.accessToken }));
 
   }
   async resendOtp(req: Request, res: Response): Promise<Response> {
@@ -90,10 +86,7 @@ export class AuthController {
 
     await this.resendOtpUseCase.execute(dto);
 
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      message: AUTH_MESSAGES.OTP_RESENT,
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(null, AUTH_MESSAGES.OTP_RESENT));
 
   }
 
@@ -104,21 +97,17 @@ export class AuthController {
 
     const result = await this._loginUseCase.execute(dto);
     CookieManager.setAuthCookies(res, result.accessToken, result.refreshToken);
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      message: AUTH_MESSAGES.LOGINSUCCESS,
-      data: {
-        user: {
-          id: result.userId,
-          email: dto.email,
-          role: result.role,
-          isOnboardingRequired: result.isOnboardingRequired,
-          approval_status: result.approval_status
+    const userData = {
+      id: result.userId,
+      email: dto.email,
+      role: result.role,
+      isOnboardingRequired: result.isOnboardingRequired,
+      approval_status: result.approval_status
+    };
 
-        }
-
-      }
-    });
+    return res
+      .status(HttpStatus.OK)
+      .json(ApiResponse.success({ user: userData }, AUTH_MESSAGES.LOGINSUCCESS));
 
   }
 
@@ -131,15 +120,14 @@ export class AuthController {
 
     CookieManager.setAuthCookies(res, result.accessToken, result.refreshToken);
 
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      data: {
-        user: {
-          ...result.user,
-          approval_status: result.user.approval_status
-        }
-      },
-    });
+   return res
+    .status(HttpStatus.OK)
+    .json(ApiResponse.success({
+      user: {
+        ...result.user,
+        approval_status: result.user.approval_status
+      }
+    }));
 
   }
   async forgotPassword(req: Request, res: Response): Promise<Response> {
@@ -148,10 +136,7 @@ export class AuthController {
 
     const result = await this._forgotPasswordUseCase.execute(dto);
 
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      message: result.message
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(null,result.message));
 
   }
 
@@ -160,10 +145,7 @@ export class AuthController {
     const dto = verifyResetOtpSchema.parse(req.body);
     const result = await this._verifyResetOtpUseCase.execute(dto);
 
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      data: result
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
   }
 
@@ -172,10 +154,7 @@ export class AuthController {
     const dto = resetPasswordSchema.parse(req.body);
     const result = await this._resetPasswordUseCase.execute(dto);
 
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      message: result.message
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(null,result.message));
 
   }
 
@@ -184,23 +163,19 @@ export class AuthController {
     const userId = req.user?.userId;
 
     if (!userId) {
-      return res.status(401).json({ success: false, message: AUTH_MESSAGES.UNAUTHORIZED });
+      return res
+        .status(HttpStatus.UNAUTHORIZED)
+        .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
     }
 
     const result = await this._getMeUseCase.execute(userId);
 
-    return res.status(200).json({
-      success: true,
-      data: result,
-    });
+    return res.status(200).json(ApiResponse.success(result));
 
   }
   async logout(req: Request, res: Response): Promise<Response> {
     CookieManager.clearAuthCookies(res);
-    return res.status(200).json({
-      success: true,
-      message: AUTH_MESSAGES.USERLOGOUT
-    });
+    return res.status(200).json(ApiResponse.success(null,AUTH_MESSAGES.USERLOGOUT));
   }
 
 }

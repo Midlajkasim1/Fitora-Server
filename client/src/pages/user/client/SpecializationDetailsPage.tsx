@@ -86,7 +86,8 @@ export default function SpecializationDetailsPage() {
           </div>
 
           <div className="space-y-0 relative">
-            {workoutList.map((wk: any, index: number) => (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            {workoutList.map((wk: unknown, index: number) => (
               <div key={wk.id} className="relative flex gap-6 pb-12 last:pb-0">
                 {index !== workoutList.length - 1 && (
                   <div className="absolute left-[19px] top-10 bottom-0 w-[1px] bg-white/10" />

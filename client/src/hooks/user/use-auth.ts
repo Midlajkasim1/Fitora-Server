@@ -11,6 +11,7 @@ export const useAuth = () => {
   const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleAuthSuccess = (userData: any) => {
     setAuth(userData);
     navigate(`/onboarding/${userData.role}/step-1`);

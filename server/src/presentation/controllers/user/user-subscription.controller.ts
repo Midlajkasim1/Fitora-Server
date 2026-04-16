@@ -14,9 +14,10 @@ import { HandleWebhookResponseDTO } from "@/application/dto/subscription/respons
 import { PurchaseSubscriptionResponseDTO } from "@/application/dto/subscription/response/purchaseSubscription.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
-import { AUTH_MESSAGES, PAYMENT_MESSAGES } from "@/domain/constants/messages.constants";
+import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { SubscriptionPlanStatus } from "@/domain/constants/subscription.constants";
 import { IPaymentProvider } from "@/domain/interfaces/services/paymentProvider.interface";
+import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
 
 
@@ -41,28 +42,23 @@ export class UserSubscriptionController{
       status: SubscriptionPlanStatus.ACTIVE,        
      };
      const result = await this._getSubscriptionUseCase.execute(dto);
-     return res.status(HttpStatus.OK).json({
-      success: true,
-      data: result,
-    });
+     return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
 
     async getPlanDetails(req: Request, res: Response): Promise<Response> {
     const id = req.params.id;
     const result = await this._getSubscriptionByIdUseCase.execute({ id });
     
-    return res.status(HttpStatus.OK).json({
-      success: true,
-      data: result,
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
   }
   async purchasePlan(req:Request,res:Response):Promise<Response>{
 
 
        if (!req.user?.userId || !req.user?.email || !req.user?.name) {
-       
-            throw new Error(AUTH_MESSAGES.USER_AUTHENTICATION_NOT_FOUND);
-        }
+      return res.status(HttpStatus.UNAUTHORIZED).json(
+        ApiResponse.error(AUTH_MESSAGES.USER_AUTHENTICATION_NOT_FOUND)
+      );
+    }
 
 
      const dto={
@@ -73,10 +69,7 @@ export class UserSubscriptionController{
     };
     
     const result = await this._purchaseSubscriptionUseCase.execute(dto);
-    return res.status(HttpStatus.OK).json({
-      success:true,
-      data:result
-    });
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
   }
   async handlewebhook(req:Request,res:Response):Promise<Response>{
     
@@ -90,44 +83,44 @@ export class UserSubscriptionController{
       }
     });
     const result = await this._webhookUseCase.execute(dto);
-    return res.status(HttpStatus.OK).json(result);
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
   }
 async checkActiveSubcriptionStatus(req:Request,res:Response):Promise<Response>{
   const userId = req.user?.userId;
-  if(!userId){
-    throw new Error(AUTH_MESSAGES.USER_AUTHENTICATION_NOT_FOUND);
-  }
+if (!userId) {
+      return res.status(HttpStatus.UNAUTHORIZED).json(
+        ApiResponse.error(AUTH_MESSAGES.USER_AUTHENTICATION_NOT_FOUND)
+      );
+    }
   const result = await this._checkActiveSubscriptionUserUseCase.execute({userId});
-  return res.status(HttpStatus.OK).json({
-    success:true,
-    data:result
-  });
+  return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 }
 async CancelSubscription(req:Request,res:Response):Promise<Response>{
   const userId = req.user?.userId;
+  if (!userId) {
+      return res.status(HttpStatus.UNAUTHORIZED).json(
+        ApiResponse.error(AUTH_MESSAGES.USER_AUTHENTICATION_NOT_FOUND)
+      );
+    }
   const dto = new CancelSubscriptionRequestDTO({
     userId:userId!
   });
   const result = await this._cancelSubscriptionUseCase.execute(dto);
-  return res.status(HttpStatus.OK).json({
-    success:true,
-    data:result
-  });
+  return res.status(HttpStatus.OK).json(ApiResponse.success(ApiResponse.success(result)));
 }
 async getPurchaseHistory(req:Request,res:Response):Promise<Response>{
    const userId = req.user?.userId;
-   if(!userId){
-    throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
-   }
+   if (!userId) {
+      return res.status(HttpStatus.UNAUTHORIZED).json(
+        ApiResponse.error(AUTH_MESSAGES.USER_AUTHENTICATION_NOT_FOUND)
+      );
+    }
    const dto = new GetPurchaseHistoryRequestDTO({
     userId:userId,
     page:Number(req.query.page) || 1,
     limit:Number(req.query.limit) || 10
    });
    const result = await this._getPurchaseHistoryUseCase.execute(dto);
-   return res.status(HttpStatus.OK).json({
-    success:true,
-    data:result
-   });
+   return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 }
 }

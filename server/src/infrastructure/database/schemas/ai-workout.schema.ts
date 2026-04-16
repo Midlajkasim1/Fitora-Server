@@ -1,5 +1,5 @@
 import { IWorkoutDay, IWorkoutExercise } from "@/domain/entities/ai-workout&diet/ai-workout-plan.entity";
-import { Schema, model } from "mongoose";
+import { Schema } from "mongoose";
 import { IWorkoutPlanDocument } from "../interfaces/ai-workout-plan.document";
 
 

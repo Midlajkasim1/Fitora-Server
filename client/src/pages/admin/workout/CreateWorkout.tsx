@@ -11,6 +11,7 @@ export default function CreateWorkoutPage() {
     const mutation = useCreateWorkout();
     const { data: specializations } = useSpecializationsForFilter();
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onSubmit = (data: any) => {
         toast.loading("Uploading workout...", { id: "publish" });
         mutation.mutate(data, {

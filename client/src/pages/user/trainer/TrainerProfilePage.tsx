@@ -20,6 +20,7 @@ export default function TrainerProfilePage() {
     reset,
     formState: { errors },
   } = useForm<TrainerProfileFormData>({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(trainerProfileSchema) as any,
   });
 

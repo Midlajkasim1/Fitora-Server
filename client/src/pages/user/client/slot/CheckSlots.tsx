@@ -37,6 +37,7 @@ const CheckSlots = () => {
     const slots = data?.slots;
     if (!slots) return {};
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return slots.reduce((acc: Record<string, any[]>, slot: any) => {
       const date = new Date(slot.startTime).toLocaleDateString("en-US", {
         weekday: "long",
@@ -106,7 +107,8 @@ const CheckSlots = () => {
       <main className="max-w-6xl mx-auto pb-20">
         {Object.keys(groupedSlots).length > 0 ? (
           <>
-            {Object.entries(groupedSlots).map(([date, dateSlots]: any) => (
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            {Object.entries(groupedSlots).map(([date, dateSlots]: unknown) => (
               <section
                 key={date}
                 className="mb-12 animate-in fade-in slide-in-from-bottom-4 duration-500"
@@ -120,7 +122,8 @@ const CheckSlots = () => {
                 </div>
 
                 <div className="grid grid-cols-1 gap-4">
-                  {dateSlots.map((slot: any) => (
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  {dateSlots.map((slot: unknown) => (
                     <AvailableSlotCard
                       key={slot.id}
                       slot={slot}
