@@ -7,6 +7,7 @@ import { HealthMetricsController } from "@/presentation/controllers/user/user-he
 import { UserAdvertisementController } from "@/presentation/controllers/user/user-advertisement.controller";
 import { UserSlotController } from "@/presentation/controllers/user/user-slot.controller";
 import { AiPlanController } from "@/presentation/controllers/user/ai-plan.controller";
+import { ChatController } from "@/presentation/controllers/user/chat.controller";
 export const userControllers = {
   authController: new AuthController(
     useCases.registerUseCase,
@@ -65,6 +66,7 @@ export const userControllers = {
     useCases.cancelSlotUseCase,
     useCases.getUserUpcomingUseCase,
     useCases.getTrainerBookingUseCase,
+    useCases.getChatPartnersUseCase,
   ),
   aiPlanController: new AiPlanController(
 
@@ -73,6 +75,11 @@ export const userControllers = {
     useCases.getWorkoutPlanUsecase,
     useCases.getDietPlanUseCase,
 
+  ),
+  chatController: new ChatController(
+    useCases.getChatHistoryUseCase,
+    useCases.sendMessageUseCase,
+    useCases.markMessagesReadUseCase
   )
 
 

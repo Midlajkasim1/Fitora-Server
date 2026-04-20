@@ -5,7 +5,11 @@ import {
   ActivityIcon 
 } from 'lucide-react';
 import { useAuthStore } from "../../store/use-auth-store"; // Adjust path
-// import { trainerLogout } from "../../api/trainer.api"; // If you have this
+import { useChatStore } from "../../store/use-chat-store";
+import { useEffect } from "react";
+import { useSocket } from "../../hooks/common/use-notification";
+import { logoutUser } from "../../api/auth.api";
+import { queryClient } from "../../constants/query-client";
 
 const menuItems = [
   { name: 'Dashboard', path: '/trainer/dashboard', icon: LayoutDashboard },
@@ -18,14 +22,35 @@ const menuItems = [
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const logout = useAuthStore((state) => state.logout);
+  const { logout, setLoggingOut } = useAuthStore();
+  const { openChat, hasUnread, setHasUnread, isOpen } = useChatStore();
+  const socket = useSocket();
+
+  // Listen for new messages to trigger the "green dot" notification
+  useEffect(() => {
+    if (!socket) return;
+    
+    const handleNewMessage = () => {
+      // Only show dot if chat panel isn't already open
+      if (!isOpen) {
+        setHasUnread(true);
+      }
+    };
+
+    socket.on("receive_message", handleNewMessage);
+    return () => {
+      socket.off("receive_message", handleNewMessage);
+    };
+  }, [socket, isOpen, setHasUnread]);
 
   const handleLogout = async () => {
     try {
-      // await trainerLogout(); 
+      setLoggingOut(true);
+      await logoutUser();
     } catch (error) {
       console.error("Logout failed", error);
     } finally {
+      queryClient.clear();
       logout();
       navigate("/login", { replace: true });
     }
@@ -45,23 +70,38 @@ const Sidebar = () => {
       <nav className="flex-1 px-4 space-y-1">
         {menuItems.map((item) => {
           const isActive = location.pathname === item.path;
+          const isMessages = item.name === 'Messages';
+          
           return (
             <Link
               key={item.name}
               to={item.path}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
+              onClick={(e) => {
+                if (isMessages) {
+                  e.preventDefault();
+                  openChat();
+                }
+              }}
+              className={`flex items-center justify-between gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
                 isActive 
                 ? "bg-[#00ff94] text-black shadow-[0_0_20px_rgba(0,255,148,0.2)]" 
                 : "text-gray-400 hover:text-white hover:bg-white/5"
               }`}
             >
-              <item.icon 
-                size={18} 
-                className={isActive ? "text-black" : "text-gray-500 group-hover:text-[#00ff94]"} 
-              />
-              <span className="text-[11px] font-bold uppercase tracking-wider italic">
-                {item.name}
-              </span>
+              <div className="flex items-center gap-3">
+                <item.icon 
+                  size={18} 
+                  className={isActive ? "text-black" : "text-gray-500 group-hover:text-[#00ff94]"} 
+                />
+                <span className="text-[11px] font-bold uppercase tracking-wider italic">
+                  {item.name}
+                </span>
+              </div>
+
+              {/* Green Dot for Messages */}
+              {isMessages && hasUnread && !isActive && (
+                <div className="w-2 h-2 bg-[#00ff94] rounded-full shadow-[0_0_10px_#00ff94]" />
+              )}
             </Link>
           );
         })}

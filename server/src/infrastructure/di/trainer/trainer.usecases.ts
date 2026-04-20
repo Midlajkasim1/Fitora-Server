@@ -1,3 +1,4 @@
+import { GetClientDetailsUseCase } from "@/application/usecases/trainer/get-client-details.usecase";
 import { TrainerCreateSlotUseCase } from "@/application/usecases/slot/create-slot.usecase";
 import { trainerRepositories } from "./trainer.repositories";
 import { BullJobScheduler } from "@/infrastructure/providers/bullQueue/bull-job-scheduler";
@@ -21,6 +22,11 @@ const passwordHasher = new BcryptPasswordHasher();
 
 
 export const trainerUsecase ={
+   getClientDetailsUseCase: new GetClientDetailsUseCase(
+      trainerRepositories.userRepository,
+      trainerRepositories.healthMetricsRepository,
+      trainerRepositories.slotRepository
+   ),
    trainerCreateSlotUseCase:new TrainerCreateSlotUseCase(
     trainerRepositories.slotRepository,
     jobScheduler,
@@ -50,7 +56,8 @@ export const trainerUsecase ={
    ),
    getTrinerProfileUseCase:new GetTrainerProfileUseCase(
     trainerRepositories.userRepository,
-    trainerRepositories.trainerRepository
+    trainerRepositories.trainerRepository,
+    trainerRepositories.specializationRepository
    ),
    uploadTrainerImageUseCase: new UploadTrainerImageUseCase(
       trainerRepositories.userRepository,

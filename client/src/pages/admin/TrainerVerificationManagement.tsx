@@ -6,18 +6,20 @@ import { Pagination } from "../../components/admin/Pagination";
 import { Eye } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useTrainerVerificationManagement } from "../../hooks/admin/use-trainer-verification-management";
+import { useDebounce } from "../../hooks/admin/use-debounce";
 import type { TrainerVerificationList } from "../../type/admin.types";
 
 export default function TrainerVerificationManagement() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
   const [status, setStatus] = useState("");
 
   const navigate = useNavigate();
 
   const { data, isLoading } = useTrainerVerificationManagement({
     page,
-    search,
+    search: debouncedSearch,
     status,
   });
 

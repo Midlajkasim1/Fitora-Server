@@ -5,7 +5,10 @@ import { SessionType, SlotStatus } from "@/domain/constants/session.constants";
 
 
 export interface ISlotRepository extends IBaseRepository<SlotEntity>{
+     /** Checks if a trainer has an overlapping slot */
     findOverlappingSlot(trainerId:string,startTime:Date,endTime:Date):Promise<SlotEntity | null>;
+    /** Checks if a user (client) has an overlapping booked slot */
+    findUserOverlappingSlot(userId:string, startTime:Date, endTime:Date):Promise<SlotEntity | null>;
     findAvailableSlotsByTrainers(params:{trainerIds: string[];skip:number;limit:number;search?:string,type?:SessionType}): Promise<{slots:ISlotWithTrainer[],total:number}>;
     bookSlot(slotId:string,userId:string):Promise<boolean>;
     cancelBooking(slotId:string,userId:string):Promise<boolean>;
@@ -15,7 +18,12 @@ export interface ISlotRepository extends IBaseRepository<SlotEntity>{
      getTrainerUpcomingSlots(params:{trainerId:string,skip:number,limit:number}):Promise<ITrainerUpcomingResult>;
      getUserUpcomingSlots(params:{userId:string,skip:number;limit:number}):Promise<IUserUpcomingResult>;
      getTotalClients(trainerId: string): Promise<number>;
-    checkAvaliability(trainerId: string, startTime: Date, endTime: Date, excludeId?: string): Promise<SlotEntity | null>;
+     checkAvaliability(trainerId: string, startTime: Date, endTime: Date, excludeId?: string): Promise<SlotEntity | null>;
+     hasActiveOrRecentBooking(userAId: string, userBId: string, gracePeriodLimit: Date): Promise<boolean>;
+     /** Returns trainers the user has an active or grace-period booking with.
+      *  Grace period: session ended less than 24 hours ago. */
+     findActiveChatPartners(userId: string, gracePeriodLimit: Date): Promise<IChatPartner[]>;
+     findActiveChatPartnersForTrainer(trainerId: string, gracePeriodLimit: Date): Promise<IChatPartner[]>;
 }
 
 export interface IAggregateSlot{
@@ -92,3 +100,8 @@ export interface IUserUpcomingResult {
   total: number;
 }
 
+export interface IChatPartner {
+  id: string;
+  name: string;
+  profileImage?: string;
+}

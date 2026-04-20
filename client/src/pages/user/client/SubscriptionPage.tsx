@@ -1,4 +1,5 @@
-import { Loader2, TrendingUp, Zap, ShieldCheck } from "lucide-react";
+import { TrendingUp, Zap, ShieldCheck } from "lucide-react";
+import { GlobalLoader } from "../../../shared/GlobalLoader";
 import { useState } from "react";
 import { useUserSubscriptions } from "../../../hooks/user/subscription/use-user-subscription";
 import { usePurchasePlan } from "../../../hooks/user/subscription/use-purchase-plan";
@@ -28,6 +29,8 @@ export default function SubscriptionPage() {
   // const isPremium = statusData?.isPremium;
   const activePlanId = statusData?.subscription?.planId;
 
+  if (isLoading || isStatusLoading) return <GlobalLoader />;
+
   return (
     <div className="max-w-7xl mx-auto py-12 px-6">
       {/* Header Section */}
@@ -42,23 +45,17 @@ export default function SubscriptionPage() {
 
       {/* Plans Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
-        {isLoading || isStatusLoading ? (
-          <div className="col-span-3 flex justify-center py-20">
-            <Loader2 className="w-10 h-10 text-[#00ff94] animate-spin" />
-          </div>
-        ) : (
-          plans.map((plan) => (
-            <SubscriptionCard 
-              key={plan.id} 
-              plan={plan} 
-              onSubscribe={(id) => purchasePlan(id)}
-              onCancel={() => setIsCancelModalOpen(true)}
-              isPurchasing={isPurchasing && purchasingId === plan.id}
-              isCancelling={isCancelling}
-              isCurrentPlan={activePlanId === plan.id}
-            />
-          ))
-        )}
+        {plans.map((plan) => (
+          <SubscriptionCard 
+            key={plan.id} 
+            plan={plan as unknown as { id: string; name: string; price: string | number; billingCycle: string; description: string; }} 
+            onSubscribe={(id) => purchasePlan(id)}
+            onCancel={() => setIsCancelModalOpen(true)}
+            isPurchasing={isPurchasing && purchasingId === plan.id}
+            isCancelling={isCancelling}
+            isCurrentPlan={activePlanId === plan.id}
+          />
+        ))}
       </div>
 
       {/* Pagination Section */}

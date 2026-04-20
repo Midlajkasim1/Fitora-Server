@@ -8,6 +8,7 @@ import { useSpecializationManagement } from "../../../hooks/admin/specialization
 import { useSpecializationToggleBlock } from "../../../hooks/admin/specialization/use-SpecializationToggleBlock";
 import { AdminLayout } from "../../../layout/admin/AdminLayout";
 import { ConfirmModal } from "../../../shared/ConfirmModal";
+import { useDebounce } from "../../../hooks/admin/use-debounce";
 import type { getSpecializations } from "../../../type/admin.types";
 
 
@@ -15,12 +16,13 @@ import type { getSpecializations } from "../../../type/admin.types";
 export default function SpecializationManagement() {
     const [page, setPages] = useState(1);
     const [search, setSearch] = useState("");
+    const debouncedSearch = useDebounce(search, 500);
     const [status, setStatus] = useState("")
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [targetSpecialization, setTargetSpecialization] = useState<getSpecializations | null>(null);
     const { data, isLoading } = useSpecializationManagement({
         page,
-        search,
+        search: debouncedSearch,
         status
     });
     const navigate = useNavigate();

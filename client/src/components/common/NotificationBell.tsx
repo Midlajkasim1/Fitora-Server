@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNotificationsLogic } from "../../hooks/common/use-notify";
+import { useNotificationsLogic, type Notification } from "../../hooks/common/use-notify";
 import { Bell, CheckCheck, Trash2 } from "lucide-react";
 
 export const NotificationBell = () => {
@@ -59,8 +59,7 @@ export const NotificationBell = () => {
               {notifications.length === 0 ? (
                 <div className="p-10 text-center text-gray-500 text-[10px] uppercase italic font-bold">No data found</div>
               ) : (
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                notifications.map((n: any) => (
+                notifications.map((n: Notification) => (
                   <div 
                     key={n.id}
                     onClick={() => {

@@ -1,5 +1,6 @@
 export interface UserUpcomingSlotDTO {
   slotId: string;
+  trainerId: string;
   trainerName: string;
   startTime: Date;
   endTime: Date;

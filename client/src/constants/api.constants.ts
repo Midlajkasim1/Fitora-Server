@@ -1,8 +1,4 @@
 
-
-
-
-
 export const AUTH_ROUTES = {
   REGISTER: "/auth/register",
   GOOGLE_AUTH: "/auth/google",
@@ -84,6 +80,7 @@ export const TRAINER_ROUTES = {
   CANCEL_SLOT: (id: string) => `trainer/${id}/cancel`,
   
   CLIENTS: (type: string) => `trainer/${type}`,
+  CLIENT_DETAILS: (clientId: string) => `trainer/client-details/${clientId}`,
 };
 
 export const NOTIFICATION_ROUTES = {
@@ -91,4 +88,24 @@ export const NOTIFICATION_ROUTES = {
   MARK_ALL_READ: "/user/notifications/mark-all-read",
   CLEAR_ALL: "/user/notifications/clear-all",
   MARK_READ: (id: string) => `/user/notifications/${id}/read`,
+};
+
+export const CHAT_ROUTES = {
+  CHAT_PARTNERS: "user/chat/partners",
+  CHAT_HISTORY: (otherUserId: string) => `user/chat/${otherUserId}`,
+  SEND_MESSAGE: "user/chat/send",
+  MARK_READ: (otherUserId: string) => `user/chat/${otherUserId}/read`,
+};
+
+export const TRAINER_CHAT_ROUTES = {
+  CHAT_PARTNERS: "trainer/chat/partners",
+  CHAT_HISTORY: (otherUserId: string) => `trainer/chat/${otherUserId}`,
+  SEND_MESSAGE: "trainer/chat/send",
+  MARK_READ: (otherUserId: string) => `trainer/chat/${otherUserId}/read`,
+};
+
+export const VIDEO_ROUTES = {
+  START_SESSION: (slotId: string) => `sessions/${slotId}/start`,
+  END_SESSION: (slotId: string) => `sessions/${slotId}/end`,
+  GET_TOKEN: (slotId: string) => `sessions/${slotId}/join-token`,
 };

@@ -63,6 +63,7 @@ export class GetDashboardUseCase implements IBaseUseCase<string, UserDashboardRe
 
         const nextSession = upcoming.data.length > 0 ? {
             slotId: upcoming.data[0].slotId.toString(),
+            trainerId: upcoming.data[0].trainerId.toString(),
             startTime: upcoming.data[0].startTime,
             trainerName: upcoming.data[0].trainerName,
             type: upcoming.data[0].type

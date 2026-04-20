@@ -38,7 +38,8 @@ export class GetTrainerBookingUseCase implements IBaseUseCase<GetTrainersBooking
         specializations: trainer.specializations as string,
         experience: trainer.experience as number,
         rating: trainer.rating as number,
-        bio: trainer.bio as string
+        bio: trainer.bio as string,
+        availableSlotsCount: trainer.availableSlotsCount as number
     }));
     return {
         trainers:mappedTrainers,

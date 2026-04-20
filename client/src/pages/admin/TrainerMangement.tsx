@@ -8,18 +8,20 @@ import { useTrainerManagmenet } from "../../hooks/admin/use-admin-trainer-manage
 import { useToggleTrainerBlock } from "../../hooks/admin/use-trainerToggleBlock";
 import { AdminLayout } from "../../layout/admin/AdminLayout";
 import { ConfirmModal } from "../../shared/ConfirmModal";
-import type { User } from "../../type/auth.types";
+import { useDebounce } from "../../hooks/admin/use-debounce";
+import type { TrainerManagement as TrainerData } from "../../type/admin.types";
 
 export default function TrainerManagement() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
   const [status, setStatus] = useState("");
   const [specialization, setSpecialization] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [targetTrainer, setTargetTrainer] = useState<User | null>(null);
+  const [targetTrainer, setTargetTrainer] = useState<TrainerData | null>(null);
   const { data, isLoading } = useTrainerManagmenet({
     page,
-    search,
+    search: debouncedSearch,
     status,
     specialization
   });
@@ -40,14 +42,13 @@ export default function TrainerManagement() {
   const columns = [
     {
       header: "#",
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      render: (_: any, index: number) => (
+      render: (_: TrainerData, index: number) => (
         <span className="text-gray-600 font-medium">{(page - 1) * 10 + (index + 1)}</span>
       )
     },
     {
       header: "Trainer",
-      render: (t: User) => (
+      render: (t: TrainerData) => (
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-[#00ff94]/10 border border-[#00ff94]/20 flex items-center justify-center overflow-hidden">
             {t.profileImage ? (
@@ -65,7 +66,7 @@ export default function TrainerManagement() {
     },
     {
       header: "Status",
-      render: (t: User) => (
+      render: (t: TrainerData) => (
         <div className={`flex items-center gap-2 px-3 py-1 rounded-full w-fit ${t.status === 'active' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'
           }`}>
           <div className={`w-1.5 h-1.5 rounded-full ${t.status === 'active' ? 'bg-green-500 shadow-[0_0_8px_#22c55e]' : 'bg-red-500 shadow-[0_0_8px_#ef4444]'
@@ -76,7 +77,7 @@ export default function TrainerManagement() {
     },
     {
       header: "Actions",
-      render: (t: User) => (
+      render: (t: TrainerData) => (
         <div className="flex gap-1">
           <button className="p-2 hover:bg-white/5 rounded-xl text-gray-500 hover:text-[#00ff94] transition-all" title="View Profile">
             <Eye size={18} />
@@ -117,7 +118,6 @@ export default function TrainerManagement() {
             },
             {
               label: "Filter Specialization",
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               options: specializations.map((s: any) => ({
                 label: s.name,
                 value: s.id

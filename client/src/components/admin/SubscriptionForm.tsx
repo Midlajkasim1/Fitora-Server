@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 interface Props {
   mode: "create" | "edit";
-  initialData?: any; 
+  initialData?: Partial<CreateSubscriptionFormData>; 
   onSubmit: (data: CreateSubscriptionFormData) => void;
   isPending: boolean;
 }
@@ -23,7 +23,7 @@ export default function SubscriptionForm({ mode, initialData, onSubmit, isPendin
   formState: { errors },
   reset // Use reset to update values when initialData arrives
 } = useForm<CreateSubscriptionFormData>({
-  resolver: zodResolver(createSubscriptionSchema),
+  resolver: zodResolver(createSubscriptionSchema) as unknown as typeof useForm extends (...args: infer _A) => { resolver?: infer R } ? R : never,
   defaultValues: {
     name: "",
     price: "",
@@ -73,13 +73,13 @@ useEffect(() => {
               <div className="space-y-2">
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">Plan Name</label>
                 <input {...register("name")} className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 px-6 text-white outline-none focus:border-[#00ff94]/50 font-bold italic transition-all" />
-                {errors.name && <p className="text-red-500 text-[10px] italic font-bold uppercase mt-1">{errors.name.message}</p>}
+                {errors.name && <p className="text-red-500 text-[10px] italic font-bold uppercase mt-1">{errors.name.message as string}</p>}
               </div>
 
               <div className="space-y-2">
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">Price (₹)</label>
                 <input {...register("price")} className="w-full bg-black/40 border border-white/10 rounded-2xl py-4 px-6 text-white outline-none focus:border-[#00ff94]/50 font-bold italic" />
-                {errors.price && <p className="text-red-500 text-[10px] italic font-bold uppercase mt-1">{errors.price.message}</p>}
+                {errors.price && <p className="text-red-500 text-[10px] italic font-bold uppercase mt-1">{errors.price.message as string}</p>}
               </div>
 
               <div className="md:col-span-2 space-y-2">
@@ -97,7 +97,7 @@ useEffect(() => {
               <div className="md:col-span-2 space-y-2">
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest ml-1">Plan Description</label>
                 <textarea {...register("description")} rows={3} className="w-full bg-black/40 border border-white/10 rounded-[2rem] py-6 px-8 text-white outline-none focus:border-[#00ff94]/50 resize-none font-bold italic" />
-                {errors.description && <p className="text-red-500 text-[10px] italic font-bold uppercase mt-1">{errors.description.message}</p>}
+                {errors.description && <p className="text-red-500 text-[10px] italic font-bold uppercase mt-1">{errors.description.message as string}</p>}
               </div>
             </div>
           </div>

@@ -6,6 +6,8 @@ export class GetTrainerProfileResponse {
   profileImage?: string;
   experience_year?: number;
   status?: string;
+  specializationName?: string;
+  specializationId?: string;
 
   constructor(data: GetTrainerProfileResponse) {
     Object.assign(this, data);

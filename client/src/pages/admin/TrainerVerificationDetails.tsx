@@ -216,8 +216,7 @@ export default function TrainerVerificationDetails() {
 }
 
 // 4. HELPER COMPONENTS
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SectionHeader = ({ icon, title }: { icon: any, title: string }) => (
+const SectionHeader = ({ icon, title }: { icon: React.ReactNode, title: string }) => (
     <div className="flex items-center gap-3 mb-6">
         <div className="p-2 bg-[#00ff94]/10 rounded-lg text-[#00ff94]">{icon}</div>
         <h4 className="text-white font-black italic uppercase tracking-tight">{title}</h4>

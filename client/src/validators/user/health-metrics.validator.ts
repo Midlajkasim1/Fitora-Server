@@ -16,9 +16,7 @@ export const healthMetricsSchema = z.object({
     .min(20, "Target weight must be at least 20 kg")
     .max(500, "Target weight must be under 500 kg"),
     
-   primaryGoal: z.enum(["Weight Loss", "Muscle Gain", "Endurance", "General Fitness"], {
-    invalid_type_error: "Please select a valid goal",
-  }),
+   primaryGoal: z.enum(["Weight Loss", "Muscle Gain", "Endurance", "General Fitness"], { message: "Primary goal is required" }),
 });
 
 export type HealthMetricsFormData = z.infer<typeof healthMetricsSchema>;

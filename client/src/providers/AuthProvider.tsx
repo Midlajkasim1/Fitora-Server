@@ -5,7 +5,7 @@ import { useAuthStore } from "../store/use-auth-store";
 import { GlobalLoader } from "../shared/GlobalLoader";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { setAuth, logout, setInitialLoading, isInitialLoading } = useAuthStore();
+  const { setAuth, logout, setInitialLoading, isInitialLoading, isLoggingOut } = useAuthStore();
 
   useEffect(() => {
     const syncAuth = async () => {
@@ -18,10 +18,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (response.data?.data) {
           setAuth(response.data.data);
         }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (err: any) {
-       
-        if (err.response?.status === 401) {
+      } catch (err) {
+        const error = err as { response?: { status: number } };
+        if (error.response?.status === 401) {
           logout();
         }
       } finally {
@@ -32,9 +31,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     syncAuth();
   }, [setAuth, logout, setInitialLoading]);
 
-  if (isInitialLoading) {
+  if (isInitialLoading || isLoggingOut) {
     return <GlobalLoader/>
-     
   }
 
   return <>{children}</>;

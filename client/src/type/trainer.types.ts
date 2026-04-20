@@ -65,7 +65,7 @@ export interface CreateSlotResponse {
   message: string;
 }
 export interface CreateSlotPayload {
-  slotId: string;
+  slotId?: string;
   type: 'one_on_one' | 'group';
   capacity: number;
   startTime: string;
@@ -88,6 +88,7 @@ export interface TrainerProfile {
   experience_year: number;
   status: string;
   profileImage?: string;
+  specializationName?: string;
 }
 
 export interface UpdateTrainerProfilePayload {

@@ -23,9 +23,25 @@ export class TrainerSlotController {
         private readonly _cancelSlotUseCase: IBaseUseCase<TrainerCancelSlotRequestDTO, TrainerCancelSlotResponseDTO>,
         private readonly _getOneOnOneUserUseCase: IBaseUseCase<GetTrainerUsersRequestDTO, GetTrainerStudentResponseDTO>,
         private readonly _getGroupUsersUseCase: IBaseUseCase<GetTrainerUsersRequestDTO, GetTrainerStudentResponseDTO>,
-        private readonly _getTrainerUpcomingUseCase: IBaseUseCase<GetTrainerUpcomingSlotRequestDTO, TrainerUpcomingResponseDTO>
+        private readonly _getTrainerUpcomingUseCase: IBaseUseCase<GetTrainerUpcomingSlotRequestDTO, TrainerUpcomingResponseDTO>,
+        private readonly _getClientDetailsUseCase: any // I'll use any here for simplicity as I didn't define a specific DTO for it yet
 
     ) { }
+
+    async getClientDetails(req: Request, res: Response): Promise<Response> {
+        const { clientId } = req.params;
+        const trainerId = req.user?.userId;
+        if (!trainerId) {
+            return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.TRAINER_ID_NOT_FOUND));
+        }
+
+        try {
+            const result = await this._getClientDetailsUseCase.execute(trainerId, clientId);
+            return res.status(HttpStatus.OK).json(ApiResponse.success(result));
+        } catch (error) {
+            return res.status(HttpStatus.BAD_REQUEST).json(ApiResponse.error((error as Error).message));
+        }
+    }
     async createSlot(req: Request, res: Response): Promise<Response> {
         const validateData = SlotSchema.parse(req.body);
         const trainerId = req.user?.userId;

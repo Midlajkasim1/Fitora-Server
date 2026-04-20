@@ -28,7 +28,9 @@ export class CheckActiveSubscriptionUserUseCase implements IBaseUseCase<CheckAct
                 planId: activesub.planId,
                 planName: plan?.name || "Plan",
                 endDate: activesub.endDate,
-                status: activesub.status
+                status: activesub.status,
+                hasAiWorkout: plan?.hasAiWorkout || false,
+                hasAiDiet: plan?.hasAiDiet || false
             }
     });
 };

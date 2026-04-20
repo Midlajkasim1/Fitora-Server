@@ -58,3 +58,8 @@ export const uploadTrainerAvatar = async (formData: FormData): Promise<{ profile
 export const changeTrainerPassword = async (payload: ChangePasswordPayload): Promise<void> => {
   await api.put(TRAINER_ROUTES.CHANGE_PASSWORD, payload);
 };
+
+export const getClientDetails = async (clientId: string) => {
+  const res = await api.get(TRAINER_ROUTES.CLIENT_DETAILS(clientId));
+  return res.data.data;
+};

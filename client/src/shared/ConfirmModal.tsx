@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle, X, Info } from "lucide-react";
 
-interface ConfirmModalProps {
+export interface ConfirmModalProps {
+  isPending?: boolean;
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;

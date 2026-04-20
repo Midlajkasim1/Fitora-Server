@@ -2,6 +2,8 @@ import { useState } from "react";
 import { SpecializationCard } from "../../../components/user/SpecializationCard";
 import { useUserSpecializations } from "../../../hooks/user/workout/use-user-specialization";
 import { Pagination } from "../../../components/admin/Pagination"; 
+import type { Specialization } from "../../../type/user.types";
+import { GlobalLoader } from "../../../shared/GlobalLoader";
 
 export default function SpecializationListPage() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,11 +16,7 @@ export default function SpecializationListPage() {
   const totalPages = Math.ceil(totalResults / resultsPerPage);
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center text-white text-lg py-40 animate-pulse font-black uppercase italic tracking-widest">
-        Syncing Programs...
-      </div>
-    );
+    return <GlobalLoader />;
   }
 
   if (isError) {
@@ -45,8 +43,7 @@ export default function SpecializationListPage() {
       {/* GRID */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         {specializations.length > 0 ? (
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          specializations.map((sp: any) => (
+          specializations.map((sp: Specialization) => (
             <SpecializationCard
               key={sp.id}
               id={sp.id}

@@ -38,8 +38,16 @@ export class BookSlotUseCase implements IBaseUseCase<BookSlotRequestDTO,BookSlot
             throw new Error(SLOT_MESSAGES.ONLY_SUPPORT_GROUP);
         }
 
-       
-       
+        // Check if user already has a session at this time (with any trainer)
+        const overlappingUserSlot = await this._slotRepository.findUserOverlappingSlot(
+            dto.userId,
+            slot.startTime,
+            slot.endTime
+        );
+
+        if (overlappingUserSlot) {
+            throw new Error(SLOT_MESSAGES.ALREADY_HAVE_A_SESSION_SCHEDULED_THAT_OVERLAPS_WITH_TIME);
+        }
         const isSuccess = await this._slotRepository.bookSlot(dto.slotId,dto.userId);
         if(!isSuccess){
             throw new Error(SLOT_MESSAGES.ALREADY_BOOKED);

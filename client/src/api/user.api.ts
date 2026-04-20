@@ -1,5 +1,5 @@
-import { AI_ROUTES, BOOKING_ROUTES, HEALTH_ROUTES, USER_ROUTES } from "../constants/api.constants";
-import type { AiPlanResponse, DietDay, EditProfile, GeneratePlanRequest, HealthMetricsData, IChangePassword, PremiumDashboardData, UpcomingSessionResponse, UserProfileResponse, WorkoutDay } from "../type/user.types"
+import { AI_ROUTES, BOOKING_ROUTES, CHAT_ROUTES, HEALTH_ROUTES, TRAINER_CHAT_ROUTES, USER_ROUTES } from "../constants/api.constants";
+import type { AiPlanResponse, ChatHistoryResponse, ChatPartnersResponse, DietDay, EditProfile, GeneratePlanRequest, HealthMetricsData, IChangePassword, PremiumDashboardData, UpcomingSessionResponse, UserProfileResponse, WorkoutDay } from "../type/user.types"
 import api from "./axios"
 
 
@@ -90,4 +90,30 @@ export const fetchAiWorkout = async (): Promise<AiPlanResponse<WorkoutDay>> => {
 export const fetchAiDiet = async (): Promise<AiPlanResponse<DietDay>> => {
   const res = await api.get<AiPlanResponse<DietDay>>(AI_ROUTES.FETCH_DIET_PLAN);
   return res.data;
+};
+
+export const getChatPartners = async (role: 'user' | 'trainer'): Promise<ChatPartnersResponse> => {
+  const routes = role === 'trainer' ? TRAINER_CHAT_ROUTES : CHAT_ROUTES;
+  const res = await api.get(routes.CHAT_PARTNERS);
+  return res.data.data;
+};
+
+export const fetchChatHistory = async (otherUserId: string, role: 'user' | 'trainer', page = 1, limit = 20): Promise<ChatHistoryResponse> => {
+  const routes = role === 'trainer' ? TRAINER_CHAT_ROUTES : CHAT_ROUTES;
+  const res = await api.get(routes.CHAT_HISTORY(otherUserId), {
+    params: { page, limit }
+  });
+  return res.data.data;
+};
+
+export const sendMessage = async (receiverId: string, role: 'user' | 'trainer', message: string) => {
+  const routes = role === 'trainer' ? TRAINER_CHAT_ROUTES : CHAT_ROUTES;
+  const res = await api.post(routes.SEND_MESSAGE, { receiverId, message });
+  return res.data.data;
+};
+
+export const markMessagesRead = async (otherUserId: string, role: 'user' | 'trainer') => {
+  const routes = role === 'trainer' ? TRAINER_CHAT_ROUTES : CHAT_ROUTES;
+  const res = await api.patch(routes.MARK_READ(otherUserId));
+  return res.data.data;
 };

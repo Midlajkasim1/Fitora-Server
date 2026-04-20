@@ -7,6 +7,8 @@ import { UserFooter } from "../../../layout/client/ClientFooter";
 import { useSpecializations } from "../../../hooks/user/use-specialization";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import type { Specialization, UserProfileResponse } from "../../../type/user.types";
+import { GlobalLoader } from "../../../shared/GlobalLoader";
 
 export default function UserProfile() {
   const { user, isLoading } = useUser();
@@ -14,7 +16,7 @@ export default function UserProfile() {
   const { mutate: updateProfile, isPending } = useUpdateUser();
   const { mutate: uploadImage } = useUploadProfileImage();
   const queryClient = useQueryClient();
-  const { data: specialization = [] } = useSpecializations();
+  const { data: specialization = [] as Specialization[] } = useSpecializations();
   const experienceOptions = [
     { label: "Beginner", value: "Beginner" },
     { label: "Intermediate", value: "Intermediate" },
@@ -67,8 +69,7 @@ export default function UserProfile() {
   const preferredWorkoutId = user?.preferredWorkouts;
 
   const preferredWorkoutName = specialization.find(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (s: any) => s.id === preferredWorkoutId
+    (s: Specialization) => s.id === preferredWorkoutId
   )?.name;
 
 
@@ -76,11 +77,7 @@ export default function UserProfile() {
 
 
   if (isLoading) {
-    return (
-      <div className="h-screen w-full bg-[#0a1810] flex items-center justify-center text-[#00ff94] font-black italic tracking-widest animate-pulse">
-        LOADING...
-      </div>
-    );
+    return <GlobalLoader />;
   }
 
   return (
@@ -113,8 +110,7 @@ export default function UserProfile() {
 
                       const previewUrl = URL.createObjectURL(file);
 
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      queryClient.setQueryData(["user-profile"], (oldData: any) => {
+                      queryClient.setQueryData(["user-profile"], (oldData: UserProfileResponse | undefined) => {
                         if (!oldData) return oldData;
 
                         return {
@@ -213,8 +209,7 @@ export default function UserProfile() {
                 label="Preferred Workout"
                 value={isEditing ? formData.preferredWorkouts : preferredWorkoutName}
                 isEditing={isEditing}
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                options={specialization.map((s: any) => ({
+                options={specialization.map((s: Specialization) => ({
 
                   label: s.name,
                   value: s.id

@@ -28,7 +28,6 @@ export const CreateSlotModal = ({ isOpen, onClose, initialData }: SlotModalProps
     resolver: zodResolver(CreateSlotSchema),
   });
 
-  // eslint-disable-next-line react-hooks/incompatible-library
   const sessionType = watch("type");
   const selectedTime = watch("time");
 
@@ -106,8 +105,7 @@ export const CreateSlotModal = ({ isOpen, onClose, initialData }: SlotModalProps
                 key={t.id}
                 type="button"
                 onClick={() => {
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  setValue('type', t.id as any);
+                  setValue('type', t.id as 'one_on_one' | 'group');
                   if (t.id === 'one_on_one') setValue('capacity', 1);
                 }}
                 className={`py-2.5 rounded-xl text-[10px] font-black uppercase italic transition-all ${

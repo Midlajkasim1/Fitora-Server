@@ -1,4 +1,5 @@
 import { AdvertisementMapper } from "@/infrastructure/database/mappers/advertisement.mapper";
+import { ChatMessageMapper } from "@/infrastructure/database/mappers/chat-message.mapper";
 import { AiDietPlanMapper } from "@/infrastructure/database/mappers/ai-diet-plan.mapper";
 import { AiWorkoutPlanMapper } from "@/infrastructure/database/mappers/ai-workout-plan.mapper";
 import { HealthMetricsMapper } from "@/infrastructure/database/mappers/client-health-metrics.mapper";
@@ -11,13 +12,14 @@ import { SubscriptionPlanMapper } from "@/infrastructure/database/mappers/subscr
 import { TrainerDetailsMapper } from "@/infrastructure/database/mappers/trainer-details.mapper";
 import { UserMapper } from "@/infrastructure/database/mappers/user.mapper";
 import { WorkoutMapper } from "@/infrastructure/database/mappers/workout.mapper";
+import { ChatMessageRepository } from "@/infrastructure/database/repositories/chat-message.repository";
 import { AdvertisementRepository } from "@/infrastructure/database/repositories/advertisement.repository";
 import { AiDietPlanRepository } from "@/infrastructure/database/repositories/ai-diet-plan.repository";
 import { AiWorkoutPlanRepository } from "@/infrastructure/database/repositories/ai-workout-plan.repository";
 import { HealthMetricsRepository } from "@/infrastructure/database/repositories/client-health-metrics";
 import { ClientPreferenceRepository } from "@/infrastructure/database/repositories/client-preference.repository";
 import { PaymentRepository } from "@/infrastructure/database/repositories/paymentRepository";
-import { SlotRespository } from "@/infrastructure/database/repositories/slot.repository";
+import { SlotRepository } from "@/infrastructure/database/repositories/slot.repository";
 import { SpecializationRepository } from "@/infrastructure/database/repositories/specialization.repository";
 import { SubscriptionRepository } from "@/infrastructure/database/repositories/subscription.repository";
 import { SubscriptionplanRepository } from "@/infrastructure/database/repositories/subscriptionPlan.repository";
@@ -34,6 +36,7 @@ const subscriptionMapper= new SubscriptionMapper();
 const paymentMapper = new PaymentMapper();
 const clientHealthMetrics = new HealthMetricsMapper();
 const advertisementMapper = new AdvertisementMapper();
+const chatMessageMapper = new ChatMessageMapper();
 const slotMapper = new SlotMapper();
 const aiWorkoutMapper = new AiWorkoutPlanMapper();
 const aiDietMapper = new AiDietPlanMapper();
@@ -49,9 +52,10 @@ export const userRepositories = {
    paymentRepository:new PaymentRepository(paymentMapper),
    clientHealthMetricRepository:new HealthMetricsRepository(clientHealthMetrics),
    advertisementRepository:new AdvertisementRepository(advertisementMapper),
-   slotRepository:new SlotRespository(slotMapper),
+   slotRepository:new SlotRepository(slotMapper),
    aiWorkoutPlanRepository:new AiWorkoutPlanRepository(aiWorkoutMapper),
-   aiDietPlanRepository:new AiDietPlanRepository(aiDietMapper)
+   aiDietPlanRepository:new AiDietPlanRepository(aiDietMapper),
+   chatMessageRepository: new ChatMessageRepository(chatMessageMapper)
    
   
   

@@ -25,6 +25,7 @@ export interface UserDashboardResponseDTO {
     }[];
     nextSession: {
         slotId: string;
+        trainerId: string;
         startTime: Date;
         trainerName: string;
         type: string;

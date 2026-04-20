@@ -37,7 +37,7 @@ export interface TrainerOnboardingPayload {
   bio: string;
   experience_year: number;
   gender: string;
-  specializations: string; // Sent as JSON string via FormData
+  specializations: string[]; // Sent as JSON string via FormData
   certificates?: File[]; // The Multer 'certificates' field
 }
 export type TrainerApprovalStatus = "pending" | "approved" | "rejected";

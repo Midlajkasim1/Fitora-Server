@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, type FieldError } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {  UserIcon, MailIcon, PhoneIcon, LockIcon,  UserCheckIcon, ShieldCheckIcon, EyeIcon, EyeOffIcon }from'lucide-react';
@@ -34,7 +34,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, onRoleChan
     defaultValues: { role: 'user' }
   });
 
-  // eslint-disable-next-line react-hooks/incompatible-library
   const selectedRole = watch('role');
 
   useEffect(() => {
@@ -45,8 +44,7 @@ const onInternalSubmit = (data: RegisterFormData) => {
   onSubmit(data); 
 };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const inputClass = (error?: any) => `w-full bg-[#0a1f1c] border ${error ? 'border-red-500/50' : 'border-white/5'} p-3 rounded-lg text-white outline-none focus:border-[#00ff94]/50 transition-all text-sm pl-10`;
+  const inputClass = (error?: FieldError) => `w-full bg-[#0a1f1c] border ${error ? 'border-red-500/50' : 'border-white/5'} p-3 rounded-lg text-white outline-none focus:border-[#00ff94]/50 transition-all text-sm pl-10`;
 
   return (
     <form onSubmit={handleSubmit(onInternalSubmit)} className="space-y-4">

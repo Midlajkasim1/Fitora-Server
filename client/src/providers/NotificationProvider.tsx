@@ -14,8 +14,8 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     if (user?.id && !socketRef.current) {
-      const newSocket = io("http://localhost:4000", {
-        query: { userId: user.id },
+      const newSocket = io(import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || "http://localhost:4000", {
+        auth: { token: localStorage.getItem('token') }, // Pass token for backend auth
         transports: ['websocket'],
       });
 
@@ -30,6 +30,26 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         });
 
         queryClient.invalidateQueries({ queryKey: ["notifications"],refetchType:"all" });
+      });
+
+      newSocket.on('session-started', (data: { slotId: string, message: string }) => {
+        toast((t) => (
+          <div className="flex flex-col gap-2">
+            <p className="text-white font-bold text-xs uppercase italic">{data.message}</p>
+            <button 
+              onClick={() => {
+                toast.dismiss(t.id);
+                window.location.href = `/video-call/${data.slotId}`;
+              }}
+              className="bg-[#00ff94] text-black font-black text-[10px] py-2 rounded-lg uppercase italic"
+            >
+              Join Session Now
+            </button>
+          </div>
+        ), {
+          duration: 10000,
+          style: { background: '#0d1a16', border: '2px solid #00ff94' },
+        });
       });
 
       socketRef.current = newSocket;

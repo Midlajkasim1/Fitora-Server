@@ -2,10 +2,11 @@ import { Clock, Mail, ShieldCheck, LogOut, ChevronRight } from "lucide-react";
 import { useAuthStore } from "../../../../store/use-auth-store";
 import { logoutUser } from "../../../../api/auth.api";
 export default function WaitingApprovalPage() {
-  const { user, logout } = useAuthStore();
+  const { user, logout, setLoggingOut } = useAuthStore();
 
 const handleLogout = async () => {
     try {
+      setLoggingOut(true);
       await logoutUser(); 
     } catch (error) {
       console.error("Logout API failed:", error);

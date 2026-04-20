@@ -16,7 +16,6 @@ export default function ClientHealthMetrics() {
     handleSubmit,
     formState: { errors },
   } = useForm<HealthMetricsFormData>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(healthMetricsSchema) as any,
     defaultValues: { 
       height: 175, 

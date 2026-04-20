@@ -42,12 +42,17 @@ import {  GetUserUpcomingSessionSlotsUseCase } from "@/application/usecases/slot
 import { GetDashboardUseCase } from "@/application/usecases/user/get-dashboard.usecase";
 import { GetTrainerBookingUseCase } from "@/application/usecases/user/get-trainerBooking.usecase";
 import { UserWeightProgressUseCase } from "@/application/usecases/user/user-weight-progress.usecase";
+import { GetChatPartnersUseCase } from "@/application/usecases/chat/get-chat-partners.usecase";
+import { SendMessageUseCase } from "@/application/usecases/chat/send-message.usecase";
+import { GetChatHistoryUseCase } from "@/application/usecases/chat/get-chat-history.usecase";
+import { MarkMessagesReadUseCase } from "@/application/usecases/chat/mark-read.usecase";
 import { notificationServiceProxy } from "@/infrastructure/providers/notification/notification.provider";
 // import { GeminiAiService } from "@/infrastructure/providers/ai-model/gemini-ai.service.provider";
 import { GenerateWorkoutPlanUseCase } from "@/application/usecases/ai-workout&diet/generate-workout-plan.usecase";
 import { GenerateDietPlanUseCase } from "@/application/usecases/ai-workout&diet/generate-diet-usecase";
 import { RedisCacheService } from "@/infrastructure/providers/redis/redis-cache.service";
 import { MistralAiService } from "@/infrastructure/providers/ai-model/mistral-ai.provider";
+import { socketEmitterProxy } from "@/infrastructure/providers/socket/socket-emitter";
 import { GetWorkoutPlanUseCase } from "@/application/usecases/ai-workout&diet/get-workout-plan.usecase";
 import { GetDietPlanUseCase } from "@/application/usecases/ai-workout&diet/get-diet-plan.usecase";
 // import { GrokAiService } from "@/infrastructure/providers/ai-model/grok-ai.service.provider";
@@ -252,6 +257,21 @@ export const useCases = {
   getDietPlanUseCase:new GetDietPlanUseCase(
     userRepositories.aiDietPlanRepository,
     redisCacheService
+  ),
+  getChatPartnersUseCase: new GetChatPartnersUseCase(
+    userRepositories.slotRepository,
+    userRepositories.chatMessageRepository
+  ),
+  sendMessageUseCase: new SendMessageUseCase(
+    userRepositories.chatMessageRepository,
+    userRepositories.slotRepository,
+    socketEmitterProxy
+  ),
+  getChatHistoryUseCase: new GetChatHistoryUseCase(
+    userRepositories.chatMessageRepository
+  ),
+  markMessagesReadUseCase: new MarkMessagesReadUseCase(
+    userRepositories.chatMessageRepository
   )
 
   

@@ -18,8 +18,8 @@ import { useOnboardingStore } from "../../../../store/use-onboarding-store";
 
 const schema = z.object({
   dietPreference: z.string().min(1, "Please select a diet preference"),
-  waterIntake: z.number({ invalid_type_error: "Enter a number" }).min(500, "Minimum 500ml required"),
-  sleepHours: z.number({ invalid_type_error: "Enter a number" }).min(3, "Min 3 hours").max(12, "Max 12 hours"),
+  waterIntake: z.number({ message: "Enter a number" }).min(500, "Minimum 500ml required"),
+  sleepHours: z.number({ message: "Enter a number" }).min(3, "Min 3 hours").max(12, "Max 12 hours"),
   medicalConditions: z.array(z.string()).min(1, "Select at least one option (or 'None')"),
 });
 
@@ -50,7 +50,6 @@ export default function ClientStepTwoPage() {
   const selectedDiet = watch("dietPreference");
 
   const toggleCondition = (val: string) => {
-    // eslint-disable-next-line react-hooks/incompatible-library
     const current = watch("medicalConditions") || [];
     let next: string[];
 
@@ -82,8 +81,7 @@ export default function ClientStepTwoPage() {
       updateOnboardingStatus(false);
       clearClient();
       navigate("/home", { replace: true });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+    } catch (error) {
       console.error("Submission failed", error);
     }
   };
@@ -123,7 +121,7 @@ export default function ClientStepTwoPage() {
               </button>
             ))}
           </div>
-          {errors.dietPreference && <p className="text-red-500 text-[10px] italic font-bold ml-1">{errors.dietPreference.message}</p>}
+          {errors.dietPreference && <p className="text-red-500 text-[10px] italic font-bold ml-1">{errors.dietPreference.message as string}</p>}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -137,7 +135,7 @@ export default function ClientStepTwoPage() {
                 className={`w-full bg-[#0a1810] border ${errors.waterIntake ? 'border-red-500/50' : 'border-white/5'} rounded-2xl p-4 pl-12 text-white outline-none focus:border-[#00ff94]/50 italic font-bold`}
               />
             </div>
-            {errors.waterIntake && <p className="text-red-500 text-[10px] italic font-bold ml-1">{errors.waterIntake.message}</p>}
+            {errors.waterIntake && <p className="text-red-500 text-[10px] italic font-bold ml-1">{errors.waterIntake.message as string}</p>}
           </div>
 
           <div className="space-y-3">
@@ -150,7 +148,7 @@ export default function ClientStepTwoPage() {
                 className={`w-full bg-[#0a1810] border ${errors.sleepHours ? 'border-red-500/50' : 'border-white/5'} rounded-2xl p-4 pl-12 text-white outline-none focus:border-[#00ff94]/50 italic font-bold`}
               />
             </div>
-            {errors.sleepHours && <p className="text-red-500 text-[10px] italic font-bold ml-1">{errors.sleepHours.message}</p>}
+            {errors.sleepHours && <p className="text-red-500 text-[10px] italic font-bold ml-1">{errors.sleepHours.message as string}</p>}
           </div>
         </div>
 
@@ -177,7 +175,7 @@ export default function ClientStepTwoPage() {
               );
             })}
           </div>
-          {errors.medicalConditions && <p className="text-red-500 text-[10px] italic font-bold ml-1">{errors.medicalConditions.message}</p>}
+          {errors.medicalConditions && <p className="text-red-500 text-[10px] italic font-bold ml-1">{errors.medicalConditions.message as string}</p>}
         </div>
 
         <div className="pt-4 space-y-4">

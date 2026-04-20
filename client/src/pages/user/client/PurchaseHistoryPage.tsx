@@ -3,6 +3,7 @@ import { Pagination } from "../../../components/admin/Pagination";
 import { format } from "date-fns";
  
 import { Receipt, CheckCircle2, XCircle, Clock } from "lucide-react";
+import { GlobalLoader } from "../../../shared/GlobalLoader";
 import { usePurchaseHistory } from "../../../hooks/user/subscription/use-purchaseHistory";
 import { useCancelSubscription } from "../../../hooks/user/subscription/use-cancel-subscription";
 import { ConfirmModal } from "../../../shared/ConfirmModal";
@@ -29,7 +30,7 @@ export default function PurchaseHistoryPage() {
     </span>;
   };
 
-  if (isLoading) return <div className="py-40 text-center text-[#00ff94] font-black italic uppercase animate-pulse">Retrieving Transactions...</div>;
+  if (isLoading) return <GlobalLoader />;
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12 space-y-10">

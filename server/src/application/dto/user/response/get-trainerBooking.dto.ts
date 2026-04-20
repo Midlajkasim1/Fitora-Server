@@ -8,6 +8,7 @@ export interface TrainerBookingDTO {
     experience: number;      
     rating: number;            
     bio: string;            
+    availableSlotsCount: number;
 }
 
 export interface GetTrainersBookingResponseDTO {

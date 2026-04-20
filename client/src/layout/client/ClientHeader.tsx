@@ -8,7 +8,7 @@ import { queryClient } from "../../constants/query-client";
 import { NotificationBell } from "../../components/common/NotificationBell";
 
 export const UserHeader = () => {
-  const { logout } = useAuthStore();
+  const { logout, setLoggingOut } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useUser();
@@ -27,6 +27,7 @@ export const UserHeader = () => {
 
   const handleLogout = async () => {
     try {
+      setLoggingOut(true);
       await logoutUser();
     } catch (error) {
       console.error("Logout API failed:", error);

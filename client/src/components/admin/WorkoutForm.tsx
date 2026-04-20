@@ -4,14 +4,19 @@ import { useEffect, useMemo } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { createWorkoutSchema } from "../../validators/admin/workout.Schema";
+import { createWorkoutSchema, type CreateWorkoutFormData } from "../../validators/admin/workout.Schema";
 import { AdminLayout } from "../../layout/admin/AdminLayout";
+
+interface WorkoutInitialData extends Partial<CreateWorkoutFormData> {
+    videoUrl?: string;
+    thumbnailUrl?: string;
+}
 
 interface Props {
     mode: "create" | "edit";
-    initialData?: any;
-    specializations?: any[];
-    onSubmit: (data: any) => void;
+    initialData?: WorkoutInitialData;
+    specializations?: { _id: string; name: string; id?: string }[];
+    onSubmit: (data: CreateWorkoutFormData) => void;
     isPending: boolean;
 }
 
@@ -24,9 +29,9 @@ export default function WorkoutForm({ mode, initialData, specializations, onSubm
         setValue,
         control,
         formState: { errors },
-    } = useForm({
-        resolver: zodResolver(createWorkoutSchema),
-        values: initialData,
+    } = useForm<CreateWorkoutFormData>({
+        resolver: zodResolver(createWorkoutSchema) as any,
+        defaultValues: initialData as any,
     });
 
     const videoFile = useWatch({ control, name: "video" });
@@ -49,7 +54,6 @@ export default function WorkoutForm({ mode, initialData, specializations, onSubm
         };
     }, [videoPreview, thumbnailPreview]);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onInvalid = (errors: any) => {
         console.error("Form Validation Errors:", errors);
         toast.error("Please fill all required fields correctly", { id: "val-error" });

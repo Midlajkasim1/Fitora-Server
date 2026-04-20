@@ -1,13 +1,15 @@
-import { Weight, Ruler, User, Flame, Video } from "lucide-react";
+import { Weight, Ruler, User, Flame, Video, MessageCircle } from "lucide-react";
 import { usePremiumDashboard } from "../../../hooks/user/use-premiumDashboard";
 import { BMIWidget } from "../../../components/user/BmiWidget";
 import { ProgressChart } from "../../../components/user/ProgressChart";
 import { useNavigate } from "react-router-dom";
 import { UpdateWeightModal } from "../../../components/user/UpdateWeightModal";
+import { useChatStore } from "../../../store/use-chat-store";
 
 export default function PremiumDashboardPage() {
   const { data, isLoading } = usePremiumDashboard();
   const navigate = useNavigate();
+  const { openChat } = useChatStore();
   if (isLoading || !data) return null;
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -90,9 +92,17 @@ export default function PremiumDashboardPage() {
               <p className="mt-8 font-bold italic opacity-60">No sessions booked</p>
             )}
           </div>
-          <button className="w-full bg-black text-white py-4 rounded-2xl font-black uppercase italic text-[10px] flex items-center justify-center gap-2 hover:bg-black/80 transition-colors">
-            <Video size={16} /> Start Class
-          </button>
+          <div className="flex gap-2">
+            <button className="flex-1 bg-black text-white py-4 rounded-2xl font-black uppercase italic text-[10px] flex items-center justify-center gap-2 hover:bg-black/80 transition-colors">
+              <Video size={16} /> Start Class
+            </button>
+            <button 
+              onClick={() => openChat(data.nextSession?.trainerId)}
+              className="px-6 bg-black/10 text-black border border-black/20 py-4 rounded-2xl font-black uppercase italic text-[10px] flex items-center justify-center hover:bg-black/20 transition-colors"
+            >
+              <MessageCircle size={18} />
+            </button>
+          </div>
         </div>
         </div>
          <UpdateWeightModal
@@ -103,8 +113,7 @@ export default function PremiumDashboardPage() {
     );
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const MetricCard = ({ icon: Icon, label, value, unit }: any) => (
+  const MetricCard = ({ icon: Icon, label, value, unit }: { icon: React.ElementType; label: string; value: string | number; unit: string }) => (
     <div className="bg-[#132a1e] border border-white/5 p-6 rounded-[2rem] flex flex-col items-center justify-center text-center gap-3 hover:border-[#00ff94]/20 transition-colors group">
       {/* Icon Container with subtle glow on hover */}
       <div className="text-[#00ff94] bg-[#00ff94]/5 p-3 rounded-2xl group-hover:bg-[#00ff94]/10 transition-colors">

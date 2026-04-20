@@ -1,0 +1,33 @@
+import { Schema } from "mongoose";
+
+export const ChatMessageSchema = new Schema(
+  {
+    senderId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
+    },
+    receiverId: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+      index: true,
+    },
+    message: {
+      type: String,
+      required: true,
+      maxlength: 5000,
+      trim: true,
+    },
+    isRead: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  { timestamps: true }
+);
+
+// Compound index for fast conversation queries
+ChatMessageSchema.index({ senderId: 1, receiverId: 1, createdAt: -1 });
+ChatMessageSchema.index({ receiverId: 1, senderId: 1, createdAt: -1 });

@@ -25,6 +25,9 @@ const envSchema = z.object({
     STRIPE_SECRET_KEY: z.string().startsWith("sk_test_"),
     STRIPE_WEBHOOK_SECRET: z.string().startsWith("whsec_").optional(),
     MISTRAL_API_KEY: z.string().min(30, "MISTRAL API Key is too short"),
+    LIVEKIT_API_KEY: z.string().min(1, "LiveKit API Key is required"),
+    LIVEKIT_API_SECRET: z.string().min(1, "LiveKit API Secret is required"),
+    LIVEKIT_URL: z.string().min(1, "LiveKit URL is required")
    
 });
 

@@ -78,6 +78,18 @@ router.post("/slots/:slotId/cancel",userMiddlewares.authMiddleware,userMiddlewar
 router.get("/upcoming-session",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userSlotsController.UpcomingSessionSlots(req,res)
 ));
+router.get("/chat/partners",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.userSlotsController.getChatPartners(req,res)
+));
+router.get("/chat/:otherUserId",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.chatController.getChatHistory(req,res)
+));
+router.post("/chat/send",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.chatController.sendMessage(req,res)
+));
+router.patch("/chat/:otherUserId/read",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+    userControllers.chatController.markAsRead(req,res)
+));
 router.get("/premium-dashboard",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userController.getUserPremiumDashboard(req,res)
 ));

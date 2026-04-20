@@ -2,8 +2,12 @@ import { Outlet } from "react-router-dom";
 import { PageMeta } from "../../shared/PageMeta";
 import Sidebar from "./SideBar";
 import { TrainerHeader } from "./TrainerHeader"; 
+import { ChatPanel } from "../../components/user/ChatPanel";
+import { useChatStore } from "../../store/use-chat-store";
 
 const TrainerLayout = () => {
+  const { isOpen, closeChat, selectedTrainerId } = useChatStore();
+
   return (
     <div className="flex bg-[#06110d] min-h-screen font-sans">
       <PageMeta 
@@ -23,6 +27,13 @@ const TrainerLayout = () => {
           </div>
         </main>
       </div>
+
+      {/* Unified Chat Overlay for Trainers */}
+      <ChatPanel 
+        isOpen={isOpen} 
+        onClose={closeChat} 
+        initialTrainerId={selectedTrainerId || undefined} 
+      />
     </div>
   );
 };

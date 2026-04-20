@@ -6,6 +6,8 @@ export class ActiveSubscriptionResponseDTO {
     planName: string;
     endDate: Date;
     status: string;
+    hasAiWorkout: boolean;
+    hasAiDiet: boolean;
   } | null;
 
   constructor(data: ActiveSubscriptionResponseDTO) {

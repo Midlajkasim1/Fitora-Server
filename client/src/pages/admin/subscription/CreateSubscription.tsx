@@ -17,7 +17,6 @@ export default function CreateSubscription() {
         toast.success("Subscription plan published!", { id: toastId });
         navigate("/admin/subscriptions");
       },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onError: (error: any) => {
         toast.error(error?.response?.data?.message || "Failed to create plan", { id: toastId });
       },

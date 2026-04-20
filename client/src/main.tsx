@@ -4,6 +4,7 @@ import { QueryProvider } from './providers/query-provider';
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import App from './App';
 import './index.css';
+import '@livekit/components-styles';
 import { AuthProvider } from './providers/AuthProvider';
 import { ToastProvider } from './providers/ToastProvider';
 import api from './api/axios';

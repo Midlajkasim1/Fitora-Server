@@ -9,29 +9,63 @@ import app from "./app";
 import { PlanRegenerationScheduler } from "@/infrastructure/providers/scheduler/plan.regeneration.scheduler";
 import { userRepositories } from "@/infrastructure/di/user/user.repositories";
 import { redisCacheService } from "@/infrastructure/di/user/user.usecases";
+import { initSocketEmitter } from "@/infrastructure/providers/socket/socket-emitter";
+import { SocketChatService } from "@/infrastructure/providers/socket/socket-chat.service";
+import { SocketVideoService } from "@/infrastructure/providers/socket/socket-video.service";
+import { chatUseCases } from "@/infrastructure/di/chat/chat.di";
 
 const PORT = env.PORT || 4000;
+
 const startServer = async () => {
   await DatabaseService.connect();
+
   const scheduler = new PlanRegenerationScheduler(
-      userRepositories.subscriptionRepository,
-      redisCacheService
-    );
-    scheduler.init();
+    userRepositories.subscriptionRepository,
+    redisCacheService
+  );
+  scheduler.init();
+
+  // ── Step 1: Initialize the SocketEmitter (Redis pub client only, no io needed).
+  // This populates the singleton so chatUseCases.sendMessageUseCase can use the
+  // socketEmitterProxy safely once io is ready.
+  initSocketEmitter();
 
   const httpServer = http.createServer(app);
 
   const io = new SocketServer(httpServer, {
     cors: {
       origin: env.CLIENT_URL,
-      credentials: true
-    }
+      credentials: true,
+    },
   });
 
-   initNotificationService(io, notificationRepositories.notificationRepository);
+  // ── Step 2: Global Notification & Identity Room Joining
+  // Ensures every connected socket joins a room named after their userId
+  io.use(require("@/infrastructure/providers/socket/socket-auth.middleware").socketAuthMiddleware);
+  io.on("connection", (socket) => {
+     const { userId } = socket.data.user;
+     if (userId) {
+         socket.join(userId);
+         logger.info(`[Socket] User ${userId} joined identity room on root namespace`);
+     }
+  });
+
+  initNotificationService(io, notificationRepositories.notificationRepository);
+
+  // ── Step 3: Chat service — attaches Redis Adapter + registers /chat namespace.
+  // SocketChatService constructor calls _attachRedisAdapter() internally, so
+  // Socket.io uses it before any connection events fire.
+  new SocketChatService(
+    io,
+    chatUseCases.sendMessageUseCase,
+    chatUseCases.getChatHistoryUseCase
+  );
+
+  // ── Step 4: Video service — attaches /video namespace.
+  new SocketVideoService(io);
 
   httpServer.listen(PORT, () => {
-    logger.info(` Server started on http://localhost:${PORT}`);
+    logger.info(`Server started on http://localhost:${PORT}`);
   });
 };
 

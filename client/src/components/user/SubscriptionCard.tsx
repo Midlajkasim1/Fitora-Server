@@ -6,7 +6,7 @@ interface PricingCardProps {
     name: string;
     price: string | number;
     billingCycle: string;
-    description: string;
+    description?: string;
   };
   onSubscribe: (id: string) => void;
   onCancel: () => void; // New prop

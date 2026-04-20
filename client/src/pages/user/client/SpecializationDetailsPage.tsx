@@ -1,13 +1,14 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useUserSpecializationById } from "../../../hooks/user/workout/use-user-specializationById";
 import { Clock, Flame, ChevronRight, Zap } from "lucide-react";
+import { GlobalLoader } from "../../../shared/GlobalLoader";
 
 export default function SpecializationDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data, isLoading, isError } = useUserSpecializationById(id!);
 
-  if (isLoading) return <div className="py-40 text-center text-white bg-[#07140f] h-screen font-black uppercase italic">Syncing System...</div>;
+  if (isLoading) return <GlobalLoader />;
   if (isError || !data) return <div className="py-40 text-center text-red-500 bg-[#07140f] h-screen font-black uppercase italic">Error Loading Data</div>;
 
   const specialization = data.specializations;
@@ -86,8 +87,7 @@ export default function SpecializationDetailsPage() {
           </div>
 
           <div className="space-y-0 relative">
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            {workoutList.map((wk: unknown, index: number) => (
+            {workoutList.map((wk: { id: string; title: string; duration: number; description: string; }, index: number) => (
               <div key={wk.id} className="relative flex gap-6 pb-12 last:pb-0">
                 {index !== workoutList.length - 1 && (
                   <div className="absolute left-[19px] top-10 bottom-0 w-[1px] bg-white/10" />

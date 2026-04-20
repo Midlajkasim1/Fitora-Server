@@ -4,22 +4,24 @@ import { DataTable } from "../../components/admin/DataTable";
 import { ManagementHeader } from "../../components/admin/ManagementHeader";
 import { Pagination } from "../../components/admin/Pagination";
 import { ConfirmModal } from "../../shared/ConfirmModal";
-import type { User } from "../../type/auth.types";
+
 import { Ban, Eye } from "lucide-react";
 import { useUserManagement } from "../../hooks/admin/use-admin-user-management";
 import { useToggleUserBlock } from "../../hooks/admin/use-userToggleBlock";
-import type { UserManagement } from "../../type/admin.types";
+import { useDebounce } from "../../hooks/admin/use-debounce";
+import type { UserManagement as UserData } from "../../type/admin.types";
 
 export default function UserManagement() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
   const [status, setStatus] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [targetUser, setTargetUser] = useState<User | null>(null);
+  const [targetUser, setTargetUser] = useState<UserData | null>(null);
 
   const {data,isLoading} = useUserManagement({
     page,
-    search,
+    search: debouncedSearch,
     status
   });
   const users = data?.users ?? [];
@@ -36,10 +38,10 @@ const handleBlockToggle = () =>{
 
 
 
-  const columns :Column<UserManagement>[] = [
+  const columns = [
     {
       header: "#",
-      render: (_: User, index: number) => (
+      render: (_: UserData, index: number) => (
         <span className="text-gray-600 font-medium">
           {(page - 1) * 10 + (index + 1)}
         </span>
@@ -47,7 +49,7 @@ const handleBlockToggle = () =>{
     },
     {
       header: "User",
-      render: (u: User) => (
+      render: (u: UserData) => (
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-[#00ff94]/10 border border-[#00ff94]/20 flex items-center justify-center overflow-hidden">
             {u.profileImage ? (
@@ -69,7 +71,7 @@ const handleBlockToggle = () =>{
     },
     {
       header: "Status",
-      render: (u: User) => (
+      render: (u: UserData) => (
         <div className={`flex items-center gap-2 px-3 py-1 rounded-full w-fit ${u.status === 'active' ? 'bg-green-500/10 text-green-500' : 'bg-red-500/10 text-red-500'
           }`}>
           <div className={`w-1.5 h-1.5 rounded-full ${u.status === 'active' ? 'bg-green-500 shadow-[0_0_8px_#22c55e]' : 'bg-red-500 shadow-[0_0_8px_#ef4444]'
@@ -80,7 +82,7 @@ const handleBlockToggle = () =>{
     },
     {
       header: "Action",
-      render: (u: User) => (
+      render: (u: UserData) => (
         <div className="flex gap-1">
           <button className="p-2 hover:bg-white/5 rounded-xl text-gray-500 hover:text-[#00ff94] transition-all">
             <Eye size={18} />
@@ -126,7 +128,7 @@ const handleBlockToggle = () =>{
           ]}
         />
 
-        <DataTable<UserManagement> columns={columns} data={users} isLoading={isLoading} />
+        <DataTable<UserData> columns={columns} data={users} isLoading={isLoading} />
 
         {total > 0 && (
           <Pagination

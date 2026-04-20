@@ -9,16 +9,18 @@ import { Pagination } from "../../../components/admin/Pagination";
 import { DataTable } from "../../../components/admin/DataTable";
 import { AdminLayout } from "../../../layout/admin/AdminLayout";
 import { ManagementHeader } from "../../../components/admin/ManagementHeader";
+import { useDebounce } from "../../../hooks/admin/use-debounce";
 
 export default function SubscriptionManagementPage() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
   const [status, setStatus] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [targetSub, setTargetSub] = useState<SubscriptionManagement | null>(null);
 
   const navigate = useNavigate();
-  const { data, isLoading } = useSubcriptionManagement({ page, search, status });
+  const { data, isLoading } = useSubcriptionManagement({ page, search: debouncedSearch, status });
   const toggleMutation = useSubscriptionToggle();
 
   const subscriptions = data?.subscriptions ?? [];

@@ -3,6 +3,7 @@ import { User, Phone, Briefcase, Wallet, Edit3, Lock, ShieldCheck } from "lucide
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
+import { GlobalLoader } from "../../../shared/GlobalLoader";
 
 import { useTrainerProfile } from "../../../hooks/trainer/profile/use-trainer-profile";
 import { TrainerProfileField } from "../../../components/trainer/TrainerProfileField";
@@ -20,7 +21,6 @@ export default function TrainerProfilePage() {
     reset,
     formState: { errors },
   } = useForm<TrainerProfileFormData>({
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     resolver: zodResolver(trainerProfileSchema) as any,
   });
 
@@ -36,11 +36,7 @@ export default function TrainerProfilePage() {
   }, [trainer, reset]);
 
   if (isLoading || !trainer) {
-    return (
-      <div className="h-full flex items-center justify-center text-[#00ff94] font-black italic animate-pulse">
-        SYNCING DATA...
-      </div>
-    );
+    return <GlobalLoader />;
   }
 
   const onSubmit = (data: TrainerProfileFormData) => {
@@ -92,6 +88,11 @@ export default function TrainerProfilePage() {
               <span className="px-3 py-1 bg-[#00ff94]/10 text-[#00ff94] text-[9px] font-black uppercase italic rounded-lg flex items-center gap-1">
                 <ShieldCheck size={10} /> {trainer.status}
               </span>
+              {trainer.specializationName && (
+                <span className="px-3 py-1 bg-white/5 text-gray-400 text-[9px] font-black uppercase italic rounded-lg border border-white/5">
+                  {trainer.specializationName}
+                </span>
+              )}
             </div>
           </div>
         </div>

@@ -18,7 +18,8 @@ export const trainerController = {
     trainerUsecase.trainerCancelSlotUseCase,
     trainerUsecase.getPersonalUserUsecase,
     trainerUsecase.getGroupUsersUseCase,
-    trainerUsecase.getTrainerUpcomingSlotsUSeCase
+    trainerUsecase.getTrainerUpcomingSlotsUSeCase,
+    trainerUsecase.getClientDetailsUseCase
    ),
    
 

@@ -2,10 +2,11 @@ import { Users, TrendingUp, Clock } from 'lucide-react';
 import { useTrainerDashboard } from '../../../hooks/trainer/use-trainerDashboard';
 import SessionCard from '../../../components/trainer/SessionCard';
 import StatCard from '../../../components/trainer/StatCard';
+import { GlobalLoader } from '../../../shared/GlobalLoader';
 
 const TrainerDashboard = () => {
   const { data, isLoading } = useTrainerDashboard();
-  if (isLoading) return <div className="p-10 text-white">Loading Dashboard...</div>;
+  if (isLoading) return <GlobalLoader />;
 
   return (
     <div className="p-8 space-y-10"> {/* Removed min-h-screen and bg color */}

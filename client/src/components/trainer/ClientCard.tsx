@@ -1,8 +1,10 @@
 // components/trainer/ClientCard.tsx
 import { User, MessageSquare, Calendar } from "lucide-react";
 import type { TrainerClient } from "../../type/trainer.types";
+import { useChatStore } from "../../store/use-chat-store";
 
-const ClientCard = ({ client }: { client: TrainerClient }) => {
+const ClientCard = ({ client, onProfileClick }: { client: TrainerClient, onProfileClick: () => void }) => {
+  const { openChat } = useChatStore();
   const date = new Date(client.startTime);
   
   // Format: "Oct 24, 2023"
@@ -44,10 +46,16 @@ const ClientCard = ({ client }: { client: TrainerClient }) => {
 
         {/* Buttons */}
         <div className="w-full grid grid-cols-2 gap-3">
-          <button className="flex items-center justify-center gap-2 py-2.5 bg-[#0d1a16] text-gray-400 rounded-xl hover:text-white hover:bg-white/5 transition text-[10px] font-bold uppercase italic border border-white/5">
+          <button 
+            onClick={onProfileClick}
+            className="flex items-center justify-center gap-2 py-2.5 bg-[#0d1a16] text-gray-400 rounded-xl hover:text-white hover:bg-white/5 transition text-[10px] font-bold uppercase italic border border-white/5"
+          >
             <User size={14} /> Profile
           </button>
-          <button className="flex items-center justify-center gap-2 py-2.5 bg-[#0d1a16] text-gray-400 rounded-xl hover:text-white hover:bg-white/5 transition text-[10px] font-bold uppercase italic border border-white/5">
+          <button 
+            onClick={() => openChat(client.userId)}
+            className="flex items-center justify-center gap-2 py-2.5 bg-[#0d1a16] text-gray-400 rounded-xl hover:text-white hover:bg-white/5 transition text-[10px] font-bold uppercase italic border border-white/5"
+          >
             <MessageSquare size={14} /> Chat
           </button>
         </div>

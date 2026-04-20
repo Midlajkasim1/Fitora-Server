@@ -21,7 +21,6 @@ export const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({ onSubmit, isLoadin
     defaultValues: { otp: '' }
   });
 
-  // eslint-disable-next-line react-hooks/incompatible-library
   const otpValue = watch('otp');
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -54,7 +53,7 @@ export const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({ onSubmit, isLoadin
         {[...Array(6)].map((_, i) => (
           <input
             key={i}
-            ref={(el) => (inputs.current[i] = el)}
+            ref={(el) => { inputs.current[i] = el; }}
             type="text"
             inputMode="numeric"
             maxLength={1}

@@ -9,7 +9,8 @@ import { ConfirmModal } from "../../../shared/ConfirmModal";
 
 // Hooks & Types
 import { useTrainerUpcomingSlots } from "../../../hooks/trainer/use-upcomingSession";
-import { useCancelSlot } from "../../../hooks/trainer/slot/use-cancel-slot"; 
+import { useCancelSlot } from "../../../hooks/trainer/slot/use-cancel-slot";
+import { useStartSession } from "../../../hooks/trainer/slot/use-start-session";
 import type { UpcomingSlot } from "../../../type/trainer.types";
 
 const UpcomingSessions = () => {
@@ -30,6 +31,9 @@ const UpcomingSessions = () => {
 
   // Cancel Mutation
   const { mutate: cancelSlot, isPending: isCancelling } = useCancelSlot();
+  
+  // Start Session Mutation
+  const { mutate: startSession } = useStartSession();
 
   const totalPages = data ? Math.ceil(data.total / LIMIT) : 0;
 
@@ -64,6 +68,10 @@ const UpcomingSessions = () => {
         }
       });
     }
+  };
+
+  const handleStartSession = (slotId: string) => {
+    startSession(slotId);
   };
 
   return (
@@ -111,7 +119,8 @@ const UpcomingSessions = () => {
                 key={slot.slotId}
                 slot={slot}
                 onEdit={handleEditClick}
-                onCancel={handleCancelIntent} // ✅ Corrected prop name
+                onCancel={handleCancelIntent}
+                onStart={handleStartSession}
               />
             ))}
 

@@ -39,11 +39,12 @@ const PurchaseHistoryPage = lazy(()=>import("../pages/user/client/PurchaseHistor
 const PaymentSuccessPage =lazy(()=>import("../pages/user/client/PaymentSucessPage"));
 const PaymentFailedPage = lazy(()=>import("../pages/user/client/PaymentFailedPage"));
 const ClientHealthMetrics = lazy(()=>import("../pages/user/client/ClientHealthMetricsPage"));
-// const PremiumDashboardPage = lazy(()=>import("../pages/user/client/PremiumDashboardPage"));
+const PremiumDashboardPage = lazy(()=>import("../pages/user/client/PremiumDashboardPage"));
 const UpcomingSessionPage = lazy(()=>import("../pages/user/client/slot/UpcomingSessions"))
 const CheckSlotsPage = lazy(()=>import("../pages/user/client/slot/CheckSlots"))
 const BrowseTrainersPage = lazy(() => import("../pages/user/client/slot/BrowserTrainersPage"));
 const UserWorkoutSessionPage = lazy(() => import("../pages/user/client/VideoSessionPage"));
+const WebRTCSessionPage = lazy(() => import("../pages/user/client/WebRTCSessionPage"));
 
 const AiSelectionPage = lazy(() => import("../pages/user/client/ai-workout&diet/AiSelection"));
 const AiWorkoutPage = lazy(() => import("../pages/user/client/ai-workout&diet/AiWorkoutPage"));
@@ -79,6 +80,7 @@ const EditSpecializationPage = lazy(()=>import("../pages/admin/subscription/Edit
 const AdvertisementManagementPage = lazy(()=>import("../pages/admin/advertisement/AdvertisementManagement"));
 const CreateAdvertisementPage = lazy(()=>import("../pages/admin/advertisement/CreateAdvertisement"));
 const EditAdvertisementPage = lazy(()=>import("../pages/admin/advertisement/EditAdvertisementPage"));
+const NotFound = lazy(() => import("../pages/NotFound"));
 const TrainerLayoutPage = lazy(() => import("../layout/trainer/TrainerLayout"));
 
 
@@ -110,6 +112,7 @@ export default function AppRoutes() {
         <Route path="/trainer/waiting-approval" element={<AuthGuard><WaitingApproval /></AuthGuard>} />
         
         <Route path="/workouts/session/:id" element={<AuthGuard><UserWorkoutSessionPage /></AuthGuard>} />
+        <Route path="/video-call/:id" element={<AuthGuard><WebRTCSessionPage /></AuthGuard>} />
 
           <Route element={<AuthGuard><UserLayoutPage /></AuthGuard>}>
           <Route path="/profile" element={<UserProfile />} />
@@ -124,20 +127,18 @@ export default function AppRoutes() {
           <Route  path="/health-metrics"  element={<ClientHealthMetrics />} />  
          <Route path="/payment/success" element={<PaymentSuccessPage />} />
          <Route path="/payment/cancel" element={<PaymentFailedPage />} />
-           <Route path="/ai-selection" element={<AiSelectionPage />} />
+          <Route path="/ai-selection" element={<AiSelectionPage />} />
           <Route path="/ai-workout" element={<AiWorkoutPage />} />
           <Route path="/ai-diet" element={<AiDietPage />} />
-         <Route element={<SubscriptionGuard />}>
-        <Route element={<HealthMetricsGuard />}>
-        <Route path="/browse-trainers" element={<BrowseTrainersPage />} />
-      {/* <Route path="/premium-dashboard" element={<PremiumDashboardPage />} /> */}
-       <Route path="/upcoming-sessions" element={<UpcomingSessionPage />} />
-         <Route path="/check-slots" element={<CheckSlotsPage />} />
-
-
-    </Route>
-  </Route>
-</Route>
+          <Route element={<SubscriptionGuard />}>
+            <Route element={<HealthMetricsGuard />}>
+              <Route path="/browse-trainers" element={<BrowseTrainersPage />} />
+              <Route path="/premium-dashboard" element={<PremiumDashboardPage />} />
+              <Route path="/upcoming-sessions" element={<UpcomingSessionPage />} />
+              <Route path="/check-slots" element={<CheckSlotsPage />} />
+            </Route>
+          </Route>
+        </Route>
 {/* trrainer */}
        <Route path="/trainer" element={<AuthGuard><TrainerLayoutPage /></AuthGuard>}>
           <Route index element={<Navigate to="dashboard" replace />} />
@@ -182,8 +183,8 @@ export default function AppRoutes() {
 
         </Route>
 
-        {/* landing page */}
-        <Route path="*" element={<Navigate to="/" replace />} />
+        {/* 404 page */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   );

@@ -178,7 +178,36 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
           as: "userInfo"
         }
       },
-      { $unwind: "$userInfo" }
+      { $unwind: "$userInfo" },
+      {
+        $lookup: {
+          from: "slots",
+          let: { tId: "$user_id" },
+          pipeline: [
+            { 
+              $match: { 
+                $expr: { 
+                  $and: [
+                    { $eq: ["$trainerId", "$$tId"] },
+                    { $eq: ["$status", "available"] },
+                    { $gt: ["$startTime", new Date()] },
+                    { $lt: [{ $size: "$participants" }, "$capacity"] }
+                  ]
+                }
+              }
+            },
+            { $count: "count" }
+          ],
+          as: "availableSlots"
+        }
+      },
+      {
+        $addFields: {
+          availableSlotsCount: { 
+            $ifNull: [{ $arrayElemAt: ["$availableSlots.count", 0] }, 0] 
+          }
+        }
+      }
     ];
 
     if (search) {
@@ -195,6 +224,7 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
     const totalResults = await TrainerDetailsModel.aggregate([...pipeline, { $count: "total" }]);
     const total = totalResults[0]?.total || 0;
 
+    pipeline.push({ $sort: { availableSlotsCount: -1 } }); // Show active trainers first
     pipeline.push({ $skip: skip }, { $limit: limit });
 
     const docs = await TrainerDetailsModel.aggregate(pipeline);
@@ -206,7 +236,8 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
       specializations: doc.specializations,
       experience: doc.experience,
       rating: 4.8,
-      bio: doc.bio
+      bio: doc.bio,
+      availableSlotsCount: doc.availableSlotsCount
     }));
 
     return { data, total };

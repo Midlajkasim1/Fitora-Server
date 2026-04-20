@@ -5,10 +5,11 @@ import type { UpcomingSlot } from "../../type/trainer.types";
 interface UpcomingSessionCardProps {
   slot: UpcomingSlot;
   onEdit: (slot: UpcomingSlot) => void;
-  onCancel: (slotId: string) => void; 
+  onCancel: (slotId: string) => void;
+  onStart: (slotId: string) => void;
 }
 
-export const UpcomingSessionCard = ({ slot, onEdit, onCancel }: UpcomingSessionCardProps) => {
+export const UpcomingSessionCard = ({ slot, onEdit, onCancel, onStart }: UpcomingSessionCardProps) => {
   const start = new Date(slot.startTime);
   const isGroup = slot.type === "group";
 
@@ -78,7 +79,11 @@ export const UpcomingSessionCard = ({ slot, onEdit, onCancel }: UpcomingSessionC
         </button>
 
         {/* PRIMARY VIDEO ACTION (Replacing Launch) */}
-        <button className="flex items-center gap-2 px-6 py-3 bg-[#00ff94] text-black font-black text-[10px] rounded-xl hover:bg-[#00e685] transition uppercase italic shadow-[0_0_15px_rgba(0,255,148,0.2)] active:scale-95 ml-2">
+        {/* PRIMARY VIDEO ACTION */}
+        <button 
+          onClick={() => onStart(slot.slotId)}
+          className="flex items-center gap-2 px-6 py-3 bg-[#00ff94] text-black font-black text-[10px] rounded-xl hover:bg-[#00e685] transition uppercase italic shadow-[0_0_15px_rgba(0,255,148,0.2)] active:scale-95 ml-2"
+        >
           <Video size={16} /> Start Session
         </button>
       </div>

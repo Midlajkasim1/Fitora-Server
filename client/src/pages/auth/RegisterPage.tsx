@@ -17,7 +17,6 @@ const RegisterPage: React.FC = () => {
     register(data);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleGoogleSuccess = (credentialResponse: any) => {
     googleLogin({ 
       idToken: credentialResponse.credential, 

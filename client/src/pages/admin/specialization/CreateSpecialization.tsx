@@ -7,7 +7,6 @@ export default function CreateSpecialization() {
   const navigate = useNavigate();
   const { mutate, isPending } = useCreateSpecialization();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleCreate = (data: any) => {
     mutate(data, {
       onSuccess: () => {

@@ -23,10 +23,12 @@ const navItems = [
 
 export const AdminSidebar = () => {
   const navigate = useNavigate(); 
- const logout = useAuthStore((state) => state.logout);
+  const logout = useAuthStore((state) => state.logout);
+  const setLoggingOut = useAuthStore((state) => state.setLoggingOut);
 
 const handleLogout = async () => {
     try {
+      setLoggingOut(true);
       await adminLogout(); 
     } catch (error) {
       console.error("Logout API failed", error);

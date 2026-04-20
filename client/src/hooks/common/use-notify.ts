@@ -6,6 +6,14 @@ import {
   clearAllNotifications 
 } from "../../api/notification.api";
 
+export interface Notification {
+  id: string;
+  title: string;
+  message: string;
+  isRead: boolean;
+  createdAt: string;
+}
+
 export const useNotificationsLogic = () => {
   const queryClient = useQueryClient();
 
@@ -40,8 +48,7 @@ export const useNotificationsLogic = () => {
     },
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const unreadCount = notifications.filter((n: any) => !n.isRead).length;
+  const unreadCount = (notifications as Notification[]).filter((n: Notification) => !n.isRead).length;
 
   return {
     notifications,

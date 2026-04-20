@@ -7,3 +7,5 @@ export const useNotification = () => {
   const context = useContext(NotificationContext);
   return context;
 };
+
+export const useSocket = useNotification;

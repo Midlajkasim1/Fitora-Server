@@ -8,6 +8,8 @@ import {  AvailableSlotsPagedResponseDTO } from "@/application/dto/slot/response
 import { UserUpcomingResponseDTO } from "@/application/dto/slot/response/user-upcomingSlot.dto";
 import { GetTrainersBookingRequestDTO } from "@/application/dto/user/request/get-trainerBooking.dto";
 import { GetTrainersBookingResponseDTO } from "@/application/dto/user/response/get-trainerBooking.dto";
+import { GetChatPartnersRequestDTO } from "@/application/dto/chat/request/get-chat-partners.dto";
+import { GetChatPartnersResponseDTO } from "@/application/dto/chat/response/chat-partners-response.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { AUTH_MESSAGES, SLOT_MESSAGES } from "@/domain/constants/messages.constants";
@@ -22,7 +24,8 @@ export class UserSlotController {
         private readonly _bookSlotUseCase: IBaseUseCase<BookSlotRequestDTO, BookSlotResponseDTO>,
         private readonly _cancelSlotUseCase: IBaseUseCase<CancelBookingRequestDTO, CancelBookingResponseDTO>,
         private readonly _getUsersUpcomingUseCase: IBaseUseCase<GetUserUpcomingRequestDTO, UserUpcomingResponseDTO>,
-        private readonly _getTrainerBookingUseCase: IBaseUseCase<GetTrainersBookingRequestDTO, GetTrainersBookingResponseDTO>
+        private readonly _getTrainerBookingUseCase: IBaseUseCase<GetTrainersBookingRequestDTO, GetTrainersBookingResponseDTO>,
+        private readonly _getChatPartnersUseCase: IBaseUseCase<GetChatPartnersRequestDTO, GetChatPartnersResponseDTO>
     ) { }
     async getAvailableSlot(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
@@ -85,6 +88,17 @@ export class UserSlotController {
             search: req.query.search as string | undefined
         });
         const result = await this._getTrainerBookingUseCase.execute(dto);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
+    }
+
+    async getChatPartners(req: Request, res: Response): Promise<Response> {
+        const userId = req.user?.userId;
+        const role = req.user?.role as 'trainer' | 'user';
+        if (!userId) {
+            return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
+        }
+        const dto = new GetChatPartnersRequestDTO({ userId, role });
+        const result = await this._getChatPartnersUseCase.execute(dto);
         return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
 

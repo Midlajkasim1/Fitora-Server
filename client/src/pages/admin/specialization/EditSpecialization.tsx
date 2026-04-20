@@ -10,7 +10,6 @@ export default function EditSpecialization() {
   const { data } = useSpecializationById(id!);
   const { mutate, isPending } = useUpdateSpecialization();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleUpdate = (formData: any) => {
     mutate(
       { id: id!, ...formData },

@@ -8,11 +8,13 @@ import { Pagination } from "../../../components/admin/Pagination";
 import { useAdvertisementToggleStatus } from "../../../hooks/admin/advertisement/use-admin-adToggleStatus";
 import { AdminLayout } from "../../../layout/admin/AdminLayout";
 import { ConfirmModal } from "../../../shared/ConfirmModal"; 
+import { useDebounce } from "../../../hooks/admin/use-debounce";
 import { useNavigate } from "react-router-dom";
 import type { AdvertisementManagement } from "../../../type/admin.types";
 const AdManagement = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
   const [status, setStatus] = useState("");
   
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +22,7 @@ const AdManagement = () => {
 
   const navigate = useNavigate();
 
-  const { data, isLoading } = useAdvertisementManagement({ page, search, status });
+  const { data, isLoading } = useAdvertisementManagement({ page, search: debouncedSearch, status });
   const toggleStatus = useAdvertisementToggleStatus();
   const handleToggle = () => {
     if (targetAd) {

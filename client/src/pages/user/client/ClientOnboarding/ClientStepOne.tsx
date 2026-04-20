@@ -9,6 +9,7 @@ import { OnboardingLayout } from "../../../../components/auth/onboarding/Onboard
 import { useOnboardingStore } from "../../../../store/use-onboarding-store";
 import type { ClientStepOne } from "../../../../type/onboarding.types";
 import { useSpecializations } from "../../../../hooks/user/use-specialization";
+import type { Specialization } from "../../../../type/user.types";
 
 const schema = z.object({
   dob: z.string()
@@ -49,14 +50,12 @@ export default function ClientStepOnePage() {
   };
 
 const toggleSelection = (field: keyof ClientStepOne, val: string) => {
-  // eslint-disable-next-line react-hooks/incompatible-library
   const current = (watch(field) as string[]) || [];
 
   const next = current.includes(val)
     ? current.filter(i => i !== val)
     : [...current, val];
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setValue(field, next as any, { shouldValidate: true });
 };
 
@@ -85,8 +84,7 @@ const toggleSelection = (field: keyof ClientStepOne, val: string) => {
               <button
                 key={g.id}
                 type="button"
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                onClick={() => setValue("gender", g.id as any, { shouldValidate: true })}
+                onClick={() => setValue("gender", g.id as "male" | "female" | "other", { shouldValidate: true })}
                 className={`relative py-6 rounded-2xl border transition-all flex flex-col items-center gap-2 group ${selectedGender === g.id ? "bg-[#00ff94] border-[#00ff94]" : "bg-[#0a1810] border-white/5 hover:border-white/10"
                   }`}
               >
@@ -107,8 +105,7 @@ const toggleSelection = (field: keyof ClientStepOne, val: string) => {
     <p className="text-gray-500 text-sm">Loading workouts...</p>
   ) : (
     <div className="grid grid-cols-2 gap-3">
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      {specialization.map((spec: unknown) => {
+      {specialization.map((spec: Specialization) => {
         const isActive = selectedWorkout === spec.id;
 
         return (

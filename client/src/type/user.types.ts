@@ -85,6 +85,7 @@ export interface PremiumDashboardData {
   monthlyProgress: { day: string; value: number }[];
   nextSession: {
     slotId: string;
+    trainerId: string;
     startTime: string;
     trainerName: string;
     type: string;
@@ -93,6 +94,7 @@ export interface PremiumDashboardData {
 
 export interface UserUpcomingSlot {
   slotId: string;
+  trainerId: string;
   startTime: string;
   endTime: string;
   type: 'one_on_one' | 'group';
@@ -183,4 +185,33 @@ export interface GeneratePlanRequest {
     days?: number;
     
   };
+}
+
+export interface ChatPartner {
+  id: string;
+  name: string;
+  profileImage?: string;
+  /** True when the user has an active booking OR the session ended <24 h ago */
+  isChatEnabled: boolean;
+  hasUnread: boolean;
+}
+
+export interface ChatPartnersResponse {
+  partners: ChatPartner[];
+}
+
+export interface ChatMessage {
+  id: string;
+  senderId: string;
+  receiverId: string;
+  message: string;
+  isRead: boolean;
+  createdAt: string;
+}
+
+export interface ChatHistoryResponse {
+  messages: ChatMessage[];
+  total: number;
+  page: number;
+  totalPages: number;
 }

@@ -8,6 +8,7 @@ import { OnboardingLayout } from "../../../../components/auth/onboarding/Onboard
 import { useAuthStore } from "../../../../store/use-auth-store";
 import { useOnboardingStore } from "../../../../store/use-onboarding-store";
 import { useSpecializations } from "../../../../hooks/user/use-specialization";
+import type { Specialization } from "../../../../type/user.types";
 
 export default function TrainerStepTwo() {
   const navigate = useNavigate();
@@ -90,8 +91,7 @@ export default function TrainerStepTwo() {
         {isLoading ? (
           <p className="text-gray-500">Loading specializations...</p>
         ) : (
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          specialization.map((spec: any) => {
+          specialization.map((spec: Specialization) => {
             const isActive = selected === spec.id;
             return (
               <div

@@ -8,11 +8,13 @@ import { useWorkoutManagement } from "../../../hooks/admin/workout/use-admin-wor
 import { useWorkoutToggleStatus } from "../../../hooks/admin/workout/use-admin-workoutToggle";
 import { AdminLayout } from "../../../layout/admin/AdminLayout";
 import { ConfirmModal } from "../../../shared/ConfirmModal";
+import { useDebounce } from "../../../hooks/admin/use-debounce";
 import type { WorkoutManagement } from "../../../type/admin.types";
 
 export default function WorkoutManagementPage() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 500);
   const [status, setStatus] = useState("");
   const [difficulty, setDifficulty] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +25,7 @@ export default function WorkoutManagementPage() {
 
 const { data, isLoading } = useWorkoutManagement({
     page,
-    search,
+    search: debouncedSearch,
     status,
     difficulty
   });

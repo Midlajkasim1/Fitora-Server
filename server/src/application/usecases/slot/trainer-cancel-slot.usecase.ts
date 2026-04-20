@@ -20,7 +20,7 @@ export class TrainerCancelSlotUseCase implements IBaseUseCase<TrainerCancelSlotR
         if(!slot){
             throw new Error(SLOT_MESSAGES.SLOT_NOT_FOUND);
         }
-        if(slot.trainerId !== dto.trainerId){
+        if(slot.trainerId.toString() !== dto.trainerId.toString()){
             throw new Error(SLOT_MESSAGES.TRAINER_WHO_CREATE_SLOT_CAN_CANCEL);
         }
        const now = new Date();

@@ -8,7 +8,7 @@ import { useUser } from "../../hooks/user/use-user";
 import { NotificationBell } from "../../components/common/NotificationBell";
 
 export const TrainerHeader = () => {
-  const { logout } = useAuthStore();
+  const { logout, setLoggingOut } = useAuthStore();
   const navigate = useNavigate();
   const { trainer } = useTrainerProfile();
   const { user } = useUser();
@@ -23,6 +23,7 @@ export const TrainerHeader = () => {
 
   const handleLogout = async () => {
     try {
+      setLoggingOut(true);
       await logoutUser();
     } catch (error) {
       console.error("Logout failed:", error);

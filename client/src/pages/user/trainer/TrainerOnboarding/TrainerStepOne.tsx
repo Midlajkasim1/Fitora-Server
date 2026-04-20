@@ -33,8 +33,13 @@ const removeFile = (index: number) => {
     setError("root.serverError", { message: "You must upload at least one certification." });
   }
 };
- // eslint-disable-next-line @typescript-eslint/no-explicit-any
- const onSubmit = (data: any) => {
+ interface TrainerStepOneData {
+  bio: string;
+  experienceYear: number;
+  gender: "male" | "female" | "other";
+}
+
+ const onSubmit = (data: TrainerStepOneData) => {
     let hasError = false;
 
     if (files.length === 0) {

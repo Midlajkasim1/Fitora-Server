@@ -19,6 +19,7 @@ export class GetUserUpcomingSessionSlotsUseCase implements IBaseUseCase<GetUserU
         });
         const mappedSessions: UserUpcomingSlotDTO[] = result.data.map(session => ({
             slotId: session.slotId.toString(),
+            trainerId: session.trainerId.toString(),
             startTime: session.startTime,
             endTime: session.endTime,
             type: session.type,

@@ -1,14 +1,16 @@
 import { useState } from "react";
-import { Search, } from "lucide-react"; // Added Calendar icon
+import { Search } from "lucide-react"; 
 import { useTrainerClients } from "../../../hooks/trainer/use-trainerClients";
 import ClientCard from "../../../components/trainer/ClientCard";
 import { Pagination } from "../../../components/admin/Pagination";
 import { useDebounce } from "../../../hooks/admin/use-debounce";
+import ClientProfileModal from "../../../components/trainer/ClientProfileModal";
 
 const ClientManagement = () => {
   const [activeTab, setActiveTab] = useState<'personal' | 'group'>('personal');
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
   const RESULTS_PER_PAGE = 6;
 
   const debouncedSearch = useDebounce(searchTerm, 500);
@@ -32,7 +34,6 @@ const ClientManagement = () => {
         </div>
       </header>
 
-      {/* Search Bar - Removed uppercase */}
       <div className="relative group">
         <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-600 group-focus-within:text-[#00ff94] transition-colors" size={18} />
         <input
@@ -47,7 +48,6 @@ const ClientManagement = () => {
         />
       </div>
 
-      {/* Tabs */}
       <div className="flex gap-10 border-b border-white/5">
         {(['personal', 'group'] as const).map((tab) => (
           <button
@@ -68,7 +68,6 @@ const ClientManagement = () => {
         ))}
       </div>
 
-      {/* Content Grid */}
       {isLoading ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
            {[...Array(6)].map((_, i) => (
@@ -79,11 +78,14 @@ const ClientManagement = () => {
         <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data?.users?.map((client) => (
-              <ClientCard key={client.userId} client={client} />
+              <ClientCard 
+                key={client.userId} 
+                client={client} 
+                onProfileClick={() => setSelectedClientId(client.userId)}
+              />
             ))}
           </div>
 
-          {/* Pagination */}
           {data && data.total > 0 && (
             <div className="pt-8 border-t border-white/5">
               <Pagination
@@ -96,6 +98,13 @@ const ClientManagement = () => {
             </div>
           )}
         </>
+      )}
+
+      {selectedClientId && (
+        <ClientProfileModal 
+          clientId={selectedClientId} 
+          onClose={() => setSelectedClientId(null)} 
+        />
       )}
     </div>
   );
