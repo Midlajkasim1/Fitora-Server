@@ -4,7 +4,10 @@ import SessionCard from '../../../components/trainer/SessionCard';
 import StatCard from '../../../components/trainer/StatCard';
 import { GlobalLoader } from '../../../shared/GlobalLoader';
 
+import { useAuthStore } from '../../../store/use-auth-store';
+
 const TrainerDashboard = () => {
+  const { user } = useAuthStore();
   const { data, isLoading } = useTrainerDashboard();
   if (isLoading) return <GlobalLoader />;
 
@@ -12,7 +15,9 @@ const TrainerDashboard = () => {
     <div className="p-8 space-y-10"> {/* Removed min-h-screen and bg color */}
       <header className="flex justify-between items-end">
         <div>
-          <h1 className="text-3xl font-semibold text-white">Good Morning, Alex</h1>
+          <h1 className="text-3xl font-semibold text-white">
+            Good Morning, {user?.firstName || 'Trainer'}
+          </h1>
           <p className="text-gray-400">Here's your daily overview and upcoming schedule.</p>
         </div>
         {/* You can add a date display here like in the image */}
@@ -24,8 +29,8 @@ const TrainerDashboard = () => {
       {/* Top Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatCard title="Total Clients" value={data?.totalClients || 0} icon={<Users className="text-emerald-500" />} percentage="+8.5%" />
-        <StatCard title="Monthly Earning" value="$8,450" icon={<TrendingUp className="text-emerald-500" />} percentage="+12%" />
-        <StatCard title="Sessions This Week" value="24" icon={<Clock className="text-emerald-500" />} percentage="+2%" />
+        <StatCard title="Monthly Earning" value={`₹${data?.monthlyEarnings?.toLocaleString('en-IN') || 0}`} icon={<TrendingUp className="text-emerald-500" />} percentage="+12%" />
+        <StatCard title="Total Balance" value={`₹${data?.walletBalance?.toLocaleString('en-IN') || 0}`} icon={<Clock className="text-emerald-500" />} percentage="+2%" />
       </div>
 
       {/* Upcoming Sessions Section */}

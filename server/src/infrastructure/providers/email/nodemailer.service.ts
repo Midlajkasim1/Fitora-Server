@@ -47,5 +47,33 @@ export class NodemailerEmailService implements IEmailService {
       `,
     });
   }
+
+  async sendReportUpdateEmail(email: string, name: string, status: string, reason: string): Promise<void> {
+    const isResolved = status.toLowerCase() === "resolved";
+    const subject = isResolved ? "Incident Report Resolved" : "Incident Report Dismissed";
+    
+    await this.transporter.sendMail({
+      from: `"Fitora Support" <${env.EMAIL_USER}>`,
+      to: email,
+      subject,
+      html: `
+        <div style="font-family: sans-serif; color: #333; max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
+          <h2 style="color: ${isResolved ? '#10b981' : '#ef4444'};">${subject}</h2>
+          <p>Hi <strong>${name}</strong>,</p>
+          <p>This is an update regarding the report you submitted.</p>
+          <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <p style="margin: 0; font-size: 14px; color: #666; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Status</p>
+            <p style="margin: 5px 0 15px 0; font-size: 18px; font-weight: bold; color: ${isResolved ? '#10b981' : '#ef4444'}; font-style: italic;">${status}</p>
+            
+            <p style="margin: 0; font-size: 14px; color: #666; text-transform: uppercase; font-weight: bold; letter-spacing: 1px;">Admin Notes</p>
+            <p style="margin: 5px 0 0 0; line-height: 1.6; font-style: italic;">"${reason || 'No additional notes provided.'}"</p>
+          </div>
+          <p>If you have any further questions, please contact our support team.</p>
+          <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;" />
+          <p style="font-size: 12px; color: #999;">Best Regards,<br/>Fitora Administration Team</p>
+        </div>
+      `,
+    });
+  }
 }
 

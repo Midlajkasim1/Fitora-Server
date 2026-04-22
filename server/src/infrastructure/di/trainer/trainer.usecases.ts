@@ -15,6 +15,8 @@ import { UpdateTrainerProfileUseCase } from "@/application/usecases/trainer/upda
 import { ChangePasswordUseCase } from "@/application/usecases/user/change-password.usecase";
 import { BcryptPasswordHasher } from "@/infrastructure/providers/crypto/bcrypt-password.service";
 import { notificationServiceProxy } from "@/infrastructure/providers/notification/notification.provider";
+import { GetTrainerWalletUseCase } from "@/application/usecases/trainer/get-trainer-wallet.usecase";
+import { RequestPayoutUseCase } from "@/application/usecases/trainer/request-payout.usecase";
 
 const jobScheduler = new BullJobScheduler();
 const storageProvider = new S3StorageProvider();
@@ -51,9 +53,11 @@ export const trainerUsecase ={
    getTrainerUpcomingSlotsUSeCase: new GetTrainerUpcomingSlotsUseCase(
       trainerRepositories.slotRepository
    ),
-   getTrainerDashboardUseCase:new GetTrainerDashboardUseCase(
-      trainerRepositories.slotRepository
-   ),
+    getTrainerDashboardUseCase:new GetTrainerDashboardUseCase(
+       trainerRepositories.slotRepository,
+       trainerRepositories.trainerRepository,
+       trainerRepositories.transactionRepository
+    ),
    getTrinerProfileUseCase:new GetTrainerProfileUseCase(
     trainerRepositories.userRepository,
     trainerRepositories.trainerRepository,
@@ -71,5 +75,13 @@ export const trainerUsecase ={
    trainerChangePasswordUseCase:new ChangePasswordUseCase(
       trainerRepositories.userRepository,
       passwordHasher
+   ),
+   getTrainerWalletUseCase: new GetTrainerWalletUseCase(
+      trainerRepositories.trainerRepository,
+      trainerRepositories.transactionRepository
+   ),
+   requestPayoutUseCase: new RequestPayoutUseCase(
+      trainerRepositories.trainerRepository,
+      trainerRepositories.transactionRepository
    )
 };

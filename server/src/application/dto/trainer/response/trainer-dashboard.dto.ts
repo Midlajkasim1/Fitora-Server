@@ -3,4 +3,6 @@ import { UpcomingSlotDTO } from "../../slot/response/trainer-get-upcomingSlot.dt
 export interface TrainerDashboardResponseDTO {
   totalClients: number;
   upcomingSessions: UpcomingSlotDTO[];
+  walletBalance: number;
+  monthlyEarnings: number;
 }

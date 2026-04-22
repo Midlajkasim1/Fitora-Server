@@ -5,9 +5,16 @@ import { asyncHandler } from "@/presentation/middleware/asyncHandler";
 import { upload } from "@/presentation/middleware/multer.middleware";
 import { Request, Response, Router } from "express";
 
+import { reportControllers } from "@/infrastructure/di/report/report.controllers";
+
 const router = Router();
 
+router.post("/reports", userMiddlewares.authMiddleware, userMiddlewares.blockGuard, asyncHandler((req: Request, res: Response) =>
+    reportControllers.reportController.createReport(req, res)
+));
+
 router.get("/profile",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
+
     userControllers.userController.userProfile(req,res)
 ));
 router.put("/profile",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>

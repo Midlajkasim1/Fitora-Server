@@ -8,6 +8,8 @@ export class ActiveSubscriptionResponseDTO {
     status: string;
     hasAiWorkout: boolean;
     hasAiDiet: boolean;
+    sessionCredits: number;
+    usedCredits: number;
   } | null;
 
   constructor(data: ActiveSubscriptionResponseDTO) {

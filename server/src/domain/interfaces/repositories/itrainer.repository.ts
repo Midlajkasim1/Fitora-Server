@@ -20,9 +20,11 @@ export interface ITrainerRepository extends IBaseRepository<TrainerDetailsEntity
     approvalStatus?:string
   }):Promise<{data:TrainerDetailsEntity[],total:number}>
   updateApprovalStatus(id:string,status:ApprovalStatus,reason?:string):Promise<void>;
+  updateRating(trainerId: string, averageRating: number, reviewCount: number): Promise<void>;
   findApprovedTrainer(): Promise<string[]>;
   findTrainerIdsBySpecializations(specializationIds: string): Promise<string[]>;
   findTrainerForBooking(params:{trainerIds:string[];search?:string;skip:number;limit:number}):Promise<{data:Record<string,unknown>[];total:number}>;
   findByTrainerId(trainerId:string):Promise<TrainerDetailsEntity | null>
+  updateWalletBalance(userId: string, amount: number): Promise<void>;
 
 }

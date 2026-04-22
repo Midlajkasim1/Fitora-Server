@@ -11,6 +11,10 @@ import { SubscriptionplanRepository } from "@/infrastructure/database/repositori
 import { TrainerRepository } from "@/infrastructure/database/repositories/trainer-details.repository";
 import { UserRepository } from "@/infrastructure/database/repositories/user.repository";
 import { WorkoutRepository } from "@/infrastructure/database/repositories/workout.repository";
+import { ReportMapper } from "@/infrastructure/database/mappers/report.mapper";
+import { MongooseReportRepository } from "@/infrastructure/database/repositories/report.repository";
+import { TransactionMapper } from "@/infrastructure/database/mappers/transaction.mapper";
+import { TransactionRepository } from "@/infrastructure/database/repositories/transaction.repository";
 
 const userMapper = new UserMapper();
 const specialistaionMapper = new SpecializationMapper();
@@ -18,6 +22,9 @@ const trainerDetailsMapper = new TrainerDetailsMapper();
 const subscriptionplanMapper = new SubscriptionPlanMapper();
 const workoutMapper =new WorkoutMapper();
 const advertisementMapper = new AdvertisementMapper();
+const reportMapper = new ReportMapper();
+const transactionMapper = new TransactionMapper();
+
 export const adminRepositories = {
   adminRepository: new AdminRepository(),
   userRepository: new UserRepository(userMapper),
@@ -25,6 +32,8 @@ export const adminRepositories = {
   trainerDetailsRepository: new TrainerRepository(trainerDetailsMapper,userMapper),
   workoutRepository:new WorkoutRepository(workoutMapper),
    subcriptionPlanRepository :new SubscriptionplanRepository(subscriptionplanMapper),
-   advertisementRepository:new AdvertisementRepository(advertisementMapper)
-
+   advertisementRepository:new AdvertisementRepository(advertisementMapper),
+   reportRepository: new MongooseReportRepository(),
+   transactionRepository: new TransactionRepository(transactionMapper)
 };
+

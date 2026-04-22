@@ -5,14 +5,18 @@ import { NOTIFICATION_TEMPLATES, SLOT_MESSAGES } from "@/domain/constants/messag
 import { NotificationType } from "@/domain/constants/notification.constants";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
 import { INotificationService } from "@/domain/interfaces/services/notification-service.interface";
+import { IBookingRepository } from "@/domain/interfaces/repositories/booking.repository";
+import { ISubscriptionRepository } from "@/domain/interfaces/repositories/subscription.repository";
+
 
 export class CancelBookingUseCase implements IBaseUseCase<CancelBookingRequestDTO, CancelBookingResponseDTO> {
   constructor(
     private readonly _slotRepository: ISlotRepository,
-    private readonly _notificationService: INotificationService
-
-
+    private readonly _notificationService: INotificationService,
+    private readonly _bookingRepository: IBookingRepository,
+    private readonly _subscriptionRepository: ISubscriptionRepository
   ) {}
+
 
   async execute(dto: CancelBookingRequestDTO): Promise<CancelBookingResponseDTO> {
     const slot = await this._slotRepository.findById(dto.slotId);
@@ -33,6 +37,19 @@ export class CancelBookingUseCase implements IBaseUseCase<CancelBookingRequestDT
 
     const success = await this._slotRepository.cancelBooking(dto.slotId, dto.userId);
     if (!success) throw new Error(SLOT_MESSAGES.FAILED_TO_CANCEL);
+
+    // Also delete the Booking document
+    const booking = await this._bookingRepository.findBySlotIdAndUserId(dto.slotId, dto.userId);
+    if (booking) {
+        await this._bookingRepository.delete(booking.id!);
+    }
+
+    // Refund credit to user's subscription
+    const subscription = await this._subscriptionRepository.findActiveByUserId(dto.userId);
+    if (subscription) {
+      await this._subscriptionRepository.decrementUsedCredit(subscription.id!);
+    }
+
     const sessionDate = new Date(slot.startTime).toLocaleDateString();
     const sessionTime = new Date(slot.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 

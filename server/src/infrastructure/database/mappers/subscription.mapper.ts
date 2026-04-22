@@ -12,7 +12,8 @@ export class SubscriptionMapper implements IMapper<SubscriptionEntity, ISubscrip
             userId: doc.user_id.toString(),
             status: doc.status as SubscriptionStatus,
             startDate: doc.start_date,
-            endDate: doc.end_date
+            endDate: doc.end_date,
+            usedCredits: doc.usedCredits
         });
     }
 

@@ -1,62 +1,59 @@
 // components/trainer/ClientCard.tsx
-import { User, MessageSquare, Calendar } from "lucide-react";
+import { User, Calendar, BookOpen } from "lucide-react";
 import type { TrainerClient } from "../../type/trainer.types";
-import { useChatStore } from "../../store/use-chat-store";
 
-const ClientCard = ({ client, onProfileClick }: { client: TrainerClient, onProfileClick: () => void }) => {
-  const { openChat } = useChatStore();
-  const date = new Date(client.startTime);
+interface ClientCardProps {
+  client: TrainerClient;
+  onAction: (mode: 'profile' | 'sessions') => void;
+}
+
+const ClientCard = ({ client, onAction }: ClientCardProps) => {
+  const date = new Date(client.lastSessionTime);
   
-  // Format: "Oct 24, 2023"
   const formattedDate = date.toLocaleDateString('en-US', { 
     month: 'short', day: 'numeric', year: 'numeric' 
   });
-  
-  // Format: "10:00 AM"
-  const formattedTime = date.toLocaleTimeString('en-US', { 
-    hour: '2-digit', minute: '2-digit' 
-  });
 
   return (
-    <div className="bg-[#1a2c26] p-6 rounded-2xl border border-emerald-900/10 relative group hover:border-[#00ff94]/30 transition-all">
+    <div className="bg-[#1a2c26] p-6 rounded-3xl border border-emerald-900/10 relative group hover:border-[#00ff94]/30 transition-all shadow-xl overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#00ff94]/5 rounded-full blur-3xl group-hover:bg-[#00ff94]/10 transition-all" />
+
+      {/* Slot Count Badge */}
+      <div className="absolute top-4 right-4 bg-[#00ff94]/10 text-[#00ff94] px-3 py-1 rounded-full text-[9px] font-black uppercase italic border border-[#00ff94]/20 flex items-center gap-1.5">
+        <BookOpen size={10} />
+        {client.totalBookedSlots} Slots
+      </div>
+
       <div className="flex flex-col items-center text-center">
         {/* Avatar */}
-        <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border-2 border-[#00ff94]/20 shadow-lg bg-emerald-900/30 flex items-center justify-center">
+        <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border-2 border-[#00ff94]/20 shadow-lg bg-emerald-900/30 flex items-center justify-center group-hover:border-[#00ff94] transition-all transform group-hover:scale-105">
           {client.profileImage ? (
             <img src={client.profileImage} alt={client.firstName} className="w-full h-full object-cover" />
           ) : (
-            <span className="text-xl font-bold text-[#00ff94]">{client.firstName[0]}</span>
+            <span className="text-xl font-black text-[#00ff94] italic">{client.firstName[0]}</span>
           )}
         </div>
 
         {/* Name */}
-        <h3 className="text-white font-semibold text-lg italic">{client.firstName} {client.lastName}</h3>
-        
-        {/* Date & Time Display */}
-        <div className="flex items-center gap-2 mt-1 text-[10px] text-gray-500 font-bold uppercase tracking-widest italic">
-          <Calendar size={12} className="text-[#00ff94]" />
-          <span>{formattedDate}</span>
-          <span className="text-[#00ff94]">•</span>
-          <span>{formattedTime}</span>
-        </div>
+        <h3 className="text-white font-black text-lg italic uppercase tracking-tighter">{client.firstName} {client.lastName}</h3>
+        <p className="text-gray-500 text-[8px] font-black uppercase tracking-[0.2em] mt-1">Last Active: {formattedDate}</p>
 
-        <p className="text-gray-500 text-[10px] mt-3 mb-6 uppercase tracking-[0.2em] font-black italic">
-          Weight Loss Program
-        </p>
-
-        {/* Buttons */}
-        <div className="w-full grid grid-cols-2 gap-3">
+        {/* Action Buttons */}
+        <div className="w-full grid grid-cols-2 gap-3 mt-8">
           <button 
-            onClick={onProfileClick}
-            className="flex items-center justify-center gap-2 py-2.5 bg-[#0d1a16] text-gray-400 rounded-xl hover:text-white hover:bg-white/5 transition text-[10px] font-bold uppercase italic border border-white/5"
+            onClick={() => onAction('profile')}
+            className="flex items-center justify-center gap-2 py-3.5 bg-[#0d1a16] text-gray-400 rounded-2xl hover:text-white hover:bg-white/5 transition-all text-[10px] font-black uppercase italic border border-white/5"
           >
-            <User size={14} /> Profile
+            <User size={14} className="text-[#00ff94]" /> 
+            Profile
           </button>
           <button 
-            onClick={() => openChat(client.userId)}
-            className="flex items-center justify-center gap-2 py-2.5 bg-[#0d1a16] text-gray-400 rounded-xl hover:text-white hover:bg-white/5 transition text-[10px] font-bold uppercase italic border border-white/5"
+            onClick={() => onAction('sessions')}
+            className="flex items-center justify-center gap-2 py-3.5 bg-[#0d1a16] text-gray-400 rounded-2xl hover:text-white hover:bg-white/5 transition-all text-[10px] font-black uppercase italic border border-white/5"
           >
-            <MessageSquare size={14} /> Chat
+            <Calendar size={14} className="text-[#00ff94]" /> 
+            Sessions
           </button>
         </div>
       </div>

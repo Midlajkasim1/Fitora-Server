@@ -12,6 +12,8 @@ interface UpcomingSessionCardProps {
 export const UpcomingSessionCard = ({ slot, onEdit, onCancel, onStart }: UpcomingSessionCardProps) => {
   const start = new Date(slot.startTime);
   const isGroup = slot.type === "group";
+  const isCompleted = slot.status === 'completed';
+  const isLive = slot.status === 'live';
 
   const formatTime = (date: Date) => {
     return date.toLocaleTimeString("en-US", {
@@ -60,31 +62,40 @@ export const UpcomingSessionCard = ({ slot, onEdit, onCancel, onStart }: Upcomin
           <span className="text-white text-xs font-bold">60 Min</span>
         </div>
 
-        {/* EDIT BUTTON */}
-        <button
-          onClick={() => onEdit(slot)}
-          className="p-3 bg-[#0d1a16] text-gray-400 rounded-xl hover:text-[#00ff94] border border-white/5 transition-all active:scale-90"
-          title="Edit Slot"
-        >
-          <Edit2 size={18} />
-        </button>
+        {!isCompleted && (
+          <>
+            {/* EDIT BUTTON */}
+            <button
+              onClick={() => onEdit(slot)}
+              className="p-3 bg-[#0d1a16] text-gray-400 rounded-xl hover:text-[#00ff94] border border-white/5 transition-all active:scale-90"
+              title="Edit Slot"
+            >
+              <Edit2 size={18} />
+            </button>
 
-        {/* CANCEL BUTTON */}
-        <button
-          onClick={() => onCancel(slot.slotId)}
-          className="p-3 bg-[#0d1a16] text-red-400/50 rounded-xl hover:text-red-500 border border-white/5 transition-all active:scale-90"
-          title="Cancel Session"
-        >
-          <Trash2 size={18} />
-        </button>
+            {/* CANCEL BUTTON */}
+            <button
+              onClick={() => onCancel(slot.slotId)}
+              className="p-3 bg-[#0d1a16] text-red-400/50 rounded-xl hover:text-red-500 border border-white/5 transition-all active:scale-90"
+              title="Cancel Session"
+            >
+              <Trash2 size={18} />
+            </button>
+          </>
+        )}
 
         {/* PRIMARY VIDEO ACTION (Replacing Launch) */}
         {/* PRIMARY VIDEO ACTION */}
         <button 
-          onClick={() => onStart(slot.slotId)}
-          className="flex items-center gap-2 px-6 py-3 bg-[#00ff94] text-black font-black text-[10px] rounded-xl hover:bg-[#00e685] transition uppercase italic shadow-[0_0_15px_rgba(0,255,148,0.2)] active:scale-95 ml-2"
+          onClick={() => !isCompleted && onStart(slot.slotId)}
+          disabled={isCompleted}
+          className={`flex items-center gap-2 px-6 py-3 font-black text-[10px] rounded-xl transition uppercase italic ml-2 ${
+            isCompleted 
+              ? "bg-white/5 text-gray-500 border border-white/5 cursor-not-allowed opacity-50" 
+              : "bg-[#00ff94] text-black hover:bg-[#00e685] shadow-[0_0_15px_rgba(0,255,148,0.2)] active:scale-95"
+          }`}
         >
-          <Video size={16} /> Start Session
+          <Video size={16} /> {isCompleted ? 'Session Completed' : isLive ? 'Join Session' : 'Start Session'}
         </button>
       </div>
     </div>

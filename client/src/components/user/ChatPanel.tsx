@@ -29,10 +29,10 @@ export const ChatPanel = ({
     isFetchingNextPage
   } = useChatHistory(selectedTrainerId);
 
-  // Sync initial trainer id
+  // Sync initial trainer id whenever it changes or panel opens
   useEffect(() => {
-    if (initialTrainerId) setSelectedTrainerId(initialTrainerId);
-  }, [initialTrainerId]);
+    setSelectedTrainerId(initialTrainerId || null);
+  }, [initialTrainerId, isOpen]);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -147,7 +147,7 @@ export const ChatPanel = ({
                         }`}>
                           {msg.message}
                           <div className={`text-[8px] mt-2 font-black uppercase opacity-40 ${isOwn ? "text-right" : "text-left"}`}>
-                            {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
                           </div>
                         </div>
                       </div>

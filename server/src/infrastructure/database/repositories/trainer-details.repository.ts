@@ -11,6 +11,20 @@ import { TrainerDetailsModel } from "../models/trainer-details.model";
 import { UserModel } from "../models/user.models";
 import { BaseRepository } from "./base.repository";
 
+interface ITrainerBookingResult {
+  user_id: Types.ObjectId;
+  userInfo: {
+    firstName: string;
+    lastName: string;
+    profileImage?: string;
+  };
+  specializations: string[];
+  experience: number;
+  rating: number;
+  bio: string;
+  availableSlotsCount: number;
+}
+
 export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITrainerDetailsDocument> implements ITrainerRepository {
   constructor(
     private readonly trainerMapper: TrainerDetailsMapper,
@@ -34,7 +48,7 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
   async findByUserId(userId: string): Promise<TrainerDetailsEntity | null> {
     const doc = await TrainerDetailsModel.findOne({
       user_id: new Types.ObjectId(userId)
-    }).lean();
+    }).lean<ITrainerDetailsDocument>();
 
     return doc ? this.trainerMapper.toEntity(doc) : null;
   }
@@ -94,9 +108,10 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
 
 
   async findById(id: string): Promise<TrainerDetailsEntity | null> {
-    const doc = await TrainerDetailsModel.findById(id).lean();
+    const doc = await TrainerDetailsModel.findById(id).lean<ITrainerDetailsDocument>();
     return doc ? this.trainerMapper.toEntity(doc) : null;
   }
+
   async findAllTrainerVerification(params: { page: number; limit: number; search?: string; approvalStatus?: string; }): Promise<{ data: TrainerDetailsEntity[]; total: number; }> {
     const { page, limit, search, approvalStatus } = params;
     const skip = (page - 1) * limit;
@@ -123,7 +138,7 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
         .sort({ created_at: -1 })
         .skip(skip)
         .limit(limit)
-        .lean(),
+        .lean<ITrainerDetailsDocument[]>(),
       TrainerDetailsModel.countDocuments(filter)
     ]);
     return {
@@ -140,12 +155,24 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
       }
     });
   }
+
+  async updateRating(trainerId: string, averageRating: number, reviewCount: number): Promise<void> {
+    await TrainerDetailsModel.findOneAndUpdate(
+      { user_id: new Types.ObjectId(trainerId) },
+      {
+        $set: {
+          rating: averageRating,
+          total_reviews: reviewCount
+        }
+      }
+    );
+  }
   async findApprovedTrainer(): Promise<string[]> {
     const docs = await TrainerDetailsModel.find({
       approval_status: ApprovalStatus.APPROVED
     })
       .select("user_id")
-      .lean();
+      .lean<{ user_id: Types.ObjectId }[]>();
 
     return docs.map(doc => doc.user_id.toString());
   }
@@ -154,7 +181,7 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
     const docs = await TrainerDetailsModel.find({
       specializations: specializationIds,
       approval_status: "approved"
-    }).select("user_id").lean().exec();
+    }).select("user_id").lean<{ user_id: Types.ObjectId }[]>().exec();
     return docs.map(doc => doc.user_id.toString());
   }
 
@@ -169,7 +196,7 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
     };
 
     const pipeline: PipelineStage[] = [
-      { $match: filter },
+      { $match: filter as Record<string, unknown> },
       {
         $lookup: {
           from: "users",
@@ -222,12 +249,12 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
     }
 
     const totalResults = await TrainerDetailsModel.aggregate([...pipeline, { $count: "total" }]);
-    const total = totalResults[0]?.total || 0;
+    const total = (totalResults[0] as { total: number } | undefined)?.total || 0;
 
     pipeline.push({ $sort: { availableSlotsCount: -1 } }); // Show active trainers first
     pipeline.push({ $skip: skip }, { $limit: limit });
 
-    const docs = await TrainerDetailsModel.aggregate(pipeline);
+    const docs = await TrainerDetailsModel.aggregate<ITrainerBookingResult>(pipeline);
 
     const data = docs.map(doc => ({
       trainerId: doc.user_id.toString(),
@@ -235,7 +262,7 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
       profileImage: doc.userInfo.profileImage,
       specializations: doc.specializations,
       experience: doc.experience,
-      rating: 4.8,
+      rating: doc.rating,
       bio: doc.bio,
       availableSlotsCount: doc.availableSlotsCount
     }));
@@ -247,6 +274,13 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
       user_id: new Types.ObjectId(trainerId)
     }).lean<ITrainerDetailsDocument>();
     return doc ? this.trainerMapper.toEntity(doc) : null;
+  }
+
+  async updateWalletBalance(userId: string, amount: number): Promise<void> {
+    await TrainerDetailsModel.findOneAndUpdate(
+      { user_id: new Types.ObjectId(userId) },
+      { $inc: { wallet_balance: amount } }
+    );
   }
 
 }

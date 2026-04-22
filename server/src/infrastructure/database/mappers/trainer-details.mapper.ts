@@ -13,7 +13,10 @@ export class TrainerDetailsMapper implements IMapper<TrainerDetailsEntity,ITrain
       experienceYear: doc.experience_year,
       certifications: doc.certifications,
       specializations: doc.specializations,
-      approvalStatus: doc.approval_status as ApprovalStatus
+      approvalStatus: doc.approval_status as ApprovalStatus,
+      averageRating: doc.rating,
+      reviewCount: doc.total_reviews,
+      walletBalance: doc.wallet_balance
     });
   }
 
@@ -24,7 +27,10 @@ export class TrainerDetailsMapper implements IMapper<TrainerDetailsEntity,ITrain
       experience_year: entity.experienceYear,
       certifications: entity.certifications,
       specializations: entity.specializations,
-      approval_status: entity.approvalStatus as "pending" | "approved" | "rejected"
+      approval_status: entity.approvalStatus as "pending" | "approved" | "rejected",
+      rating: entity.averageRating,
+      total_reviews: entity.reviewCount,
+      wallet_balance: entity.walletBalance
     };
   }
 }

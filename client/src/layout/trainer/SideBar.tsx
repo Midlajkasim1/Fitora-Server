@@ -16,7 +16,7 @@ const menuItems = [
   { name: 'Clients', path: '/trainer/clients', icon: Users },
   { name: 'Sessions', path: '/trainer/session', icon: Calendar },
   { name: 'Messages', path: '/trainer/messages', icon: MessageSquare },
-  { name: 'Earnings', path: '/trainer/earnings', icon: DollarSign },
+  { name: 'Earnings', path: '/trainer/wallet', icon: DollarSign },
 ];
 
 const Sidebar = () => {

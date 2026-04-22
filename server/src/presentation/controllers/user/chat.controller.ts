@@ -1,6 +1,8 @@
-import { GetChatHistoryInput, GetChatHistoryUseCase } from "@/application/usecases/chat/get-chat-history.usecase";
-import { MarkMessagesReadUseCase } from "@/application/usecases/chat/mark-read.usecase";
-import { SendMessageUseCase } from "@/application/usecases/chat/send-message.usecase";
+import { GetChatHistoryInput, GetChatHistoryOutput } from "@/application/usecases/chat/get-chat-history.usecase";
+import { MarkMessagesReadDTO } from "@/application/usecases/chat/mark-read.usecase";
+import { SendMessageInput } from "@/application/usecases/chat/send-message.usecase";
+import { ChatMessageEntity } from "@/domain/entities/chat/chat-message.entity";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { ApiResponse } from "@/shared/utils/response.handler";
@@ -8,9 +10,9 @@ import { Request, Response } from "express";
 
 export class ChatController {
   constructor(
-    private readonly _getChatHistoryUseCase: GetChatHistoryUseCase,
-    private readonly _sendMessageUseCase: SendMessageUseCase,
-    private readonly _markMessagesReadUseCase: MarkMessagesReadUseCase
+    private readonly _getChatHistoryUseCase: IBaseUseCase<GetChatHistoryInput, GetChatHistoryOutput>,
+    private readonly _sendMessageUseCase: IBaseUseCase<SendMessageInput, ChatMessageEntity>,
+    private readonly _markMessagesReadUseCase: IBaseUseCase<MarkMessagesReadDTO, void>
   ) {}
 
   async getChatHistory(req: Request, res: Response): Promise<Response> {

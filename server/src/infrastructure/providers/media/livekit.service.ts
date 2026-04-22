@@ -26,7 +26,7 @@ export class LiveKitMediaServer implements IMediaServerProvider {
             const at = new AccessToken(this.apiKey, this.apiSecret, {
                 identity: participantId,
                 name: participantName,
-                metadata: JSON.stringify({ role: isTrainer ? 'trainer' : 'client' })
+                metadata: JSON.stringify({ role: isTrainer ? "trainer" : "client" })
             });
 
             at.addGrant({

@@ -58,5 +58,11 @@ router.put("/edit-profile", userMiddlewares.authMiddleware, userMiddlewares.bloc
 router.put("/change-password", userMiddlewares.authMiddleware, userMiddlewares.blockGuard, asyncHandler((req: Request, res: Response) =>
   trainerController.trainerController.ChangePassword(req, res)
 ));
+router.get("/wallet", userMiddlewares.authMiddleware, userMiddlewares.blockGuard, asyncHandler((req: Request, res: Response) =>
+  trainerController.trainerController.getTrainerWallet(req, res)
+));
+router.post("/wallet/payout", userMiddlewares.authMiddleware, userMiddlewares.blockGuard, asyncHandler((req: Request, res: Response) =>
+  trainerController.trainerController.requestPayout(req, res)
+));
 
 export default router;

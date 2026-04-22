@@ -9,6 +9,10 @@ import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repositor
 import { ISubscriptionRepository } from "@/domain/interfaces/repositories/subscription.repository";
 import { ISubscriptionPlanRepository } from "@/domain/interfaces/repositories/subscriptionPlan.repository";
 import { INotificationService } from "@/domain/interfaces/services/notification-service.interface";
+import { IBookingRepository } from "@/domain/interfaces/repositories/booking.repository";
+import { BookingEntity } from "@/domain/entities/slot/booking.entity";
+import { AttendanceStatus } from "@/domain/constants/session.constants";
+
 
 
 export class BookSlotUseCase implements IBaseUseCase<BookSlotRequestDTO,BookSlotResponseDTO>{
@@ -16,8 +20,10 @@ export class BookSlotUseCase implements IBaseUseCase<BookSlotRequestDTO,BookSlot
         private readonly _subscriptionRepository:ISubscriptionRepository,
         private readonly _slotRepository:ISlotRepository,
         private readonly _subscriptionPlanRepository:ISubscriptionPlanRepository,
-        private readonly _notificationService:INotificationService
+        private readonly _notificationService:INotificationService,
+        private readonly _bookingRepository:IBookingRepository
     ){}
+
   async  execute(dto: BookSlotRequestDTO): Promise<BookSlotResponseDTO> {
         const subscription = await this._subscriptionRepository.findActiveByUserId(dto.userId);
         if(!subscription){
@@ -52,6 +58,18 @@ export class BookSlotUseCase implements IBaseUseCase<BookSlotRequestDTO,BookSlot
         if(!isSuccess){
             throw new Error(SLOT_MESSAGES.ALREADY_BOOKED);
         }
+
+        // Create a Booking document to track attendance
+        await this._bookingRepository.create(new BookingEntity({
+            slotId: dto.slotId,
+            userId: dto.userId,
+            cumulativeMinutes: 0,
+            attendanceStatus: AttendanceStatus.PENDING
+        }));
+
+        // Increment used credits in subscription
+        await this._subscriptionRepository.incrementUsedCredit(subscription.id!);
+
         const startTime = new Date(slot.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
         await this._notificationService.notify(slot.trainerId, {
             title: "New Booking Received! 🗓️",

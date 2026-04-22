@@ -12,6 +12,11 @@ import { SubscriptionPlanMapper } from "@/infrastructure/database/mappers/subscr
 import { TrainerDetailsMapper } from "@/infrastructure/database/mappers/trainer-details.mapper";
 import { UserMapper } from "@/infrastructure/database/mappers/user.mapper";
 import { WorkoutMapper } from "@/infrastructure/database/mappers/workout.mapper";
+import { BookingMapper } from "@/infrastructure/database/mappers/booking.mapper";
+import { TransactionMapper } from "@/infrastructure/database/mappers/transaction.mapper";
+import { BookingRepository } from "@/infrastructure/database/repositories/booking.repository";
+import { TransactionRepository } from "@/infrastructure/database/repositories/transaction.repository";
+
 import { ChatMessageRepository } from "@/infrastructure/database/repositories/chat-message.repository";
 import { AdvertisementRepository } from "@/infrastructure/database/repositories/advertisement.repository";
 import { AiDietPlanRepository } from "@/infrastructure/database/repositories/ai-diet-plan.repository";
@@ -40,6 +45,9 @@ const chatMessageMapper = new ChatMessageMapper();
 const slotMapper = new SlotMapper();
 const aiWorkoutMapper = new AiWorkoutPlanMapper();
 const aiDietMapper = new AiDietPlanMapper();
+const bookingMapper = new BookingMapper();
+const transactionMapper = new TransactionMapper();
+
 
 export const userRepositories = {
   userRepository: new UserRepository(userMapper) ,
@@ -55,7 +63,10 @@ export const userRepositories = {
    slotRepository:new SlotRepository(slotMapper),
    aiWorkoutPlanRepository:new AiWorkoutPlanRepository(aiWorkoutMapper),
    aiDietPlanRepository:new AiDietPlanRepository(aiDietMapper),
-   chatMessageRepository: new ChatMessageRepository(chatMessageMapper)
+   chatMessageRepository: new ChatMessageRepository(chatMessageMapper),
+   bookingRepository: new BookingRepository(bookingMapper),
+   transactionRepository: new TransactionRepository(transactionMapper)
+
    
   
   

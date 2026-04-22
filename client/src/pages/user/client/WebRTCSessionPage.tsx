@@ -86,8 +86,9 @@ const WebRTCSessionPage = () => {
                 serverUrl={host}
                 connect={true}
                 onDisconnected={() => {
-                    user?.role === "trainer" ? navigate("/trainer/session") : navigate("/upcoming-sessions");
+                    user?.role === "trainer" ? navigate("/trainer/session") : navigate(`/session-review/${slotId}`);
                 }}
+
                 className="flex-1 flex flex-col"
             >
                 {/* Header */}

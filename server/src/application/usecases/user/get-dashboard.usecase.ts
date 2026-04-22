@@ -1,6 +1,7 @@
 import { UserDashboardResponseDTO } from "@/application/dto/user/response/dashboard.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { GenderType } from "@/domain/constants/auth.constants";
+import { SlotStatus } from "@/domain/constants/session.constants";
 import { BMIStatus } from "@/domain/constants/health.metrics.constants";
 import { AUTH_MESSAGES, HEALTH_METRICS_MESSAGES } from "@/domain/constants/messages.constants";
 import { IHealthMetricsRepository } from "@/domain/interfaces/repositories/onboarding/iclient-health-metrics.interface";
@@ -22,7 +23,7 @@ export class GetDashboardUseCase implements IBaseUseCase<string, UserDashboardRe
         if (!metrics) {
             throw new Error(HEALTH_METRICS_MESSAGES.HEALT_METRICS_NOT_FOUND);
         }
-        const upcoming = await this._slotRepository.getUserUpcomingSlots({ userId, skip: 0, limit: 1 });
+        const upcoming = await this._slotRepository.getUserUpcomingSlots({ userId, skip: 0, limit: 5 });
 
         const heightBmi = metrics.height / 100;
         const bmiValue = parseFloat((metrics.weight / (heightBmi * heightBmi)).toFixed(1));
@@ -61,12 +62,14 @@ export class GetDashboardUseCase implements IBaseUseCase<string, UserDashboardRe
         const genderMul = user.gender?.toLowerCase() === GenderType.MALE ? 1 : 0;
         const bodyFatValue = parseFloat(((1.20 * bmiValue) + (0.23 * age) - (10.8 * genderMul) - 5.4).toFixed(1));
 
-        const nextSession = upcoming.data.length > 0 ? {
-            slotId: upcoming.data[0].slotId.toString(),
-            trainerId: upcoming.data[0].trainerId.toString(),
-            startTime: upcoming.data[0].startTime,
-            trainerName: upcoming.data[0].trainerName,
-            type: upcoming.data[0].type
+        const nextSessionData = upcoming.data.find(slot => slot.status !== SlotStatus.COMPLETED);
+
+        const nextSession = nextSessionData ? {
+            slotId: nextSessionData.slotId.toString(),
+            trainerId: nextSessionData.trainerId.toString(),
+            startTime: nextSessionData.startTime,
+            trainerName: nextSessionData.trainerName,
+            type: nextSessionData.type
         } : null;
 
         return {

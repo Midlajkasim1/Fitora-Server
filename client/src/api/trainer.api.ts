@@ -63,3 +63,13 @@ export const getClientDetails = async (clientId: string) => {
   const res = await api.get(TRAINER_ROUTES.CLIENT_DETAILS(clientId));
   return res.data.data;
 };
+
+export const getTrainerWallet = async () => {
+  const res = await api.get(TRAINER_ROUTES.WALLET);
+  return res.data.data;
+};
+
+export const requestPayout = async (amount: number) => {
+  const res = await api.post(TRAINER_ROUTES.PAYOUT_REQUEST, { amount });
+  return res.data.data;
+};

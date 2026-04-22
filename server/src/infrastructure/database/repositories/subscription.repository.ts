@@ -3,7 +3,7 @@ import { SubscriptionEntity } from "@/domain/entities/subscription/subscription.
 import { SubscriptionMapper } from "../mappers/subscription.mapper";
 import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
 import { SubscriptionModel } from "../models/subscription.model";
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 import { ISubscriptionDocument } from "../interfaces/ISubscription.document";
 import { BaseRepository } from "./base.repository";
 import { SlotModel } from "../models/slots.models";
@@ -36,16 +36,8 @@ export class SubscriptionRepository extends BaseRepository<SubscriptionEntity,IS
             end_date: { $gt: new Date() } 
         }).lean();
         if(!doc)return null;
-        const usedCreditsCount = await SlotModel.countDocuments({
-            participants:userId,
-            status:{$ne:SlotStatus.CANCELLED},
-            startTime:{$gte:doc.start_date,$lte:doc.end_date}
-        });
         
-        return this._subscriptionMapper.toEntity({
-            ...doc,
-            usedCredits:usedCreditsCount
-        });
+        return this._subscriptionMapper.toEntity(doc as ISubscriptionDocument);
     }
     async findEveryActive(): Promise<{ userId: string; }[]> {
         const docs = await SubscriptionModel.find({
@@ -58,5 +50,13 @@ export class SubscriptionRepository extends BaseRepository<SubscriptionEntity,IS
         return docs.map(doc => ({
             userId: doc.user_id.toString()
         }));
+    }
+
+    async incrementUsedCredit(subscriptionId: string): Promise<void> {
+        await SubscriptionModel.findByIdAndUpdate(subscriptionId, { $inc: { usedCredits: 1 } });
+    }
+
+    async decrementUsedCredit(subscriptionId: string): Promise<void> {
+        await SubscriptionModel.findByIdAndUpdate(subscriptionId, { $inc: { usedCredits: -1 } });
     }
 }

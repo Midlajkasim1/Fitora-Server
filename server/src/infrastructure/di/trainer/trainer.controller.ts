@@ -10,7 +10,9 @@ export const trainerController = {
      trainerUsecase.getTrinerProfileUseCase,
      trainerUsecase.uploadTrainerImageUseCase,
      trainerUsecase.updateTrainerProfileUseCase,
-     trainerUsecase.trainerChangePasswordUseCase
+     trainerUsecase.trainerChangePasswordUseCase,
+     trainerUsecase.getTrainerWalletUseCase,
+     trainerUsecase.requestPayoutUseCase
    ),
    trainerSlotController: new TrainerSlotController(
     trainerUsecase.trainerCreateSlotUseCase,

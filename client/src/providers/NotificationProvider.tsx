@@ -52,6 +52,26 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         });
       });
 
+      newSocket.on('SESSION_FINISHED', (data: { slotId: string, message: string }) => {
+        toast.success(data.message || "Session ended.", {
+          style: { background: '#0d1a16', border: '1px solid #00ff94', color: '#fff' }
+        });
+        // Reload all session-related data
+        queryClient.invalidateQueries({ queryKey: ["trainer-upcoming-slots"], refetchType: 'all' });
+        queryClient.invalidateQueries({ queryKey: ["trainerDashboard"], refetchType: 'all' });
+        queryClient.invalidateQueries({ queryKey: ["upcoming-sessions"], refetchType: 'all' });
+        queryClient.invalidateQueries({ queryKey: ["premium-dashboard"], refetchType: 'all' });
+        
+        // Brief delay before redirecting to allow user to see the message
+        setTimeout(() => {
+          if (window.location.pathname.includes(`/video-call/${data.slotId}`)) {
+            window.location.href = `/session-review/${data.slotId}`;
+          }
+        }, 2000);
+      });
+
+
+
       socketRef.current = newSocket;
     }
 

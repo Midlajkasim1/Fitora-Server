@@ -14,6 +14,7 @@ import { AUTH_MESSAGES, SLOT_MESSAGES } from "@/domain/constants/messages.consta
 import { SlotSchema } from "@/infrastructure/validators/user/trainer/trainer-slot.validator";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
+import { GetClientDetailsRequestDTO, ClientDetailsOutput } from "@/application/usecases/trainer/get-client-details.usecase";
 
 
 export class TrainerSlotController {
@@ -24,7 +25,7 @@ export class TrainerSlotController {
         private readonly _getOneOnOneUserUseCase: IBaseUseCase<GetTrainerUsersRequestDTO, GetTrainerStudentResponseDTO>,
         private readonly _getGroupUsersUseCase: IBaseUseCase<GetTrainerUsersRequestDTO, GetTrainerStudentResponseDTO>,
         private readonly _getTrainerUpcomingUseCase: IBaseUseCase<GetTrainerUpcomingSlotRequestDTO, TrainerUpcomingResponseDTO>,
-        private readonly _getClientDetailsUseCase: any // I'll use any here for simplicity as I didn't define a specific DTO for it yet
+        private readonly _getClientDetailsUseCase: IBaseUseCase<GetClientDetailsRequestDTO, ClientDetailsOutput>
 
     ) { }
 
@@ -36,7 +37,7 @@ export class TrainerSlotController {
         }
 
         try {
-            const result = await this._getClientDetailsUseCase.execute(trainerId, clientId);
+            const result = await this._getClientDetailsUseCase.execute({ trainerId, clientId });
             return res.status(HttpStatus.OK).json(ApiResponse.success(result));
         } catch (error) {
             return res.status(HttpStatus.BAD_REQUEST).json(ApiResponse.error((error as Error).message));

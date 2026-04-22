@@ -10,7 +10,7 @@ const ClientManagement = () => {
   const [activeTab, setActiveTab] = useState<'personal' | 'group'>('personal');
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedClientId, setSelectedClientId] = useState<string | null>(null);
+  const [modalConfig, setModalConfig] = useState<{ id: string, mode: 'profile' | 'sessions' } | null>(null);
   const RESULTS_PER_PAGE = 6;
 
   const debouncedSearch = useDebounce(searchTerm, 500);
@@ -81,7 +81,7 @@ const ClientManagement = () => {
               <ClientCard 
                 key={client.userId} 
                 client={client} 
-                onProfileClick={() => setSelectedClientId(client.userId)}
+                onAction={(mode) => setModalConfig({ id: client.userId, mode })}
               />
             ))}
           </div>
@@ -100,10 +100,11 @@ const ClientManagement = () => {
         </>
       )}
 
-      {selectedClientId && (
+      {modalConfig && (
         <ClientProfileModal 
-          clientId={selectedClientId} 
-          onClose={() => setSelectedClientId(null)} 
+          clientId={modalConfig.id} 
+          mode={modalConfig.mode}
+          onClose={() => setModalConfig(null)} 
         />
       )}
     </div>

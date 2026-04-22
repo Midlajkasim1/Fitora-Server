@@ -81,6 +81,8 @@ export const TRAINER_ROUTES = {
   
   CLIENTS: (type: string) => `trainer/${type}`,
   CLIENT_DETAILS: (clientId: string) => `trainer/client-details/${clientId}`,
+  WALLET: "/trainer/wallet",
+  PAYOUT_REQUEST: "/trainer/wallet/payout",
 };
 
 export const NOTIFICATION_ROUTES = {
@@ -108,4 +110,25 @@ export const VIDEO_ROUTES = {
   START_SESSION: (slotId: string) => `sessions/${slotId}/start`,
   END_SESSION: (slotId: string) => `sessions/${slotId}/end`,
   GET_TOKEN: (slotId: string) => `sessions/${slotId}/join-token`,
+  GET_ACCESS_STATE: (slotId: string) => `sessions/${slotId}/access`,
+};
+
+export const REVIEW_ROUTES = {
+  BASE: "/reviews",
+  REPORTS: "/reviews/reports",
+  TRAINER_REVIEWS: (trainerId: string) => `/reviews/trainers/${trainerId}`,
+};
+
+export const REPORT_ROUTES = {
+  CREATE: "/user/reports",
+  ADMIN_LIST: "/admin/reports",
+  ADMIN_SUMMARY: "/admin/reports/summary",
+  ADMIN_GET_DETAILS: (id: string) => `/admin/reports/${id}`,
+  ADMIN_UPDATE_STATUS: (id: string) => `/admin/reports/${id}/status`,
+};
+
+export const FINANCE_ROUTES = {
+  OVERVIEW: "/admin/finance/overview",
+  TRANSACTIONS: "/admin/finance/transactions",
+  REPORT: "/admin/finance/report",
 };

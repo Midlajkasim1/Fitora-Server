@@ -15,9 +15,10 @@ const navItems = [
   { name: "Specialisation", path: "/admin/specializations", icon: Settings },
   { name: "Verification", path: "/admin/trainer/verifications", icon: CheckCircle },
   { name: "Subscription", path: "/admin/subscriptions", icon: Zap },
-  { name: "Finance Management", path: "", icon: Wallet },
+  { name: "Finance Management", path: "/admin/finance", icon: Wallet },
   { name: "Advertisements", path: "/admin/advertisements", icon: Megaphone },
-  { name: "Report", path: "", icon: FileText },
+  { name: "Report", path: "/admin/reports", icon: FileText },
+
   { name: "Workout", path: "/admin/workouts", icon: Dumbbell },
 ];
 

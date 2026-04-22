@@ -1,14 +1,17 @@
-import { useState } from "react";
-import { CalendarDays, ArrowLeft, Plus, Users } from "lucide-react"; // Added Users icon
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { CalendarDays, ArrowLeft, Plus, Users } from "lucide-react"; 
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useUpcomingSessions } from "../../../../hooks/user/slot/use-upcomingSession";
 import { useCancelBooking } from "../../../../hooks/user/slot/use-cancelBooking";
 import { GlobalLoader } from "../../../../shared/GlobalLoader";
 import { UserSessionCard } from "../../../../components/user/UserSessionCard";
 import { Pagination } from "../../../../components/admin/Pagination";
 import { ConfirmModal } from "../../../../shared/ConfirmModal";
+import { useChatStore } from "../../../../store/use-chat-store";
 
 const UpcomingSessions = () => {
+  const location = useLocation();
+  const { openChat } = useChatStore();
   const [currentPage, setCurrentPage] = useState(1);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
   const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
@@ -19,6 +22,16 @@ const UpcomingSessions = () => {
 
   // Cancellation Mutation
   const { mutate: cancelBooking, isPending: isCancelling } = useCancelBooking();
+
+  // Handle auto-opening chat from dashboard
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const trainerId = params.get('chat');
+    if (trainerId) {
+      openChat(trainerId);
+      // We keep the 'back' param to allow UserLayout to handle the return navigation
+    }
+  }, [location.search, openChat]);
 
   const totalPages = data ? Math.ceil(data.total / LIMIT) : 0;
 

@@ -7,7 +7,7 @@ interface FilterOption {
 
 interface ManagementHeaderProps {
   placeholder: string;
-  filters: {
+  filters?: {
     label: string;
     options: FilterOption[];
     onChange: (value: string) => void;
@@ -15,7 +15,7 @@ interface ManagementHeaderProps {
   onSearch: (query: string) => void;
 }
 
-export const ManagementHeader = ({ placeholder, filters, onSearch }: ManagementHeaderProps) => {
+export const ManagementHeader = ({ placeholder, filters = [], onSearch }: ManagementHeaderProps) => {
   return (
     <div className="bg-[#0a1810] border border-white/5 p-4 rounded-2xl flex flex-wrap gap-4 items-center">
       <div className="flex-1 min-w-[300px] relative">

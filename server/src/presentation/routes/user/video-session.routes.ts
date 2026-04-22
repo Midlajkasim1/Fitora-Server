@@ -38,4 +38,16 @@ router.post("/:slotId/end",
     asyncHandler((req, res) => videoControllers.videoCallController.endSession(req, res))
 );
 
+/**
+ * @route GET /api/user/sessions/:slotId/access
+ * @desc Get current UI state/access state for a session
+ * @access Private
+ */
+router.get("/:slotId/access",
+    userMiddlewares.authMiddleware,
+    userMiddlewares.blockGuard,
+    asyncHandler((req, res) => videoControllers.videoCallController.getAccessState(req, res))
+);
+
 export default router;
+

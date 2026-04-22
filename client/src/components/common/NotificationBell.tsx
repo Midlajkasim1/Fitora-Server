@@ -77,7 +77,7 @@ export const NotificationBell = () => {
                       {n.message}
                     </p>
                     <p className="text-[8px] text-gray-600 mt-2 font-black uppercase italic">
-                      {new Date(n.createdAt).toLocaleTimeString()} • {new Date(n.createdAt).toLocaleDateString()}
+                      {new Date(n.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })} • {new Date(n.createdAt).toLocaleDateString()}
                     </p>
                   </div>
                 ))

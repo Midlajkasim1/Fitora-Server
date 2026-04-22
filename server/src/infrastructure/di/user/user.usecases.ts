@@ -174,7 +174,9 @@ export const useCases = {
     userRepositories.paymentRepository,
     userRepositories.subscriptionRepository,
     userRepositories.subscriptionPlanRepository,
-    notificationServiceProxy
+    notificationServiceProxy,
+    userRepositories.transactionRepository,
+    userRepositories.userRepository
   ),
   clientHealthMetricsUseCase:new SaveHealthMetricsUseCase(
     userRepositories.clientHealthMetricRepository
@@ -207,13 +209,18 @@ export const useCases = {
     userRepositories.subscriptionRepository,
     userRepositories.slotRepository,
     userRepositories.subscriptionPlanRepository,
-    notificationServiceProxy
-
+    notificationServiceProxy,
+    userRepositories.bookingRepository
   ),
+
+
   cancelSlotUseCase:new CancelBookingUseCase(
     userRepositories.slotRepository,
-    notificationServiceProxy
+    notificationServiceProxy,
+    userRepositories.bookingRepository,
+    userRepositories.subscriptionRepository
   ),
+
   getUserUpcomingUseCase:new GetUserUpcomingSessionSlotsUseCase(
     userRepositories.slotRepository
   ),

@@ -4,6 +4,7 @@ import { ISocketEmitter } from "@/domain/interfaces/services/socket-emitter.inte
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
 import { ChatMessageResponseDTO } from "../../dto/chat/response/chat-message-response.dto";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 
 export interface SendMessageInput {
   senderId: string;
@@ -13,7 +14,7 @@ export interface SendMessageInput {
 
 const GRACE_PERIOD_MS = 24 * 60 * 60 * 1000; // 24 hours
 
-export class SendMessageUseCase {
+export class SendMessageUseCase implements IBaseUseCase<SendMessageInput, ChatMessageEntity> {
   constructor(
     private readonly _chatRepo: IChatMessageRepository,
     private readonly _slotRepo: ISlotRepository,

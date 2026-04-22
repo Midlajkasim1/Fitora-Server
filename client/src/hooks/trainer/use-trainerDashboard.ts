@@ -6,6 +6,9 @@ import { trainerDashboard } from "../../api/trainer.api"
 export const useTrainerDashboard = ()=>{
     return useQuery({
         queryKey:["trainerDashboard"],
-        queryFn: trainerDashboard
+        queryFn: trainerDashboard,
+        staleTime: 0,
+        refetchOnMount: "always",
+        refetchOnWindowFocus: true
     })
 }

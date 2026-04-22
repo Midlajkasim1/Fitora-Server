@@ -5,21 +5,18 @@ import { PaymentModel } from "../models/payment.models";
 import { PaymentStatus } from "@/domain/constants/payment.constants";
 import { IPaymentDocument } from "../interfaces/IPayment.document";
 import { IPaymentHistory } from "../interfaces/IPayment-history.interface";
-import { Types } from "mongoose";
+import { Types, Model } from "mongoose";
 import { SubscriptionStatus } from "@/domain/constants/subscription.constants";
+import { BaseRepository } from "./base.repository";
 
-export class PaymentRepository implements IPaymentRepository {
-    constructor(private readonly _paymentMapper: PaymentMapper) {}
-
-    async create(payment: PaymentEntity): Promise<PaymentEntity> {
-        const data = this._paymentMapper.toMongo(payment);
-        const created = await PaymentModel.create(data);
-        return this._paymentMapper.toEntity(created as IPaymentDocument);
+export class PaymentRepository extends BaseRepository<PaymentEntity, IPaymentDocument> implements IPaymentRepository {
+    constructor(private readonly _paymentMapper: PaymentMapper) {
+        super(PaymentModel as unknown as Model<IPaymentDocument>, _paymentMapper);
     }
 
     async findByProviderId(providerId: string): Promise<PaymentEntity | null> {
-        const doc = await PaymentModel.findOne({ provider_payment_id: providerId }).lean();
-        return doc ? this._paymentMapper.toEntity(doc as IPaymentDocument) : null;
+        const doc = await PaymentModel.findOne({ provider_payment_id: providerId }).lean<IPaymentDocument>();
+        return doc ? this._paymentMapper.toEntity(doc) : null;
     }
 
     async updateStatus(providerId: string, status: PaymentStatus): Promise<void> {
@@ -28,6 +25,7 @@ export class PaymentRepository implements IPaymentRepository {
             { $set: { status } }
         ).exec();
     }
+
     async findHistoryByUserId(userId: string, page: number, limit: number): Promise<{ history: IPaymentHistoryResult[]; total: number; }> {
         const skip = (page-1) * limit;
         const data = await PaymentModel.aggregate<IPaymentHistory>([
@@ -51,8 +49,6 @@ export class PaymentRepository implements IPaymentRepository {
                     localField:"sub.plan_id",
                     foreignField:"_id",
                     as:"planDetails"
-
-
                 }
             }
         ]);

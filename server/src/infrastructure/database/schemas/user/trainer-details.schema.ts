@@ -31,8 +31,8 @@ export const TrainerDetailsSchema = new Schema(
             default: 0
         },
         total_reviews: {
-            type: String,
-            default: "0"
+            type: Number,
+            default: 0
         },
         verified: {
             type: Boolean,
@@ -54,6 +54,10 @@ export const TrainerDetailsSchema = new Schema(
         last_seen: {
             type: Date,
             default: Date.now
+        },
+        wallet_balance: {
+            type: Number,
+            default: 0
         }
     },
     {

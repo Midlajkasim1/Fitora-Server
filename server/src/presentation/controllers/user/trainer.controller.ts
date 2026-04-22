@@ -14,6 +14,8 @@ import { changePasswordSchema } from "@/infrastructure/validators/user/change-pa
 import { updateTrainerProfileSchema } from "@/infrastructure/validators/user/trainer/trainer-profile.validator";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
+import { TrainerWalletResponse } from "@/application/usecases/trainer/get-trainer-wallet.usecase";
+import { RequestPayoutDTO } from "@/application/usecases/trainer/request-payout.usecase";
 
 
 export class TrainerController {
@@ -22,9 +24,9 @@ export class TrainerController {
         private readonly _getTrainerProfileUseCase: IBaseUseCase<string, GetTrainerProfileResponse>,
         private readonly _uploadTrainerImageUseCase: IBaseUseCase<UploadTrainerImageRequest, UploadTrainerImageResponse, UploadFileDTO>,
         private readonly _updateTrainerProfileUseCase: IBaseUseCase<UpdateTrainerProfileRequest, UpdateTrainerProfileResponseDTO>,
-        private readonly _changePasswordUseCase:IBaseUseCase<ChangePasswordRequest,ChangePasswordResponse>,
-        
-
+        private readonly _changePasswordUseCase: IBaseUseCase<ChangePasswordRequest, ChangePasswordResponse>,
+        private readonly _getTrainerWalletUseCase: IBaseUseCase<string, TrainerWalletResponse>,
+        private readonly _requestPayoutUseCase: IBaseUseCase<RequestPayoutDTO, void>
     ) { }
     async getTrainerDashboard(req: Request, res: Response): Promise<Response> {
         const trainerId = req.user?.userId;
@@ -93,4 +95,23 @@ export class TrainerController {
             });
             return res.status(HttpStatus.OK).json(ApiResponse.success(result,AUTH_MESSAGES.PASSWORD_UPDATE));
         }
+
+    async getTrainerWallet(req: Request, res: Response): Promise<Response> {
+        const trainerId = req.user?.userId;
+        if (!trainerId) {
+            return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
+        }
+        const walletData = await this._getTrainerWalletUseCase.execute(trainerId);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(walletData));
+    }
+
+    async requestPayout(req: Request, res: Response): Promise<Response> {
+        const trainerId = req.user?.userId;
+        if (!trainerId) {
+            return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
+        }
+        const { amount } = req.body;
+        await this._requestPayoutUseCase.execute({ trainerId, amount });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(null, "Payout request submitted successfully"));
+    }
 }

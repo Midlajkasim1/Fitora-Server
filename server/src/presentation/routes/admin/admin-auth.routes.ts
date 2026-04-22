@@ -6,6 +6,8 @@ import { Request, Response, Router } from "express";
 const router = Router();
 
 router.post( "/login",asyncHandler((req: Request, res:Response) => adminControllers.adminAuthController.login(req, res))
+
+
 );
 router.post("/refresh-token", asyncHandler((req:Request, res:Response) => 
   adminControllers.adminAuthController.refreshToken(req, res))
@@ -109,5 +111,17 @@ router.patch("/advertisement/:adId/status",adminMiddlewares.authMiddleware,async
 router.get("/advertisement/:id",adminMiddlewares.authMiddleware,asyncHandler((req:Request,res:Response)=>
   adminControllers.advertisementController.getAdvertisementById(req,res)
 ));
+//
+router.get("/reports", adminMiddlewares.authMiddleware, asyncHandler((req: Request, res: Response) => 
+  adminControllers.adminReportController.getReports(req, res))
+);
+
+router.get("/summary", adminMiddlewares.authMiddleware, asyncHandler((req: Request, res: Response) => 
+  adminControllers.adminReportController.getSummary(req, res))
+);
+
+router.patch("/:id/status", adminMiddlewares.authMiddleware, asyncHandler((req: Request, res: Response) => 
+  adminControllers.adminReportController.updateStatus(req, res))
+);
 
 export default router;

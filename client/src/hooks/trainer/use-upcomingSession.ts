@@ -7,5 +7,8 @@ export const useTrainerUpcomingSlots = (params: UpcomingSlotsParams) => {
     queryKey: ["trainer-upcoming-slots", params.page],
     queryFn: () => getTrainerUpcomingSlots(params),
     placeholderData: (prev) => prev,
+    staleTime: 0,
+    refetchOnMount: "always",
+    refetchOnWindowFocus: true
   });
 };

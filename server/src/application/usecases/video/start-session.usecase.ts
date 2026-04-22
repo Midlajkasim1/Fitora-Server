@@ -31,9 +31,10 @@ export class StartSessionUseCase {
             throw new Error("This session has already been completed");
         }
 
-        // 2. Update status to ACTIVE
-        await this._slotRepository.updateStatus(slotId, SlotStatus.ACTIVE);
-        logger.info(`[StartSession] Slot ${slotId} is now ACTIVE`);
+        // 2. Update status to LIVE
+        await this._slotRepository.updateStatus(slotId, SlotStatus.LIVE);
+        logger.info(`[StartSession] Slot ${slotId} is now LIVE`);
+
 
         // 3. Notify all participants
         // We emit to each participant's individual room (userId) so they see the notification

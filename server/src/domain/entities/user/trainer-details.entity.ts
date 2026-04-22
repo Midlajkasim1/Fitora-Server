@@ -9,6 +9,9 @@ export class TrainerDetailsEntity {
   private readonly _specializations: string;
   private readonly _approvalStatus: ApprovalStatus;
   private readonly _rejectionReason?: string | null;
+  private readonly _averageRating: number;
+  private readonly _reviewCount: number;
+  private readonly _walletBalance: number;
   private readonly _createdAt?: Date;
 
   constructor(props: {
@@ -20,6 +23,9 @@ export class TrainerDetailsEntity {
     specializations: string;
     approvalStatus: ApprovalStatus;
     rejectionReason?:string | null;
+    averageRating?: number;
+    reviewCount?: number;
+    walletBalance?: number;
     createdAt?:Date;
   }) {
     this._id = props.id;
@@ -29,7 +35,10 @@ export class TrainerDetailsEntity {
     this._certifications = props.certifications;
     this._specializations = props.specializations;
     this._approvalStatus = props.approvalStatus;
-     this._rejectionReason = props.rejectionReason ?? null;
+    this._rejectionReason = props.rejectionReason ?? null;
+    this._averageRating = props.averageRating ?? 0;
+    this._reviewCount = props.reviewCount ?? 0;
+    this._walletBalance = props.walletBalance ?? 0;
     this._createdAt = props.createdAt;
   }
 
@@ -42,7 +51,10 @@ export class TrainerDetailsEntity {
   }): TrainerDetailsEntity {
     return new TrainerDetailsEntity({
       ...props,
-      approvalStatus: ApprovalStatus.PENDING
+      approvalStatus: ApprovalStatus.PENDING,
+      averageRating: 0,
+      reviewCount: 0,
+      walletBalance: 0
     });
   }
 
@@ -54,5 +66,8 @@ export class TrainerDetailsEntity {
   get specializations() { return this._specializations; }
   get approvalStatus() { return this._approvalStatus; }
   get rejectionReason(){return this._rejectionReason;}
+  get averageRating() { return this._averageRating; }
+  get reviewCount() { return this._reviewCount; }
+  get walletBalance() { return this._walletBalance; }
   get createdAt(){return this._createdAt;}
 }

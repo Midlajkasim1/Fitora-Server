@@ -67,14 +67,14 @@ export default function PremiumDashboardPage() {
           <BMIWidget value={data.bmi.value} status={data.bmi.status} />
           <ProgressChart data={data.monthlyProgress} />
 
-      <div className="bg-gradient-to-br from-[#00ff94] to-[#00cc76] p-8 rounded-[2.5rem] text-black flex flex-col justify-between">
+      <div className={`${data.nextSession ? 'bg-gradient-to-br from-[#132a1e] to-[#0a1810] border border-[#00ff94]/20' : 'bg-[#132a1e]/50 border border-white/5'} p-8 rounded-[2.5rem] flex flex-col justify-between shadow-2xl transition-all`}>
           <div>
-            <h3 className="font-black uppercase italic tracking-tight">Next Session</h3>
+            <h3 className="font-black uppercase italic tracking-tight text-[#00ff94] text-xs">Next Session</h3>
             {data.nextSession ? (
               <div className="mt-8">
-                <p className="text-[10px] font-black uppercase opacity-60">With {data.nextSession.trainerName}</p>
+                <p className="text-[10px] font-black uppercase text-gray-500 italic">With {data.nextSession.trainerName}</p>
                 
-                <h2 className="text-3xl font-black uppercase italic leading-none mt-1">
+                <h2 className="text-3xl font-black uppercase italic leading-none mt-1 text-white">
                   {new Date(data.nextSession.startTime).toLocaleTimeString('en-US', { 
                     hour: 'numeric', 
                     minute: '2-digit', 
@@ -82,27 +82,37 @@ export default function PremiumDashboardPage() {
                   })}
                 </h2>
 
-                <p className="mt-4 font-bold uppercase italic text-[11px]">
+                <p className="mt-4 font-bold uppercase italic text-[10px] text-[#00ff94]/60">
                   {data.nextSession.type.toLowerCase().includes('group') 
                     ? "Group Session" 
                     : "Personal Session"}
                 </p>
               </div>
             ) : (
-              <p className="mt-8 font-bold italic opacity-60">No sessions booked</p>
+              <div className="mt-8 flex flex-col items-center justify-center py-4 opacity-30">
+                <Video size={32} className="text-gray-600 mb-2" />
+                <p className="font-bold italic text-[10px] uppercase tracking-widest text-gray-400">No sessions booked</p>
+              </div>
             )}
           </div>
-          <div className="flex gap-2">
-            <button className="flex-1 bg-black text-white py-4 rounded-2xl font-black uppercase italic text-[10px] flex items-center justify-center gap-2 hover:bg-black/80 transition-colors">
-              <Video size={16} /> Start Class
-            </button>
-            <button 
-              onClick={() => openChat(data.nextSession?.trainerId)}
-              className="px-6 bg-black/10 text-black border border-black/20 py-4 rounded-2xl font-black uppercase italic text-[10px] flex items-center justify-center hover:bg-black/20 transition-colors"
-            >
-              <MessageCircle size={18} />
-            </button>
-          </div>
+          
+          {data.nextSession && (
+            <div className="flex gap-2 mt-6">
+              <button 
+                onClick={() => navigate(`/video-call/${data.nextSession?.slotId}`)}
+                className="flex-1 bg-[#00ff94] text-black py-4 rounded-2xl font-black uppercase italic text-[10px] flex items-center justify-center gap-2 hover:bg-[#00e685] transition-transform active:scale-95 shadow-[0_0_20px_rgba(0,255,148,0.2)]"
+              >
+                <Video size={16} /> Start Class
+              </button>
+              <button 
+                onClick={() => navigate(`/upcoming-sessions?chat=${data.nextSession?.trainerId}&back=dashboard`)}
+                className="px-6 bg-white/5 text-gray-400 border border-white/10 py-4 rounded-2xl font-black uppercase italic text-[10px] flex items-center justify-center hover:bg-[#00ff94]/10 hover:text-[#00ff94] transition-all"
+                title="Message Coach"
+              >
+                <MessageCircle size={18} />
+              </button>
+            </div>
+          )}
         </div>
         </div>
          <UpdateWeightModal

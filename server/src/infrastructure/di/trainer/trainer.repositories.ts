@@ -8,17 +8,21 @@ import { TrainerRepository } from "@/infrastructure/database/repositories/traine
 import { UserRepository } from "@/infrastructure/database/repositories/user.repository";
 import { SpecializationMapper } from "@/infrastructure/database/mappers/specialization.mapper";
 import { SpecializationRepository } from "@/infrastructure/database/repositories/specialization.repository";
+import { TransactionMapper } from "@/infrastructure/database/mappers/transaction.mapper";
+import { TransactionRepository } from "@/infrastructure/database/repositories/transaction.repository";
 
 const slotMapper=new SlotMapper();
 const userMapper = new UserMapper();
 const trainerMapper = new TrainerDetailsMapper();
 const healthMetricsMapper = new HealthMetricsMapper();
 const specializationMapper = new SpecializationMapper();
+const transactionMapper = new TransactionMapper();
 
 export const trainerRepositories = {
   slotRepository:new SlotRepository(slotMapper),
   userRepository:new UserRepository(userMapper),
   trainerRepository:new TrainerRepository(trainerMapper,userMapper),
   healthMetricsRepository: new HealthMetricsRepository(healthMetricsMapper),
-  specializationRepository: new SpecializationRepository(specializationMapper)
+  specializationRepository: new SpecializationRepository(specializationMapper),
+  transactionRepository: new TransactionRepository(transactionMapper)
 };

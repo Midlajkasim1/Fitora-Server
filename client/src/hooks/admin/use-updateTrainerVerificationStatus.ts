@@ -19,6 +19,9 @@ export const useUpdateTrainerApproval = () => {
       queryClient.invalidateQueries({
         queryKey: ["trainer-verification"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["admin-trainer"],
+      });
       toast.success("Status updated");
     },
   });

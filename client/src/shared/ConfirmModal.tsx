@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { AlertTriangle, X, Info } from "lucide-react";
+import { AlertTriangle, X, Info, CheckCircle } from "lucide-react";
 
 export interface ConfirmModalProps {
   isPending?: boolean;
@@ -10,7 +10,7 @@ export interface ConfirmModalProps {
   message?: string;
   confirmText?: string;
   children?: React.ReactNode;
-  variant?: "danger" | "warning"; 
+  variant?: "danger" | "warning" | "success"; 
 }
 
 export const ConfirmModal = ({ 
@@ -25,11 +25,16 @@ export const ConfirmModal = ({
 }: ConfirmModalProps) => {
   
   const isWarning = variant === "warning";
-  const accentColor = isWarning ? "text-yellow-500" : "text-red-500";
-  const bgColor = isWarning ? "bg-yellow-500/10" : "bg-red-500/10";
-  const buttonBg = isWarning 
-    ? "bg-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.3)] hover:bg-yellow-600" 
-    : "bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:bg-red-600";
+  const isSuccess = variant === "success";
+  
+  const accentColor = isSuccess ? "text-emerald-500" : (isWarning ? "text-yellow-500" : "text-red-500");
+  const bgColor = isSuccess ? "bg-emerald-500/10" : (isWarning ? "bg-yellow-500/10" : "bg-red-500/10");
+  
+  const buttonBg = isSuccess
+    ? "bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.3)] hover:bg-emerald-600"
+    : (isWarning 
+      ? "bg-yellow-500 shadow-[0_0_20px_rgba(234,179,8,0.3)] hover:bg-yellow-600" 
+      : "bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)] hover:bg-red-600");
 
   return (
     <AnimatePresence>
@@ -54,7 +59,7 @@ export const ConfirmModal = ({
             <div className="flex flex-col items-center text-center">
               {/* ✅ Dynamic Icon and Color */}
               <div className={`w-16 h-16 ${bgColor} rounded-full flex items-center justify-center ${accentColor} mb-6`}>
-                {isWarning ? <Info size={32} /> : <AlertTriangle size={32} />}
+                {isSuccess ? <CheckCircle size={32} /> : (isWarning ? <Info size={32} /> : <AlertTriangle size={32} />)}
               </div>
 
               <h3 className="text-xl font-black italic uppercase tracking-tight text-white mb-2">{title}</h3>

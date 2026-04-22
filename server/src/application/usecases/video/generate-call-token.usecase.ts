@@ -4,6 +4,8 @@ import { IUserRepository } from "@/domain/interfaces/repositories/user.repositor
 import { env } from "@/infrastructure/config/env.config";
 
 
+import { SlotStatus } from "@/domain/constants/session.constants";
+
 export interface GenerateCallTokenRequest {
     slotId: string;
     userId: string;
@@ -31,10 +33,10 @@ export class GenerateCallTokenUseCase {
         }
 
         if (!isTrainer) {
-            // If the trainer has already marked it as ACTIVE, let the client in regardless of time.
-            const isSessionActive = slot.status === "active";
+            // If the trainer has already marked it as LIVE, let the client in regardless of time.
+            const isSessionLive = slot.status === SlotStatus.LIVE;
             
-            if (!isSessionActive) {
+            if (!isSessionLive) {
                 const now = new Date();
                 const startTime = new Date(slot.startTime);
                 const bufferMillis = 5 * 60 * 1000; // 5 minutes
@@ -43,6 +45,7 @@ export class GenerateCallTokenUseCase {
                     throw new Error("Session has not started yet. You can join 5 minutes early.");
                 }
             }
+
 
             const now = new Date();
             const endTime = new Date(slot.endTime);

@@ -14,14 +14,13 @@ export interface TrainerDashboardData {
 }
 
 export interface TrainerClient {
-  slotId: string;
   userId: string;
-  startTime: string;
-  status: string;
   firstName: string;
   lastName: string;
   email: string;
   profileImage: string | null;
+  totalBookedSlots: number;
+  lastSessionTime: string;
 }
 
 export interface TrainerClientsResponse {
@@ -106,4 +105,18 @@ export interface ChangePasswordPayload {
 export interface TrainerProfileResponse {
   success: boolean;
   data: TrainerProfile;
+}
+
+export interface WalletTransaction {
+  id: string;
+  amount: number;
+  type: string;
+  status: string;
+  description: string;
+  createdAt: string;
+}
+
+export interface TrainerWalletData {
+  walletBalance: number;
+  recentTransactions: WalletTransaction[];
 }

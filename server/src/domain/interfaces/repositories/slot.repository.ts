@@ -24,6 +24,7 @@ export interface ISlotRepository extends IBaseRepository<SlotEntity>{
       *  Grace period: session ended less than 24 hours ago. */
      findActiveChatPartners(userId: string, gracePeriodLimit: Date): Promise<IChatPartner[]>;
      findActiveChatPartnersForTrainer(trainerId: string, gracePeriodLimit: Date): Promise<IChatPartner[]>;
+     getClientSessionHistory(trainerId: string, clientId: string): Promise<SlotEntity[]>;
 }
 
 export interface IAggregateSlot{

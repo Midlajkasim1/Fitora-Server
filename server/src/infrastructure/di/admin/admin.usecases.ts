@@ -33,6 +33,16 @@ import { UpdateAdvertisementUseCase } from "@/application/usecases/advertisement
 import { GetAllAdvertisementUseCase } from "@/application/usecases/advertisement/get-All-advertisement.usecase";
 import { UpdateStatusAdvertisementUseCase } from "@/application/usecases/advertisement/updateStatus-advertisement.usecase";
 import { GetAdvertisementById } from "@/application/usecases/advertisement/get-advertisementById.usecase";
+import { GetReportsUseCase } from "@/application/usecases/admin/report/get-reports.usecase";
+import { GetReportSummaryUseCase } from "@/application/usecases/admin/report/get-report-summary.usecase";
+import { UpdateReportStatusUseCase } from "@/application/usecases/admin/report/update-report-status.usecase";
+import { GetReportByIdUseCase } from "@/application/usecases/admin/report/get-report-by-id.usecase";
+import { GetFinanceOverviewUseCase } from "@/application/usecases/admin/finance/get-finance-overview.usecase";
+import { GetRecentTransactionsUseCase } from "@/application/usecases/admin/finance/get-recent-transactions.usecase";
+import { GenerateFinanceReportUseCase } from "@/application/usecases/admin/finance/generate-finance-report.usecase";
+
+import { socketEmitterProxy } from "@/infrastructure/providers/socket/socket-emitter";
+import { trainerRepositories } from "../trainer/trainer.repositories";
 
 const tokenService = new JwtTokenService();
 const passwordHasher = new BcryptPasswordHasher();
@@ -145,11 +155,30 @@ export const adminUseCases = {
   ),
   getAdvertisementById:new GetAdvertisementById(
     adminRepositories.advertisementRepository
+  ),
+  getReportsUseCase: new GetReportsUseCase(
+    adminRepositories.reportRepository
+  ),
+  getReportSummaryUseCase: new GetReportSummaryUseCase(
+    adminRepositories.reportRepository
+  ),
+  getReportByIdUseCase: new GetReportByIdUseCase(
+    adminRepositories.reportRepository
+  ),
+  updateReportStatusUseCase: new UpdateReportStatusUseCase(
+    adminRepositories.reportRepository,
+    socketEmitterProxy,
+    trainerRepositories.trainerRepository,
+    adminRepositories.userRepository,
+    emailService
+  ),
+  getFinanceOverviewUseCase: new GetFinanceOverviewUseCase(
+    adminRepositories.transactionRepository
+  ),
+  getRecentTransactionsUseCase: new GetRecentTransactionsUseCase(
+    adminRepositories.transactionRepository
+  ),
+  generateFinanceReportUseCase: new GenerateFinanceReportUseCase(
+    adminRepositories.transactionRepository
   )
-  
-
-
-  
- 
-
 };

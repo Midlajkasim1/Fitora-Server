@@ -45,6 +45,8 @@ const CheckSlotsPage = lazy(()=>import("../pages/user/client/slot/CheckSlots"))
 const BrowseTrainersPage = lazy(() => import("../pages/user/client/slot/BrowserTrainersPage"));
 const UserWorkoutSessionPage = lazy(() => import("../pages/user/client/VideoSessionPage"));
 const WebRTCSessionPage = lazy(() => import("../pages/user/client/WebRTCSessionPage"));
+const SessionReviewPage = lazy(() => import("../pages/user/client/SessionReviewPage"));
+
 
 const AiSelectionPage = lazy(() => import("../pages/user/client/ai-workout&diet/AiSelection"));
 const AiWorkoutPage = lazy(() => import("../pages/user/client/ai-workout&diet/AiWorkoutPage"));
@@ -56,6 +58,7 @@ const TrainerCleintManagement = lazy(() => import("../pages/user/trainer/Trainer
 const UpcomingSlotsPage = lazy(() => import("../pages/user/trainer/UpcomingSlotsPage"));
 const TrainerProfilePage = lazy(() => import("../pages/user/trainer/TrainerProfilePage"));
 const TrainerChangePassword = lazy(() => import("../pages/user/trainer/TrainerChangePassword"));
+const TrainerWalletPage = lazy(() => import("../pages/user/trainer/TrainerWalletPage"));
 
 // const CreateSessionSlotPage = lazy(() => import("../pages/user/trainer/CreateSessionSlotPage"));
 
@@ -80,7 +83,12 @@ const EditSpecializationPage = lazy(()=>import("../pages/admin/subscription/Edit
 const AdvertisementManagementPage = lazy(()=>import("../pages/admin/advertisement/AdvertisementManagement"));
 const CreateAdvertisementPage = lazy(()=>import("../pages/admin/advertisement/CreateAdvertisement"));
 const EditAdvertisementPage = lazy(()=>import("../pages/admin/advertisement/EditAdvertisementPage"));
+const ReportManagement = lazy(() => import("../pages/admin/ReportManagement"));
+const ReportDetails = lazy(() => import("../pages/admin/ReportDetails"));
+const FinanceManagement = lazy(() => import("../pages/admin/FinanceManagement"));
 const NotFound = lazy(() => import("../pages/NotFound"));
+
+
 const TrainerLayoutPage = lazy(() => import("../layout/trainer/TrainerLayout"));
 
 
@@ -113,6 +121,8 @@ export default function AppRoutes() {
         
         <Route path="/workouts/session/:id" element={<AuthGuard><UserWorkoutSessionPage /></AuthGuard>} />
         <Route path="/video-call/:id" element={<AuthGuard><WebRTCSessionPage /></AuthGuard>} />
+        <Route path="/session-review/:id" element={<AuthGuard><SessionReviewPage /></AuthGuard>} />
+
 
           <Route element={<AuthGuard><UserLayoutPage /></AuthGuard>}>
           <Route path="/profile" element={<UserProfile />} />
@@ -147,6 +157,7 @@ export default function AppRoutes() {
           <Route path="session" element={<UpcomingSlotsPage/>}/>
            <Route path="profile" element={<TrainerProfilePage/>}/>
             <Route path="change-password" element={<TrainerChangePassword/>}/>
+            <Route path="wallet" element={<TrainerWalletPage/>}/>
 
 
           {/* <Route path="create-slot" element={<CreateSessionSlotPage/>}/> */}
@@ -177,6 +188,11 @@ export default function AppRoutes() {
           <Route path="advertisements" element={<AdvertisementManagementPage/>}/>
            <Route path="create-advertisement" element={<CreateAdvertisementPage/>}/>
            <Route path="edit-advertisement/:id" element={<EditAdvertisementPage/>}/>
+           <Route path="reports" element={<ReportManagement />} />
+           <Route path="reports/:id" element={<ReportDetails />} />
+           <Route path="finance" element={<FinanceManagement />} />
+
+
 
 
 

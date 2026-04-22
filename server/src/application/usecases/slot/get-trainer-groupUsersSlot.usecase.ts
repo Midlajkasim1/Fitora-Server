@@ -19,15 +19,13 @@ export class GetTrainerGroupUserUseCase implements IBaseUseCase<GetTrainerUsersR
             search:dto.search
         });
        const mappedUsers = result.data.map((item)=>({
-        slotId:item.slotId.toString(),
-        userId:item.userId.toString(),
-        startTime: item.startTime,
-        status: item.status,
+        userId:item.userId, // Already a string from repository
         firstName: item.firstName,
         lastName: item.lastName,
         email: item.email,
-        profileImage:item.profileImage
-
+        profileImage:item.profileImage,
+        totalBookedSlots: item.totalBookedSlots,
+        lastSessionTime: item.lastSessionTime
        }));
        return {
         users:mappedUsers,

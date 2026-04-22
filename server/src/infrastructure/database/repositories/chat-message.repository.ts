@@ -3,10 +3,13 @@ import { IChatMessageRepository } from "@/domain/interfaces/repositories/chat-me
 import { ChatMessageMapper } from "../mappers/chat-message.mapper";
 import { ChatMessageModel } from "../models/chat-message.model";
 import { IChatMessageDocument } from "../interfaces/chat-message.document";
-import { Types } from "mongoose";
+import { Types, Model } from "mongoose";
+import { BaseRepository } from "./base.repository";
 
-export class ChatMessageRepository implements IChatMessageRepository {
-  constructor(private readonly _mapper: ChatMessageMapper) {}
+export class ChatMessageRepository extends BaseRepository<ChatMessageEntity, IChatMessageDocument> implements IChatMessageRepository {
+  constructor(private readonly _mapper: ChatMessageMapper) {
+    super(ChatMessageModel as unknown as Model<IChatMessageDocument>, _mapper);
+  }
 
   async save(message: ChatMessageEntity): Promise<ChatMessageEntity> {
     const mongoData = this._mapper.toMongo(message);
@@ -35,10 +38,10 @@ export class ChatMessageRepository implements IChatMessageRepository {
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
-      .lean()
+      .lean<IChatMessageDocument[]>()
       .exec();
 
-    return docs.map((doc) => this._mapper.toEntity(doc as IChatMessageDocument));
+    return docs.map((doc) => this._mapper.toEntity(doc));
   }
 
   async countConversation(userAId: string, userBId: string): Promise<number> {

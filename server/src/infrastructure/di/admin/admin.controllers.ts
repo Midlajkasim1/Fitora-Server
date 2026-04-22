@@ -6,6 +6,9 @@ import { SpecializationController } from "@/presentation/controllers/admin/speci
 import { WorkoutController } from "@/presentation/controllers/admin/admin-workout.controller";
 import { AdminSubscriptionController } from "@/presentation/controllers/admin/admin-subscription.controller";
 import { AdvertisementController } from "@/presentation/controllers/admin/admin-advertisement.controller";
+import { AdminReportController } from "@/presentation/controllers/admin/admin-report.controller";
+import { AdminFinanceController } from "@/presentation/controllers/admin/admin-finance.controller";
+
 
 export const adminControllers = {
   adminAuthController: new AdminAuthController(
@@ -56,6 +59,18 @@ export const adminControllers = {
     adminUseCases.getAllAdvertisementUseCase,
     adminUseCases.updateStatusAdvertisement,
     adminUseCases.getAdvertisementById
+  ),
+  adminReportController: new AdminReportController(
+    adminUseCases.getReportsUseCase,
+    adminUseCases.getReportSummaryUseCase,
+    adminUseCases.updateReportStatusUseCase,
+    adminUseCases.getReportByIdUseCase
+  ),
+  adminFinanceController: new AdminFinanceController(
+    adminUseCases.getFinanceOverviewUseCase,
+    adminUseCases.getRecentTransactionsUseCase,
+    adminUseCases.generateFinanceReportUseCase
   )
+
  
 };

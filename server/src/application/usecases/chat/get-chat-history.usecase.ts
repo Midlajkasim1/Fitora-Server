@@ -1,5 +1,6 @@
 import { ChatMessageEntity } from "@/domain/entities/chat/chat-message.entity";
 import { IChatMessageRepository } from "@/domain/interfaces/repositories/chat-message.repository";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 
 export interface GetChatHistoryInput {
   requesterId: string;
@@ -15,7 +16,7 @@ export interface GetChatHistoryOutput {
   totalPages: number;
 }
 
-export class GetChatHistoryUseCase {
+export class GetChatHistoryUseCase implements IBaseUseCase<GetChatHistoryInput, GetChatHistoryOutput> {
   constructor(private readonly _chatRepo: IChatMessageRepository) {}
 
   async execute(input: GetChatHistoryInput): Promise<GetChatHistoryOutput> {

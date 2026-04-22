@@ -10,7 +10,8 @@ export interface ITrainerDetailsDocument  {
   approval_status: "pending" | "approved" | "rejected"; 
   verified: boolean; 
   rating: number;
-  total_reviews: string; 
+  total_reviews: number; 
+  wallet_balance: number;
   created_at: Date; 
   update_at: Date; 
 }
