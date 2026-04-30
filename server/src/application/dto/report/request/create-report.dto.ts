@@ -5,4 +5,5 @@ export interface CreateReportRequestDTO {
     reportedId: string;
     type: ReportType;
     description: string;
+    sessionId?: string;
 }

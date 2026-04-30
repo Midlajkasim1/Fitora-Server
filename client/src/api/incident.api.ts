@@ -5,6 +5,7 @@ export const createIncidentReport = (data: {
     reportedId: string;
     type: string;
     description: string;
+    sessionId?: string;
 }) => {
     return api.post(REPORT_ROUTES.CREATE, data);
 };

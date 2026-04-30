@@ -3,6 +3,7 @@ import { SubmitSessionReportResponseDTO } from "@/application/dto/review/respons
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { ISessionReportRepository } from "@/domain/interfaces/repositories/session-report.repository";
 import { SessionReportEntity } from "@/domain/entities/review/session-report.entity";
+import { REPORT_MESSAGES } from "@/domain/constants/messages.constants";
 
 export class SubmitSessionReportUseCase implements IBaseUseCase<SubmitSessionReportRequestDTO, SubmitSessionReportResponseDTO> {
   constructor(
@@ -10,6 +11,11 @@ export class SubmitSessionReportUseCase implements IBaseUseCase<SubmitSessionRep
   ) {}
 
   async execute(dto: SubmitSessionReportRequestDTO): Promise<SubmitSessionReportResponseDTO> {
+    const existingReport = await this._sessionReportRepository.findByBookingId(dto.bookingId);
+    if (existingReport) {
+      throw new Error(REPORT_MESSAGES.ALREADY_REPORTED);
+    }
+
     const report = new SessionReportEntity({
       bookingId: dto.bookingId,
       content: dto.content,
@@ -20,7 +26,7 @@ export class SubmitSessionReportUseCase implements IBaseUseCase<SubmitSessionRep
     await this._sessionReportRepository.create(report);
 
     return {
-      message: "Session report submitted successfully",
+      message: REPORT_MESSAGES.REPORT_FILED,
     };
   }
 }

@@ -1,7 +1,7 @@
 import { TrainerEditSlotRequestDTO } from "@/application/dto/slot/request/trainer-edit-slot.dto";
 import { EditSlotResponseDTO } from "@/application/dto/slot/response/trainer-edit-slot.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { NOTIFICATION_MESSAGES, NOTIFICATION_TEMPLATES, SLOT_MESSAGES } from "@/domain/constants/messages.constants";
+import { NOTIFICATION_MESSAGES, NOTIFICATION_TEMPLATES, SESSION_MESSAGES, SLOT_MESSAGES } from "@/domain/constants/messages.constants";
 import { NotificationType } from "@/domain/constants/notification.constants";
 import { SlotStatus } from "@/domain/constants/session.constants";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
@@ -47,7 +47,7 @@ export class TrainerEditSlotUseCase implements IBaseUseCase<TrainerEditSlotReque
             throw new Error(SLOT_MESSAGES.ALREADY_HAVE_A_SESSION_SCHEDULED_THAT_OVERLAPS_WITH_TIME);
         }
         const existingSlot = await this._slotRespository.findById(dto.slotId);
-        if (!existingSlot) throw new Error("Slot not found");
+        if (!existingSlot) throw new Error(SLOT_MESSAGES.SLOT_NOT_FOUND);
 
         if (existingSlot.status !== SlotStatus.AVAILABLE) {
             throw new Error(SLOT_MESSAGES.CANNOT_EDIT_ALREADY_BOOKED_SLOT);
@@ -66,7 +66,7 @@ export class TrainerEditSlotUseCase implements IBaseUseCase<TrainerEditSlotReque
             type: dto.type,
             capacity: dto.capacity
         });
-        if (!updatedSlot) throw new Error("Failed to update slot");
+        if (!updatedSlot) throw new Error(SESSION_MESSAGES.FAILED_UPDATE);
 
         const participants = existingSlot.participants || [];
 

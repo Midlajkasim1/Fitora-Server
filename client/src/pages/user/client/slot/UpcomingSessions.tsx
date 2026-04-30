@@ -68,7 +68,7 @@ const UpcomingSessions = () => {
   if (isLoading) return <GlobalLoader />;
 
   return (
-    <div className="min-h-screen bg-[#0d1f17] p-8 space-y-8">
+    <div className="min-h-screen bg-[#0d1f17] p-4 md:p-8 space-y-8">
       {/* Header Section */}
       <header className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div className="flex items-center gap-4">

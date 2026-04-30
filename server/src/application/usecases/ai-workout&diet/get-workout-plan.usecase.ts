@@ -5,7 +5,7 @@ import { GetWorkoutPlanResponseDTO } from "../../dto/ai-workout&diet/response/ge
 import { IAiWorkoutPlanRepository } from "@/domain/interfaces/repositories/ai-workout-plan.repository";
 import { ICacheService } from "@/domain/interfaces/services/cache-service";
 import { AiWorkoutPlanEntity } from "@/domain/entities/ai-workout&diet/ai-workout-plan.entity";
-import { ONE_WEEK_IN_SECONDS } from "@/domain/constants/messages.constants";
+import { AI_MESSAGES, ONE_WEEK_IN_SECONDS } from "@/domain/constants/messages.constants";
 import { GetWorkoutPlanRequestDTO } from "@/application/dto/ai-workout&diet/request/get-workoutPlan.dto";
 
 export class GetWorkoutPlanUseCase implements IBaseUseCase<GetWorkoutPlanRequestDTO, GetWorkoutPlanResponseDTO> {
@@ -20,18 +20,18 @@ export class GetWorkoutPlanUseCase implements IBaseUseCase<GetWorkoutPlanRequest
 
     const cachedData = await this._cacheService.get<AiWorkoutPlanEntity>(cacheKey);
     if (cachedData && cachedData.weeklyPlan?.length > 0) {
-      return this._formatResponse(cachedData, "Retrieved from neural cache.");
+      return this._formatResponse(cachedData, AI_MESSAGES.RETRIEVED_FROM_CACHE);
     }
 
     const dbPlan = await this._aiWorkoutRepo.findLatestByUserId(userId);
     if (dbPlan) {
       await this._cacheService.set(cacheKey, dbPlan, ONE_WEEK_IN_SECONDS);
-      return this._formatResponse(dbPlan, "Retrieved from database.");
+      return this._formatResponse(dbPlan, AI_MESSAGES.RETRIEVED_FROM_DB);
     }
 
     return {
       success: false,
-      message: "No active workout plan found. Please initialize generation.",
+      message: AI_MESSAGES.NO_WORKOUT_PLAN,
       planId: "",
       title: "",
       weeklyPlan: []

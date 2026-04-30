@@ -26,25 +26,24 @@ export class SocketVideoService {
       socket.join(slotId);
       logger.info(`[Video] User ${userId} joined room ${slotId}`);
       
-      // Notify others in the room
       socket.to(slotId).emit("user-joined", { userId, role });
     });
 
-    socket.on("offer", (data: { slotId: string; offer: any; to: string }) => {
+    socket.on("offer", (data: { slotId: string; offer: unknown; to: string }) => {
       socket.to(data.slotId).emit("offer", {
         from: userId,
         offer: data.offer,
       });
     });
 
-    socket.on("answer", (data: { slotId: string; answer: any; to: string }) => {
+    socket.on("answer", (data: { slotId: string; answer: unknown; to: string }) => {
       socket.to(data.slotId).emit("answer", {
         from: userId,
         answer: data.answer,
       });
     });
 
-    socket.on("ice-candidate", (data: { slotId: string; candidate: any; to: string }) => {
+    socket.on("ice-candidate", (data: { slotId: string; candidate: unknown; to: string }) => {
       socket.to(data.slotId).emit("ice-candidate", {
         from: userId,
         candidate: data.candidate,
@@ -71,15 +70,11 @@ export class SocketVideoService {
     });
   }
 
-  /**
-   * Closes a room and notifies all participants.
-   * Can be called by a scheduler when the slot expires.
-   */
+
   public closeRoom(slotId: string): void {
     this._videoNamespace.to(slotId).emit("session-ended", {
       message: "This session has reached its scheduled end time.",
     });
     logger.info(`[Video] Room ${slotId} closed due to timeout`);
-    // Note: Use ISocketEmitter to force disconnect if needed
   }
 }

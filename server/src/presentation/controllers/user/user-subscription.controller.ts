@@ -106,7 +106,7 @@ async CancelSubscription(req:Request,res:Response):Promise<Response>{
     userId:userId!
   });
   const result = await this._cancelSubscriptionUseCase.execute(dto);
-  return res.status(HttpStatus.OK).json(ApiResponse.success(ApiResponse.success(result)));
+  return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 }
 async getPurchaseHistory(req:Request,res:Response):Promise<Response>{
    const userId = req.user?.userId;

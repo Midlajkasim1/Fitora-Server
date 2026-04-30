@@ -28,11 +28,11 @@ export default function SpecializationListPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto space-y-14 pb-20 px-6">
+    <div className="max-w-7xl mx-auto space-y-14 pb-20 px-4 md:px-6">
       
       {/* HEADER */}
       <div className="text-center space-y-4 pt-10">
-        <h1 className="text-4xl md:text-5xl font-black text-white tracking-tight uppercase italic">
+        <h1 className="text-3xl md:text-5xl font-black text-white tracking-tight uppercase italic">
           Workout <span className="text-[#00ff94]">Specializations</span>
         </h1>
         <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto italic font-medium">

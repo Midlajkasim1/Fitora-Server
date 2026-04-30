@@ -46,6 +46,7 @@ const BrowseTrainersPage = lazy(() => import("../pages/user/client/slot/BrowserT
 const UserWorkoutSessionPage = lazy(() => import("../pages/user/client/VideoSessionPage"));
 const WebRTCSessionPage = lazy(() => import("../pages/user/client/WebRTCSessionPage"));
 const SessionReviewPage = lazy(() => import("../pages/user/client/SessionReviewPage"));
+const SupportPage = lazy(() => import("../pages/user/client/SupportPage"));
 
 
 const AiSelectionPage = lazy(() => import("../pages/user/client/ai-workout&diet/AiSelection"));
@@ -140,6 +141,7 @@ export default function AppRoutes() {
           <Route path="/ai-selection" element={<AiSelectionPage />} />
           <Route path="/ai-workout" element={<AiWorkoutPage />} />
           <Route path="/ai-diet" element={<AiDietPage />} />
+          <Route path="/support" element={<SupportPage />} />
           <Route element={<SubscriptionGuard />}>
             <Route element={<HealthMetricsGuard />}>
               <Route path="/browse-trainers" element={<BrowseTrainersPage />} />

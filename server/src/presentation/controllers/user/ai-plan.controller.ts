@@ -31,7 +31,7 @@ export class AiPlanController {
             userId: userId
         });
         const result = await this._getWorkoutPlanUseCase.execute(dto);
-        return res.status(200).json(ApiResponse.success(result));
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
     async getDietPlan(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;

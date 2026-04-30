@@ -12,7 +12,7 @@ export class TrainerBlockUseCase implements IBaseUseCase<BlockUserRequestDTO, Bl
     const trainer = await this._userRepository.findById(dto.userId);
 
     if (!trainer) {
-      throw new Error("Trainer not found");
+      throw new Error(AUTH_MESSAGES.TRAINER_ID_NOT_FOUND);
     }
     trainer.toggleStatus();
     

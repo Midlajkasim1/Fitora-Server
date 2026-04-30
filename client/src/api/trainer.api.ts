@@ -64,8 +64,8 @@ export const getClientDetails = async (clientId: string) => {
   return res.data.data;
 };
 
-export const getTrainerWallet = async () => {
-  const res = await api.get(TRAINER_ROUTES.WALLET);
+export const getTrainerWallet = async (page: number = 1, limit: number = 10) => {
+  const res = await api.get(TRAINER_ROUTES.WALLET, { params: { page, limit } });
   return res.data.data;
 };
 

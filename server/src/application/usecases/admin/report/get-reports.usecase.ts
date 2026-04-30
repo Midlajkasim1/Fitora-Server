@@ -1,5 +1,5 @@
 import { IReportRepository } from "@/domain/interfaces/repositories/report.repository";
-import { GetReportsRequestDTO, GetReportsResponseDTO } from "@/application/dto/admin/report/request/get-reports.dto";
+import { GetReportsRequestDTO, GetReportsResponseDTO } from "@/application/dto/admin/request/get-reports.dto";
 
 export class GetReportsUseCase {
     constructor(private readonly _reportRepository: IReportRepository) {}

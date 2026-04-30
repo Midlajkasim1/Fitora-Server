@@ -59,7 +59,7 @@ const CheckSlots = () => {
     : "Find A Session";
 
   return (
-    <div className="min-h-screen bg-[#0d1f17] p-8 space-y-10">
+    <div className="min-h-screen bg-[#0d1f17] p-4 md:p-8 space-y-10">
       <header className="max-w-6xl mx-auto space-y-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="flex items-center gap-4">
@@ -71,7 +71,7 @@ const CheckSlots = () => {
               <ArrowLeft size={20} />
             </Link>
             <div>
-              <h1 className="text-4xl font-black italic uppercase tracking-tighter text-white">
+              <h1 className="text-2xl md:text-4xl font-black italic uppercase tracking-tighter text-white">
                 {displayTitle}
               </h1>
               <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest italic">

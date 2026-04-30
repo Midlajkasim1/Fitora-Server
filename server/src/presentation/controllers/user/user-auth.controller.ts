@@ -170,12 +170,12 @@ export class AuthController {
 
     const result = await this._getMeUseCase.execute(userId);
 
-    return res.status(200).json(ApiResponse.success(result));
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
   }
   async logout(req: Request, res: Response): Promise<Response> {
     CookieManager.clearAuthCookies(res);
-    return res.status(200).json(ApiResponse.success(null,AUTH_MESSAGES.USERLOGOUT));
+    return res.status(HttpStatus.OK).json(ApiResponse.success(null,AUTH_MESSAGES.USERLOGOUT));
   }
 
 }

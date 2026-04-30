@@ -1,3 +1,5 @@
+import { ChatMessageEntity } from "@/domain/entities/chat/chat-message.entity";
+
 export class ChatMessageResponseDTO {
   id!: string;
   senderId!: string;
@@ -10,14 +12,14 @@ export class ChatMessageResponseDTO {
     Object.assign(this, data);
   }
 
-  static fromEntity(entity: any): ChatMessageResponseDTO {
+  static fromEntity(entity: ChatMessageEntity): ChatMessageResponseDTO {
     return new ChatMessageResponseDTO({
-      id: entity.id,
+      id: entity.id!,
       senderId: entity.senderId,
       receiverId: entity.receiverId,
       message: entity.message,
       isRead: entity.isRead,
-      createdAt: entity.createdAt,
+      createdAt: entity.createdAt!,
     });
   }
 }

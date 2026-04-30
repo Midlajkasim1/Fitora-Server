@@ -58,7 +58,7 @@ async blockTrainer(req: Request, res: Response):Promise<Response> {
 
   const result = await this._getTrainerVerificationUseCase.execute(dto);
 
-  return res.status(200).json(ApiResponse.success(result));
+  return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 }
 async updateTrainerApprovalStatus(req:Request,res:Response):Promise<Response>{
   const dto ={

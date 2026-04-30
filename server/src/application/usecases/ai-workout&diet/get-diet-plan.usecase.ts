@@ -5,7 +5,7 @@ import { GetDietPlanResponseDTO } from "../../dto/ai-workout&diet/response/get-d
 import { IAiDietPlanRepository } from "@/domain/interfaces/repositories/ai-diet-plan.repository";
 import { ICacheService } from "@/domain/interfaces/services/cache-service";
 import { AiDietPlanEntity } from "@/domain/entities/ai-workout&diet/ai-diet-plan.entity";
-import { ONE_WEEK_IN_SECONDS } from "@/domain/constants/messages.constants";
+import { AI_MESSAGES, ONE_WEEK_IN_SECONDS } from "@/domain/constants/messages.constants";
 import { GetDietPlanRequestDTO } from "@/application/dto/ai-workout&diet/request/get-diet-plan.dto";
 
 export class GetDietPlanUseCase implements IBaseUseCase<GetDietPlanRequestDTO, GetDietPlanResponseDTO> {
@@ -20,17 +20,17 @@ export class GetDietPlanUseCase implements IBaseUseCase<GetDietPlanRequestDTO, G
 
     const cachedData = await this._cacheService.get<AiDietPlanEntity>(cacheKey);
     if (cachedData && cachedData.weeklyPlan?.length > 0) {
-     return this._formatResponse(cachedData, "Your meal plan is ready.");  
+     return this._formatResponse(cachedData, AI_MESSAGES.MEAL_PLAN_READY);  
       }
 
     const dbPlan = await this._aiDietRepo.findLatestByUserId(userId);
     if (dbPlan) {
       await this._cacheService.set(cacheKey, dbPlan, ONE_WEEK_IN_SECONDS);
-    return this._formatResponse(dbPlan, "Your meal plan is ready.");    }
+    return this._formatResponse(dbPlan, AI_MESSAGES.MEAL_PLAN_READY);    }
 
     return {
       success: false,
-      message: "No active diet plan found. Please initialize generation.",
+      message: AI_MESSAGES.NO_DIET_PLAN,
       planId: "",
       title: "",
       weeklyPlan: []

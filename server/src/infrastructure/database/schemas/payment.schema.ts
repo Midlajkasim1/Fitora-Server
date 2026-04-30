@@ -19,6 +19,10 @@ export const PaymentSchema = new Schema({
         type:Number,
         required:true 
     },
+    trainerAmount:{
+        type:Number,
+        default:0
+    },
     status:{
         type:String,
         enum:Object.values(PaymentStatus),

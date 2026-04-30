@@ -1,25 +1,14 @@
-import { ChatMessageEntity } from "@/domain/entities/chat/chat-message.entity";
 import { IChatMessageRepository } from "@/domain/interfaces/repositories/chat-message.repository";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { GetChatHistoryRequestDTO } from "@/application/dto/chat/request/get-chat-history.dto";
+import { GetChatHistoryResponseDTO } from "@/application/dto/chat/response/get-chat-history.dto";
 
-export interface GetChatHistoryInput {
-  requesterId: string;
-  otherUserId: string;
-  page?: number;
-  limit?: number;
-}
 
-export interface GetChatHistoryOutput {
-  messages: ChatMessageEntity[];
-  total: number;
-  page: number;
-  totalPages: number;
-}
 
-export class GetChatHistoryUseCase implements IBaseUseCase<GetChatHistoryInput, GetChatHistoryOutput> {
+export class GetChatHistoryUseCase implements IBaseUseCase<GetChatHistoryRequestDTO, GetChatHistoryResponseDTO> {
   constructor(private readonly _chatRepo: IChatMessageRepository) {}
 
-  async execute(input: GetChatHistoryInput): Promise<GetChatHistoryOutput> {
+  async execute(input: GetChatHistoryRequestDTO): Promise<GetChatHistoryResponseDTO> {
     const { requesterId, otherUserId } = input;
     const page = Math.max(1, input.page ?? 1);
     const limit = Math.min(50, Math.max(1, input.limit ?? 20));
@@ -30,7 +19,6 @@ export class GetChatHistoryUseCase implements IBaseUseCase<GetChatHistoryInput, 
       this._chatRepo.countConversation(requesterId, otherUserId),
     ]);
 
-    // Mark messages from otherUser as read
     await this._chatRepo.markRead(otherUserId, requesterId);
 
     return {

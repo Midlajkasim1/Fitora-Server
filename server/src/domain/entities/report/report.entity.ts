@@ -3,10 +3,12 @@ import { ReportStatus, ReportType } from "@/domain/constants/report.constants";
 export class ReportEntity {
     private readonly _id?: string;
     private readonly _reporterId: string;
-    private readonly _reportedId: string; // Could be TrainerId, UserId, or SlotId
+    private readonly _reportedId: string;
     private readonly _type: ReportType;
     private readonly _status: ReportStatus;
     private readonly _description: string;
+    private readonly _sessionId?: string;
+    private readonly _resolutionNotes?: string;
     private readonly _createdAt?: Date;
     private readonly _updatedAt?: Date;
 
@@ -17,6 +19,8 @@ export class ReportEntity {
         type: ReportType;
         status: ReportStatus;
         description: string;
+        sessionId?: string;
+        resolutionNotes?: string;
         createdAt?: Date;
         updatedAt?: Date;
     }) {
@@ -26,6 +30,8 @@ export class ReportEntity {
         this._type = props.type;
         this._status = props.status;
         this._description = props.description;
+        this._sessionId = props.sessionId;
+        this._resolutionNotes = props.resolutionNotes;
         this._createdAt = props.createdAt;
         this._updatedAt = props.updatedAt;
     }
@@ -36,6 +42,8 @@ export class ReportEntity {
     get type() { return this._type; }
     get status() { return this._status; }
     get description() { return this._description; }
+    get sessionId() { return this._sessionId; }
+    get resolutionNotes() { return this._resolutionNotes; }
     get createdAt() { return this._createdAt; }
     get updatedAt() { return this._updatedAt; }
 }

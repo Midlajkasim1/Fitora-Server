@@ -35,7 +35,6 @@ router.get("/profile", userMiddlewares.authMiddleware, userMiddlewares.blockGuar
   trainerController.trainerController.getTrainerProfile(req, res)
 ));
 
-// Chat Routes for Trainers
 router.get("/chat/partners", userMiddlewares.authMiddleware, userMiddlewares.blockGuard, asyncHandler((req: Request, res: Response) =>
   userControllers.userSlotsController.getChatPartners(req, res)
 ));

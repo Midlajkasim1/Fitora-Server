@@ -29,7 +29,7 @@ export class NotificationController {
         }
         const notifications = await this._getUserNotifications.execute(userId);
 
-        return res.status(200).json(ApiResponse.success(notifications));
+        return res.status(HttpStatus.OK).json(ApiResponse.success(notifications));
     };
     async markAsRead(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;

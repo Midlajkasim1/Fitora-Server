@@ -9,8 +9,7 @@ export const ReportSchema = new Schema({
         index: true
     },
     reportedId: {
-        type: Schema.Types.ObjectId, // Could be User, Trainer, or Slot
-        required: true,
+        type: Schema.Types.ObjectId, 
         index: true
     },
     type: {
@@ -31,6 +30,10 @@ export const ReportSchema = new Schema({
     },
     resolutionNotes: {
         type: String
+    },
+    sessionId: {
+        type: String,
+        index: true
     }
 }, {
     timestamps: true,

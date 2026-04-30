@@ -6,8 +6,7 @@ import { SubscriptionModel } from "../models/subscription.model";
 import { Model, Types } from "mongoose";
 import { ISubscriptionDocument } from "../interfaces/ISubscription.document";
 import { BaseRepository } from "./base.repository";
-import { SlotModel } from "../models/slots.models";
-import { SlotStatus } from "@/domain/constants/session.constants";
+
 
 export class SubscriptionRepository extends BaseRepository<SubscriptionEntity,ISubscriptionDocument> implements ISubscriptionRepository {
     constructor(private readonly _subscriptionMapper: SubscriptionMapper) {
@@ -31,7 +30,7 @@ export class SubscriptionRepository extends BaseRepository<SubscriptionEntity,IS
 
     async findActiveByUserId(userId: string): Promise<SubscriptionEntity | null> {
         const doc = await SubscriptionModel.findOne({
-            user_id: userId,
+            user_id: new Types.ObjectId(userId),
             status: SubscriptionStatus.ACTIVE,
             end_date: { $gt: new Date() } 
         }).lean();
@@ -58,5 +57,45 @@ export class SubscriptionRepository extends BaseRepository<SubscriptionEntity,IS
 
     async decrementUsedCredit(subscriptionId: string): Promise<void> {
         await SubscriptionModel.findByIdAndUpdate(subscriptionId, { $inc: { usedCredits: -1 } });
+    }
+
+    async countActiveSubscriptions(): Promise<number> {
+        return await SubscriptionModel.countDocuments({
+            status: SubscriptionStatus.ACTIVE,
+            end_date: { $gt: new Date() }
+        });
+    }
+
+    async getActiveSubscriptionCountsByPlan(): Promise<{ name: string, count: number }[]> {
+        return await SubscriptionModel.aggregate([
+            {
+                $match: {
+                    status: SubscriptionStatus.ACTIVE,
+                    end_date: { $gt: new Date() }
+                }
+            },
+            {
+                $lookup: {
+                    from: "subscriptionplans",
+                    localField: "plan_id",
+                    foreignField: "_id",
+                    as: "plan"
+                }
+            },
+            { $unwind: "$plan" },
+            {
+                $group: {
+                    _id: "$plan.name",
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    name: "$_id",
+                    count: 1
+                }
+            }
+        ]);
     }
 }

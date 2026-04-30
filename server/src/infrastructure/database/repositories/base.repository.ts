@@ -1,4 +1,4 @@
-import { Model, SortOrder } from "mongoose";
+import { Model, SortOrder, ClientSession } from "mongoose";
 import { IBaseRepository } from "@/domain/interfaces/repositories/base.repository";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
 
@@ -9,10 +9,11 @@ export abstract class BaseRepository<TEntity, TDocument> implements IBaseReposit
     protected readonly mapper: IMapper<TEntity, TDocument>
   ) {}
 
-  async create(item: TEntity): Promise<TEntity> {
+  async create(item: TEntity, session?: ClientSession): Promise<TEntity> {
     const mongoData = this.mapper.toMongo(item);
-    const result = await this.model.create(mongoData);
-    return this.mapper.toEntity(result as TDocument);
+    const createdDoc = new this.model(mongoData);
+    await createdDoc.save({ session });
+    return this.mapper.toEntity(createdDoc as TDocument);
   }
 
   async findById(id: string): Promise<TEntity | null> {
@@ -25,9 +26,9 @@ export abstract class BaseRepository<TEntity, TDocument> implements IBaseReposit
     return result.map((doc) => this.mapper.toEntity(doc as TDocument));
   }
 
-  async update(id: string, update: Record<string, unknown>): Promise<TEntity | null> {
+  async update(id: string, update: Record<string, unknown>, session?: ClientSession): Promise<TEntity | null> {
     const result = await this.model
-      .findByIdAndUpdate(id, update, { new: true })
+      .findByIdAndUpdate(id, update, { new: true, session })
       .lean()
       .exec();
     return result ? this.mapper.toEntity(result as TDocument) : null;

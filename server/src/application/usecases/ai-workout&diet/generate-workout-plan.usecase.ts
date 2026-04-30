@@ -1,7 +1,7 @@
 import { GenerateWorkoutRequestDTO } from "@/application/dto/ai-workout&diet/request/generate-plan.request.dto";
 import { GenerateWorkoutResponseDTO } from "@/application/dto/ai-workout&diet/response/generate-plan.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { ONE_WEEK_IN_SECONDS } from "@/domain/constants/messages.constants";
+import { AI_MESSAGES, ONE_WEEK_IN_SECONDS } from "@/domain/constants/messages.constants";
 import { AiWorkoutPlanEntity } from "@/domain/entities/ai-workout&diet/ai-workout-plan.entity";
 import { IAiWorkoutPlanRepository } from "@/domain/interfaces/repositories/ai-workout-plan.repository";
 import { IHealthMetricsRepository } from "@/domain/interfaces/repositories/onboarding/iclient-health-metrics.interface";
@@ -33,7 +33,7 @@ export class GenerateWorkoutPlanUseCase implements IBaseUseCase<GenerateWorkoutR
     if (cachedPlan && cachedPlan.weeklyPlan?.length >= 7) {
       return {
         success: true,
-        message: "Retrieved from neural cache.",
+        message: AI_MESSAGES.RETRIEVED_FROM_CACHE,
         planId: cachedPlan.id || "",
         title: cachedPlan.title,
         weeklyPlan: cachedPlan.weeklyPlan
@@ -42,13 +42,13 @@ export class GenerateWorkoutPlanUseCase implements IBaseUseCase<GenerateWorkoutR
 
     const hasLock = await this._cacheService.acquireLock(cacheKey, 60);
     if (!hasLock) {
-      throw new Error("AI is already processing your plan. Please wait a moment.");
+      throw new Error(AI_MESSAGES.PROCESSING);
     }
 
     try {
       const activeSub = await this._subRepo.findActiveByUserId(userId);
       const prefs = await this._preferenceRepo.findByUserId(userId);
-      if (!prefs?.preferredWorkouts) throw new Error("Select specialization first.");
+      if (!prefs?.preferredWorkouts) throw new Error(AI_MESSAGES.SELECT_SPECIALIZATION);
 
       const specialization = await this._specializationRepo.findById(prefs.preferredWorkouts);
       const specName = specialization ? specialization.name : "General Fitness";
@@ -57,7 +57,7 @@ export class GenerateWorkoutPlanUseCase implements IBaseUseCase<GenerateWorkoutR
 
       if (!activeSub) {
         const usage = await this._aiWorkoutRepo.count({ userId });
-        if (usage >= 1) throw new Error("Free trial limit reached. Please subscribe!");
+        if (usage >= 1) throw new Error(AI_MESSAGES.TRIAL_LIMIT);
 
         aiMetrics = {
           weight: 0, 
@@ -70,10 +70,10 @@ export class GenerateWorkoutPlanUseCase implements IBaseUseCase<GenerateWorkoutR
         };
       } else {
         const plan = await this._planRepo.findById(activeSub.planId);
-        if (!plan || !plan.hasAiWorkout) throw new Error("Your current plan does not include AI Workouts.");
+        if (!plan || !plan.hasAiWorkout) throw new Error(AI_MESSAGES.PLAN_NOT_INCLUDED);
 
         const dbMetrics = await this._healthRepo.findByUserId(userId);
-        if (!dbMetrics) throw new Error("Complete profile metrics first to get personalized training.");
+        if (!dbMetrics) throw new Error(AI_MESSAGES.COMPLETE_METRICS);
 
         aiMetrics = {
           weight: dbMetrics.weight,
@@ -93,7 +93,7 @@ export class GenerateWorkoutPlanUseCase implements IBaseUseCase<GenerateWorkoutR
 
       return {
         success: true,
-        message: "Plan generated successfully.",
+        message: AI_MESSAGES.PLAN_GENERATED,
         planId: savedPlan.id || "",
         title: savedPlan.title,
         weeklyPlan: savedPlan.weeklyPlan

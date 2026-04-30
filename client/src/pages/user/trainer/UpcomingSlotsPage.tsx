@@ -75,11 +75,11 @@ const UpcomingSessions = () => {
   };
 
   return (
-    <div className="p-8 space-y-8 bg-[#06110d] min-h-screen">
+    <div className="p-4 md:p-8 space-y-6 md:space-y-8 bg-[#06110d] min-h-screen">
       {/* Header */}
-      <header className="flex justify-between items-center">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 md:gap-0">
         <div>
-          <h1 className="text-3xl font-bold text-white uppercase tracking-tighter italic">
+          <h1 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tighter italic">
             Schedule
           </h1>
           <p className="text-gray-500 text-[10px] font-bold uppercase tracking-widest italic mt-1">
@@ -89,16 +89,18 @@ const UpcomingSessions = () => {
 
         <button
           onClick={handleCreateNew}
-          className="flex items-center gap-2 px-6 py-3 bg-[#00ff94] text-black font-black text-[11px] rounded-xl hover:bg-[#00e685] transition-all uppercase italic shadow-[0_0_20px_rgba(0,255,148,0.3)] active:scale-95"
+          className="w-full md:w-auto flex items-center justify-center gap-2 px-6 py-3 md:py-4 bg-[#00ff94] text-black font-black text-[10px] md:text-[11px] rounded-xl hover:bg-[#00e685] transition-all uppercase italic shadow-[0_0_20px_rgba(0,255,148,0.3)] active:scale-95"
         >
-          <Plus size={18} /> Create Session Slot
+          <Plus size={16} className="md:w-[18px] md:h-[18px]" /> 
+          <span className="hidden xs:inline">Create Session Slot</span>
+          <span className="xs:hidden">New Slot</span>
         </button>
       </header>
 
       {/* Stats Summary */}
-      <div className="flex items-center gap-4 text-[#00ff94] bg-[#00ff94]/5 border border-[#00ff94]/10 p-4 rounded-2xl">
-        <CalendarDays size={20} />
-        <span className="text-xs font-black uppercase tracking-widest italic">
+      <div className="flex items-start md:items-center gap-4 text-[#00ff94] bg-[#00ff94]/5 border border-[#00ff94]/10 p-4 rounded-2xl">
+        <CalendarDays size={20} className="shrink-0" />
+        <span className="text-[10px] md:text-xs font-black uppercase tracking-widest italic leading-tight">
           You have {data?.total || 0} sessions scheduled for the coming weeks
         </span>
       </div>

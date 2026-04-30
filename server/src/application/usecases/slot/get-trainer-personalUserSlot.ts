@@ -19,7 +19,7 @@ export class GetTrainerOneOnOneUserUseCase implements IBaseUseCase<GetTrainerUse
             search:dto.search
         });
        const mappedUsers = result.data.map((item)=>({
-        userId:item.userId, // Already a string from repository
+        userId:item.userId,
         firstName: item.firstName,
         lastName: item.lastName,
         email: item.email,

@@ -17,4 +17,4 @@ export enum AttendanceStatus {
     COMPLETED = "COMPLETED"
 }
 
-export const MIN_SUCCESS_THRESHOLD = 5;
+export const MIN_SUCCESS_THRESHOLD = 10; // 10 seconds threshold for payout eligibility

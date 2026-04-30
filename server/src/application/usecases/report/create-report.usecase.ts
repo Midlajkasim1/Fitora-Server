@@ -1,20 +1,20 @@
 import { CreateReportRequestDTO } from "@/application/dto/report/request/create-report.dto";
-import { ReportResponseDTO } from "@/application/dto/report/response/report-response.dto";
+import { CreateReportResponseDTO } from "@/application/dto/report/response/create-report-response.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { IReportRepository } from "@/domain/interfaces/repositories/report.repository";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
 import { ReportEntity } from "@/domain/entities/report/report.entity";
 import { ReportStatus } from "@/domain/constants/report.constants";
+import { REPORT_MESSAGES } from "@/domain/constants/messages.constants";
 
-export class CreateReportUseCase implements IBaseUseCase<CreateReportRequestDTO, ReportResponseDTO> {
+export class CreateReportUseCase implements IBaseUseCase<CreateReportRequestDTO, CreateReportResponseDTO> {
     constructor(
         private readonly _reportRepository: IReportRepository,
         private readonly _slotRepository: ISlotRepository
     ) {}
 
-    async execute(dto: CreateReportRequestDTO): Promise<ReportResponseDTO> {
-        // Validation: Reporter must have been involved in a session with Reported party
-        // We check last 30 days of sessions to verify relationship
+    async execute(dto: CreateReportRequestDTO): Promise<CreateReportResponseDTO> {
+     
         const gracePeriod = new Date();
         gracePeriod.setDate(gracePeriod.getDate() - 30);
 
@@ -25,9 +25,15 @@ export class CreateReportUseCase implements IBaseUseCase<CreateReportRequestDTO,
         );
 
         if (!hasConnection && dto.type !== "Bug") {
-             // For misconduct/harassment, they MUST have a session connection.
-             // For bugs, we might skip this.
-             throw new Error("You can only report individuals you have had a session with in the last 30 days.");
+     
+             throw new Error(REPORT_MESSAGES.REPORT_CONNECTION_REQUIRED);
+        }
+
+        if (dto.sessionId) {
+            const existingReport = await this._reportRepository.findBySessionAndReporter(dto.sessionId, dto.reporterId);
+            if (existingReport) {
+                throw new Error(REPORT_MESSAGES.REPORT_SESSION_ALREADY);
+            }
         }
 
         const report = new ReportEntity({
@@ -35,7 +41,8 @@ export class CreateReportUseCase implements IBaseUseCase<CreateReportRequestDTO,
             reportedId: dto.reportedId,
             type: dto.type,
             status: ReportStatus.PENDING,
-            description: dto.description
+            description: dto.description,
+            sessionId: dto.sessionId
         });
 
         const savedReport = await this._reportRepository.create(report);

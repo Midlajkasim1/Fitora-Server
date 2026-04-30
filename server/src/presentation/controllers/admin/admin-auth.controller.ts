@@ -52,7 +52,7 @@ export class AdminAuthController {
     const adminId = req.user?.userId;
 
     if (!adminId) {
-      return res.status(HttpStatus.UNAUTHORIZED).json({ success: false, message: AUTH_MESSAGES.UNAUTHORIZED });
+      return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
     }
 
     const result = await this._getAdminMeUsecase.execute(adminId);

@@ -17,6 +17,7 @@ export const UserFooter = () => {
             <h4 className="text-[#00ff94] text-[10px] font-black uppercase tracking-widest italic mb-2">Platform</h4>
             <Link to="/home" className="text-gray-500 hover:text-white text-xs font-bold uppercase italic transition-colors">Dashboard</Link>
             <Link to="/workouts" className="text-gray-500 hover:text-white text-xs font-bold uppercase italic transition-colors">Workouts</Link>
+            <Link to="/support" className="text-gray-500 hover:text-white text-xs font-bold uppercase italic transition-colors">Support Center</Link>
           </div>
 
           {/* Support Links */}

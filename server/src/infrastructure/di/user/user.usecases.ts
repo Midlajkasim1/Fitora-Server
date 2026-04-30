@@ -227,7 +227,10 @@ export const useCases = {
   getUserPremiumDashboard:new GetDashboardUseCase(
     userRepositories.userRepository,
     userRepositories.clientHealthMetricRepository,
-    userRepositories.slotRepository
+    userRepositories.slotRepository,
+    userRepositories.bookingRepository,
+    userRepositories.subscriptionRepository,
+    userRepositories.subscriptionPlanRepository
   ),
   getTrainerBookingUseCase:new GetTrainerBookingUseCase(
     userRepositories.trainerRepository,

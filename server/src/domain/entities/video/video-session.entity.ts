@@ -4,25 +4,61 @@ export enum VideoSessionStatus {
     COMPLETED = "completed"
 }
 
-export class VideoSession {
-    constructor(
-        public readonly id: string,
-        public readonly slotId: string,
-        public status: VideoSessionStatus,
-        public readonly startedAt: Date,
-        public endedAt?: Date
-    ) {}
+export interface IVideoSessionProps {
+    id?: string;
+    slotId: string;
+    status: VideoSessionStatus;
+    startedAt: Date;
+    endedAt?: Date;
+}
 
-    complete(): void {
-        this.status = VideoSessionStatus.COMPLETED;
-        this.endedAt = new Date();
+export class VideoSessionEntity {
+    private readonly _id?: string;
+    private readonly _slotId: string;
+    private _status: VideoSessionStatus;
+    private readonly _startedAt: Date;
+    private _endedAt?: Date;
+
+    constructor(props: IVideoSessionProps) {
+        this._id = props.id;
+        this._slotId = props.slotId;
+        this._status = props.status;
+        this._startedAt = props.startedAt;
+        this._endedAt = props.endedAt;
     }
 
-    interrupt(): void {
-        this.status = VideoSessionStatus.INTERRUPTED;
+    static create(props: {
+        id?: string;
+        slotId: string;
+        status?: VideoSessionStatus;
+        startedAt?: Date;
+        endedAt?: Date;
+    }) {
+        return new VideoSessionEntity({
+            id: props.id,
+            slotId: props.slotId,
+            status: props.status ?? VideoSessionStatus.ACTIVE,
+            startedAt: props.startedAt ?? new Date(),
+            endedAt: props.endedAt
+        });
     }
 
-    resume(): void {
-        this.status = VideoSessionStatus.ACTIVE;
+    get id() { return this._id; }
+    get slotId() { return this._slotId; }
+    get status() { return this._status; }
+    get startedAt() { return this._startedAt; }
+    get endedAt() { return this._endedAt; }
+
+    public complete(): void {
+        this._status = VideoSessionStatus.COMPLETED;
+        this._endedAt = new Date();
+    }
+
+    public interrupt(): void {
+        this._status = VideoSessionStatus.INTERRUPTED;
+    }
+
+    public resume(): void {
+        this._status = VideoSessionStatus.ACTIVE;
     }
 }

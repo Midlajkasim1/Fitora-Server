@@ -1,9 +1,17 @@
-export class GetChatHistoryRequestDTO {
-  otherUserId!: string;
+// export class GetChatHistoryRequestDTO {
+//   otherUserId!: string;
+//   page?: number;
+//   limit?: number;
+
+//   constructor(data: GetChatHistoryRequestDTO) {
+//     Object.assign(this, data);
+//   }
+// }
+
+
+export interface GetChatHistoryRequestDTO {
+  requesterId: string;
+  otherUserId: string;
   page?: number;
   limit?: number;
-
-  constructor(data: GetChatHistoryRequestDTO) {
-    Object.assign(this, data);
-  }
 }

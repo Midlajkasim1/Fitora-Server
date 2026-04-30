@@ -6,7 +6,7 @@ export interface ReportResponseDTO {
     reporter: {
         name: string;
         role: "User" | "Trainer";
-        profileImage?: string;
+        profileImage?: string | null;
     };
     reportedId: string;
     reportedName?: string;

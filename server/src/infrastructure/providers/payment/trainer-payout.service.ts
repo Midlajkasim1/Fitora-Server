@@ -24,8 +24,7 @@ export class TrainerPayoutService implements ITrainerPayoutService {
 
         if (attendingCount === 0) return;
 
-        // Try to determine session value from a participant's plan
-        let sessionValue = 200; // Default fallback if we can't determine
+        let sessionValue = 200; 
         
         try {
             const firstBooking = completedBookings.find(b => b.attendanceStatus === AttendanceStatus.COMPLETED);
@@ -33,18 +32,18 @@ export class TrainerPayoutService implements ITrainerPayoutService {
                 const sub = await this._subscriptionRepository.findActiveByUserId(firstBooking.userId);
                 if (sub) {
                     const plan = await this._subscriptionPlanRepository.findById(sub.planId);
-                    if (plan && typeof plan.price === 'number' && plan.sessionCredits > 0) {
+                    if (plan && typeof plan.price === "number" && plan.sessionCredits > 0) {
                         sessionValue = plan.price / plan.sessionCredits;
                     }
                 }
             }
-        } catch (error) {
-            console.error("Error determining session value for payout:", error);
+        } catch {
+            // Silently fail or use a more robust fallback
         }
 
         const totalSessionPot = sessionValue * attendingCount;
-        const trainerAmount = totalSessionPot * 0.8; // 80% split
-        const platformFee = totalSessionPot * 0.2; // 20% split
+        const trainerAmount = totalSessionPot * 0.8; 
+        const platformFee = totalSessionPot * 0.2; 
 
         await TrainerPayoutModel.findOneAndUpdate(
             { slotId: new Types.ObjectId(slotId) },

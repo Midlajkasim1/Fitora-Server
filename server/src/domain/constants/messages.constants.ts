@@ -63,7 +63,8 @@ export const SPECIALIZATION_MESSAGES ={
 
 };
 export const  USER_MESSAGES={
-  PROFILE_UPDATED:"Profile updated successfully"
+  PROFILE_UPDATED:"Profile updated successfully",
+  CLIENT_NOT_FOUND:"Client details not found"
 };
 
 export const  ADMIN_MESSAGES={
@@ -199,6 +200,14 @@ export const TRAINER_MESSAGES={
     TITLE: "Booking Cancelled ",
     MESSAGE: (type: string, date: string, time: string) => `A client cancelled their booking for the ${type} session on ${date} at ${time}. The slot is now available.`
   },
+  SLOT_BOOKED_PARTICIPANT: {
+    TITLE: "Booking Confirmed ",
+    MESSAGE: (type: string, date: string, time: string) => `Your ${type} session on ${date} at ${time} has been confirmed.`
+  },
+  SLOT_CANCELLED_PARTICIPANT: {
+    TITLE: "Booking Cancelled ",
+    MESSAGE: (type: string, date: string, time: string) => `Your ${type} session on ${date} at ${time} has been cancelled.`
+  },
   SLOT_CREATED_TRAINER: {
     TITLE: "Slot Created",
     MESSAGE: (type: string, date: string, time: string) => `Your ${type} session for ${date} at ${time} has been published.`
@@ -206,9 +215,79 @@ export const TRAINER_MESSAGES={
   SLOT_UPDATED_PARTICIPANT: {
     TITLE: "Session Time Changed ",
     MESSAGE: (type: string, time: string) => `Your booked ${type} session has been rescheduled to ${time}. Please check your updated schedule.`
-  },
-  SLOT_CANCELLED_PARTICIPANT: {
-    TITLE: "Session Cancelled ",
-    MESSAGE: (type: string, date: string, time: string) => `The trainer has cancelled the ${type} session scheduled for ${date} at ${time}. Your credits will be managed accordingly.`
   }
+};
+
+export const VIDEO_MESSAGES = {
+  UNAUTHORIZED: "Unauthorized",
+  SESSION_ENDED: "Session ended successfully",
+  TOKEN_GENERATED: "Join token generated successfully",
+  SESSION_ENDED_WITH_COMMISSION: "Session ended and commission split processed",
+  SESSION_STARTED_AND_NOTIFIED: "Session started and participants notified",
+};
+
+export const REPORT_MESSAGES = {
+  REPORT_FILED: "Report filed successfully",
+  REPORT_STATUS_UPDATED: "Report status updated successfully",
+  ALREADY_REPORTED: "You have already submitted a report for this session",
+  REPORT_SESSION_ALREADY: "You have already reported this session.",
+  REPORT_CONNECTION_REQUIRED: "You can only report individuals you have had a session with in the last 30 days.",
+  REPORT_NOT_FOUND: "Report not found",
+  REPORT_UPDATE_FAILED: "Failed to update report status",
+  REPORT_DETAILS_FAILED: "Failed to retrieve updated report details",
+};
+
+export const FINANCE_MESSAGES = {
+  PAYOUT_SUBMITTED: "Payout request submitted successfully",
+  PAYOUT_STATUS_UPDATED: (status: string) => `Payout request ${status === "Success" ? "approved" : "rejected"} successfully`,
+  INSUFFICIENT_BALANCE: "Insufficient balance in wallet",
+  MIN_WITHDRAWAL_AMOUNT: (amount: number) => `Minimum withdrawal amount is ₹${amount}`,
+  TRANSACTION_NOT_FOUND: "Transaction not found",
+  TRANSACTION_ALREADY_PROCESSED: "Transaction is already processed",
+  USER_ID_MISSING: "Cannot refund transaction: User ID missing",
+  PAYOUT_PROCESSED: (amount: number) => `Payout of ₹${amount} processed successfully`,
+};
+
+export const SESSION_MESSAGES = {
+  SESSION_NOT_FOUND: "Session not found",
+  ONLY_TRAINER_CAN_START: "Only the assigned trainer can start this session",
+  ONLY_TRAINER_CAN_END: "Only the assigned trainer can end this session",
+  SESSION_ALREADY_COMPLETED: "This session has already been completed",
+  SESSION_NOT_STARTED: "Session has not started yet. You can join 5 minutes early.",
+  SESSION_ALREADY_ENDED: "This session has already ended.",
+  UNAUTHORIZED_SESSION: "You are not authorized for this session",
+  FAILED_UPDATE: "Failed to update session",
+};
+
+export const CHAT_MESSAGES = {
+  MESSAGE_EMPTY: "Message cannot be empty",
+  COMMUNICATION_RESTRICTED: "You can only message users you have an active or recent booking with (24-hour grace period).",
+};
+
+export const REVIEW_MESSAGES = {
+  BOOKING_NOT_FOUND: "Booking not found",
+  ALREADY_REVIEWED: "You have already reviewed this session",
+  REVIEW_SUBMITTED: "Review submitted successfully",
+};
+
+export const AI_MESSAGES = {
+  PROCESSING: "AI is already processing your plan. Please wait a moment.",
+  SELECT_SPECIALIZATION: "Select specialization first.",
+  TRIAL_LIMIT: "Free trial limit reached. Please subscribe!",
+  PLAN_NOT_INCLUDED: "Your current plan does not include this feature. Please upgrade.",
+  COMPLETE_METRICS: "Complete profile metrics first to get personalized training.",
+  PLAN_GENERATED: "Plan generated successfully.",
+  BUILDING_PLAN: "We are currently building your plan. Please wait a moment.",
+  COMPLETE_NUTRITION: "Please complete your nutrition profile first.",
+  ADD_HEIGHT_WEIGHT: "Please add your height and weight to your profile to get an accurate meal plan.",
+  DAILY_LIMIT: "You've updated your plan twice today. You can make more changes tomorrow!",
+  RETRIEVED_FROM_CACHE: "Retrieved from neural cache.",
+  RETRIEVED_FROM_DB: "Retrieved from database.",
+  PRO_FEATURE: "AI Diet Plans are a Pro feature. Please subscribe to unlock your personalized nutrition guide!",
+  UPGRADE_PRO: "Your current plan does not include AI Diet features. Please upgrade to Pro.",
+  LOADING_EXISTING: "Loading your existing meal plan.",
+  DIET_CREATED: "Your personalized meal plan has been created!",
+  MEAL_PLAN_READY: "Your meal plan is ready.",
+  NO_WORKOUT_PLAN: "No active workout plan found. Please initialize generation.",
+  NO_DIET_PLAN: "No active diet plan found. Please initialize generation.",
 };

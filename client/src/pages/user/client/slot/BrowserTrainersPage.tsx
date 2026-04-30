@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Star, ArrowRight, Dumbbell, MessageCircle } from "lucide-react";
+import { Search, Star, ArrowRight, Dumbbell, MessageCircle, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useDebounce } from "../../../../hooks/admin/use-debounce";
 import { GlobalLoader } from "../../../../shared/GlobalLoader";
@@ -22,11 +22,23 @@ const BrowseTrainers = () => {
   if (isLoading && !data) return <GlobalLoader />;
 
   return (
-    <div className="min-h-screen bg-[#0d1f17] p-8">
-      <header className="max-w-7xl mx-auto mb-12 flex flex-col md:flex-row justify-between gap-6">
-        <div>
-          <h1 className="text-4xl font-black italic uppercase text-white tracking-tighter">Choose Your Coach</h1>
-          <p className="text-gray-500 text-xs font-bold uppercase italic tracking-widest">Expert trainers matched to your goals</p>
+    <div className="min-h-screen bg-[#0d1f17] p-4 md:p-8">
+      <header className="max-w-7xl mx-auto mb-8 md:mb-12 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+        <div className="flex flex-col gap-6">
+          <button 
+            onClick={() => navigate("/upcoming-sessions")}
+            className="group flex items-center gap-2 text-gray-500 hover:text-[#00ff94] transition-colors"
+          >
+            <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#00ff94]/10 transition-colors">
+              <ArrowLeft size={16} />
+            </div>
+            <span className="text-[10px] font-black uppercase italic tracking-widest">Go Back</span>
+          </button>
+          
+          <div>
+            <h1 className="text-3xl md:text-4xl font-black italic uppercase text-white tracking-tighter">Choose Your Coach</h1>
+            <p className="text-gray-500 text-xs font-bold uppercase italic tracking-widest">Expert trainers matched to your goals</p>
+          </div>
         </div>
         <div className="relative w-full md:w-96">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={18} />

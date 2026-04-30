@@ -1,4 +1,4 @@
-import { ReportSummaryDTO } from "@/application/dto/admin/report/response/report-summary.dto";
+import { ReportSummaryDTO } from "@/application/dto/admin/response/report-summary.dto";
 import { IReportRepository } from "@/domain/interfaces/repositories/report.repository";
 
 export class GetReportSummaryUseCase {

@@ -2,14 +2,16 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { 
   LayoutDashboard, Users, Calendar, 
   MessageSquare, DollarSign, LogOut, 
-  ActivityIcon 
+  ActivityIcon, ShieldCheck, User as UserIcon
 } from 'lucide-react';
-import { useAuthStore } from "../../store/use-auth-store"; // Adjust path
+import { useAuthStore } from "../../store/use-auth-store"; 
 import { useChatStore } from "../../store/use-chat-store";
 import { useEffect } from "react";
 import { useSocket } from "../../hooks/common/use-notification";
 import { logoutUser } from "../../api/auth.api";
 import { queryClient } from "../../constants/query-client";
+import { useTrainerProfile } from "../../hooks/trainer/profile/use-trainer-profile";
+import { useUser } from "../../hooks/user/use-user";
 
 const menuItems = [
   { name: 'Dashboard', path: '/trainer/dashboard', icon: LayoutDashboard },
@@ -19,20 +21,29 @@ const menuItems = [
   { name: 'Earnings', path: '/trainer/wallet', icon: DollarSign },
 ];
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout, setLoggingOut } = useAuthStore();
-  const { openChat, hasUnread, setHasUnread, isOpen } = useChatStore();
+  const { openChat, hasUnread, setHasUnread, isOpen: isChatOpen } = useChatStore();
   const socket = useSocket();
+  const { trainer } = useTrainerProfile();
+  const { user } = useUser();
+
+  const avatarSrc =
+    trainer?.profileImage ||
+    (user?.gender === "male"
+      ? "/avatarMale.png"
+      : user?.gender === "female"
+        ? "/avatarFemale.png"
+        : "/default-avatar.png");
 
   // Listen for new messages to trigger the "green dot" notification
   useEffect(() => {
     if (!socket) return;
     
     const handleNewMessage = () => {
-      // Only show dot if chat panel isn't already open
-      if (!isOpen) {
+      if (!isChatOpen) {
         setHasUnread(true);
       }
     };
@@ -41,7 +52,7 @@ const Sidebar = () => {
     return () => {
       socket.off("receive_message", handleNewMessage);
     };
-  }, [socket, isOpen, setHasUnread]);
+  }, [socket, isChatOpen, setHasUnread]);
 
   const handleLogout = async () => {
     try {
@@ -57,13 +68,21 @@ const Sidebar = () => {
   };
 
   return (
-    <aside className="w-64 h-screen bg-[#0d1f17] border-r border-white/5 flex flex-col fixed left-0 top-0 overflow-y-auto z-50">
+    <aside className={`w-64 h-screen bg-[#0d1f17] border-r border-white/5 flex flex-col fixed left-0 top-0 overflow-y-auto z-[100] transition-transform duration-300 lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
       {/* Logo Section */}
-      <div className="p-8 flex items-center gap-3">
+      <div className="p-8 flex items-center justify-between gap-3">
         <Link to="/trainer/dashboard" className="flex items-center gap-2">
           <ActivityIcon className="w-6 h-6 text-[#00ff94]" />
           <span className="text-white font-bold text-xl italic tracking-tighter uppercase">Fitora</span>
         </Link>
+        
+        {/* Close button for mobile */}
+        <button 
+          onClick={onClose}
+          className="lg:hidden p-2 text-gray-500 hover:text-white"
+        >
+          <LogOut size={18} className="rotate-180" />
+        </button>
       </div>
 
       {/* Navigation Links */}
@@ -80,6 +99,9 @@ const Sidebar = () => {
                 if (isMessages) {
                   e.preventDefault();
                   openChat();
+                }
+                if (window.innerWidth < 1024) {
+                  onClose();
                 }
               }}
               className={`flex items-center justify-between gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${

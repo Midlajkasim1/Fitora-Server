@@ -14,7 +14,8 @@ import { AUTH_MESSAGES, SLOT_MESSAGES } from "@/domain/constants/messages.consta
 import { SlotSchema } from "@/infrastructure/validators/user/trainer/trainer-slot.validator";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
-import { GetClientDetailsRequestDTO, ClientDetailsOutput } from "@/application/usecases/trainer/get-client-details.usecase";
+import { GetClientDetailsRequestDTO } from "@/application/dto/trainer/request/get-client-details.dto";
+import { ClientDetailsResponseDTO } from "@/application/dto/trainer/response/client-details.dto";
 
 
 export class TrainerSlotController {
@@ -25,7 +26,7 @@ export class TrainerSlotController {
         private readonly _getOneOnOneUserUseCase: IBaseUseCase<GetTrainerUsersRequestDTO, GetTrainerStudentResponseDTO>,
         private readonly _getGroupUsersUseCase: IBaseUseCase<GetTrainerUsersRequestDTO, GetTrainerStudentResponseDTO>,
         private readonly _getTrainerUpcomingUseCase: IBaseUseCase<GetTrainerUpcomingSlotRequestDTO, TrainerUpcomingResponseDTO>,
-        private readonly _getClientDetailsUseCase: IBaseUseCase<GetClientDetailsRequestDTO, ClientDetailsOutput>
+        private readonly _getClientDetailsUseCase: IBaseUseCase<GetClientDetailsRequestDTO, ClientDetailsResponseDTO>
 
     ) { }
 

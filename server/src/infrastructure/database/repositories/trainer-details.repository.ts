@@ -3,7 +3,7 @@ import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.ent
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
 import { TrainerWithUser } from "@/domain/interfaces/repositories/onboarding/approveTrainer.interface";
-import { Model, PipelineStage, Types } from "mongoose";
+import { Model, PipelineStage, Types, ClientSession } from "mongoose";
 import { ITrainerDetailsDocument } from "../interfaces/trainer-details-document.interface";
 import { TrainerDetailsMapper } from "../mappers/trainer-details.mapper";
 import { UserMapper } from "../mappers/user.mapper";
@@ -276,11 +276,15 @@ export class TrainerRepository extends BaseRepository<TrainerDetailsEntity, ITra
     return doc ? this.trainerMapper.toEntity(doc) : null;
   }
 
-  async updateWalletBalance(userId: string, amount: number): Promise<void> {
-    await TrainerDetailsModel.findOneAndUpdate(
+  async updateWalletBalance(userId: string, amountInRupees: number, session?: ClientSession): Promise<void> {
+    const result = await TrainerDetailsModel.findOneAndUpdate(
       { user_id: new Types.ObjectId(userId) },
-      { $inc: { wallet_balance: amount } }
+      { $inc: { wallet_balance: amountInRupees } },
+      { new: true, session }
     );
+    if (!result) {
+      // Non-critical: could be a data consistency issue or an admin manual update
+    }
   }
 
 }

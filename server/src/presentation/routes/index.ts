@@ -8,9 +8,9 @@ import userRoutes from "./user/user.routes";
 
 import onboardingRoutes from "./auth/onboarding.routes";
 import trainerRoutes from "./trainer/trainer.routes";
-import videoSessionRoutes from "./user/video-session.routes";
-import reviewRoutes from "./user/review.routes";
 import { videoControllers } from "@/infrastructure/di/video/video.di";
+
+import { asyncHandler } from "@/presentation/middleware/asyncHandler";
 
 const router = Router();
 
@@ -22,15 +22,7 @@ router.use("/admin/finance", adminFinanceRoutes);
 router.use("/user",userRoutes);
 
 router.use("/trainer",trainerRoutes);
-router.use("/sessions", videoSessionRoutes);
-router.use("/reviews", reviewRoutes);
 
-// Webhooks
-router.post("/webhooks/livekit", (req, res) => videoControllers.livekitWebhookController.handleWebhook(req, res));
-
-
-
-
-
+router.post("/webhooks/livekit", asyncHandler((req, res) => videoControllers.livekitWebhookController.handleWebhook(req, res)));
 
 export default router;

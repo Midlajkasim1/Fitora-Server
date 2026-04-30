@@ -90,7 +90,12 @@ export interface PremiumDashboardData {
     trainerName: string;
     type: string;
   } | null;
+  sessionsPerDay: { day: string; value: number }[];
+  totalSessionsAttended: number;
+  totalSubscriptionSessions: number;
+  sessionsLeft: number;
 }
+
 
 export interface UserUpcomingSlot {
   slotId: string;

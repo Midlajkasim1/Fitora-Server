@@ -21,7 +21,7 @@ async completeUser(req: Request, res: Response): Promise<Response> {
     const validatedData = userOnboardingSchema.parse(req.body);
     const result = await this._userOnboardingUseCase.execute(validatedData);
     
-    return res.status(200).json(ApiResponse.success(result));
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
 }
 
@@ -38,7 +38,7 @@ async completeUser(req: Request, res: Response): Promise<Response> {
       }));
       const result = await this._trainerOnboardingUseCase.execute(validatedData, uploadedFiles);
 
-      return res.status(200).json(ApiResponse.success(result));
+      return res.status(HttpStatus.OK).json(ApiResponse.success(result));
  
   }
   async getActiveSpecializations(req:Request,res:Response):Promise<Response>{

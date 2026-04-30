@@ -31,6 +31,8 @@ findAllUsers(params: {
 
 
     updateUserProfile(user:UserEntity):Promise<UserEntity | null>;
-findPasswordById(userId:string):Promise<string | null>;
-
+    findPasswordById(userId:string):Promise<string | null>;
+    countByRole(role: UserRole): Promise<number>;
+    countTotalUsers(): Promise<number>;
+    getMonthlyRegistrationStats(year: number): Promise<{ month: string, count: number }[]>;
 }

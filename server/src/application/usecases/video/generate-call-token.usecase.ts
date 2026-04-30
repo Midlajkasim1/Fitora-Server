@@ -2,38 +2,34 @@ import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repositor
 import { IMediaServerProvider } from "@/domain/interfaces/services/media-server.interface";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { env } from "@/infrastructure/config/env.config";
-
-
 import { SlotStatus } from "@/domain/constants/session.constants";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { GenerateCallTokenRequestDTO } from "@/application/dto/video/request/generate-call-token.dto";
+import { GenerateCallTokenResponseDTO } from "@/application/dto/video/response/generate-call-token.dto";
+import { SESSION_MESSAGES, AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 
-export interface GenerateCallTokenRequest {
-    slotId: string;
-    userId: string;
-}
-
-export class GenerateCallTokenUseCase {
+export class GenerateCallTokenUseCase implements IBaseUseCase<GenerateCallTokenRequestDTO, GenerateCallTokenResponseDTO> {
     constructor(
         private readonly _slotRepository: ISlotRepository,
         private readonly _userRepository: IUserRepository,
         private readonly _mediaServer: IMediaServerProvider
     ) {}
 
-    async execute(request: GenerateCallTokenRequest): Promise<{ token: string; host: string; trainerId: string }> {
-        const { slotId, userId } = request;
+    async execute(dto: GenerateCallTokenRequestDTO): Promise<GenerateCallTokenResponseDTO> {
+        const { slotId, userId } = dto;
 
         const slot = await this._slotRepository.findById(slotId);
         if (!slot) {
-            throw new Error("Session not found");
+            throw new Error(SESSION_MESSAGES.SESSION_NOT_FOUND);
         }
         const isTrainer = slot.trainerId.toString() === userId;
         const isParticipant = slot.participants.some(p => p.toString() === userId);
 
         if (!isTrainer && !isParticipant) {
-            throw new Error("You are not authorized for this session");
+            throw new Error(SESSION_MESSAGES.UNAUTHORIZED_SESSION);
         }
 
         if (!isTrainer) {
-            // If the trainer has already marked it as LIVE, let the client in regardless of time.
             const isSessionLive = slot.status === SlotStatus.LIVE;
             
             if (!isSessionLive) {
@@ -42,7 +38,7 @@ export class GenerateCallTokenUseCase {
                 const bufferMillis = 5 * 60 * 1000; // 5 minutes
 
                 if (now.getTime() < startTime.getTime() - bufferMillis) {
-                    throw new Error("Session has not started yet. You can join 5 minutes early.");
+                    throw new Error(SESSION_MESSAGES.SESSION_NOT_STARTED);
                 }
             }
 
@@ -50,25 +46,23 @@ export class GenerateCallTokenUseCase {
             const now = new Date();
             const endTime = new Date(slot.endTime);
             if (now.getTime() > endTime.getTime()) {
-                throw new Error("This session has already ended.");
+                throw new Error(SESSION_MESSAGES.SESSION_ALREADY_ENDED);
             }
         }
 
-        // 4. Fetch User Info for Media Server
         const user = await this._userRepository.findById(userId);
         if (!user) {
-            throw new Error("User not found");
+            throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
         }
 
         const participantName = `${user.firstName} ${user.lastName}`;
 
-        // 5. Generate Token via Adapter
-        const token = await this._mediaServer.generateToken(
-            slotId,
-            userId,
+        const token = await this._mediaServer.generateToken({
+            roomId: slotId,
+            participantId: userId,
             participantName,
             isTrainer
-        );
+        });
 
         return { 
             token, 

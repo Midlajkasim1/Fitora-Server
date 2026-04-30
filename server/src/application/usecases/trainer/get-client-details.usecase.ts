@@ -2,69 +2,40 @@ import { IUserRepository } from "@/domain/interfaces/repositories/user.repositor
 import { IHealthMetricsRepository } from "@/domain/interfaces/repositories/onboarding/iclient-health-metrics.interface";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { GRACE_PERIOD_MS } from "@/domain/constants/chat.constants";
+import { GetClientDetailsRequestDTO } from "@/application/dto/trainer/request/get-client-details.dto";
+import { ClientDetailsResponseDTO } from "@/application/dto/trainer/response/client-details.dto";
+import { AUTH_MESSAGES, USER_MESSAGES } from "@/domain/constants/messages.constants";
 
-export interface GetClientDetailsRequestDTO {
-  trainerId: string;
-  clientId: string;
-}
+export class GetClientDetailsUseCase implements IBaseUseCase<GetClientDetailsRequestDTO, ClientDetailsResponseDTO> {
+    constructor(
+        private readonly _userRepo: IUserRepository,
+        private readonly _healthRepo: IHealthMetricsRepository,
+        private readonly _slotRepo: ISlotRepository
+    ) {}
 
-export interface ClientDetailsOutput {
-  basicInfo: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    profileImage: string | null;
-    gender?: string;
-    age?: number;
-  };
-  healthMetrics: {
-    weight: number;
-    height: number;
-    targetWeight: number;
-    goal: string;
-  } | null;
-  sessionHistory: Array<{
-    slotId: string;
-    startTime: Date;
-    endTime: Date;
-    type: string;
-    status: string;
-  }>;
-}
+    async execute(dto: GetClientDetailsRequestDTO): Promise<ClientDetailsResponseDTO> {
+        const { trainerId, clientId } = dto;
+        const gracePeriodCutoff = new Date(Date.now() - GRACE_PERIOD_MS);
+        const canAccess = await this._slotRepo.hasActiveOrRecentBooking(
+            trainerId,
+            clientId,
+            gracePeriodCutoff
+        );
 
-const GRACE_PERIOD_MS = 24 * 60 * 60 * 1000;
+        if (!canAccess) {
+            throw new Error(AUTH_MESSAGES.UNAUTHORIZED);
+        }
 
-export class GetClientDetailsUseCase implements IBaseUseCase<GetClientDetailsRequestDTO, ClientDetailsOutput> {
-  constructor(
-    private readonly _userRepo: IUserRepository,
-    private readonly _healthRepo: IHealthMetricsRepository,
-    private readonly _slotRepo: ISlotRepository
-  ) {}
+        const [user, health, sessions] = await Promise.all([
+            this._userRepo.findById(clientId),
+            this._healthRepo.findByUserId(clientId),
+            this._slotRepo.getClientSessionHistory(trainerId, clientId)
+        ]);
 
-  async execute(dto: GetClientDetailsRequestDTO): Promise<ClientDetailsOutput> {
-    const { trainerId, clientId } = dto;
-    const gracePeriodCutoff = new Date(Date.now() - GRACE_PERIOD_MS);
-    const canAccess = await this._slotRepo.hasActiveOrRecentBooking(
-      trainerId,
-      clientId,
-      gracePeriodCutoff
-    );
-
-    if (!canAccess) {
-      throw new Error("Unauthorized: You can only view details for your assigned clients.");
-    }
-
-    const [user, health, sessions] = await Promise.all([
-      this._userRepo.findById(clientId),
-      this._healthRepo.findByUserId(clientId),
-      this._slotRepo.getClientSessionHistory(trainerId, clientId)
-    ]);
-
-    if (!user) {
-      throw new Error("Client not found.");
-    }
+        if (!user) {
+            throw new Error(USER_MESSAGES.CLIENT_NOT_FOUND);
+        }
 
     return {
       basicInfo: {
@@ -86,7 +57,7 @@ export class GetClientDetailsUseCase implements IBaseUseCase<GetClientDetailsReq
           }
         : null,
       sessionHistory: sessions.map(s => ({
-        slotId: s._id.toString(),
+        slotId: s.id!,
         startTime: s.startTime,
         endTime: s.endTime,
         type: s.type,

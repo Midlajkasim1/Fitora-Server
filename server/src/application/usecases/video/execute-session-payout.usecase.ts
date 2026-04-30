@@ -1,91 +1,122 @@
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
 import { IBookingRepository } from "@/domain/interfaces/repositories/booking.repository";
-import { ISubscriptionRepository } from "@/domain/interfaces/repositories/subscription.repository";
-import { ISubscriptionPlanRepository } from "@/domain/interfaces/repositories/subscriptionPlan.repository";
 import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
 import { ITransactionRepository } from "@/domain/interfaces/repositories/transaction.repository";
-import { PayoutCalculator } from "@/domain/services/payout-calculator.service";
+import { PayoutCalculator } from "@/domain/interfaces/services/payout-calculator.service";
 import { TransactionEntity, TransactionType } from "@/domain/entities/transaction/transaction.entity";
-import { AttendanceStatus } from "@/domain/constants/session.constants";
+import { AttendanceStatus, MIN_SUCCESS_THRESHOLD } from "@/domain/constants/session.constants";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
-import mongoose from "mongoose";
+import { INotificationService } from "@/domain/interfaces/services/notification-service.interface";
+import { NotificationType } from "@/domain/constants/notification.constants";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { ExecuteSessionPayoutRequestDTO } from "@/application/dto/video/request/execute-session-payout.dto";
+import { ExecuteSessionPayoutResponseDTO } from "@/application/dto/video/response/execute-session-payout.dto";
+import mongoose, { ClientSession } from "mongoose";
+import { SLOT_MESSAGES, FINANCE_MESSAGES } from "@/domain/constants/messages.constants";
 
-export class ExecuteSessionPayoutUseCase {
+
+export class ExecuteSessionPayoutUseCase implements IBaseUseCase<ExecuteSessionPayoutRequestDTO, ExecuteSessionPayoutResponseDTO> {
     constructor(
         private readonly _slotRepository: ISlotRepository,
         private readonly _bookingRepository: IBookingRepository,
-        private readonly _subscriptionRepository: ISubscriptionRepository,
-        private readonly _subscriptionPlanRepository: ISubscriptionPlanRepository,
         private readonly _trainerRepository: ITrainerRepository,
         private readonly _transactionRepository: ITransactionRepository,
-        private readonly _userRepository: IUserRepository
+        private readonly _userRepository: IUserRepository,
+        private readonly _notificationService: INotificationService
     ) {}
 
-    async execute(slotId: string): Promise<void> {
+    async execute(dto: ExecuteSessionPayoutRequestDTO): Promise<ExecuteSessionPayoutResponseDTO> {
+        const { slotId } = dto;
+        
         const slot = await this._slotRepository.findById(slotId);
         if (!slot) {
-            throw new Error("Slot not found");
+            return { message: SLOT_MESSAGES.SLOT_NOT_FOUND };
         }
 
         const trainer = await this._userRepository.findById(slot.trainerId);
         const trainerName = trainer ? `${trainer.firstName} ${trainer.lastName}` : "Unknown Trainer";
 
-        const bookings = await this._bookingRepository.findBySlotId(slotId);
-        const completedBookings = bookings.filter(b => b.attendanceStatus === AttendanceStatus.COMPLETED);
-
-        if (completedBookings.length === 0) {
-            return; 
-        }
-
-        let sessionValue = 0;
-        const firstAttendingParticipant = completedBookings[0];
-        const subscription = await this._subscriptionRepository.findActiveByUserId(firstAttendingParticipant.userId);
-        
-        if (subscription) {
-            const plan = await this._subscriptionPlanRepository.findById(subscription.planId);
-            if (plan && plan.sessionCredits > 0) {
-                sessionValue = plan.price / plan.sessionCredits;
-            }
-        }
-
-        const totalSessionValue = sessionValue * completedBookings.length;
-        const { trainerAmount, platformFee } = PayoutCalculator.calculateSplit(totalSessionValue);
-
-        const session = await mongoose.startSession();
-        session.startTransaction();
+        const mongoSession: ClientSession = await mongoose.startSession();
+        mongoSession.startTransaction();
 
         try {
-            // 1. Credit Trainer's Wallet
-            await this._trainerRepository.updateWalletBalance(slot.trainerId, trainerAmount);
+            const bookings = await this._bookingRepository.findBySlotId(slotId, mongoSession);
+            
+            const unpaidBookings = bookings.filter(b => {
+                const isQualified = b.attendanceStatus === AttendanceStatus.COMPLETED || 
+                                   (b.attendanceStatus === AttendanceStatus.ATTENDED && b.cumulativeMinutes * 60 >= MIN_SUCCESS_THRESHOLD);
+                const isUnpaid    = !b.isPayoutProcessed;
+                
+                
+                return isQualified && isUnpaid;
+            });
 
-            // 2. Create Immutable Payout Transaction (Outflow: Negative)
-            const payoutTransaction = TransactionEntity.create({
+            if (unpaidBookings.length === 0) {
+                await mongoSession.commitTransaction();
+                return { message: "No eligible bookings to process" };
+            }
+
+
+            let totalRevenuePaise = 0;
+            for (const booking of unpaidBookings) {
+                const sessionValuePaise = booking.creditValueAtPurchase > 0
+                    ? booking.creditValueAtPurchase
+                    : 20000;
+                totalRevenuePaise += sessionValuePaise;
+            }
+
+            const { trainerAmountPaise, platformFeePaise } = PayoutCalculator.calculateSplit({ sessionValueInPaise: totalRevenuePaise });
+            const trainerAmountRupees = PayoutCalculator.toRupees({ paise: trainerAmountPaise });
+            const platformFeeRupees   = PayoutCalculator.toRupees({ paise: platformFeePaise });
+
+
+            await this._trainerRepository.updateWalletBalance(slot.trainerId, trainerAmountRupees, mongoSession);
+
+            const payoutTx = TransactionEntity.create({
                 userId: slot.trainerId,
                 entityName: trainerName,
-                amount: -trainerAmount,
+                amount: trainerAmountRupees,
                 type: TransactionType.SESSION_PAYOUT,
-                description: `Payout for session ${slotId} (${completedBookings.length} participants)`,
+                description: `Payout: Session (${unpaidBookings.length} participant${unpaidBookings.length > 1 ? "s" : ""})`,
                 referenceId: slotId
             });
-            await this._transactionRepository.create(payoutTransaction);
+            await this._transactionRepository.create(payoutTx, mongoSession);
 
-            // 3. Create Platform Commission Transaction (Inflow: Positive)
-            const commissionTransaction = TransactionEntity.create({
+            const commissionTx = TransactionEntity.create({
                 entityName: "Fitora Platform",
-                amount: platformFee,
+                amount: platformFeeRupees,
                 type: TransactionType.PLATFORM_COMMISSION,
-                description: `Commission from session ${slotId}`,
+                description: "Commission: Session",
                 referenceId: slotId
             });
-            await this._transactionRepository.create(commissionTransaction);
+            await this._transactionRepository.create(commissionTx, mongoSession);
 
-            await session.commitTransaction();
+            for (const booking of unpaidBookings) {
+                await this._bookingRepository.updateAttendance(booking.id!, {
+                    isPayoutProcessed: true
+                }, mongoSession);
+            }
+
+            await mongoSession.commitTransaction();
+
+
+            try {
+                await this._notificationService.notify(slot.trainerId, {
+                    title: "Wallet Credited! 💰",
+                    message: `You've received ₹${trainerAmountRupees} for completing session with ${unpaidBookings.length} participant${unpaidBookings.length > 1 ? "s" : ""}.`,
+                    type: NotificationType.WALLET_CREDITED
+                });
+            } catch {
+                // Silently handle notification failures to avoid failing the payout process
+            }
+
+            return { message: FINANCE_MESSAGES.PAYOUT_PROCESSED(trainerAmountRupees) };
+
         } catch (error) {
-            await session.abortTransaction();
-            console.error("Financial transaction failed, aborted.", error);
+            await mongoSession.abortTransaction();
             throw error;
         } finally {
-            session.endSession();
+            mongoSession.endSession();
         }
     }
 }

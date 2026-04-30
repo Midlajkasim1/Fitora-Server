@@ -40,6 +40,8 @@ import { GetReportByIdUseCase } from "@/application/usecases/admin/report/get-re
 import { GetFinanceOverviewUseCase } from "@/application/usecases/admin/finance/get-finance-overview.usecase";
 import { GetRecentTransactionsUseCase } from "@/application/usecases/admin/finance/get-recent-transactions.usecase";
 import { GenerateFinanceReportUseCase } from "@/application/usecases/admin/finance/generate-finance-report.usecase";
+import { HandlePayoutUseCase } from "@/application/usecases/admin/finance/handle-payout.usecase";
+import { GetAdminDashboardStatsUseCase } from "@/application/usecases/admin/get-admin-dashboard-stats.usecase";
 
 import { socketEmitterProxy } from "@/infrastructure/providers/socket/socket-emitter";
 import { trainerRepositories } from "../trainer/trainer.repositories";
@@ -168,7 +170,6 @@ export const adminUseCases = {
   updateReportStatusUseCase: new UpdateReportStatusUseCase(
     adminRepositories.reportRepository,
     socketEmitterProxy,
-    trainerRepositories.trainerRepository,
     adminRepositories.userRepository,
     emailService
   ),
@@ -180,5 +181,15 @@ export const adminUseCases = {
   ),
   generateFinanceReportUseCase: new GenerateFinanceReportUseCase(
     adminRepositories.transactionRepository
+  ),
+  handlePayoutUseCase: new HandlePayoutUseCase(
+    adminRepositories.transactionRepository,
+    trainerRepositories.trainerRepository
+  ),
+  getAdminDashboardStatsUseCase: new GetAdminDashboardStatsUseCase(
+    adminRepositories.paymentRepository,
+    adminRepositories.subscriptionRepository,
+    adminRepositories.userRepository,
+    adminRepositories.slotRepository
   )
 };

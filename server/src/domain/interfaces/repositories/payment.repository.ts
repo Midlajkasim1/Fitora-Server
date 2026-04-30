@@ -12,9 +12,16 @@ export interface IPaymentHistoryResult {
     planName: string;
     paymentMethod: string;
 }
+export interface IFinancialStats {
+    month: string;
+    totalRevenue: number;
+    totalExpenses: number;
+    totalProfit: number;
+}
 export interface IPaymentRepository {
     create(payment: PaymentEntity): Promise<PaymentEntity>;
     updateStatus(providerId: string, status: string): Promise<void>;
     findByProviderId(id: string): Promise<PaymentEntity | null>;
     findHistoryByUserId(userId:string,page:number,limit:number):Promise<{history:IPaymentHistoryResult[],total:number}>
+    getFinancialStats(year: number): Promise<IFinancialStats[]>;
 }

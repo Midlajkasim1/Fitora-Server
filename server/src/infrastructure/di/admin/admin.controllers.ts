@@ -69,7 +69,9 @@ export const adminControllers = {
   adminFinanceController: new AdminFinanceController(
     adminUseCases.getFinanceOverviewUseCase,
     adminUseCases.getRecentTransactionsUseCase,
-    adminUseCases.generateFinanceReportUseCase
+    adminUseCases.generateFinanceReportUseCase,
+    adminUseCases.handlePayoutUseCase,
+    adminUseCases.getAdminDashboardStatsUseCase
   )
 
  

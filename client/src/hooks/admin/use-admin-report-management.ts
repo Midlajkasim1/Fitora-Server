@@ -55,12 +55,8 @@ export const useUpdateReportStatus = () => {
             return response.data;
         },
         onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ["admin-reports"] });
-            queryClient.invalidateQueries({ queryKey: ["admin-reports-summary"] });
-            toast.success("Report status updated successfully");
-        },
-        onError: (error: any) => {
-            toast.error(error.response?.data?.message || "Failed to update status");
+            toast.success("Status updated successfully");
+            queryClient.invalidateQueries({ queryKey: ["adminReports"] });
         }
     });
 };

@@ -7,7 +7,7 @@ export interface IReportListItem {
     reporterId: string;
     reporter: {
         name: string;
-        role: string;
+        role: "User" | "Trainer";
         profileImage: string | null;
     };
     reportedId: string;
@@ -40,4 +40,5 @@ export interface IReportRepository extends IBaseRepository<ReportEntity> {
     updateStatus(id: string, status: ReportStatus, resolutionNotes?: string): Promise<ReportEntity | null>;
     getSummary(): Promise<IReportSummary>;
     findByIdWithDetails(id: string): Promise<IReportListItem | null>;
+    findBySessionAndReporter(sessionId: string, reporterId: string): Promise<ReportEntity | null>;
 }

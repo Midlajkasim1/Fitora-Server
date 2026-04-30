@@ -1,4 +1,5 @@
 export class SendMessageRequestDTO {
+  senderId!: string;
   receiverId!: string;
   message!: string;
 

@@ -1,7 +1,7 @@
 import { GenerateDietRequestDTO } from "@/application/dto/ai-workout&diet/request/generate-diet-plan.dto";
 import { GenerateDietResponseDTO } from "@/application/dto/ai-workout&diet/response/generate-diet-plan.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { ONE_WEEK_IN_SECONDS } from "@/domain/constants/messages.constants";
+import { AI_MESSAGES, ONE_WEEK_IN_SECONDS } from "@/domain/constants/messages.constants";
 import { AiDietPlanEntity } from "@/domain/entities/ai-workout&diet/ai-diet-plan.entity";
 import { IAiDietPlanRepository } from "@/domain/interfaces/repositories/ai-diet-plan.repository";
 import { IHealthMetricsRepository } from "@/domain/interfaces/repositories/onboarding/iclient-health-metrics.interface";
@@ -30,19 +30,19 @@ export class GenerateDietPlanUseCase implements IBaseUseCase<GenerateDietRequest
     const activeSub = await this._subRepo.findActiveByUserId(userId);
     
     if (!activeSub) {
-      throw new Error("AI Diet Plans are a Pro feature. Please subscribe to unlock your personalized nutrition guide!");
+      throw new Error(AI_MESSAGES.PRO_FEATURE);
     }
 
     const plan = await this._planRepo.findById(activeSub.planId);
     if (!plan || !plan.hasAiDiet) {
-      throw new Error("Your current plan does not include AI Diet features. Please upgrade to Pro.");
+      throw new Error(AI_MESSAGES.UPGRADE_PRO);
     }
 
     const cached = await this._cacheService.get<AiDietPlanEntity>(cacheKey);
     if (cached &&  cached.weeklyPlan && cached.weeklyPlan.length >0) {
       return {
         success: true,
-        message: "Loading your existing meal plan.", 
+        message: AI_MESSAGES.LOADING_EXISTING, 
         planId: cached.id || "",
         title: cached.title,
         weeklyPlan: cached.weeklyPlan
@@ -51,15 +51,15 @@ export class GenerateDietPlanUseCase implements IBaseUseCase<GenerateDietRequest
 
     const lockAcquired = await this._cacheService.acquireLock(cacheKey, 60);
     if (!lockAcquired) {
-      throw new Error("We are currently building your plan. Please wait a moment.");
+      throw new Error(AI_MESSAGES.BUILDING_PLAN);
     }
 
     try {
       const prefs = await this._prefRepo.findByUserId(userId);
-      if (!prefs) throw new Error("Please complete your nutrition profile first.");
+      if (!prefs) throw new Error(AI_MESSAGES.COMPLETE_NUTRITION);
 
       const dbMetrics = await this._healthRepo.findByUserId(userId);
-      if (!dbMetrics) throw new Error("Please add your height and weight to your profile to get an accurate meal plan.");
+      if (!dbMetrics) throw new Error(AI_MESSAGES.ADD_HEIGHT_WEIGHT);
 
       const startOfToday = new Date();
       startOfToday.setHours(0, 0, 0, 0);
@@ -69,7 +69,7 @@ export class GenerateDietPlanUseCase implements IBaseUseCase<GenerateDietRequest
       });
       
       if (generatedToday >= 2) {
-        throw new Error("You've updated your plan twice today. You can make more changes tomorrow!");
+        throw new Error(AI_MESSAGES.DAILY_LIMIT);
       }
 
       const aiMetrics: IUserDietMetrics = {
@@ -88,7 +88,7 @@ export class GenerateDietPlanUseCase implements IBaseUseCase<GenerateDietRequest
 
       return {
         success: true,
-        message: "Your personalized meal plan has been created!",
+        message: AI_MESSAGES.DIET_CREATED,
         planId: savedPlan.id || "",
         title: savedPlan.title,
         weeklyPlan: savedPlan.weeklyPlan

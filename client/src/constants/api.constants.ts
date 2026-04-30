@@ -107,16 +107,16 @@ export const TRAINER_CHAT_ROUTES = {
 };
 
 export const VIDEO_ROUTES = {
-  START_SESSION: (slotId: string) => `sessions/${slotId}/start`,
-  END_SESSION: (slotId: string) => `sessions/${slotId}/end`,
-  GET_TOKEN: (slotId: string) => `sessions/${slotId}/join-token`,
-  GET_ACCESS_STATE: (slotId: string) => `sessions/${slotId}/access`,
+  START_SESSION: (slotId: string) => `user/sessions/${slotId}/start`,
+  END_SESSION: (slotId: string) => `user/sessions/${slotId}/end`,
+  GET_TOKEN: (slotId: string) => `user/sessions/${slotId}/join-token`,
+  GET_ACCESS_STATE: (slotId: string) => `user/sessions/${slotId}/access`,
 };
 
 export const REVIEW_ROUTES = {
-  BASE: "/reviews",
-  REPORTS: "/reviews/reports",
-  TRAINER_REVIEWS: (trainerId: string) => `/reviews/trainers/${trainerId}`,
+  BASE: "/user/reviews",
+  REPORTS: "/user/reviews/reports",
+  TRAINER_REVIEWS: (trainerId: string) => `/user/reviews/trainers/${trainerId}`,
 };
 
 export const REPORT_ROUTES = {
@@ -128,7 +128,9 @@ export const REPORT_ROUTES = {
 };
 
 export const FINANCE_ROUTES = {
+  BASE: "/admin/finance",
   OVERVIEW: "/admin/finance/overview",
   TRANSACTIONS: "/admin/finance/transactions",
   REPORT: "/admin/finance/report",
+  DASHBOARD_STATS: "/admin/finance/dashboard-stats",
 };

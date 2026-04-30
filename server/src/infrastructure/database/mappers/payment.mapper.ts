@@ -11,6 +11,7 @@ export class PaymentMapper implements IMapper<PaymentEntity, IPaymentDocument> {
             userId: doc.user_id.toString(),
             subscriptionId: doc.subscription_id?.toString(),
             amount: doc.amount,
+            trainerAmount: doc.trainerAmount,
             status: doc.status as PaymentStatus,
             paymentMethod: doc.payment_method, 
             providerPaymentId: doc.provider_payment_id,
@@ -23,6 +24,7 @@ export class PaymentMapper implements IMapper<PaymentEntity, IPaymentDocument> {
             user_id: new Types.ObjectId(entity.userId),
             subscription_id: entity.subscriptionId ? new Types.ObjectId(entity.subscriptionId)  : undefined,
             amount: entity.amount,
+            trainerAmount: entity.trainerAmount,
             status: entity.status,
             provider_payment_id: entity.providerPaymentId,
             payment_method: entity.paymentMethod 

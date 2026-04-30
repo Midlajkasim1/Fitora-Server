@@ -5,7 +5,7 @@ export class TrainerPayoutEntity {
     private readonly _amount: number;
     private readonly _platformFee: number;
     private readonly _totalAmount: number;
-    private readonly _status: 'PENDING' | 'PAID';
+    private readonly _status: "PENDING" | "PAID";
     private readonly _createdAt?: Date;
 
     constructor(props: {
@@ -15,7 +15,7 @@ export class TrainerPayoutEntity {
         amount: number;
         platformFee: number;
         totalAmount: number;
-        status: 'PENDING' | 'PAID';
+        status: "PENDING" | "PAID";
         createdAt?: Date;
     }) {
         this._id = props.id;

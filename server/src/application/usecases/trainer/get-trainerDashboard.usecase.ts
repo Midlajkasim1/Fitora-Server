@@ -16,11 +16,9 @@ export class GetTrainerDashboardUseCase implements IBaseUseCase<string, TrainerD
 
         const totalClients = await this._slotRepository.getTotalClients(trainerId);
         
-        // Fetch trainer details for wallet balance
         const trainer = await this._trainerRepository.findByTrainerId(trainerId);
         const walletBalance = trainer?.walletBalance || 0;
 
-        // Calculate monthly earnings
         const startOfMonth = new Date();
         startOfMonth.setDate(1);
         startOfMonth.setHours(0, 0, 0, 0);

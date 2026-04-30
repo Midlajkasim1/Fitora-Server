@@ -38,7 +38,7 @@ export class TransactionRepository extends BaseRepository<TransactionEntity, ITr
                         {
                             $group: {
                                 _id: {
-                                    isPremium: { $regexMatch: { input: "$description", pattern: /Premium/i } }
+                                    isPremium: { $regexMatch: { input: "$description", regex: "Premium", options: "i" } }
                                 },
                                 total: { $sum: "$amount" }
                             }
@@ -65,15 +65,41 @@ export class TransactionRepository extends BaseRepository<TransactionEntity, ITr
         const { page, limit, search } = params;
         const skip = (page - 1) * limit;
 
-        const filter: Record<string, unknown> = {};
+        const filter: Record<string, unknown> = {
+            type: { $ne: TransactionType.WITHDRAWAL }
+        };
+
         if (search) {
-            filter.$or = [
-                { entityName: { $regex: search, $options: "i" } },
-                { description: { $regex: search, $options: "i" } },
-                { type: { $regex: search, $options: "i" } }
-            ] as Record<string, unknown>[];
+            filter.$and = [
+                { type: { $ne: TransactionType.WITHDRAWAL } },
+                {
+                    $or: [
+                        { entityName: { $regex: search, $options: "i" } },
+                        { description: { $regex: search, $options: "i" } },
+                        { type: { $regex: search, $options: "i" } }
+                    ]
+                }
+            ];
+            delete filter.type; // Removed because it's handled in $and
         }
 
+        const [docs, total] = await Promise.all([
+            TransactionModel.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean<ITransactionDocument[]>(),
+            TransactionModel.countDocuments(filter)
+        ]);
+
+        return {
+            data: docs.map(doc => this._transactionMapper.toEntity(doc)),
+            total
+        };
+    }
+
+    async findPaginatedByUserId(userId: string, params: { page: number; limit: number }): Promise<{ data: TransactionEntity[]; total: number }> {
+        const { page, limit } = params;
+        const skip = (page - 1) * limit;
+
+        const filter = { userId };
+        
         const [docs, total] = await Promise.all([
             TransactionModel.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean<ITransactionDocument[]>(),
             TransactionModel.countDocuments(filter)

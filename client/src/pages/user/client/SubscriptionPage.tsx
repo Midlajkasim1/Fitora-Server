@@ -13,38 +13,34 @@ export default function SubscriptionPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
-  // Data Hooks
   const { data, isLoading } = useUserSubscriptions(currentPage);
   const { data: statusData, isLoading: isStatusLoading } = useSubscriptionStatus();
   
-  // Mutation Hooks
   const { mutate: purchasePlan, isPending: isPurchasing, variables: purchasingId } = usePurchasePlan();
   const { mutate: cancelPlan, isPending: isCancelling } = useCancelSubscription();
 
-  const resultsPerPage = 1; // Match your current pagination setup
+  const resultsPerPage = 1; 
   const totalResults = data?.totals || 0;
   const totalPages = Math.ceil(totalResults / resultsPerPage);
   const plans = data?.subscriptions ?? [];
   
-  // const isPremium = statusData?.isPremium;
   const activePlanId = statusData?.subscription?.planId;
 
   if (isLoading || isStatusLoading) return <GlobalLoader />;
 
   return (
-    <div className="max-w-7xl mx-auto py-12 px-6">
+    <div className="max-w-7xl mx-auto py-8 md:py-12 px-4 md:px-6">
       {/* Header Section */}
-      <div className="text-center mb-20">
+      <div className="text-center mb-12 md:mb-20">
         <span className="bg-[#00ff94]/10 text-[#00ff94] text-[10px] font-black uppercase italic tracking-widest px-4 py-1.5 rounded-full border border-[#00ff94]/20">
           Pricing Plans
         </span>
-        <h1 className="text-6xl font-black italic uppercase tracking-tighter mt-8 leading-none text-white">
+        <h1 className="text-4xl md:text-6xl font-black italic uppercase tracking-tighter mt-6 md:mt-8 leading-none text-white">
           Level Up Your <br /> <span className="text-gray-800 bg-white px-2">Performance</span>
         </h1>
       </div>
 
-      {/* Plans Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-32">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-20 md:mb-32">
         {plans.map((plan) => (
           <SubscriptionCard 
             key={plan.id} 
@@ -75,14 +71,14 @@ export default function SubscriptionPage() {
       )}
 
       {/* Feature Section */}
-      <section className="border-t border-white/5 pt-20 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+      <section className="border-t border-white/5 pt-12 md:pt-20 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-center">
           <div className="space-y-4">
             <div className="w-12 h-12 bg-[#00ff94]/10 rounded-2xl flex items-center justify-center mx-auto text-[#00ff94]">
               <TrendingUp size={24} />
             </div>
-            <h3 className="text-white font-black italic uppercase text-lg">Accelerate Results</h3>
-            <p className="text-gray-500 text-xs italic leading-relaxed">
+            <h3 className="text-white font-black italic uppercase text-base md:text-lg">Accelerate Results</h3>
+            <p className="text-gray-500 text-[10px] md:text-xs italic leading-relaxed">
               Users with premium subscriptions see 40% faster progress through AI-optimized load adjustments.
             </p>
           </div>
@@ -91,8 +87,8 @@ export default function SubscriptionPage() {
             <div className="w-12 h-12 bg-[#00ff94]/10 rounded-2xl flex items-center justify-center mx-auto text-[#00ff94]">
               <Zap size={24} />
             </div>
-            <h3 className="text-white font-black italic uppercase text-lg">Exclusive Content</h3>
-            <p className="text-gray-500 text-xs italic leading-relaxed">
+            <h3 className="text-white font-black italic uppercase text-base md:text-lg">Exclusive Content</h3>
+            <p className="text-gray-500 text-[10px] md:text-xs italic leading-relaxed">
               Access workout specializations designed by Olympic-level trainers.
             </p>
           </div>
@@ -101,15 +97,14 @@ export default function SubscriptionPage() {
             <div className="w-12 h-12 bg-[#00ff94]/10 rounded-2xl flex items-center justify-center mx-auto text-[#00ff94]">
               <ShieldCheck size={24} />
             </div>
-            <h3 className="text-white font-black italic uppercase text-lg">Cancel Anytime</h3>
-            <p className="text-gray-500 text-xs italic leading-relaxed">
+            <h3 className="text-white font-black italic uppercase text-base md:text-lg">Cancel Anytime</h3>
+            <p className="text-gray-500 text-[10px] md:text-xs italic leading-relaxed">
               No hidden contracts. Manage your billing easily through your dashboard.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Modal - Place at the bottom for accessibility */}
       <ConfirmModal
         isOpen={isCancelModalOpen}
         onClose={() => setIsCancelModalOpen(false)}

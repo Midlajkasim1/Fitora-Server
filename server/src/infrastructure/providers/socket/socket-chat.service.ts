@@ -46,17 +46,17 @@ export class SocketChatService {
     socket.join(userId);
     logger.info(`[Chat] User ${userId} connected (${socket.id})`);
 
-    socket.on("send_message", (data) => this._handleSendMessage(socket, data));
-    socket.on("get_chat_history", (data) => this._handleGetChatHistory(socket, data));
+    socket.on("send_message", (data: unknown) => this._handleSendMessage(socket, data));
+    socket.on("get_chat_history", (data: unknown) => this._handleGetChatHistory(socket, data));
     socket.on("disconnect", () => logger.info(`[Chat] User ${userId} disconnected`));
   }
 
   // ── Handlers (SRP) ────────────────────────────────────────────────────────
 
-  private async _handleSendMessage(socket: Socket, payload: any): Promise<void> {
+  private async _handleSendMessage(socket: Socket, payload: unknown): Promise<void> {
     try {
       const { userId } = socket.data.user as JwtPayload;
-      const dto = new SendMessageRequestDTO(payload);
+      const dto = new SendMessageRequestDTO(payload as SendMessageRequestDTO);
 
       if (!dto.receiverId || !dto.message) {
         return this._emitError(socket, "receiverId and message are required");
@@ -77,10 +77,10 @@ export class SocketChatService {
     }
   }
 
-  private async _handleGetChatHistory(socket: Socket, payload: any): Promise<void> {
+  private async _handleGetChatHistory(socket: Socket, payload: unknown): Promise<void> {
     try {
       const { userId } = socket.data.user as JwtPayload;
-      const dto = new GetChatHistoryRequestDTO(payload);
+      const dto = payload as GetChatHistoryRequestDTO;
 
       if (!dto.otherUserId) {
         return this._emitError(socket, "otherUserId is required");

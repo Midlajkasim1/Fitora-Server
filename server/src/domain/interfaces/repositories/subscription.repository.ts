@@ -8,4 +8,6 @@ export interface ISubscriptionRepository extends IBaseRepository<SubscriptionEnt
     findEveryActive(): Promise<{ userId: string }[]>;
     incrementUsedCredit(subscriptionId: string): Promise<void>;
     decrementUsedCredit(subscriptionId: string): Promise<void>;
+    countActiveSubscriptions(): Promise<number>;
+    getActiveSubscriptionCountsByPlan(): Promise<{ name: string, count: number }[]>;
 }

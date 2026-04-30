@@ -31,7 +31,6 @@ export class MongooseReportRepository
         const pipeline: PipelineStage[] = [
             { $match: filter as Record<string, unknown> },
             { $sort: { createdAt: -1 } },
-            // Lookup reporter
             {
                 $lookup: {
                     from: "users",
@@ -41,7 +40,6 @@ export class MongooseReportRepository
                 }
             },
             { $unwind: { path: "$reporterData", preserveNullAndEmptyArrays: true } },
-            // Search in looked up fields
             ...(params.search ? [{
                 $match: {
                     $or: [
@@ -53,7 +51,6 @@ export class MongooseReportRepository
             }] : []),
             { $skip: skip },
             { $limit: params.limit },
-            // Lookup reported party (trainer/user)
             {
                 $lookup: {
                     from: "users",
@@ -67,7 +64,6 @@ export class MongooseReportRepository
 
         const docs = await this.model.aggregate(pipeline);
         
-        // For total with search on joined fields, we need a separate aggregate or use previous results
         const totalResult = await this.model.aggregate([
             { $match: filter as Record<string, unknown> },
             {
@@ -96,8 +92,7 @@ export class MongooseReportRepository
 
         return {
             data: docs.map(doc => {
-                // Since aggregate returns raw objects, we define an internal interface.
-                interface IAggregateResult extends Omit<IReportListItem, 'id' | 'reporterId' | 'reportedId'> {
+                interface IAggregateResult extends Omit<IReportListItem, "id" | "reporterId" | "reportedId"> {
                     _id: Types.ObjectId;
                     reporterId: Types.ObjectId;
                     reportedId: Types.ObjectId;
@@ -169,7 +164,6 @@ export class MongooseReportRepository
     async findByIdWithDetails(id: string): Promise<IReportListItem | null> {
         const pipeline: PipelineStage[] = [
             { $match: { _id: new Types.ObjectId(id) } },
-            // Lookup reporter
             {
                 $lookup: {
                     from: "users",
@@ -179,7 +173,6 @@ export class MongooseReportRepository
                 }
             },
             { $unwind: { path: "$reporterData", preserveNullAndEmptyArrays: true } },
-            // Lookup reported party
             {
                 $lookup: {
                     from: "users",
@@ -194,7 +187,7 @@ export class MongooseReportRepository
         const docs = await this.model.aggregate(pipeline);
         if (docs.length === 0) return null;
 
-        interface IDetailResult extends Omit<IReportListItem, 'id' | 'reporterId' | 'reportedId'> {
+        interface IDetailResult extends Omit<IReportListItem, "id" | "reporterId" | "reportedId"> {
             _id: Types.ObjectId;
             reporterId: Types.ObjectId;
             reportedId: Types.ObjectId;
@@ -219,5 +212,14 @@ export class MongooseReportRepository
             createdAt: doc.createdAt,
             updatedAt: doc.updatedAt
         };
+    }
+
+    async findBySessionAndReporter(sessionId: string, reporterId: string): Promise<ReportEntity | null> {
+        const doc = await this.model.findOne({
+            sessionId,
+            reporterId: new Types.ObjectId(reporterId)
+        }).lean<IReportDocument>().exec();
+
+        return doc ? this.mapper.toEntity(doc) : null;
     }
 }

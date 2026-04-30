@@ -29,7 +29,7 @@ import { useChatStore } from "../../store/use-chat-store";
       />
       <UserHeader />
 
-      <main className="flex-1 pt-28 px-6 md:px-12">
+      <main className="flex-1 pt-28">
         <Outlet />
       </main>
 

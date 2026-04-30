@@ -5,12 +5,10 @@ import { GetChatHistoryUseCase } from "@/application/usecases/chat/get-chat-hist
 import { socketEmitterProxy } from "@/infrastructure/providers/socket/socket-emitter";
 import { userRepositories } from "../user/user.repositories";
 
-// ── Repository ────────────────────────────────────────────────────────────────
 const chatMessageMapper = new ChatMessageMapper();
 const chatMessageRepository = new ChatMessageRepository(chatMessageMapper);
 
-// ── Use Cases ─────────────────────────────────────────────────────────────────
-// SendMessageUseCase uses ISocketEmitter via proxy — no circular dependency.
+
 const sendMessageUseCase = new SendMessageUseCase(
   chatMessageRepository,
   userRepositories.slotRepository,
@@ -19,7 +17,6 @@ const sendMessageUseCase = new SendMessageUseCase(
 
 const getChatHistoryUseCase = new GetChatHistoryUseCase(chatMessageRepository);
 
-// ── Exports ───────────────────────────────────────────────────────────────────
 export const chatRepositories = {
   chatMessageRepository,
 };

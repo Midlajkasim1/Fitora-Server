@@ -7,6 +7,7 @@ import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { ReportStatus, ReportType } from "@/domain/constants/report.constants";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
+import { REPORT_MESSAGES } from "@/domain/constants/messages.constants";
 
 export class AdminReportController {
     constructor(
@@ -18,12 +19,8 @@ export class AdminReportController {
 
     async getReportById(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;
-        try {
-            const result = await this._getReportByIdUseCase.execute(id);
-            return res.status(HttpStatus.OK).json(ApiResponse.success(result));
-        } catch (error: unknown) {
-            return res.status(HttpStatus.NOT_FOUND).json(ApiResponse.error(error.message));
-        }
+        const result = await this._getReportByIdUseCase.execute(id);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
 
 
@@ -49,15 +46,11 @@ export class AdminReportController {
         const { id } = req.params;
         const { status, resolutionNotes } = req.body;
 
-        try {
-            const result = await this._updateReportStatusUseCase.execute({
-                reportId: id,
-                status,
-                resolutionNotes
-            });
-            return res.status(HttpStatus.OK).json(ApiResponse.success(result, "Report status updated successfully"));
-        } catch (error: unknown) {
-            return res.status(HttpStatus.BAD_REQUEST).json(ApiResponse.error(error.message));
-        }
+        const result = await this._updateReportStatusUseCase.execute({
+            reportId: id,
+            status,
+            resolutionNotes
+        });
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result, REPORT_MESSAGES.REPORT_STATUS_UPDATED));
     }
 }

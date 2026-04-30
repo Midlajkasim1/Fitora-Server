@@ -1,4 +1,12 @@
+import { ChatMessageEntity } from "@/domain/entities/chat/chat-message.entity";
 import { ChatMessageResponseDTO } from "./chat-message-response.dto";
+
+export interface ChatHistoryResult {
+  messages: ChatMessageEntity[];
+  total: number;
+  page: number;
+  totalPages: number;
+}
 
 export class ChatHistoryResponseDTO {
   messages!: ChatMessageResponseDTO[];
@@ -10,9 +18,9 @@ export class ChatHistoryResponseDTO {
     Object.assign(this, data);
   }
 
-  static fromResult(result: any): ChatHistoryResponseDTO {
+  static fromResult(result: ChatHistoryResult): ChatHistoryResponseDTO {
     return new ChatHistoryResponseDTO({
-      messages: result.messages.map((m: any) => ChatMessageResponseDTO.fromEntity(m)),
+      messages: result.messages.map((m: ChatMessageEntity) => ChatMessageResponseDTO.fromEntity(m)),
       total: result.total,
       page: result.page,
       totalPages: result.totalPages,

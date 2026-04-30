@@ -4,13 +4,6 @@ import { env } from "@/infrastructure/config/env.config";
 import { ISocketEmitter } from "@/domain/interfaces/services/socket-emitter.interface";
 import { logger } from "@/infrastructure/providers/loggers/logger";
 
-/**
- * SocketEmitter — Decoupled publisher that lets Use Cases / Controllers
- * fire socket events to any room WITHOUT importing the Socket.io server.
- * 
- * Uses a separate dedicated Redis pub/sub client (best practice: ioredis
- * connections should not be shared between pub/sub and regular commands).
- */
 
 let emitterInstance: SocketEmitter | null = null;
 

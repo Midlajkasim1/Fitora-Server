@@ -1,15 +1,15 @@
 import { ITransactionRepository } from "@/domain/interfaces/repositories/transaction.repository";
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { RecentTransactionsRequestDTO } from "@/application/dto/admin/request/recent-transaction.dto";
+import { GetRecentTransactionsResponseDTO } from "@/application/dto/admin/response/recent-trainsactions.dto";
 
-export interface RecentTransactionsRequest {
-    page: number;
-    limit: number;
-    search?: string;
-}
 
-export class GetRecentTransactionsUseCase {
+
+
+export class GetRecentTransactionsUseCase implements IBaseUseCase<RecentTransactionsRequestDTO, GetRecentTransactionsResponseDTO> {
     constructor(private readonly _transactionRepository: ITransactionRepository) {}
 
-    async execute(request: RecentTransactionsRequest) {
+    async execute(request: RecentTransactionsRequestDTO): Promise<GetRecentTransactionsResponseDTO> {
         const { data, total } = await this._transactionRepository.findRecentTransactions(request);
         
         return {

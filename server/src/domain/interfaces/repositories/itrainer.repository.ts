@@ -3,6 +3,8 @@ import { ApprovalStatus } from "@/domain/constants/auth.constants";
 import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.entity";
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IBaseRepository } from "./base.repository";
+import { ClientSession } from "mongoose";
+
 export interface ITrainerRepository extends IBaseRepository<TrainerDetailsEntity> {
 
   save(details: TrainerDetailsEntity): Promise<void>;
@@ -25,6 +27,7 @@ export interface ITrainerRepository extends IBaseRepository<TrainerDetailsEntity
   findTrainerIdsBySpecializations(specializationIds: string): Promise<string[]>;
   findTrainerForBooking(params:{trainerIds:string[];search?:string;skip:number;limit:number}):Promise<{data:Record<string,unknown>[];total:number}>;
   findByTrainerId(trainerId:string):Promise<TrainerDetailsEntity | null>
-  updateWalletBalance(userId: string, amount: number): Promise<void>;
+  /** Atomically increments the trainer's wallet balance. session must be a MongoDB ClientSession for transactional integrity. */
+  updateWalletBalance(userId: string, amountInRupees: number, session?: ClientSession): Promise<void>;
 
 }

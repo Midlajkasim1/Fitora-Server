@@ -3,42 +3,36 @@ import { ISocketEmitter } from "@/domain/interfaces/services/socket-emitter.inte
 import { SlotStatus } from "@/domain/constants/session.constants";
 import { logger } from "@/infrastructure/providers/loggers/logger";
 
-export interface StartSessionRequest {
-    slotId: string;
-    trainerId: string;
-}
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { StartSessionRequestDTO } from "@/application/dto/video/request/start-session.dto";
+import { SESSION_MESSAGES } from "@/domain/constants/messages.constants";
 
-export class StartSessionUseCase {
+export class StartSessionUseCase implements IBaseUseCase<StartSessionRequestDTO, void> {
     constructor(
         private readonly _slotRepository: ISlotRepository,
         private readonly _socketEmitter: ISocketEmitter
     ) {}
 
-    async execute(request: StartSessionRequest): Promise<void> {
-        const { slotId, trainerId } = request;
+    async execute(dto: StartSessionRequestDTO): Promise<void> {
+        const { slotId, trainerId } = dto;
 
-        // 1. Fetch Slot and verify trainer
         const slot = await this._slotRepository.findById(slotId);
         if (!slot) {
-            throw new Error("Session not found");
+            throw new Error(SESSION_MESSAGES.SESSION_NOT_FOUND);
         }
 
         if (slot.trainerId.toString() !== trainerId) {
-            throw new Error("Only the assigned trainer can start this session");
+            throw new Error(SESSION_MESSAGES.ONLY_TRAINER_CAN_START);
         }
 
         if (slot.status === SlotStatus.COMPLETED) {
-            throw new Error("This session has already been completed");
+            throw new Error(SESSION_MESSAGES.SESSION_ALREADY_COMPLETED);
         }
 
-        // 2. Update status to LIVE
         await this._slotRepository.updateStatus(slotId, SlotStatus.LIVE);
         logger.info(`[StartSession] Slot ${slotId} is now LIVE`);
 
 
-        // 3. Notify all participants
-        // We emit to each participant's individual room (userId) so they see the notification
-        // and can click "Join Session".
         const participants = slot.participants.map(p => p.toString());
         
         participants.forEach(userId => {

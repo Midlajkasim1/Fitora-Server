@@ -2,6 +2,7 @@ import { GetActiveSpecializationResponse } from "@/application/dto/specializatio
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { ISpecialization } from "@/domain/interfaces/repositories/specialization.interface";
 import { SpecializationStatus } from "@/domain/constants/auth.constants";
+import { SPECIALIZATION_MESSAGES } from "@/domain/constants/messages.constants";
 
 export class GetActiveSpecializationUseCase implements IBaseUseCase<void, GetActiveSpecializationResponse> {
 
@@ -20,7 +21,7 @@ export class GetActiveSpecializationUseCase implements IBaseUseCase<void, GetAct
 
     const result = data.map(spec => {
       if (!spec.id) {
-        throw new Error("Specialization id missing");
+        throw new Error(SPECIALIZATION_MESSAGES.SPECIALIZATION_ID_MISSING);
       }
 
       return {

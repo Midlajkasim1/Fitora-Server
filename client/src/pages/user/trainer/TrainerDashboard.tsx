@@ -1,4 +1,5 @@
 import { Users, TrendingUp, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useTrainerDashboard } from '../../../hooks/trainer/use-trainerDashboard';
 import SessionCard from '../../../components/trainer/SessionCard';
 import StatCard from '../../../components/trainer/StatCard';
@@ -12,16 +13,15 @@ const TrainerDashboard = () => {
   if (isLoading) return <GlobalLoader />;
 
   return (
-    <div className="p-8 space-y-10"> {/* Removed min-h-screen and bg color */}
-      <header className="flex justify-between items-end">
+    <div className="p-4 md:p-8 space-y-10">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
-          <h1 className="text-3xl font-semibold text-white">
+          <h1 className="text-2xl md:text-3xl font-semibold text-white">
             Good Morning, {user?.firstName || 'Trainer'}
           </h1>
-          <p className="text-gray-400">Here's your daily overview and upcoming schedule.</p>
+          <p className="text-gray-400 text-sm">Here's your daily overview and upcoming schedule.</p>
         </div>
-        {/* You can add a date display here like in the image */}
-        <div className="text-gray-500 text-sm font-medium">
+        <div className="text-gray-500 text-xs md:text-sm font-medium">
           {new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
         </div>
       </header>
@@ -36,8 +36,8 @@ const TrainerDashboard = () => {
       {/* Upcoming Sessions Section */}
       <section>
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-medium">Upcoming Sessions</h2>
-          <button className="text-emerald-500 text-sm hover:underline">View All</button>
+          <h2 className="text-xl font-medium text-white">Upcoming Sessions</h2>
+          <Link to="/trainer/session" className="text-emerald-500 text-sm hover:underline">View All</Link>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

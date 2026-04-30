@@ -15,6 +15,7 @@ import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { AUTH_MESSAGES, SLOT_MESSAGES } from "@/domain/constants/messages.constants";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
+import { UserRole } from "@/domain/constants/auth.constants";
 
 
 
@@ -93,7 +94,7 @@ export class UserSlotController {
 
     async getChatPartners(req: Request, res: Response): Promise<Response> {
         const userId = req.user?.userId;
-        const role = req.user?.role as 'trainer' | 'user';
+        const role = req.user?.role as UserRole.TRAINER| UserRole.USER;
         if (!userId) {
             return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }

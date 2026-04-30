@@ -55,7 +55,7 @@ const ClientProfileModal = ({ clientId, onClose, mode }: ClientProfileModalProps
   }, [clientId]);
 
   if (loading) return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
       <div className="bg-[#0d1a16] border border-emerald-900/30 rounded-3xl w-full max-w-sm p-12 text-center">
          <div className="w-12 h-12 border-4 border-[#00ff94]/20 border-t-[#00ff94] rounded-full animate-spin mx-auto mb-4" />
          <p className="text-[#00ff94] text-[10px] font-black uppercase tracking-widest">Loading...</p>
@@ -64,7 +64,7 @@ const ClientProfileModal = ({ clientId, onClose, mode }: ClientProfileModalProps
   );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
       <div className={`bg-[#0d1a16] border border-emerald-900/10 rounded-[2.5rem] w-full ${mode === 'profile' ? 'max-w-4xl' : 'max-w-xl'} overflow-hidden shadow-2xl relative my-auto`}>
         
         {/* Header */}

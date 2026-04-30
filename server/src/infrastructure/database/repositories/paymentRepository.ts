@@ -64,4 +64,35 @@ export class PaymentRepository extends BaseRepository<PaymentEntity, IPaymentDoc
         const total = await PaymentModel.countDocuments({user_id:new Types.ObjectId(userId)});
         return {history,total};
     }
+
+    async getFinancialStats(year: number): Promise<{ month: string; totalRevenue: number; totalExpenses: number; totalProfit: number; }[]> {
+        const startOfYear = new Date(year, 0, 1);
+        const endOfYear = new Date(year, 11, 31, 23, 59, 59);
+
+        return await PaymentModel.aggregate([
+            {
+                $match: {
+                    status: PaymentStatus.SUCCESS,
+                    createdAt: { $gte: startOfYear, $lte: endOfYear }
+                }
+            },
+            {
+                $group: {
+                    _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+                    totalRevenue: { $sum: "$amount" },
+                    totalExpenses: { $sum: "$trainerAmount" }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    month: "$_id",
+                    totalRevenue: 1,
+                    totalExpenses: 1,
+                    totalProfit: { $subtract: ["$totalRevenue", "$totalExpenses"] }
+                }
+            },
+            { $sort: { month: 1 } }
+        ]);
+    }
 }

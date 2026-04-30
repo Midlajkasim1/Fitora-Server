@@ -6,6 +6,8 @@ import { upload } from "@/presentation/middleware/multer.middleware";
 import { Request, Response, Router } from "express";
 
 import { reportControllers } from "@/infrastructure/di/report/report.controllers";
+import { videoControllers } from "@/infrastructure/di/video/video.di";
+import { reviewControllers } from "@/infrastructure/di/review/review.controllers";
 
 const router = Router();
 
@@ -125,5 +127,37 @@ router.get("/workout-plan",userMiddlewares.authMiddleware,userMiddlewares.blockG
 ));
 router.get("/diet-plan",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.aiPlanController.getDietPlan(req,res)
+));
+
+// Video Sessions
+router.get("/sessions/:slotId/join-token", 
+    userMiddlewares.authMiddleware, 
+    userMiddlewares.blockGuard, 
+    asyncHandler((req, res) => videoControllers.videoCallController.getJoinToken(req, res))
+);
+router.post("/sessions/:slotId/start", 
+    userMiddlewares.authMiddleware, 
+    userMiddlewares.blockGuard, 
+    asyncHandler((req, res) => videoControllers.videoCallController.startSession(req, res))
+);
+router.post("/sessions/:slotId/end", 
+    userMiddlewares.authMiddleware, 
+    userMiddlewares.blockGuard, 
+    asyncHandler((req, res) => videoControllers.videoCallController.endSession(req, res))
+);
+router.get("/sessions/:slotId/access",
+    userMiddlewares.authMiddleware,
+    userMiddlewares.blockGuard,
+    asyncHandler((req, res) => videoControllers.videoCallController.getAccessState(req, res))
+);
+
+router.post("/reviews", userMiddlewares.authMiddleware, userMiddlewares.blockGuard, asyncHandler((req, res) => 
+    reviewControllers.reviewController.createReview(req, res)
+));
+router.post("/reviews/reports", userMiddlewares.authMiddleware, userMiddlewares.blockGuard, asyncHandler((req, res) => 
+    reviewControllers.reviewController.submitSessionReport(req, res)
+));
+router.get("/reviews/trainers/:id", asyncHandler((req, res) => 
+    reviewControllers.reviewController.getTrainerReviews(req, res)
 ));
 export default router;

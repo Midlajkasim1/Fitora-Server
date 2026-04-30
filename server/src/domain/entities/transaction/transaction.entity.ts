@@ -14,8 +14,8 @@ export enum TransactionStatus {
 
 export class TransactionEntity {
     private readonly _id?: string;
-    private readonly _userId?: string; // Optional: could be "SYSTEM" or system user
-    private readonly _entityName: string; // e.g., "Sarah Jenkins", "Google AdSense"
+    private readonly _userId?: string; 
+    private readonly _entityName: string; 
     private readonly _amount: number;
     private readonly _type: TransactionType;
     private readonly _status: TransactionStatus;

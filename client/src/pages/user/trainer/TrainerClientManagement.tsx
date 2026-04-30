@@ -24,12 +24,12 @@ const ClientManagement = () => {
   const totalPages = data ? Math.ceil(data.total / RESULTS_PER_PAGE) : 0;
 
   return (
-    <div className="p-8 space-y-8 bg-[#06110d] min-h-screen">
-      <header className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold text-white uppercase tracking-tighter italic">
+    <div className="p-4 md:p-8 space-y-8 bg-[#06110d] min-h-screen">
+      <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <h1 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tighter italic">
           Assigned Clients
         </h1>
-        <div className="text-[#00ff94] bg-[#00ff94]/10 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-[#00ff94]/20">
+        <div className="text-[#00ff94] bg-[#00ff94]/10 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border border-[#00ff94]/20 w-fit">
            {data?.total || 0} ACTIVE CLIENTS
         </div>
       </header>
@@ -48,7 +48,7 @@ const ClientManagement = () => {
         />
       </div>
 
-      <div className="flex gap-10 border-b border-white/5">
+      <div className="flex gap-6 md:gap-10 border-b border-white/5 overflow-x-auto scrollbar-hide">
         {(['personal', 'group'] as const).map((tab) => (
           <button
             key={tab}

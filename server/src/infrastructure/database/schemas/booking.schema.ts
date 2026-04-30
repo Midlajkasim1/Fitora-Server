@@ -23,6 +23,19 @@ export const BookingSchema = new Schema({
         type: String,
         enum: Object.values(AttendanceStatus),
         default: AttendanceStatus.PENDING
+    },
+    isPayoutProcessed: {
+        type: Boolean,
+        default: false
+    },
+    creditValueAtPurchase: {
+        type: Number, // Stored in Paise
+        default: 0
+    },
+    sessionType: {
+        type: String,
+        enum: ["one_on_one", "group"],
+        default: "group"
     }
 }, { timestamps: true });
 

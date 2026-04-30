@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/use-auth-store";
-import { User, LogOut, ChevronDown, ActivityIcon, Zap } from "lucide-react";
+import { User, LogOut, ChevronDown, ActivityIcon, Zap, Menu, X } from "lucide-react";
 import { logoutUser } from "../../api/auth.api";
 import { useUser } from "../../hooks/user/use-user";
 import { useSubscriptionStatus } from "../../hooks/user/subscription/check-plan-status";
@@ -12,6 +13,7 @@ export const UserHeader = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user } = useUser();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { data: statusData } = useSubscriptionStatus();
   const isPremium = !!statusData?.isPremium;
@@ -47,12 +49,21 @@ export const UserHeader = () => {
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[#0d1f17]/90 backdrop-blur-xl border-b border-white/5 h-20">
-      <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2">
-          <ActivityIcon className="w-6 h-6 text-[#00ff94]" />
-          <span className="text-white font-bold text-xl italic tracking-tighter uppercase">Fitora</span>
-        </Link>
+    <>
+    <header className="fixed top-0 w-full z-50 bg-[#0d1f17] backdrop-blur-xl border-b border-white/5">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <button 
+            className="lg:hidden text-gray-400 hover:text-[#00ff94] transition-colors"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+          <Link to="/" className="flex items-center gap-2">
+            <ActivityIcon className="w-6 h-6 text-[#00ff94]" />
+            <span className="text-white font-bold text-xl italic tracking-tighter uppercase">Fitora</span>
+          </Link>
+        </div>
 
         {/* Navigation */}
         <div className="hidden lg:flex items-center gap-8 text-[11px] font-bold uppercase tracking-widest italic">
@@ -115,6 +126,59 @@ export const UserHeader = () => {
 
         </div>
       </div>
-    </nav>
+
+    </header>
+    
+    {/* Mobile Menu Overlay - Moved outside header to prevent clipping/stacking issues */}
+    <div className={`lg:hidden fixed inset-0 z-[100] transition-all duration-300 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+      {/* Blurred Backdrop */}
+      <div 
+        className="absolute inset-0 bg-[#07140f]/90 backdrop-blur-xl" 
+        onClick={() => setIsMenuOpen(false)}
+      />
+      
+      {/* Menu Content */}
+      <div className={`absolute right-0 top-0 bottom-0 w-[280px] bg-[#07140f] shadow-2xl border-l border-white/5 p-8 flex flex-col gap-2 transition-transform duration-300 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="flex items-center justify-between mb-8">
+           <span className="text-white font-black italic uppercase tracking-tighter text-xl">Menu</span>
+           <button onClick={() => setIsMenuOpen(false)} className="p-2 text-gray-500 hover:text-white transition-colors">
+             <X size={24} />
+           </button>
+        </div>
+
+        {navLinks.map((link) => (
+          <Link
+            key={link.path}
+            to={link.path}
+            onClick={() => setIsMenuOpen(false)}
+            className={`text-sm font-black uppercase tracking-widest italic py-4 border-b border-white/5 transition-colors ${
+              location.pathname === link.path ? "text-[#00ff94]" : "text-gray-400"
+            }`}
+          >
+            {link.name}
+          </Link>
+        ))}
+        
+        <div className="mt-auto space-y-4">
+          <Link 
+            to="/profile" 
+            onClick={() => setIsMenuOpen(false)}
+            className="flex items-center gap-3 py-4 text-gray-400 font-black uppercase tracking-widest italic border-t border-white/5"
+          >
+            <User size={18} /> Profile Settings
+          </Link>
+          <button 
+            onClick={() => {
+              handleLogout();
+              setIsMenuOpen(false);
+            }}
+            className="w-full flex items-center gap-3 py-4 text-red-500 font-black uppercase tracking-widest italic bg-red-500/5 rounded-xl px-4"
+          >
+            <LogOut size={18} /> Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </>
   );
 };

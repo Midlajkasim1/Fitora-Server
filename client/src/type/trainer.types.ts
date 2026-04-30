@@ -118,5 +118,11 @@ export interface WalletTransaction {
 
 export interface TrainerWalletData {
   walletBalance: number;
-  recentTransactions: WalletTransaction[];
+  transactions: WalletTransaction[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
 }

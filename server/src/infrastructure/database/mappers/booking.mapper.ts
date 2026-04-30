@@ -10,6 +10,9 @@ export interface IBookingDocument {
     cumulativeMinutes: number;
     lastJoinedAt?: Date;
     attendanceStatus: AttendanceStatus;
+    isPayoutProcessed: boolean;
+    creditValueAtPurchase: number;
+    sessionType: string;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -22,7 +25,10 @@ export class BookingMapper implements IMapper<BookingEntity, IBookingDocument> {
             userId: doc.userId.toString(),
             cumulativeMinutes: doc.cumulativeMinutes,
             lastJoinedAt: doc.lastJoinedAt,
-            attendanceStatus: doc.attendanceStatus
+            attendanceStatus: doc.attendanceStatus,
+            isPayoutProcessed: doc.isPayoutProcessed,
+            creditValueAtPurchase: doc.creditValueAtPurchase,
+            sessionType: doc.sessionType
         });
     }
 
@@ -31,7 +37,10 @@ export class BookingMapper implements IMapper<BookingEntity, IBookingDocument> {
             slotId: new Types.ObjectId(entity.slotId),
             userId: new Types.ObjectId(entity.userId),
             cumulativeMinutes: entity.cumulativeMinutes,
-            attendanceStatus: entity.attendanceStatus
+            attendanceStatus: entity.attendanceStatus,
+            isPayoutProcessed: entity.isPayoutProcessed,
+            creditValueAtPurchase: entity.creditValueAtPurchase,
+            sessionType: entity.sessionType
         };
         if (entity.lastJoinedAt) {
             doc.lastJoinedAt = entity.lastJoinedAt;

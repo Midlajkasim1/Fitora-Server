@@ -3,10 +3,7 @@ import { env } from "@/infrastructure/config/env.config";
 import { logger } from "@/infrastructure/providers/loggers/logger";
 import { AccessToken } from "livekit-server-sdk";
 
-/**
- * LiveKitMediaServer — Concrete implementation of IMediaServerProvider
- * for SFU sessions using the official LiveKit SDK.
- */
+
 export class LiveKitMediaServer implements IMediaServerProvider {
     private readonly apiKey: string;
     private readonly apiSecret: string;
@@ -16,10 +13,8 @@ export class LiveKitMediaServer implements IMediaServerProvider {
         this.apiSecret = env.LIVEKIT_API_SECRET || "secret";
     }
 
-    /**
-     * Generates a real, cryptographically signed token using LiveKit SDK.
-     */
-    async generateToken(roomId: string, participantId: string, participantName: string, isTrainer: boolean): Promise<string> {
+    async generateToken(params: { roomId: string; participantId: string; participantName: string; isTrainer: boolean }): Promise<string> {
+        const { roomId, participantId, participantName, isTrainer } = params;
         logger.info(`[LiveKit] Creating Real Token for Room: ${roomId}, User: ${participantId}`);
 
         try {
@@ -35,7 +30,6 @@ export class LiveKitMediaServer implements IMediaServerProvider {
                 canPublish: true,
                 canSubscribe: true,
                 canPublishData: true,
-                // Trainers get host privileges (optional, can be used for server-side control)
             });
 
             return await at.toJwt();
@@ -45,9 +39,9 @@ export class LiveKitMediaServer implements IMediaServerProvider {
         }
     }
 
-    async closeSession(roomId: string): Promise<void> {
+    async closeSession(params: { roomId: string }): Promise<void> {
+        const { roomId } = params;
         logger.info(`[LiveKit] Closing room: ${roomId}`);
-        // In a production environment, you could use the RoomService 
-        // to forcefully delete the room on the LiveKit server.
+     
     }
 }

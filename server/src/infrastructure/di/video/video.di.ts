@@ -8,22 +8,20 @@ import { ExecuteSessionPayoutUseCase } from "@/application/usecases/video/execut
 import { LiveKitMediaServer } from "@/infrastructure/providers/media/livekit.service";
 import { userRepositories } from "../user/user.repositories";
 import { socketEmitterProxy } from "@/infrastructure/providers/socket/socket-emitter";
+import { notificationServiceProxy } from "@/infrastructure/providers/notification/notification.provider";
 import { VideoCallController } from "@/presentation/controllers/user/video-call.controller";
 import { LiveKitWebhookController } from "@/presentation/controllers/video/livekit-webhook.controller";
-// ── Providers ────────────────────────────────────────────────────────────────
 const mediaServerProvider = new LiveKitMediaServer();
 
 const executeSessionPayoutUseCase = new ExecuteSessionPayoutUseCase(
     userRepositories.slotRepository,
     userRepositories.bookingRepository,
-    userRepositories.subscriptionRepository,
-    userRepositories.subscriptionPlanRepository,
     userRepositories.trainerRepository,
     userRepositories.transactionRepository,
-    userRepositories.userRepository
+    userRepositories.userRepository,
+    notificationServiceProxy 
 );
 
-// ── Use Cases ─────────────────────────────────────────────────────────────────
 const generateCallTokenUseCase = new GenerateCallTokenUseCase(
     userRepositories.slotRepository,
     userRepositories.userRepository,
@@ -35,7 +33,10 @@ const startSessionUseCase = new StartSessionUseCase(
     socketEmitterProxy
 );
 
-const handleParticipantJoinedUseCase = new HandleParticipantJoinedUseCase(userRepositories.bookingRepository);
+const handleParticipantJoinedUseCase = new HandleParticipantJoinedUseCase(
+    userRepositories.bookingRepository,
+    userRepositories.subscriptionRepository
+);
 const handleParticipantLeftUseCase = new HandleParticipantLeftUseCase(userRepositories.bookingRepository);
 
 const endSessionUseCase = new EndSessionUseCase(
@@ -51,20 +52,20 @@ const getSessionAccessStateUseCase = new GetSessionAccessStateUseCase(
     userRepositories.bookingRepository
 );
 
-// ── Controllers ───────────────────────────────────────────────────────────────
 const videoCallController = new VideoCallController(
     generateCallTokenUseCase,
     endSessionUseCase,
     startSessionUseCase,
-    getSessionAccessStateUseCase
+    getSessionAccessStateUseCase,
+    handleParticipantJoinedUseCase
 );
 
 const livekitWebhookController = new LiveKitWebhookController(
     handleParticipantJoinedUseCase,
-    handleParticipantLeftUseCase
+    handleParticipantLeftUseCase,
+    executeSessionPayoutUseCase
 );
 
-// ── Exports ───────────────────────────────────────────────────────────────────
 export const videoUseCases = {
     generateCallTokenUseCase,
     startSessionUseCase,

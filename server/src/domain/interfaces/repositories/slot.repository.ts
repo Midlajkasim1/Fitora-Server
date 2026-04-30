@@ -5,9 +5,7 @@ import { SessionType, SlotStatus } from "@/domain/constants/session.constants";
 
 
 export interface ISlotRepository extends IBaseRepository<SlotEntity>{
-     /** Checks if a trainer has an overlapping slot */
     findOverlappingSlot(trainerId:string,startTime:Date,endTime:Date):Promise<SlotEntity | null>;
-    /** Checks if a user (client) has an overlapping booked slot */
     findUserOverlappingSlot(userId:string, startTime:Date, endTime:Date):Promise<SlotEntity | null>;
     findAvailableSlotsByTrainers(params:{trainerIds: string[];skip:number;limit:number;search?:string,type?:SessionType}): Promise<{slots:ISlotWithTrainer[],total:number}>;
     bookSlot(slotId:string,userId:string):Promise<boolean>;
@@ -20,11 +18,10 @@ export interface ISlotRepository extends IBaseRepository<SlotEntity>{
      getTotalClients(trainerId: string): Promise<number>;
      checkAvaliability(trainerId: string, startTime: Date, endTime: Date, excludeId?: string): Promise<SlotEntity | null>;
      hasActiveOrRecentBooking(userAId: string, userBId: string, gracePeriodLimit: Date): Promise<boolean>;
-     /** Returns trainers the user has an active or grace-period booking with.
-      *  Grace period: session ended less than 24 hours ago. */
      findActiveChatPartners(userId: string, gracePeriodLimit: Date): Promise<IChatPartner[]>;
      findActiveChatPartnersForTrainer(trainerId: string, gracePeriodLimit: Date): Promise<IChatPartner[]>;
      getClientSessionHistory(trainerId: string, clientId: string): Promise<SlotEntity[]>;
+     countActiveSessions(): Promise<number>;
 }
 
 export interface IAggregateSlot{
@@ -54,15 +51,13 @@ export interface ISlotWithTrainer {
 }
 
 export interface ITrainerParticipantRow {
-  slotId: Types.ObjectId;
-  startTime: Date;
-  type: string;
-  status:string;
-  userId: Types.ObjectId;
+  userId: string;
   firstName: string;
   lastName: string;
   email: string;
   profileImage?: string;
+  totalBookedSlots: number;
+  lastSessionTime: Date;
 }
 
 export interface ITrainerParticipantsResult {

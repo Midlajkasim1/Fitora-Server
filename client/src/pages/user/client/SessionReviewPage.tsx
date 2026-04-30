@@ -52,7 +52,7 @@ const SessionReviewPage = () => {
             });
             toast.success("Thank you for your feedback!");
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Failed to submit review");
+            // Error is handled by global interceptor
         } finally {
             setIsSubmittingReview(false);
         }
@@ -73,12 +73,13 @@ const SessionReviewPage = () => {
             await createIncidentReport({
                 reportedId: accessData.reportedId || slotId || '',
                 type: reportType,
-                description: reportDetails
+                description: reportDetails,
+                sessionId: accessData.bookingId
             });
             toast.success("Report submitted. Our team will investigate.");
             setReportDetails('');
         } catch (error: any) {
-            toast.error(error.response?.data?.message || "Failed to submit report");
+            // Error is handled by global interceptor
         } finally {
             setIsSubmittingReport(false);
         }

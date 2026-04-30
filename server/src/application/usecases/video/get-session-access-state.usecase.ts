@@ -1,29 +1,19 @@
 import { IBookingRepository } from "@/domain/interfaces/repositories/booking.repository";
 import { ISlotRepository } from "@/domain/interfaces/repositories/slot.repository";
-import { AttendanceStatus, SlotStatus, MIN_SUCCESS_THRESHOLD } from "@/domain/constants/session.constants";
+import { AttendanceStatus, SlotStatus } from "@/domain/constants/session.constants";
 
-export interface SessionAccessStateRequest {
-    slotId: string;
-    userId: string;
-}
+import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { SessionAccessStateRequestDTO } from "@/application/dto/video/request/get-session-access-state.dto";
+import { SessionAccessStateResponseDTO } from "@/application/dto/video/response/get-session-access-state.dto";
 
-export interface SessionAccessStateResponse {
-    showReview: boolean;
-    canJoin: boolean;
-    bookingId?: string;
-    reportedId?: string;
-}
-
-
-
-export class GetSessionAccessStateUseCase {
+export class GetSessionAccessStateUseCase implements IBaseUseCase<SessionAccessStateRequestDTO, SessionAccessStateResponseDTO> {
     constructor(
         private readonly _slotRepository: ISlotRepository,
         private readonly _bookingRepository: IBookingRepository
     ) {}
 
-    async execute(request: SessionAccessStateRequest): Promise<SessionAccessStateResponse> {
-        const { slotId, userId } = request;
+    async execute(dto: SessionAccessStateRequestDTO): Promise<SessionAccessStateResponseDTO> {
+        const { slotId, userId } = dto;
         const slot = await this._slotRepository.findById(slotId);
         const booking = await this._bookingRepository.findBySlotIdAndUserId(slotId, userId);
 

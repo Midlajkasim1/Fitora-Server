@@ -59,16 +59,21 @@ export class BookSlotUseCase implements IBaseUseCase<BookSlotRequestDTO,BookSlot
             throw new Error(SLOT_MESSAGES.ALREADY_BOOKED);
         }
 
-        // Create a Booking document to track attendance
+        // Calculate Credit Value at Purchase (Price in INR * 100 / sessionCredits)
+        const planPrice = Number(plan.price) || 0;
+        const creditValueInPaise = plan.sessionCredits > 0 
+            ? Math.round((planPrice * 100) / plan.sessionCredits) 
+            : 0;
+
+        // Create a Booking document to track attendance and financial state
         await this._bookingRepository.create(new BookingEntity({
             slotId: dto.slotId,
             userId: dto.userId,
             cumulativeMinutes: 0,
-            attendanceStatus: AttendanceStatus.PENDING
+            attendanceStatus: AttendanceStatus.PENDING,
+            creditValueAtPurchase: creditValueInPaise,
+            sessionType: slot.type as string
         }));
-
-        // Increment used credits in subscription
-        await this._subscriptionRepository.incrementUsedCredit(subscription.id!);
 
         const startTime = new Date(slot.startTime).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
         await this._notificationService.notify(slot.trainerId, {

@@ -17,10 +17,6 @@ export const useStartSession = () => {
             toast.success("Session started! Redirecting to call...");
             queryClient.invalidateQueries({ queryKey: ["trainerUpcomingSlots"] });
             navigate(`/video-call/${slotId}`);
-        },
-        onError: (error: any) => {
-            const message = error.response?.data?.message || "Failed to start session";
-            toast.error(message);
         }
     });
 };

@@ -28,6 +28,5 @@ export const ChatMessageSchema = new Schema(
   { timestamps: true }
 );
 
-// Compound index for fast conversation queries
 ChatMessageSchema.index({ senderId: 1, receiverId: 1, createdAt: -1 });
 ChatMessageSchema.index({ receiverId: 1, senderId: 1, createdAt: -1 });

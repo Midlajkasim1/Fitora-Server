@@ -12,7 +12,6 @@ export class SlotRepository extends BaseRepository<SlotEntity, ISlotDocument> im
         super(SlotModel as unknown as Model<ISlotDocument>, _slotMapper);
     }
 
-    // ── Specialized Slot Methods ──────────────────────────────────────────────
 
     async findByTrainerAndPeriod(trainerId: string, start: Date, end: Date): Promise<SlotEntity[]> {
         const docs = await SlotModel.find({
@@ -463,5 +462,9 @@ export class SlotRepository extends BaseRepository<SlotEntity, ISlotDocument> im
             }
         ]);
         return result as IChatPartner[];
+    }
+
+    async countActiveSessions(): Promise<number> {
+        return await SlotModel.countDocuments({ status: SlotStatus.LIVE });
     }
 }

@@ -1,26 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getTrainerWallet, requestPayout } from "../../api/trainer.api";
-import { useNotify } from "../common/use-notify";
+import toast from "react-hot-toast";
 
-export const useTrainerWallet = () => {
+export const useTrainerWallet = (page: number = 1, limit: number = 10) => {
   return useQuery({
-    queryKey: ["trainerWallet"],
-    queryFn: getTrainerWallet,
+    queryKey: ["trainerWallet", page, limit],
+    queryFn: () => getTrainerWallet(page, limit),
   });
 };
 
 export const useRequestPayout = () => {
   const queryClient = useQueryClient();
-  const { notify } = useNotify();
 
   return useMutation({
     mutationFn: (amount: number) => requestPayout(amount),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["trainerWallet"] });
-      notify("Payout request submitted successfully", "success");
-    },
-    onError: (error: any) => {
-      notify(error.response?.data?.message || "Failed to submit payout request", "error");
+      toast.success("Payout request submitted successfully");
     },
   });
 };

@@ -13,6 +13,7 @@ import { initSocketEmitter } from "@/infrastructure/providers/socket/socket-emit
 import { SocketChatService } from "@/infrastructure/providers/socket/socket-chat.service";
 import { SocketVideoService } from "@/infrastructure/providers/socket/socket-video.service";
 import { chatUseCases } from "@/infrastructure/di/chat/chat.di";
+import { socketAuthMiddleware } from "@/infrastructure/providers/socket/socket-auth.middleware";
 
 const PORT = env.PORT || 4000;
 
@@ -41,7 +42,7 @@ const startServer = async () => {
 
   // ── Step 2: Global Notification & Identity Room Joining
   // Ensures every connected socket joins a room named after their userId
-  io.use(require("@/infrastructure/providers/socket/socket-auth.middleware").socketAuthMiddleware);
+  io.use(socketAuthMiddleware);
   io.on("connection", (socket) => {
      const { userId } = socket.data.user;
      if (userId) {

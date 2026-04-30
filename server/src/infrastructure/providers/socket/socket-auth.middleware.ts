@@ -40,7 +40,7 @@ export const socketAuthMiddleware = (
     socket.data.user = payload;
     logger.info(`[Socket Auth] Authenticated: userId=${payload.userId}`);
     next();
-  } catch (error) {
+  } catch {
     logger.warn(`[Socket Auth] Invalid token — connection rejected (${socket.id})`);
     next(new Error("Unauthorized: Invalid or expired token"));
   }

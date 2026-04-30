@@ -9,12 +9,12 @@ import { ChangePasswordRequest } from "@/application/dto/user/request/change-pas
 import { ChangePasswordResponse } from "@/application/dto/user/response/change-password.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
-import { AUTH_MESSAGES, TRAINER_MESSAGES } from "@/domain/constants/messages.constants";
+import { AUTH_MESSAGES, TRAINER_MESSAGES, FINANCE_MESSAGES } from "@/domain/constants/messages.constants";
 import { changePasswordSchema } from "@/infrastructure/validators/user/change-password.validator";
 import { updateTrainerProfileSchema } from "@/infrastructure/validators/user/trainer/trainer-profile.validator";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
-import { TrainerWalletResponse } from "@/application/usecases/trainer/get-trainer-wallet.usecase";
+import { TrainerWalletResponse, GetTrainerWalletRequest } from "@/application/usecases/trainer/get-trainer-wallet.usecase";
 import { RequestPayoutDTO } from "@/application/usecases/trainer/request-payout.usecase";
 
 
@@ -25,7 +25,7 @@ export class TrainerController {
         private readonly _uploadTrainerImageUseCase: IBaseUseCase<UploadTrainerImageRequest, UploadTrainerImageResponse, UploadFileDTO>,
         private readonly _updateTrainerProfileUseCase: IBaseUseCase<UpdateTrainerProfileRequest, UpdateTrainerProfileResponseDTO>,
         private readonly _changePasswordUseCase: IBaseUseCase<ChangePasswordRequest, ChangePasswordResponse>,
-        private readonly _getTrainerWalletUseCase: IBaseUseCase<string, TrainerWalletResponse>,
+        private readonly _getTrainerWalletUseCase: IBaseUseCase<GetTrainerWalletRequest, TrainerWalletResponse>,
         private readonly _requestPayoutUseCase: IBaseUseCase<RequestPayoutDTO, void>
     ) { }
     async getTrainerDashboard(req: Request, res: Response): Promise<Response> {
@@ -101,7 +101,11 @@ export class TrainerController {
         if (!trainerId) {
             return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
-        const walletData = await this._getTrainerWalletUseCase.execute(trainerId);
+        
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+        
+        const walletData = await this._getTrainerWalletUseCase.execute({ trainerId, page, limit });
         return res.status(HttpStatus.OK).json(ApiResponse.success(walletData));
     }
 
@@ -112,6 +116,6 @@ export class TrainerController {
         }
         const { amount } = req.body;
         await this._requestPayoutUseCase.execute({ trainerId, amount });
-        return res.status(HttpStatus.OK).json(ApiResponse.success(null, "Payout request submitted successfully"));
+        return res.status(HttpStatus.OK).json(ApiResponse.success(null, FINANCE_MESSAGES.PAYOUT_SUBMITTED));
     }
 }

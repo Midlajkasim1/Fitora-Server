@@ -2,10 +2,11 @@ import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.re
 import { ITransactionRepository } from "@/domain/interfaces/repositories/transaction.repository";
 import { TransactionType } from "@/domain/entities/transaction/transaction.entity";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 
 export interface TrainerWalletResponse {
     walletBalance: number;
-    recentTransactions: {
+    transactions: {
         id: string;
         amount: number;
         type: TransactionType;
@@ -13,33 +14,52 @@ export interface TrainerWalletResponse {
         description: string;
         createdAt: Date;
     }[];
+    pagination: {
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+    };
 }
 
-export class GetTrainerWalletUseCase implements IBaseUseCase<string, TrainerWalletResponse> {
+export interface GetTrainerWalletRequest {
+    trainerId: string;
+    page: number;
+    limit: number;
+}
+
+export class GetTrainerWalletUseCase implements IBaseUseCase<GetTrainerWalletRequest, TrainerWalletResponse> {
     constructor(
         private readonly _trainerRepository: ITrainerRepository,
         private readonly _transactionRepository: ITransactionRepository
     ) {}
 
-    async execute(trainerId: string): Promise<TrainerWalletResponse> {
+    async execute(request: GetTrainerWalletRequest): Promise<TrainerWalletResponse> {
+        const { trainerId, page, limit } = request;
+        
         const trainer = await this._trainerRepository.findByTrainerId(trainerId);
         if (!trainer) {
-            throw new Error("Trainer not found");
+            throw new Error(AUTH_MESSAGES.TRAINER_ID_NOT_FOUND);
         }
 
-        // Fetch recent transactions for this trainer
-        const transactions = await this._transactionRepository.findByUserId(trainerId);
+        const { data: transactions, total } = await this._transactionRepository.findPaginatedByUserId(trainerId, { page, limit });
 
         return {
             walletBalance: trainer.walletBalance,
-            recentTransactions: transactions.slice(0, 10).map(tx => ({
+            transactions: transactions.map(tx => ({
                 id: tx.id!,
                 amount: tx.amount,
                 type: tx.type,
                 status: tx.status,
                 description: tx.description,
                 createdAt: tx.createdAt!
-            }))
+            })),
+            pagination: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit)
+            }
         };
     }
 }

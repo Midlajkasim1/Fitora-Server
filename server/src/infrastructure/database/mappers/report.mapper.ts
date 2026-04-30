@@ -10,6 +10,7 @@ export interface IReportDocument {
     type: ReportType;
     status: ReportStatus;
     description: string;
+    sessionId?: string;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -23,6 +24,7 @@ export class ReportMapper implements IMapper<ReportEntity, IReportDocument> {
             type: doc.type,
             status: doc.status,
             description: doc.description,
+            sessionId: doc.sessionId,
             createdAt: doc.createdAt,
             updatedAt: doc.updatedAt
         });
@@ -34,7 +36,8 @@ export class ReportMapper implements IMapper<ReportEntity, IReportDocument> {
             reportedId: new Types.ObjectId(entity.reportedId),
             type: entity.type,
             status: entity.status,
-            description: entity.description
+            description: entity.description,
+            sessionId: entity.sessionId
         };
     }
 }

@@ -7,7 +7,7 @@ import { CreateAdvertismentResponse } from "@/application/dto/advertisement/resp
 import { GetAdvertisementByIdResponse } from "@/application/dto/advertisement/response/get-advertisementById.dto";
 import { GetAllAdvertismentResponse } from "@/application/dto/advertisement/response/get-allAdvertisment.dto";
 import { UpdateAdvertismentResponse } from "@/application/dto/advertisement/response/update-advetisement.dto";
-import {UpdateStatusAdvertisementResponseDTO } from "@/application/dto/advertisement/response/updateStatus-advertisment.dto";
+import { UpdateStatusAdvertisementResponseDTO } from "@/application/dto/advertisement/response/updateStatus-advertisment.dto";
 import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer-upload-file.dto";
 import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { AdvertisementStatus } from "@/domain/constants/advertisment.constants";
@@ -19,70 +19,70 @@ import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
 
 
-export class AdvertisementController{
+export class AdvertisementController {
     constructor(
-        private readonly _createAdvertisementUseCase: IBaseUseCase<CreateAdvertismentRequest,CreateAdvertismentResponse,UploadFileDTO[]>,
-        private readonly _updateAdvertisementUseCase: IBaseUseCase<UpdateAdvertismentRequest,UpdateAdvertismentResponse,UploadFileDTO[]>,
-        private readonly _getAllAdvertisementUseCase: IBaseUseCase<GetAllAdvertismentRequest,GetAllAdvertismentResponse>,
-        private readonly _updateStatusAdvertisementUseCase: IBaseUseCase<UpdateStatusAdvertisementRequestDTO,UpdateStatusAdvertisementResponseDTO>,
-        private readonly _getAdvertisementByIdUseCase: IBaseUseCase<GetAdvertisementByIdRequest,GetAdvertisementByIdResponse>
-    ){}
-    async createAdvertisement(req:Request,res:Response):Promise<Response>{
+        private readonly _createAdvertisementUseCase: IBaseUseCase<CreateAdvertismentRequest, CreateAdvertismentResponse, UploadFileDTO[]>,
+        private readonly _updateAdvertisementUseCase: IBaseUseCase<UpdateAdvertismentRequest, UpdateAdvertismentResponse, UploadFileDTO[]>,
+        private readonly _getAllAdvertisementUseCase: IBaseUseCase<GetAllAdvertismentRequest, GetAllAdvertismentResponse>,
+        private readonly _updateStatusAdvertisementUseCase: IBaseUseCase<UpdateStatusAdvertisementRequestDTO, UpdateStatusAdvertisementResponseDTO>,
+        private readonly _getAdvertisementByIdUseCase: IBaseUseCase<GetAdvertisementByIdRequest, GetAdvertisementByIdResponse>
+    ) { }
+    async createAdvertisement(req: Request, res: Response): Promise<Response> {
         const dto = CreateAdvertisementSchema.parse(req.body);
         const files = req.files as Express.Multer.File[];
-        if(!files || files.length ===0){
-            return res.status(HttpStatus.BAD_REQUEST).json({message:ADVERTISEMENT_MESSAGES.NO_IMAGES_UPLOADED});
+        if (!files || files.length === 0) {
+            return res.status(HttpStatus.BAD_REQUEST).json(ApiResponse.error(ADVERTISEMENT_MESSAGES.NO_IMAGES_UPLOADED));
         }
-       const uploadFiles:UploadFileDTO[]=files.map(file=>({
-         buffer:file.buffer,
-        originalname:file.originalname,
-        mimetype:file.mimetype,
-        size:file.size
-        
-       }));
-        const result = await this._createAdvertisementUseCase.execute(dto,uploadFiles);
-        return res.status(HttpStatus.OK).json(ApiResponse.success(result,ADVERTISEMENT_MESSAGES.ADS_CREATED));
+        const uploadFiles: UploadFileDTO[] = files.map(file => ({
+            buffer: file.buffer,
+            originalname: file.originalname,
+            mimetype: file.mimetype,
+            size: file.size
+
+        }));
+        const result = await this._createAdvertisementUseCase.execute(dto, uploadFiles);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result, ADVERTISEMENT_MESSAGES.ADS_CREATED));
     }
-    async updateAdvertisement(req:Request,res:Response):Promise<Response>{
-   const updateinput = {
-    ...req.body,
-    id:req.params.id
-   };
-   const validatedData = UpdateAdvertisementSchema.parse(updateinput);
-   const dto = new UpdateAdvertismentRequest(validatedData);
-   const files = req.files as Express.Multer.File[];
-   const uploadfiles = files?.map(file=>({
-    buffer:file.buffer,
-    originalname:file.originalname,
-    mimetype:file.mimetype,
-    size:file.size
-   }));
-   const result = await this._updateAdvertisementUseCase.execute(dto,uploadfiles);
-   return res.status(HttpStatus.OK).json(ApiResponse.success(result,ADVERTISEMENT_MESSAGES.ADS_UPDATED));
+    async updateAdvertisement(req: Request, res: Response): Promise<Response> {
+        const updateinput = {
+            ...req.body,
+            id: req.params.id
+        };
+        const validatedData = UpdateAdvertisementSchema.parse(updateinput);
+        const dto = new UpdateAdvertismentRequest(validatedData);
+        const files = req.files as Express.Multer.File[];
+        const uploadfiles = files?.map(file => ({
+            buffer: file.buffer,
+            originalname: file.originalname,
+            mimetype: file.mimetype,
+            size: file.size
+        }));
+        const result = await this._updateAdvertisementUseCase.execute(dto, uploadfiles);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result, ADVERTISEMENT_MESSAGES.ADS_UPDATED));
     }
- async  getAllAdvertisement(req:Request,res:Response):Promise<Response>{
-    const dto = new GetAllAdvertismentRequest({
-        page:Number(req.query.number) || 1,
-        limit:Number(req.query.limit) || 10,
-        search:req.query.search as string,
-        status:req.query.status as AdvertisementStatus
-    });
-    const result = await this._getAllAdvertisementUseCase.execute(dto);
-    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
- }
- async updateStatusAdvertisement(req:Request,res:Response):Promise<Response>{
+    async getAllAdvertisement(req: Request, res: Response): Promise<Response> {
+        const dto = new GetAllAdvertismentRequest({
+            page: Number(req.query.number) || 1,
+            limit: Number(req.query.limit) || 10,
+            search: req.query.search as string,
+            status: req.query.status as AdvertisementStatus
+        });
+        const result = await this._getAllAdvertisementUseCase.execute(dto);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
+    }
+    async updateStatusAdvertisement(req: Request, res: Response): Promise<Response> {
 
 
-    const dto = new UpdateStatusAdvertisementRequestDTO({
-        adId:req.params.adId
-    });
-    const result = await this._updateStatusAdvertisementUseCase.execute(dto);
-    return res.status(HttpStatus.OK).json(ApiResponse.success(result,ADVERTISEMENT_MESSAGES.ADVERTISEMENT_STATUS_UPDATED(result.status)));
- };
- async getAdvertisementById(req:Request,res:Response):Promise<Response>{
-    const dto =new GetAdvertisementByIdRequest({adId:req.params.id});
-    const result = await this._getAdvertisementByIdUseCase.execute(dto);
-    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
+        const dto = new UpdateStatusAdvertisementRequestDTO({
+            adId: req.params.adId
+        });
+        const result = await this._updateStatusAdvertisementUseCase.execute(dto);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result, ADVERTISEMENT_MESSAGES.ADVERTISEMENT_STATUS_UPDATED(result.status)));
+    };
+    async getAdvertisementById(req: Request, res: Response): Promise<Response> {
+        const dto = new GetAdvertisementByIdRequest({ adId: req.params.id });
+        const result = await this._getAdvertisementByIdUseCase.execute(dto);
+        return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
- }
+    }
 }

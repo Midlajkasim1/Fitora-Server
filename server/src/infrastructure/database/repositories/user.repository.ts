@@ -119,10 +119,44 @@ async updateUserProfile(user: UserEntity): Promise<UserEntity | null> {
   if(!data)return null;
   return this.userMapper.toEntity(data);
 }
- async findPasswordById(userId: string): Promise<string | null> {
-   const user = await UserModel.findById(userId).select("+password").lean();
-   return user?.password  ?? null;
- }
+  async findPasswordById(userId: string): Promise<string | null> {
+    const user = await UserModel.findById(userId).select("+password").lean();
+    return user?.password  ?? null;
+  }
+
+  async countByRole(role: UserRole): Promise<number> {
+    return await UserModel.countDocuments({ role });
+  }
+
+  async countTotalUsers(): Promise<number> {
+    return await UserModel.countDocuments({ role: UserRole.USER });
+  }
+
+  async getMonthlyRegistrationStats(year: number): Promise<{ month: string; count: number; }[]> {
+    const startOfYear = new Date(year, 0, 1);
+    const endOfYear = new Date(year, 11, 31, 23, 59, 59);
+
+    return await UserModel.aggregate([
+      {
+        $match: {
+          role: UserRole.USER,
+          createdAt: { $gte: startOfYear, $lte: endOfYear }
+        }
+      },
+      {
+        $group: {
+          _id: { $dateToString: { format: "%Y-%m", date: "$createdAt" } },
+          count: { $sum: 1 }
+        }
+      },
+      {
+        $project: {
+          _id: 0,
+          month: "$_id",
+          count: 1
+        }
+      },
+      { $sort: { month: 1 } }
+    ]);
+  }
 }
-
-

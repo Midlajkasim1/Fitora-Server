@@ -1,47 +1,69 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { AdminLayout } from "../../layout/admin/AdminLayout";
 import { DataTable } from "../../components/admin/DataTable";
 import { ManagementHeader } from "../../components/admin/ManagementHeader";
 import { Pagination } from "../../components/admin/Pagination";
 import { 
-    TrendingUp, 
-    TrendingDown, 
-    DollarSign, 
+    IndianRupee, 
     Activity, 
-    PieChart, 
-    Users,
     Download,
-    ArrowUpRight,
-    ArrowDownRight
+    Check,
+    X,
+    CreditCard
 } from "lucide-react";
 import { 
-    useFinanceOverview, 
+    useAdminDashboardStats,
     useRecentTransactions,
-    exportFinanceReport
+    exportFinanceReport,
+    useHandlePayout
 } from "../../hooks/admin/use-admin-finance-management";
 import { useDebounce } from "../../hooks/admin/use-debounce";
 import { motion } from "framer-motion";
-import React from "react";
+import { 
+    AreaChart, 
+    Area, 
+    XAxis, 
+    YAxis, 
+    CartesianGrid, 
+    Tooltip, 
+    ResponsiveContainer
+} from "recharts";
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 export default function FinanceManagement() {
+    const [year, setYear] = useState(new Date().getFullYear());
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 500);
     
-    const { data: overview, isLoading: isOverviewLoading } = useFinanceOverview();
+    const { data: stats, isLoading: isStatsLoading } = useAdminDashboardStats(year);
     const { data: transactionsData, isLoading: isTableLoading } = useRecentTransactions({
         page,
         search: debouncedSearch,
         limit: 10
     });
+    const { mutate: handlePayout, isPending: isHandlingPayout } = useHandlePayout();
 
     const transactions = transactionsData?.transactions ?? [];
     const total = transactionsData?.total ?? 0;
 
+    const formattedFinancialData = useMemo(() => {
+        if (!stats?.financialStats) return [];
+        return MONTHS.map((month, index) => {
+            const monthStr = `${year}-${String(index + 1).padStart(2, '0')}`;
+            const monthData = stats.financialStats.find((s: any) => s.month === monthStr);
+            return {
+                name: month,
+                revenue: monthData?.totalRevenue || 0,
+                profit: monthData?.totalProfit || 0
+            };
+        });
+    }, [stats, year]);
+
     const exportReport = () => {
-        const now = new Date();
-        const start = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-        const end = now.toISOString();
+        const start = new Date(year, 0, 1).toISOString();
+        const end = new Date(year, 11, 31).toISOString();
         exportFinanceReport(start, end);
     };
 
@@ -58,7 +80,7 @@ export default function FinanceManagement() {
             header: "Entity",
             render: (tx: any) => (
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 italic font-black text-[#00ff94] text-xs">
+                    <div className="w-8 h-8 rounded-lg bg-[#00ff94]/10 flex items-center justify-center border border-[#00ff94]/20 italic font-black text-[#00ff94] text-xs">
                         {tx.entityName?.charAt(0) || "F"}
                     </div>
                     <div>
@@ -79,12 +101,13 @@ export default function FinanceManagement() {
         {
             header: "Amount",
             render: (tx: any) => {
-                const isPositive = tx.amount > 0;
+                const isExpense = tx.type === "Session Payout" || tx.type === "Withdrawal";
+                const isPositive = !isExpense && tx.amount > 0;
                 return (
                     <div className={`flex items-center gap-1 font-black italic tracking-tighter ${
                         isPositive ? 'text-[#00ff94]' : 'text-rose-500'
                     }`}>
-                        {isPositive ? '+' : ''}${Math.abs(tx.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        {isPositive ? '+' : '-'}₹{Math.abs(tx.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </div>
                 );
             }
@@ -100,6 +123,34 @@ export default function FinanceManagement() {
                     <span className="text-[9px] font-black uppercase text-gray-400">{tx.status}</span>
                 </div>
             )
+        },
+        {
+            header: "Actions",
+            render: (tx: any) => {
+                if (tx.type === "Withdrawal" && tx.status === "Pending") {
+                    return (
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => handlePayout({ id: tx.id, status: 'Success' })}
+                                disabled={isHandlingPayout}
+                                className="p-2 rounded-lg bg-[#00ff94]/10 text-[#00ff94] hover:bg-[#00ff94] hover:text-black transition-all"
+                                title="Approve Payout"
+                            >
+                                <Check size={14} />
+                            </button>
+                            <button
+                                onClick={() => handlePayout({ id: tx.id, status: 'Failed' })}
+                                disabled={isHandlingPayout}
+                                className="p-2 rounded-lg bg-rose-500/10 text-rose-500 hover:bg-rose-500 hover:text-white transition-all"
+                                title="Reject Payout"
+                            >
+                                <X size={14} />
+                            </button>
+                        </div>
+                    );
+                }
+                return <span className="text-[10px] text-gray-700 italic">No Action</span>;
+            }
         }
     ];
 
@@ -120,131 +171,95 @@ export default function FinanceManagement() {
                         className="flex items-center gap-2 px-6 py-3 bg-[#00ff94] text-black font-black uppercase italic text-xs rounded-xl hover:scale-105 transition-all shadow-[0_0_20px_rgba(0,255,148,0.2)]"
                     >
                         <Download size={14} />
-                        Generate Report
+                        Export Report
                     </button>
                 </header>
 
-                {/* Growth Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                {/* Stats Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <StatCard 
-                        title="Total Profit" 
-                        value={overview?.summary?.totalProfit || 0}
-                        growth={overview?.summary?.growth?.profit || 0}
-                        icon={<DollarSign size={20} />}
+                        title="Total Revenue" 
+                        value={stats?.statsCards?.totalRevenue || 0}
+                        icon={<IndianRupee size={20} />}
                         isCurrency
+                        delay={0.1}
                     />
                     <StatCard 
-                        title="Ad Revenue" 
-                        value={overview?.summary?.adRevenue || 0}
-                        growth={overview?.summary?.growth?.revenue || 0}
-                        icon={<Activity size={20} />}
-                        isCurrency
+                        title="Total Subscriptions" 
+                        value={stats?.statsCards?.totalSubscriptions || 0}
+                        icon={<CreditCard size={20} />}
+                        delay={0.2}
                     />
-                    <StatCard 
-                        title="Platform Commission" 
-                        value={overview?.summary?.commissionEarnings || 0}
-                        growth={overview?.summary?.growth?.commission || 0}
-                        icon={<PieChart size={20} />}
-                        isCurrency
-                    />
-                    <StatCard 
-                        title="Trainer Earnings" 
-                        value={overview?.summary?.trainerEarnings || 0}
-                        growth={overview?.summary?.growth?.trainerEarnings || 0}
-                        icon={<Users size={20} />}
-                        isCurrency
-                    />
+                    {stats?.statsCards?.planStats?.map((plan: any, index: number) => (
+                        <StatCard 
+                            key={plan.name}
+                            title={`${plan.name} Plan`} 
+                            value={plan.count}
+                            icon={<Activity size={20} />}
+                            delay={0.3 + index * 0.1}
+                        />
+                    ))}
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    {/* Revenue Trends Placeholder */}
-                    <div className="lg:col-span-2 bg-[#0b1b16] border border-white/5 p-8 rounded-[2rem] relative overflow-hidden h-[400px]">
-                         <div className="flex justify-between items-start mb-8">
-                             <div>
-                                 <p className="text-[10px] font-black uppercase tracking-widest text-[#00ff94] italic mb-1">Revenue Overview</p>
-                                 <h3 className="text-2xl font-black text-white italic tracking-tight">Analytics Trends</h3>
-                             </div>
-                             <div className="flex gap-4">
-                                <div className="flex items-center gap-2 text-[9px] uppercase font-bold text-gray-500 italic">
-                                    <div className="w-2 h-2 rounded-full bg-[#00ff94]" /> Commission
-                                </div>
-                                <div className="flex items-center gap-2 text-[9px] uppercase font-bold text-gray-500 italic">
-                                    <div className="w-2 h-2 rounded-full bg-blue-500" /> Ad Revenue
-                                </div>
-                             </div>
-                         </div>
-                         
-                         {/* Simple SVG Chart Replacement for Recharts */}
-                         <div className="w-full h-[250px] mt-10 relative flex items-end justify-between px-4">
-                            {[1,2,3,4,5,6,7].map((i) => (
-                                <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
-                                    <div className="w-full flex items-end justify-center gap-1 h-full px-2">
-                                        <div 
-                                            className="w-full bg-[#00ff94]/20 border border-[#00ff94]/30 rounded-t-lg transition-all group-hover:bg-[#00ff94]/40"
-                                            style={{ height: `${Math.random() * 80 + 20}%` }}
-                                        />
-                                        <div 
-                                            className="w-full bg-blue-500/20 border border-blue-500/30 rounded-t-lg transition-all group-hover:bg-blue-500/40"
-                                            style={{ height: `${Math.random() * 60 + 10}%` }}
-                                        />
-                                    </div>
-                                    <span className="text-[8px] font-bold text-gray-600 uppercase">Day {i}</span>
-                                </div>
-                            ))}
-                            {/* Grid Lines */}
-                            <div className="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-5">
-                                {[1,2,3,4].map(i => <div key={i} className="w-full h-px bg-white" />)}
-                            </div>
-                         </div>
-                    </div>
-
-                    {/* Subscription Amount Card */}
-                    <div className="bg-[#0b1b16] border border-white/5 p-8 rounded-[2rem] flex flex-col justify-between relative overflow-hidden">
+                {/* Revenue Analytics Chart */}
+                <div className="bg-[#0b1b16] border border-white/5 p-8 rounded-[2rem] relative overflow-hidden h-[450px]">
+                    <div className="flex justify-between items-start mb-8">
                         <div>
-                             <p className="text-[10px] font-black uppercase tracking-widest text-[#00ff94] italic mb-1">Subscriptions</p>
-                             <h3 className="text-2xl font-black text-white italic tracking-tight">Revenue Split</h3>
+                            <p className="text-[10px] font-black uppercase tracking-widest text-[#00ff94] italic mb-1">Revenue Overview</p>
+                            <h3 className="text-2xl font-black text-white italic tracking-tight">Analytics Trends</h3>
                         </div>
-
-                        <div className="space-y-6 my-8">
-                            <div className="space-y-2">
-                                <div className="flex justify-between items-end">
-                                    <span className="text-[10px] font-bold text-gray-400 uppercase italic">Premium Plans</span>
-                                    <span className="text-lg font-black text-[#00ff94] italic">${overview?.subscriptionSplit?.premium.toLocaleString()}</span>
-                                </div>
-                                <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                                    <div 
-                                        className="h-full bg-[#00ff94] shadow-[0_0_10px_rgba(0,255,148,0.5)] transition-all duration-1000"
-                                        style={{ width: `${(overview?.subscriptionSplit?.premium / overview?.subscriptionSplit?.total) * 100 || 0}%` }}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <div className="flex justify-between items-end">
-                                    <span className="text-[10px] font-bold text-gray-400 uppercase italic">Basic Plans</span>
-                                    <span className="text-lg font-black text-white italic">${overview?.subscriptionSplit?.basic.toLocaleString()}</span>
-                                </div>
-                                <div className="h-2 bg-white/5 rounded-full overflow-hidden">
-                                    <div 
-                                        className="h-full bg-white/20 transition-all duration-1000"
-                                        style={{ width: `${(overview?.subscriptionSplit?.basic / overview?.subscriptionSplit?.total) * 100 || 0}%` }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="p-6 bg-white/5 rounded-[1.5rem] border border-white/5 text-center">
-                            <p className="text-[9px] font-bold text-gray-500 uppercase tracking-widest mb-1 italic">Monthly Subscription Revenue</p>
-                            <h4 className="text-3xl font-black text-white italic tracking-tighter">${overview?.subscriptionSplit?.total.toLocaleString()}</h4>
-                        </div>
+                        <select 
+                            value={year}
+                            onChange={(e) => setYear(Number(e.target.value))}
+                            className="bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-white font-bold italic text-xs appearance-none focus:outline-none"
+                        >
+                            {[2024, 2025, 2026].map(y => (
+                                <option key={y} value={y} className="bg-[#0b1b16]">{y}</option>
+                            ))}
+                        </select>
+                    </div>
+                    
+                    <div className="w-full h-[300px]">
+                        <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart data={formattedFinancialData}>
+                                <defs>
+                                    <linearGradient id="colorRev" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#00ff94" stopOpacity={0.3}/>
+                                        <stop offset="95%" stopColor="#00ff94" stopOpacity={0}/>
+                                    </linearGradient>
+                                </defs>
+                                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.05)" />
+                                <XAxis 
+                                    dataKey="name" 
+                                    axisLine={false} 
+                                    tickLine={false} 
+                                    tick={{ fill: '#6b7280', fontSize: 10, fontWeight: 700 }}
+                                />
+                                <YAxis 
+                                    axisLine={false} 
+                                    tickLine={false} 
+                                    tick={{ fill: '#6b7280', fontSize: 10, fontWeight: 700 }}
+                                />
+                                <Tooltip content={<CustomTooltip />} />
+                                <Area 
+                                    type="monotone" 
+                                    dataKey="revenue" 
+                                    stroke="#00ff94" 
+                                    strokeWidth={3}
+                                    fillOpacity={1} 
+                                    fill="url(#colorRev)" 
+                                />
+                            </AreaChart>
+                        </ResponsiveContainer>
                     </div>
                 </div>
 
+                {/* Ledger Section */}
                 <div className="space-y-6">
                     <header className="flex justify-between items-center px-2">
                         <h3 className="text-xl font-black italic uppercase tracking-tight text-white flex items-center gap-3">
                             <Activity className="text-[#00ff94]" size={20} />
-                            Recent Transactions
+                            Transaction Ledger
                         </h3>
                     </header>
                     
@@ -270,8 +285,11 @@ export default function FinanceManagement() {
     );
 }
 
-const StatCard = ({ title, value, growth, icon, isCurrency }: { title: string, value: number, growth: number, icon: any, isCurrency?: boolean }) => (
+const StatCard = ({ title, value, icon, isCurrency, delay }: any) => (
     <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay }}
         whileHover={{ y: -5 }}
         className="bg-[#0b1b16] border border-white/5 p-6 rounded-[2rem] relative group"
     >
@@ -281,19 +299,23 @@ const StatCard = ({ title, value, growth, icon, isCurrency }: { title: string, v
                  <p className="text-[10px] font-black uppercase tracking-tight text-gray-500 italic leading-none">{title}</p>
             </div>
             <h3 className="text-3xl font-black text-white italic tracking-tighter pt-2">
-                {isCurrency ? '$' : ''}{value.toLocaleString(undefined, { minimumFractionDigits: 0 })}
+                {isCurrency ? '₹' : ''}{value.toLocaleString(undefined, { minimumFractionDigits: 0 })}
             </h3>
-            <div className="flex items-center gap-1 pt-1">
-                {growth >= 0 ? (
-                    <TrendingUp size={12} className="text-[#00ff94]" />
-                ) : (
-                    <TrendingDown size={12} className="text-rose-500" />
-                )}
-                <span className={`text-[10px] font-black italic tracking-wide ${growth >= 0 ? 'text-[#00ff94]' : 'text-rose-500'}`}>
-                    {growth > 0 ? '+' : ''}{growth}%
-                </span>
-                <span className="text-[9px] text-gray-600 font-bold uppercase tracking-tighter ml-1">vs last period</span>
-            </div>
         </div>
     </motion.div>
 );
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+        return (
+            <div className="bg-[#0b1b16] border border-white/10 p-4 rounded-xl shadow-2xl">
+                <p className="text-[10px] font-black text-gray-500 uppercase italic mb-2 tracking-widest">{label}</p>
+                <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 rounded-full bg-[#00ff94]" />
+                    <span className="text-xs font-bold text-white italic">Revenue: ₹{payload[0].value.toLocaleString()}</span>
+                </div>
+            </div>
+        );
+    }
+    return null;
+};

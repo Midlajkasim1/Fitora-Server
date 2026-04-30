@@ -42,7 +42,10 @@ export class UpdateTrainerProfileUseCase implements IBaseUseCase<UpdateTrainerPr
       experienceYear: dto.experience_year ?? trainerDetails.experienceYear,
       certifications: trainerDetails.certifications,
       specializations: trainerDetails.specializations,
-      approvalStatus: trainerDetails.approvalStatus
+      approvalStatus: trainerDetails.approvalStatus,
+      walletBalance: trainerDetails.walletBalance,
+      reviewCount: trainerDetails.reviewCount,
+      averageRating: trainerDetails.averageRating
     });
     await this._trainerRepository.save(updatedDetails);
   }
