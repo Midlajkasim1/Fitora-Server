@@ -3,8 +3,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Lock } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { UserHeader } from "../../../layout/client/ClientHeader";
-import { UserFooter } from "../../../layout/client/ClientFooter";
 import { useChangePassword } from "../../../hooks/user/use-user";
 
 
@@ -47,7 +45,6 @@ export default function ChangePassword() {
 
   return (
     <div className="min-h-screen bg-[#0d1f17] text-white flex flex-col font-sans">
-      <UserHeader />
 
       <main className="flex-1 pt-32 pb-20">
         <div className="max-w-xl mx-auto px-6">
@@ -130,7 +127,6 @@ export default function ChangePassword() {
         </div>
       </main>
 
-      <UserFooter />
     </div>
   );
 }

@@ -13,7 +13,7 @@ export const attachLogicToApi = (apiInstance: AxiosInstance) => {
 
       if (error.response?.status === 401 && !originalRequest._retry) {
         
-        const publicPages = ["/login", "/register", "/"];
+        const publicPages = ["/login", "/register", "/"];  
         if (publicPages.includes(window.location.pathname)) {
           return Promise.reject(error);
         }

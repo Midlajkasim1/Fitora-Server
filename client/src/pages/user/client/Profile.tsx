@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { User, Phone, Dumbbell, Target, Lock, Edit3,Receipt } from "lucide-react";
-import { UserHeader } from "../../../layout/client/ClientHeader";
 import { useUpdateUser, useUploadProfileImage, useUser } from "../../../hooks/user/use-user";
 import { ProfileField } from "../../../components/user/UserProfileInput";
-import { UserFooter } from "../../../layout/client/ClientFooter";
 import { useSpecializations } from "../../../hooks/user/use-specialization";
 import { useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -82,7 +80,6 @@ export default function UserProfile() {
 
   return (
     <div className="min-h-screen bg-[#0d1f17] text-white flex flex-col font-sans">
-      <UserHeader />
 
       <main className="flex-1 pt-32 pb-20">
         <div className="max-w-4xl mx-auto px-6">
@@ -264,7 +261,6 @@ export default function UserProfile() {
         </div>
       </main>
 
-      <UserFooter />
     </div>
   );
 }
