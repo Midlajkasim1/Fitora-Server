@@ -1,6 +1,6 @@
 import { Calendar, Users } from "lucide-react";
 import type { UpcomingSession } from "../../type/trainer.types";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface SessionCardProps {
   session: UpcomingSession;

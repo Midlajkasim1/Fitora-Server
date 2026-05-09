@@ -57,7 +57,7 @@ export const TrainerHeader = ({ onMenuClick }: { onMenuClick?: () => void }) => 
             onClick={onMenuClick}
             className="p-2 -ml-2 text-gray-400 hover:text-white lg:hidden transition-colors shrink-0"
           >
-            <Menu size={22} md:size={24} />
+            <Menu className="w-[22px] h-[22px] md:w-6 md:h-6" />
           </button>
           
           {/* Logo (Visible on mobile since sidebar is hidden) */}

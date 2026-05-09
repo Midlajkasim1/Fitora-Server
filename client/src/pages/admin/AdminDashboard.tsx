@@ -18,7 +18,7 @@ const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "
 
 export default function AdminDashboard() {
   const [year] = useState(new Date().getFullYear());
-  const { data: stats, isLoading } = useAdminDashboardStats(year);
+  const { data: stats } = useAdminDashboardStats(year);
 
   const formattedFinancialData = useMemo(() => {
     if (!stats?.financialStats) return [];

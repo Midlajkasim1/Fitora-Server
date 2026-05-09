@@ -10,6 +10,8 @@ export interface UpcomingSession {
 
 export interface TrainerDashboardData {
   totalClients: number;
+  monthlyEarnings?: number;
+  walletBalance?: number;
   upcomingSessions: UpcomingSession[];
 }
 

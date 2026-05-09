@@ -7,9 +7,7 @@ import {
   IndianRupee,
   AlertCircle,
   CheckCircle2,
-  XCircle,
-  ChevronLeft,
-  ChevronRight
+  XCircle
 } from 'lucide-react';
 import { useTrainerWallet, useRequestPayout } from '../../../hooks/trainer/use-trainer-wallet';
 import { GlobalLoader } from '../../../shared/GlobalLoader';
@@ -148,7 +146,7 @@ const TrainerWalletPage = () => {
                           <div className={`p-2.5 md:p-3 rounded-xl shrink-0 ${
                             tx.amount > 0 ? 'bg-emerald-500/10 text-emerald-500' : 'bg-amber-500/10 text-amber-500'
                           }`}>
-                            {tx.amount > 0 ? <ArrowUpRight size={18} md:size={20} /> : <ArrowDownLeft size={18} md:size={20} />}
+                            {tx.amount > 0 ? <ArrowUpRight size={18} /> : <ArrowDownLeft size={18} />}
                           </div>
                           <div className="min-w-0">
                             <p className="text-white text-xs md:text-sm font-black uppercase italic group-hover:text-[#00ff94] transition-colors truncate pr-2">

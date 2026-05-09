@@ -5,17 +5,14 @@ import {
     useUpdateReportStatus 
 } from "../../hooks/admin/use-admin-report-management";
 import { 
-    Clock, 
     Check, 
     X, 
-    Calendar,
     User,
     ExternalLink,
     AlertCircle,
     Info,
     ChevronLeft
 } from "lucide-react";
-import { motion } from "framer-motion";
 import { ConfirmModal } from "../../shared/ConfirmModal";
 import { useState } from "react";
 
@@ -225,7 +222,7 @@ export default function ReportDetails() {
     );
 }
 
-const UserCard = ({ label, name, image, role, isReported }: any) => (
+const UserCard = ({ label, name, image, isReported }: any) => (
     <div className="bg-black/20 border border-white/5 p-4 rounded-2xl flex items-center justify-between group hover:border-[#00ff94]/30 transition-all cursor-pointer">
         <div className="flex items-center gap-4">
             <div className={`w-12 h-12 rounded-xl border border-white/5 overflow-hidden flex items-center justify-center ${isReported ? 'bg-[#00ff94]/10 text-[#00ff94]' : 'bg-[#00ff94]/5 text-gray-500'}`}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowLeft, Calendar, ChevronDown, ChevronUp, Clock, Dumbbell, Flame, TrendingUp, Zap } from "lucide-react";
+import { ArrowLeft, Calendar, ChevronDown, ChevronUp, Clock, Dumbbell, Flame, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useGenerateWorkout, useWorkoutPlan } from "../../../../hooks/user/ai-workout&plan/use-ai-generate";
 import { PromptInput } from "../../../../components/user/ai-workout&diet/PromptInput";

@@ -7,7 +7,6 @@ import {
     LiveKitRoom, 
     RoomAudioRenderer,
     ControlBar,
-    GridLayout,
     ParticipantTile,
     useTracks,
     useRemoteParticipants,
@@ -165,9 +164,7 @@ const SmartVideoLayout = ({ role }: { role?: string }) => {
   const tracks = useTracks(
     [
       Track.Source.Camera,
-      Track.Source.ScreenShare,
-    ],
-    { onlyConsiderOnStage: false },
+    ]
   );
 
   const remoteParticipants = useRemoteParticipants();
@@ -204,7 +201,6 @@ const SmartVideoLayout = ({ role }: { role?: string }) => {
                         <VideoTrack 
                             trackRef={mainStageTrack} 
                             className="w-full h-full object-contain" 
-                            mirror={false}
                         />
                         
                         {/* Status Pin Overlay */}
@@ -251,7 +247,6 @@ const SmartVideoLayout = ({ role }: { role?: string }) => {
                             <VideoTrack 
                                 trackRef={trainerTrack} 
                                 className="w-full h-full object-cover" 
-                                mirror={true}
                             />
                             <div className="absolute top-3 right-3 bg-[#00ff94] p-1 rounded-md">
                                 <Maximize2 size={10} className="text-black" />
@@ -315,7 +310,6 @@ const SmartVideoLayout = ({ role }: { role?: string }) => {
                     <VideoTrack 
                         trackRef={trainerTrack} 
                         className="w-full h-full object-contain" 
-                        mirror={true}
                     />
                     <div className="absolute bottom-6 lg:bottom-10 left-6 lg:left-10 flex items-center gap-3 lg:gap-4 px-4 lg:px-5 py-2 lg:py-2.5 bg-black/60 backdrop-blur-2xl border border-white/10 rounded-3xl z-20 shadow-2xl">
                          <div className="w-2 lg:w-2.5 h-2 lg:h-2.5 bg-[#00ff94] rounded-full animate-pulse shadow-[0_0_15px_#00ff94]" />

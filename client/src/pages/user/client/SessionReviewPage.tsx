@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Star, AlertTriangle, CheckCircle2, LayoutDashboard, Loader2 } from 'lucide-react';
@@ -71,7 +71,7 @@ const SessionReviewPage = () => {
         setIsSubmittingReport(true);
         try {
             await createIncidentReport({
-                reportedId: accessData.reportedId || slotId || '',
+                reportedId: (accessData as any).reportedId || slotId || '',
                 type: reportType,
                 description: reportDetails,
                 sessionId: accessData.bookingId

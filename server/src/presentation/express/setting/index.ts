@@ -26,9 +26,7 @@ const startServer = async () => {
   );
   scheduler.init();
 
-  // ── Step 1: Initialize the SocketEmitter (Redis pub client only, no io needed).
-  // This populates the singleton so chatUseCases.sendMessageUseCase can use the
-  // socketEmitterProxy safely once io is ready.
+
   initSocketEmitter();
 
   const httpServer = http.createServer(app);

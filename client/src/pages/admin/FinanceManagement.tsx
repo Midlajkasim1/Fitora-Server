@@ -37,7 +37,7 @@ export default function FinanceManagement() {
     const [search, setSearch] = useState("");
     const debouncedSearch = useDebounce(search, 500);
     
-    const { data: stats, isLoading: isStatsLoading } = useAdminDashboardStats(year);
+    const { data: stats } = useAdminDashboardStats(year);
     const { data: transactionsData, isLoading: isTableLoading } = useRecentTransactions({
         page,
         search: debouncedSearch,

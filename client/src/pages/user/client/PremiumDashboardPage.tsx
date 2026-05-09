@@ -4,12 +4,10 @@ import { BMIWidget } from "../../../components/user/BmiWidget";
 import { DonutProgress } from "../../../components/user/DonutProgress";
 import { useNavigate } from "react-router-dom";
 import { UpdateWeightModal } from "../../../components/user/UpdateWeightModal";
-import { useChatStore } from "../../../store/use-chat-store";
 
 export default function PremiumDashboardPage() {
   const { data, isLoading } = usePremiumDashboard();
   const navigate = useNavigate();
-  const { openChat } = useChatStore();
   if (isLoading || !data) return null;
   const getGreeting = () => {
     const hour = new Date().getHours();

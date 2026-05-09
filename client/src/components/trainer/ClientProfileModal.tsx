@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { X, Activity, Scale, Ruler, User, Mail, Phone, Calendar, Target, Clock, CheckCircle2, MessageSquare } from "lucide-react";
+import { X, User, Mail, Phone, Calendar, Clock, CheckCircle2, MessageSquare } from "lucide-react";
 import { getClientDetails } from "../../api/trainer.api";
 import { useChatStore } from "../../store/use-chat-store";
 
@@ -18,7 +18,7 @@ interface ClientDetails {
     weight: number;
     height: number;
     targetWeight: number;
-    goal: string;
+    goal: string; 
   } | null;
   sessionHistory: Array<{
     slotId: string;
@@ -116,7 +116,7 @@ const ClientProfileModal = ({ clientId, onClose, mode }: ClientProfileModalProps
                      <MiniMetric label="Weight" value={details.healthMetrics.weight} unit="KG" />
                      <MiniMetric label="Height" value={details.healthMetrics.height} unit="CM" />
                      <MiniMetric label="Target" value={details.healthMetrics.targetWeight} unit="KG" />
-                     <MiniMetric label="Goal" value={details.healthMetrics.goal.replace('_', ' ')} isString />
+                     <MiniMetric label="Goal" value={details.healthMetrics.goal.replace('_', ' ')} />
                    </div>
                  ) : (
                    <p className="text-gray-600 text-[10px] italic">No health metrics found.</p>
@@ -193,7 +193,7 @@ const InfoRow = ({ icon: Icon, label, value }: any) => (
   </div>
 );
 
-const MiniMetric = ({ label, value, unit, isString = false }: any) => (
+const MiniMetric = ({ label, value, unit }: any) => (
   <div className="bg-white/[0.02] p-4 rounded-2xl border border-white/5">
     <p className="text-[7px] text-gray-600 font-black uppercase tracking-widest mb-1.5">{label}</p>
     <p className="text-sm font-black text-white italic uppercase">

@@ -86,7 +86,6 @@ const AiSelectionPage = () => {
               subtitle={hasAiWorkout ? "Daily routines" : "Plan Lock"}
               isLocked={!hasAiWorkout}
               onClick={handleWorkoutClick}
-              color="emerald"
             />
             <SelectionCard 
               icon={hasAiDiet ? <Utensils size={28} strokeWidth={2.5} /> : <Lock size={28} strokeWidth={2.5} />}
@@ -94,7 +93,6 @@ const AiSelectionPage = () => {
               subtitle={hasAiDiet ? "Smart nutrition" : "Plan Lock"}
               isLocked={!hasAiDiet}
               onClick={handleDietClick}
-              color="blue"
             />
           </div>
 
@@ -124,7 +122,7 @@ const AiSelectionPage = () => {
   );
 };
 
-const SelectionCard = ({ icon, title, subtitle, onClick, isLocked, color }: { icon: React.ReactNode; title: string; subtitle: string; onClick: () => void; isLocked?: boolean; color: string }) => (
+const SelectionCard = ({ icon, title, subtitle, onClick, isLocked }: { icon: React.ReactNode; title: string; subtitle: string; onClick: () => void; isLocked?: boolean }) => (
   <button 
     onClick={onClick} 
     className={`group flex items-center text-left gap-6 p-6 rounded-3xl border transition-all duration-500 relative overflow-hidden ${

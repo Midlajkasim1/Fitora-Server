@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { 
   LayoutDashboard, Users, Calendar, 
   MessageSquare, DollarSign, LogOut, 
-  ActivityIcon, ShieldCheck, User as UserIcon
+  ActivityIcon
 } from 'lucide-react';
 import { useAuthStore } from "../../store/use-auth-store"; 
 import { useChatStore } from "../../store/use-chat-store";
@@ -10,8 +10,6 @@ import { useEffect } from "react";
 import { useSocket } from "../../hooks/common/use-notification";
 import { logoutUser } from "../../api/auth.api";
 import { queryClient } from "../../constants/query-client";
-import { useTrainerProfile } from "../../hooks/trainer/profile/use-trainer-profile";
-import { useUser } from "../../hooks/user/use-user";
 
 const menuItems = [
   { name: 'Dashboard', path: '/trainer/dashboard', icon: LayoutDashboard },
@@ -27,16 +25,6 @@ const Sidebar = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) 
   const { logout, setLoggingOut } = useAuthStore();
   const { openChat, hasUnread, setHasUnread, isOpen: isChatOpen } = useChatStore();
   const socket = useSocket();
-  const { trainer } = useTrainerProfile();
-  const { user } = useUser();
-
-  const avatarSrc =
-    trainer?.profileImage ||
-    (user?.gender === "male"
-      ? "/avatarMale.png"
-      : user?.gender === "female"
-        ? "/avatarFemale.png"
-        : "/default-avatar.png");
 
   // Listen for new messages to trigger the "green dot" notification
   useEffect(() => {
