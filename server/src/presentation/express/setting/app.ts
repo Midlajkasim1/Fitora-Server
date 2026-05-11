@@ -10,8 +10,12 @@ import { userControllers } from "@/infrastructure/di/user/user.controllers";
 import { asyncHandler } from "@/presentation/middleware/asyncHandler";
 const app = express();
 
-app.use(helmet());
-app.use(cors({
+app.use(
+  helmet({
+    crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" },
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);app.use(cors({
     origin: env.CLIENT_URL,
     credentials: true,
     methods: ["GET", "POST", "DELETE", "PATCH","PUT"], 
