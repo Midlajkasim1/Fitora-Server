@@ -51,16 +51,13 @@ const startServer = async () => {
 
   initNotificationService(io, notificationRepositories.notificationRepository);
 
-  // ── Step 3: Chat service — attaches Redis Adapter + registers /chat namespace.
-  // SocketChatService constructor calls _attachRedisAdapter() internally, so
-  // Socket.io uses it before any connection events fire.
+
   new SocketChatService(
     io,
     chatUseCases.sendMessageUseCase,
     chatUseCases.getChatHistoryUseCase
   );
 
-  // ── Step 4: Video service — attaches /video namespace.
   new SocketVideoService(io);
 
   httpServer.listen(PORT, () => {

@@ -8,8 +8,8 @@ export class CookieManager {
   private static get defaultOptions() {
     return {
       httpOnly: true,
-      secure: env.NODE_ENV === "production",
-      sameSite: "strict" as const,
+      secure: true,
+      sameSite: "none" as const,
       path: "/",
     };
   }
