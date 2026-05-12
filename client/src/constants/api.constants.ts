@@ -113,6 +113,13 @@ export const VIDEO_ROUTES = {
   GET_ACCESS_STATE: (slotId: string) => `user/sessions/${slotId}/access`,
 };
 
+export const TRAINER_VIDEO_ROUTES = {
+  START_SESSION: (slotId: string) => `trainer/sessions/${slotId}/start`,
+  END_SESSION: (slotId: string) => `trainer/sessions/${slotId}/end`,
+  GET_TOKEN: (slotId: string) => `trainer/sessions/${slotId}/join-token`,
+  GET_ACCESS_STATE: (slotId: string) => `trainer/sessions/${slotId}/access`,
+};
+
 export const REVIEW_ROUTES = {
   BASE: "/user/reviews",
   REPORTS: "/user/reviews/reports",

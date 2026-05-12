@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../../../api/axios";
-import { VIDEO_ROUTES } from "../../../constants/api.constants";
+import { VIDEO_ROUTES, TRAINER_VIDEO_ROUTES } from "../../../constants/api.constants";
 import { useAuthStore } from "../../../store/use-auth-store";
 import { 
     LiveKitRoom, 
@@ -35,7 +35,8 @@ const WebRTCSessionPage = () => {
         
         const fetchToken = async () => {
             try {
-                const response = await api.get(VIDEO_ROUTES.GET_TOKEN(slotId!));
+                const routes = user?.role === 'trainer' ? TRAINER_VIDEO_ROUTES : VIDEO_ROUTES;
+                const response = await api.get(routes.GET_TOKEN(slotId!));
                 setToken(response.data.data.token);
 
                 let serverUrl = response.data.data.host;
@@ -56,7 +57,7 @@ const WebRTCSessionPage = () => {
 
     const handleEndSession = async () => {
         try {
-            await api.post(VIDEO_ROUTES.END_SESSION(slotId!));
+            await api.post(TRAINER_VIDEO_ROUTES.END_SESSION(slotId!));
             toast.success("Session concluded.");
             navigate("/trainer/session");
         } catch (error: any) {

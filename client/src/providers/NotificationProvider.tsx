@@ -14,14 +14,15 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
   const [activeSocket, setActiveSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (user?.id && token && !socketRef.current) {
-      const socketUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || "https://fitora.ddns.net"; // Safe production fallback
+    // Auth is cookie-based (httpOnly). The browser sends cookies automatically.
+    // We only need user?.id to know the user is authenticated.
+    if (user?.id && !socketRef.current) {
+      const socketUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:4000';
       console.log('🔌 Attempting Socket Connection to:', socketUrl);
-      
+
       const newSocket = io(socketUrl, {
-        auth: { token },
-        transports: ['polling', 'websocket'], // Allow polling fallback for production stability
+        withCredentials: true,        // sends the httpOnly accessToken cookie
+        transports: ['websocket', 'polling'],
         reconnection: true,
         reconnectionAttempts: 10,
         reconnectionDelay: 1000,
