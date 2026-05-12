@@ -13,15 +13,43 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
   const [activeSocket, setActiveSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    if (user?.id && !socketRef.current) {
-      const newSocket = io(import.meta.env.VITE_API_BASE_URL?.replace('/api', '') || "http://localhost:4000", {
-        auth: { token: localStorage.getItem('token') }, // Pass token for backend auth
-        transports: ['websocket'],
+    const token = localStorage.getItem('token');
+    if (user?.id && token && !socketRef.current) {
+      const socketUrl = import.meta.env.VITE_API_URL?.replace('/api', '') || "https://fitora.ddns.net"; // Safe production fallback
+      console.log('🔌 Attempting Socket Connection to:', socketUrl);
+      
+      const newSocket = io(socketUrl, {
+        auth: { token },
+        transports: ['polling', 'websocket'], // Allow polling fallback for production stability
+        reconnection: true,
+        reconnectionAttempts: 10,
+        reconnectionDelay: 1000,
       });
 
       newSocket.on('connect', () => {
-        console.log('✅ Notification Socket Connected');
+        console.log('✅ Notification Socket Connected:', newSocket.id);
         setActiveSocket(newSocket);
+      });
+
+      // DEBUG: Listen for any incoming event to see what the server is sending
+      newSocket.onAny((eventName, ...args) => {
+        console.log(`📡 Incoming Event [${eventName}]:`, args);
+      });
+
+      newSocket.on('connect_error', (error) => {
+        console.error('❌ Notification Socket Connection Error:', error.message);
+        if (error.message === "Unauthorized: Invalid or expired token") {
+          setActiveSocket(null);
+        }
+      });
+
+      newSocket.on('disconnect', (reason) => {
+        console.warn('⚠️ Notification Socket Disconnected:', reason);
+        if (reason === "io server disconnect") {
+          // the disconnection was initiated by the server, you need to reconnect manually
+          newSocket.connect();
+        }
+        setActiveSocket(null);
       });
 
       newSocket.on('notification_received', (data: { title: string; message: string }) => {
@@ -29,7 +57,7 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
           style: { background: '#1A1D21', color: '#fff', border: '1px solid #2D3139' },
         });
 
-        queryClient.invalidateQueries({ queryKey: ["notifications"],refetchType:"all" });
+        queryClient.invalidateQueries({ queryKey: ["notifications"], refetchType: "all" });
       });
 
       newSocket.on('session-started', (data: { slotId: string, message: string }) => {
@@ -56,13 +84,12 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         toast.success(data.message || "Session ended.", {
           style: { background: '#0d1a16', border: '1px solid #00ff94', color: '#fff' }
         });
-        // Reload all session-related data
+        
         queryClient.invalidateQueries({ queryKey: ["trainer-upcoming-slots"], refetchType: 'all' });
         queryClient.invalidateQueries({ queryKey: ["trainerDashboard"], refetchType: 'all' });
         queryClient.invalidateQueries({ queryKey: ["upcoming-sessions"], refetchType: 'all' });
         queryClient.invalidateQueries({ queryKey: ["premium-dashboard"], refetchType: 'all' });
         
-        // Brief delay before redirecting to allow user to see the message
         setTimeout(() => {
           if (window.location.pathname.includes(`/video-call/${data.slotId}`)) {
             window.location.href = `/session-review/${data.slotId}`;
@@ -70,13 +97,12 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         }, 2000);
       });
 
-
-
       socketRef.current = newSocket;
     }
 
     return () => {
       if (socketRef.current) {
+        console.log('🔌 Disconnecting Notification Socket');
         socketRef.current.disconnect();
         socketRef.current = null;
         setActiveSocket(null);

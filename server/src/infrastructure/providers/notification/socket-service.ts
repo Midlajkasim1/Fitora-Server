@@ -16,15 +16,19 @@ export class SocketNotificationService implements INotificationService {
 
     private setupListeners(): void {
         this._io.on("connection", (socket: Socket) => {
-            const userId = socket.handshake.query.userId as string;
+            // Get userId from authenticated socket data (set by socketAuthMiddleware)
+            // Fallback to query for backward compatibility or special cases
+            const userId = (socket.data?.user?.userId as string) || (socket.handshake.query.userId as string);
 
             if (userId) {
                 socket.join(userId);
-                logger.info(`Notification Socket: User ${userId} connected and joined private room`);
+                logger.info(`[Notification] User ${userId} joined room (${socket.id})`);
             }
 
             socket.on("disconnect", () => {
-                logger.info(`Notification Socket: User ${userId} disconnected`);
+                if (userId) {
+                    logger.info(`[Notification] User ${userId} disconnected`);
+                }
             });
         });
     }

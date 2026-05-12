@@ -35,10 +35,18 @@ export class SocketChatService {
   }
 
   private _attachRedisAdapter(): void {
-    const pubClient = new Redis(env.REDIS_URL);
-    const subClient = pubClient.duplicate();
-    this._io.adapter(createAdapter(pubClient, subClient));
-    logger.info("[SocketChatService] Redis Adapter attached to main Server");
+    try {
+      const pubClient = new Redis(env.REDIS_URL || "redis://127.0.0.1:6379");
+      const subClient = pubClient.duplicate();
+      
+      pubClient.on("error", (err) => logger.error("[SocketChatService] Redis Pub Error:", err));
+      subClient.on("error", (err) => logger.error("[SocketChatService] Redis Sub Error:", err));
+
+      this._io.adapter(createAdapter(pubClient, subClient));
+      logger.info("[SocketChatService] Redis Adapter attached successfully");
+    } catch (error) {
+      logger.error("[SocketChatService] Failed to attach Redis Adapter:", error);
+    }
   }
 
   private _onConnection(socket: Socket): void {
