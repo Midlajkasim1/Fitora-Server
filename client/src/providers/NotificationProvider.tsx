@@ -4,6 +4,7 @@ import { useAuthStore } from '../store/use-auth-store';
 import { useQueryClient } from '@tanstack/react-query'; 
 import toast from 'react-hot-toast';
 import { NotificationContext } from '../hooks/common/use-notification';
+import { useChatStore } from '../store/use-chat-store';
 
 export const NotificationProvider = ({ children }: { children: React.ReactNode }) => {
   const user = useAuthStore((state) => state.user);
@@ -58,6 +59,23 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         });
 
         queryClient.invalidateQueries({ queryKey: ["notifications"], refetchType: "all" });
+      });
+
+      newSocket.on('receive_message', (data: any) => {
+        const msg = data?.data;
+        queryClient.invalidateQueries({ queryKey: ["chat-partners"], refetchType: "all" });
+        queryClient.invalidateQueries({ queryKey: ["chat-history"], refetchType: "all" });
+        
+        if (msg) {
+          const state = useChatStore.getState();
+          if (!state.isOpen || state.selectedTrainerId !== msg.senderId) {
+             state.setHasUnread(true);
+             toast.success(`New message received`, {
+               style: { background: '#0a1810', color: '#fff', border: '1px solid #00ff94' },
+               icon: '💬',
+             });
+          }
+        }
       });
 
       newSocket.on('session-started', (data: { slotId: string, message: string }) => {

@@ -1,41 +1,33 @@
-import { Emitter } from "@socket.io/redis-emitter";
-import Redis from "ioredis";
-import { env } from "@/infrastructure/config/env.config";
+import { Server } from "socket.io";
 import { ISocketEmitter } from "@/domain/interfaces/services/socket-emitter.interface";
 import { logger } from "@/infrastructure/providers/loggers/logger";
-
 
 let emitterInstance: SocketEmitter | null = null;
 
 export class SocketEmitter implements ISocketEmitter {
-  private readonly _emitter: Emitter;
+  private readonly _io: Server;
 
-  constructor() {
-    const pubClient = new Redis(env.REDIS_URL || "redis://127.0.0.1:6379");
-
-    pubClient.on("connect", () => logger.info("[SocketEmitter] Redis pub client connected"));
-    pubClient.on("error", (err) => logger.error("[SocketEmitter] Redis pub client error", err));
-
-    this._emitter = new Emitter(pubClient);
+  constructor(io: Server) {
+    this._io = io;
   }
 
   emitToRoom(room: string, event: string, data: unknown): void {
-    this._emitter.to(room).emit(event, data);
+    this._io.to(room).emit(event, data);
   }
 
   disconnectRoom(room: string): void {
-    this._emitter.in(room).disconnectSockets(true);
+    this._io.in(room).disconnectSockets(true);
   }
 }
 
 /**
  * Initialize the singleton SocketEmitter.
- * Call this in index.ts BEFORE creating the Socket.io server.
+ * Call this in index.ts AFTER creating the Socket.io server.
  */
-export const initSocketEmitter = (): SocketEmitter => {
+export const initSocketEmitter = (io: Server): SocketEmitter => {
   if (!emitterInstance) {
-    emitterInstance = new SocketEmitter();
-    logger.info("[SocketEmitter] Initialized");
+    emitterInstance = new SocketEmitter(io);
+    logger.info("[SocketEmitter] Initialized with IO instance");
   }
   return emitterInstance;
 };

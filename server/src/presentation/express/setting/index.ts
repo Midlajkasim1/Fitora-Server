@@ -27,8 +27,6 @@ const startServer = async () => {
   scheduler.init();
 
 
-  initSocketEmitter();
-
   const httpServer = http.createServer(app);
 
   const io = new SocketServer(httpServer, {
@@ -37,6 +35,9 @@ const startServer = async () => {
       credentials: true,
     },
   });
+
+  // Initialize SocketEmitter with io
+  initSocketEmitter(io);
 
   // ── Step 2: Global Notification & Identity Room Joining
   // Ensures every connected socket joins a room named after their userId
