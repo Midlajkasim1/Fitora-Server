@@ -45,8 +45,8 @@ const WebRTCSessionPage = () => {
                     if (!serverUrl.startsWith("ws")) serverUrl = `wss://${serverUrl}`;
                 }
                 setHost(serverUrl);
-            } catch (error: any) {
-                user?.role === "trainer" ? navigate("/trainer/session") : navigate("/upcoming-sessions");
+            } catch (_error: unknown) {
+                if (user?.role === "trainer") navigate("/trainer/session"); else navigate("/upcoming-sessions");
             } finally {
                 setIsLoading(false);
             }
@@ -60,7 +60,7 @@ const WebRTCSessionPage = () => {
             await api.post(TRAINER_VIDEO_ROUTES.END_SESSION(slotId!));
             toast.success("Session concluded.");
             navigate("/trainer/session");
-        } catch (error: any) {
+        } catch (_error: unknown) {
             toast.error("Failed to end session officially");
         }
     };
@@ -88,7 +88,7 @@ const WebRTCSessionPage = () => {
                 serverUrl={host}
                 connect={true}
                 onDisconnected={() => {
-                    user?.role === "trainer" ? navigate("/trainer/session") : navigate(`/session-review/${slotId}`);
+                    if (user?.role === "trainer") navigate("/trainer/session"); else navigate(`/session-review/${slotId}`);
                 }}
 
                 className="flex-1 flex flex-col"
@@ -152,11 +152,11 @@ const WebRTCSessionPage = () => {
     );
 };
 
-const isTrainer = (participant: any) => {
+const isTrainer = (participant: { metadata?: string }) => {
     try {
         const meta = JSON.parse(participant.metadata || '{}');
         return meta.role === 'trainer';
-    } catch (e) {
+    } catch {
         return false;
     }
 };

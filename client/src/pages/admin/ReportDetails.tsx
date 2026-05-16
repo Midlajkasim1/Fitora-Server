@@ -222,7 +222,15 @@ export default function ReportDetails() {
     );
 }
 
-const UserCard = ({ label, name, image, isReported }: any) => (
+interface UserCardProps {
+  label: string;
+  name: string;
+  image?: string | null;
+  role?: string;
+  isReported?: boolean;
+}
+
+const UserCard = ({ label, name, image, isReported }: UserCardProps) => (
     <div className="bg-black/20 border border-white/5 p-4 rounded-2xl flex items-center justify-between group hover:border-[#00ff94]/30 transition-all cursor-pointer">
         <div className="flex items-center gap-4">
             <div className={`w-12 h-12 rounded-xl border border-white/5 overflow-hidden flex items-center justify-center ${isReported ? 'bg-[#00ff94]/10 text-[#00ff94]' : 'bg-[#00ff94]/5 text-gray-500'}`}>

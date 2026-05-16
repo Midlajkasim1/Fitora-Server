@@ -106,7 +106,7 @@ const CheckSlots = () => {
       <main className="max-w-6xl mx-auto pb-20">
         {Object.keys(groupedSlots).length > 0 ? (
           <>
-            {(Object.entries(groupedSlots) as [string, any[]][]).map(([date, dateSlots]) => (
+            {(Object.entries(groupedSlots) as [string, typeof groupedSlots[string]][]).map(([date, dateSlots]) => (
               <section
                 key={date}
                 className="mb-12 animate-in fade-in slide-in-from-bottom-4 duration-500"

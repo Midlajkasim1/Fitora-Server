@@ -51,7 +51,7 @@ const SessionReviewPage = () => {
                 comment: feedback
             });
             toast.success("Thank you for your feedback!");
-        } catch (error: any) {
+        } catch (_error: unknown) {
             // Error is handled by global interceptor
         } finally {
             setIsSubmittingReview(false);
@@ -71,14 +71,14 @@ const SessionReviewPage = () => {
         setIsSubmittingReport(true);
         try {
             await createIncidentReport({
-                reportedId: (accessData as any).reportedId || slotId || '',
+                reportedId: (accessData as { bookingId?: string; reportedId?: string }).reportedId || slotId || '',
                 type: reportType,
                 description: reportDetails,
                 sessionId: accessData.bookingId
             });
             toast.success("Report submitted. Our team will investigate.");
             setReportDetails('');
-        } catch (error: any) {
+        } catch (_error: unknown) {
             // Error is handled by global interceptor
         } finally {
             setIsSubmittingReport(false);

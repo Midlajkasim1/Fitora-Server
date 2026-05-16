@@ -39,10 +39,18 @@ export default function ReportManagement() {
     const reports = data?.data ?? [];
     const total = data?.total ?? 0;
 
+interface Report {
+    id: string;
+    reporter?: { profileImage?: string; name?: string; role?: string };
+    type: string;
+    status: string;
+    createdAt: string;
+}
+
     const columns = [
         {
             header: "#",
-            render: (_: any, index: number) => (
+            render: (_: Report, index: number) => (
                 <span className="text-gray-600 font-medium">
                     {(page - 1) * 10 + (index + 1)}
                 </span>
@@ -50,7 +58,7 @@ export default function ReportManagement() {
         },
         {
             header: "Reporter",
-            render: (r: any) => (
+            render: (r: Report) => (
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-[#00ff94]/10 border border-[#00ff94]/20 flex items-center justify-center overflow-hidden">
                         {r.reporter?.profileImage ? (
@@ -72,13 +80,13 @@ export default function ReportManagement() {
         },
         {
             header: "Type",
-            render: (r: any) => (
+            render: (r: Report) => (
                 <span className="text-sm text-gray-400 font-medium italic">{r.type}</span>
             )
         },
         {
             header: "Status",
-            render: (r: any) => (
+            render: (r: Report) => (
                 <div className={`flex items-center gap-2 px-3 py-1 rounded-full w-fit ${
                     r.status === 'Resolved' ? 'bg-green-500/10 text-green-500' : 
                     r.status === 'Dismissed' ? 'bg-red-500/10 text-red-500' :
@@ -95,7 +103,7 @@ export default function ReportManagement() {
         },
         {
             header: "Date",
-            render: (r: any) => (
+            render: (r: Report) => (
                 <div className="text-gray-500 text-[11px] font-bold uppercase tracking-widest">
                    {new Date(r.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                 </div>
@@ -103,7 +111,7 @@ export default function ReportManagement() {
         },
         {
             header: "Action",
-            render: (r: any) => (
+            render: (r: Report) => (
                 <div className="flex gap-1">
                     <button 
                         onClick={() => navigate(`/admin/reports/${r.id}`)}
@@ -200,7 +208,7 @@ export default function ReportManagement() {
     );
 }
 
-const SummaryCard = ({ title, value, icon, color }: { title: string, value: number, icon: any, color: string }) => (
+const SummaryCard = ({ title, value, icon, color }: { title: string, value: number, icon: React.ReactElement, color: string }) => (
     <motion.div 
         whileHover={{ y: -5 }}
         className="bg-[#0b1b16] border border-white/5 p-8 rounded-[2rem] relative group overflow-hidden"

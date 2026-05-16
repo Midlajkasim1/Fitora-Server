@@ -10,7 +10,7 @@ export default function EditSpecialization() {
   const { data } = useSpecializationById(id!);
   const { mutate, isPending } = useUpdateSpecialization();
 
-  const handleUpdate = (formData: any) => {
+  const handleUpdate = (formData: Record<string, unknown>) => {
     mutate(
       { id: id!, ...formData },
       {

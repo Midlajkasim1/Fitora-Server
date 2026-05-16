@@ -24,7 +24,7 @@ export default function AdminDashboard() {
     if (!stats?.financialStats) return [];
     return MONTHS.map((month, index) => {
         const monthStr = `${year}-${String(index + 1).padStart(2, '0')}`;
-        const monthData = stats.financialStats.find((s: any) => s.month === monthStr);
+        const monthData = stats.financialStats.find((s: { month: string; totalRevenue?: number }) => s.month === monthStr);
         return {
             name: month,
             revenue: monthData?.totalRevenue || 0
@@ -159,7 +159,14 @@ export default function AdminDashboard() {
   );
 }
 
-const ProgressItem = ({ label, value, total, color }: any) => {
+interface ProgressItemProps {
+    label: string;
+    value: number;
+    total: number;
+    color: string;
+}
+
+const ProgressItem = ({ label, value, total, color }: ProgressItemProps) => {
     const percentage = total > 0 ? (value / total) * 100 : 0;
     return (
         <div className="space-y-3">
@@ -180,7 +187,17 @@ const ProgressItem = ({ label, value, total, color }: any) => {
     );
 };
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+interface TooltipPayloadItem {
+    value: number;
+}
+
+interface CustomTooltipProps {
+    active?: boolean;
+    payload?: TooltipPayloadItem[];
+    label?: string;
+}
+
+const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-[#050a05]/90 backdrop-blur-md border border-white/10 p-4 rounded-xl shadow-2xl">

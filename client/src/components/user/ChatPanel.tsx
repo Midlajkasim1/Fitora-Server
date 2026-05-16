@@ -30,9 +30,12 @@ export const ChatPanel = ({
   } = useChatHistory(selectedTrainerId);
 
   // Sync initial trainer id whenever it changes or panel opens
-  useEffect(() => {
+  // Use a ref to track the last seen initialTrainerId to avoid direct setState in effect
+  const prevInitialTrainerIdRef = useRef<string | undefined>(initialTrainerId);
+  if (prevInitialTrainerIdRef.current !== initialTrainerId) {
+    prevInitialTrainerIdRef.current = initialTrainerId;
     setSelectedTrainerId(initialTrainerId || null);
-  }, [initialTrainerId, isOpen]);
+  }
 
   // Scroll to bottom on new messages
   useEffect(() => {

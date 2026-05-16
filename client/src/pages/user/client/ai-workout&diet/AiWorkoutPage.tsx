@@ -34,7 +34,7 @@ const AiWorkoutPage = () => {
   // Combine loading states
   const isBusy = isFetching || isGenerating;
   // Use data from either source
-  const planData = (existingData as any)?.data || existingData;
+  const planData = (existingData as { data?: { success?: boolean; weeklyPlan?: WorkoutDay[] } } | null)?.data || (existingData as { success?: boolean; weeklyPlan?: WorkoutDay[] } | null);
 
   return (
     <div className="min-h-screen bg-[#05110B] text-white p-6 md:p-12 font-sans pt-28 selection:bg-[#00ff94] selection:text-black">
@@ -81,7 +81,7 @@ const AiWorkoutPage = () => {
 
         {planData?.success && planData?.weeklyPlan?.length > 0 ? (
           <div className="space-y-24 relative z-10">
-            {planData.weeklyPlan.map((dayPlan: any, idx: number) => (
+            {planData.weeklyPlan.map((dayPlan: WorkoutDay, idx: number) => (
               <WorkoutDayAccordion key={idx} day={dayPlan} isDefaultOpen={idx === 0} />
             )) || <p>No weekly plan available</p>}
           </div>
@@ -171,7 +171,7 @@ const WorkoutDayAccordion = ({ day, isDefaultOpen }: { day: WorkoutDay; isDefaul
   );
 };
 
-const ExerciseCard = ({ ex }: { ex: any }) => (
+const ExerciseCard = ({ ex }: { ex: { name: string; sets: number; reps: number | string; notes?: string; restTime?: string } }) => (
   <div className="bg-[#0A1A12] border border-white/5 rounded-[3rem] p-8 group hover:border-[#00ff94]/40 hover:bg-[#0E2419] transition-all duration-500 flex items-center gap-6 shadow-2xl relative overflow-hidden">
      <div className="absolute top-0 right-0 w-32 h-32 bg-[#00ff94]/5 blur-3xl pointer-events-none" />
      

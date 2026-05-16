@@ -7,7 +7,7 @@ export default function CreateSpecialization() {
   const navigate = useNavigate();
   const { mutate, isPending } = useCreateSpecialization();
 
-  const handleCreate = (data: any) => {
+  const handleCreate = (data: Record<string, unknown>) => {
     mutate(data, {
       onSuccess: () => {
         toast.success("Specialization created");

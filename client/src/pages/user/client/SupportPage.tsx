@@ -196,7 +196,15 @@ export default function SupportPage() {
     );
 }
 
-function ContactCard({ icon, title, detail, description, delay }: any) {
+interface ContactCardProps {
+    icon: React.ReactNode;
+    title: string;
+    detail: string;
+    description: string;
+    delay: number;
+}
+
+function ContactCard({ icon, title, detail, description, delay }: ContactCardProps) {
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -217,7 +225,13 @@ function ContactCard({ icon, title, detail, description, delay }: any) {
     );
 }
 
-function FaqItem({ faq, isOpen, onClick }: any) {
+interface FaqItemProps {
+    faq: { question: string; answer: string };
+    isOpen: boolean;
+    onClick: () => void;
+}
+
+function FaqItem({ faq, isOpen, onClick }: FaqItemProps) {
     return (
         <div 
             className={`border rounded-3xl transition-all duration-300 cursor-pointer overflow-hidden ${

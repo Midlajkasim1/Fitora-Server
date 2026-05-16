@@ -183,7 +183,13 @@ const ClientProfileModal = ({ clientId, onClose, mode }: ClientProfileModalProps
   );
 };
 
-const InfoRow = ({ icon: Icon, label, value }: any) => (
+interface InfoRowProps {
+  icon: React.ElementType;
+  label: string;
+  value: string | undefined;
+}
+
+const InfoRow = ({ icon: Icon, label, value }: InfoRowProps) => (
   <div className="flex items-center gap-4 bg-white/[0.02] p-4 rounded-2xl border border-white/5">
     <Icon size={14} className="text-[#00ff94]" />
     <div className="flex-1">
@@ -193,7 +199,13 @@ const InfoRow = ({ icon: Icon, label, value }: any) => (
   </div>
 );
 
-const MiniMetric = ({ label, value, unit }: any) => (
+interface MiniMetricProps {
+  label: string;
+  value: string | number;
+  unit?: string;
+}
+
+const MiniMetric = ({ label, value, unit }: MiniMetricProps) => (
   <div className="bg-white/[0.02] p-4 rounded-2xl border border-white/5">
     <p className="text-[7px] text-gray-600 font-black uppercase tracking-widest mb-1.5">{label}</p>
     <p className="text-sm font-black text-white italic uppercase">

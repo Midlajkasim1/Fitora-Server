@@ -10,7 +10,7 @@ export interface CreateReviewRequest {
 export interface SubmitReportRequest {
   bookingId: string;
   content: string;
-  metrics?: any;
+  metrics?: Record<string, unknown>;
   isPrivate?: boolean;
 }
 

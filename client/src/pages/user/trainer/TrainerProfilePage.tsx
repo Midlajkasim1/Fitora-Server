@@ -21,7 +21,7 @@ export default function TrainerProfilePage() {
     reset,
     formState: { errors },
   } = useForm<TrainerProfileFormData>({
-    resolver: zodResolver(trainerProfileSchema) as any,
+    resolver: zodResolver(trainerProfileSchema) as ReturnType<typeof zodResolver>,
   });
 
   useEffect(() => {

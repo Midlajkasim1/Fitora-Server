@@ -118,7 +118,7 @@ export default function TrainerManagement() {
             },
             {
               label: "Filter Specialization",
-              options: specializations.map((s: any) => ({
+              options: specializations.map((s: { name: string; id: string }) => ({
                 label: s.name,
                 value: s.id
               })),

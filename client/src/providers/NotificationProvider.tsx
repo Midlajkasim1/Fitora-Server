@@ -62,7 +62,7 @@ export const NotificationProvider = ({ children }: { children: React.ReactNode }
         queryClient.invalidateQueries({ queryKey: ["notifications"], refetchType: "all" });
       });
 
-      newSocket.on('receive_message', (data: any) => {
+      newSocket.on('receive_message', (data: { data?: { senderId?: string } }) => {
         const msg = data?.data;
         queryClient.invalidateQueries({ queryKey: ["chat-partners"], refetchType: "all" });
         queryClient.invalidateQueries({ queryKey: ["chat-history"], refetchType: "all" });

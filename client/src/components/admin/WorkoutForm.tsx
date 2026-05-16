@@ -30,8 +30,8 @@ export default function WorkoutForm({ mode, initialData, specializations, onSubm
         control,
         formState: { errors },
     } = useForm<CreateWorkoutFormData>({
-        resolver: zodResolver(createWorkoutSchema) as any,
-        defaultValues: initialData as any,
+        resolver: zodResolver(createWorkoutSchema) as ReturnType<typeof zodResolver>,
+        defaultValues: initialData as Partial<CreateWorkoutFormData>,
     });
 
     const videoFile = useWatch({ control, name: "video" });
@@ -54,7 +54,7 @@ export default function WorkoutForm({ mode, initialData, specializations, onSubm
         };
     }, [videoPreview, thumbnailPreview]);
 
-    const onInvalid = (errors: any) => {
+    const onInvalid = (errors: Record<string, unknown>) => {
         console.error("Form Validation Errors:", errors);
         toast.error("Please fill all required fields correctly", { id: "val-error" });
     };

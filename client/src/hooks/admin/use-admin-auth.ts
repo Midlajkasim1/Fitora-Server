@@ -5,6 +5,12 @@ import { useAuthStore } from "../../store/use-auth-store";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast"; 
 
+interface DecodedToken {
+  userId: string;
+  email: string;
+  role: string;
+}
+
 export const useAdminAuth = () => {
   const navigate = useNavigate();
   const setAuth = useAuthStore((state) => state.setAuth);
@@ -15,7 +21,7 @@ export const useAdminAuth = () => {
       const token = res.data?.data?.accessToken || res.data?.accessToken;
 
       if (token) {
-        const decoded: any = jwtDecode(token);
+        const decoded = jwtDecode<DecodedToken>(token);
 
         setAuth({
           id: decoded.userId,

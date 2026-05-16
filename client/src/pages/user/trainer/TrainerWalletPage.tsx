@@ -137,7 +137,7 @@ const TrainerWalletPage = () => {
               {data?.transactions && data.transactions.length > 0 ? (
                 <>
                   <div className="space-y-3 md:space-y-4">
-                    {data.transactions.map((tx: any) => (
+                    {data.transactions.map((tx: { id: string; description: string; createdAt: string; amount: number; status: string }) => (
                       <div 
                         key={tx.id}
                         className="flex flex-col md:flex-row md:items-center justify-between p-4 rounded-2xl bg-black/20 border border-white/5 hover:border-[#00ff94]/20 transition-all group gap-4 md:gap-0"

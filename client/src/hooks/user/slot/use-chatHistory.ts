@@ -32,20 +32,21 @@ export const useChatHistory = (otherUserId: string | null) => {
     if (otherUserId) {
       markReadMutation.mutate();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [otherUserId]);
 
   // ─── Real-time Listener ────────────────────────────────────────────────────
   useEffect(() => {
     if (!socket || !otherUserId) return;
 
-    const handleMessage = (data: any) => {
+    const handleMessage = (data: { data?: { senderId?: string; receiverId?: string } }) => {
       const msg = data.data;
       // Only care about messages from/to the current selected user
-      if (msg.senderId === otherUserId || msg.receiverId === otherUserId) {
+      if (msg?.senderId === otherUserId || msg?.receiverId === otherUserId) {
         queryClient.invalidateQueries({ queryKey: ["chat-history", otherUserId, role] });
         
         // If we are currently chatting with this user, mark as read immediately
-        if (msg.senderId === otherUserId) {
+        if (msg?.senderId === otherUserId) {
           markReadMutation.mutate();
         }
       } else {
@@ -58,6 +59,7 @@ export const useChatHistory = (otherUserId: string | null) => {
     return () => {
       socket.off("receive_message", handleMessage);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket, otherUserId, queryClient, role]);
 
   // ─── Send Mutation ─────────────────────────────────────────────────────────

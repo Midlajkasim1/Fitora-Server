@@ -56,7 +56,7 @@ const toggleSelection = (field: keyof ClientStepOne, val: string) => {
     ? current.filter(i => i !== val)
     : [...current, val];
 
-  setValue(field, next as any, { shouldValidate: true });
+  setValue(field, next as string & string[], { shouldValidate: true });
 };
 
   return (

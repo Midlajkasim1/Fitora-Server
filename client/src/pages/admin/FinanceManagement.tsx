@@ -52,7 +52,7 @@ export default function FinanceManagement() {
         if (!stats?.financialStats) return [];
         return MONTHS.map((month, index) => {
             const monthStr = `${year}-${String(index + 1).padStart(2, '0')}`;
-            const monthData = stats.financialStats.find((s: any) => s.month === monthStr);
+            const monthData = stats.financialStats.find((s: { month: string; totalRevenue?: number; totalProfit?: number }) => s.month === monthStr);
             return {
                 name: month,
                 revenue: monthData?.totalRevenue || 0,
@@ -67,10 +67,19 @@ export default function FinanceManagement() {
         exportFinanceReport(start, end);
     };
 
-    const columns = [
+interface Transaction {
+    id: string;
+    entityName?: string;
+    description?: string;
+    type: string;
+    amount: number;
+    status: string;
+}
+
+const columns = [
         {
             header: "TX ID",
-            render: (tx: any) => (
+            render: (tx: Transaction) => (
                 <span className="text-[10px] font-mono text-gray-500 uppercase tracking-tighter">
                     #{tx.id.slice(-8)}
                 </span>
@@ -78,7 +87,7 @@ export default function FinanceManagement() {
         },
         {
             header: "Entity",
-            render: (tx: any) => (
+            render: (tx: Transaction) => (
                 <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg bg-[#00ff94]/10 flex items-center justify-center border border-[#00ff94]/20 italic font-black text-[#00ff94] text-xs">
                         {tx.entityName?.charAt(0) || "F"}
@@ -94,13 +103,13 @@ export default function FinanceManagement() {
         },
         {
             header: "Type",
-            render: (tx: any) => (
+            render: (tx: Transaction) => (
                 <span className="text-[10px] text-gray-400 font-bold uppercase italic tracking-wider">{tx.type}</span>
             )
         },
         {
             header: "Amount",
-            render: (tx: any) => {
+            render: (tx: Transaction) => {
                 const isExpense = tx.type === "Session Payout" || tx.type === "Withdrawal";
                 const isPositive = !isExpense && tx.amount > 0;
                 return (
@@ -114,7 +123,7 @@ export default function FinanceManagement() {
         },
         {
             header: "Status",
-            render: (tx: any) => (
+            render: (tx: Transaction) => (
                 <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/5 w-fit">
                     <div className={`w-1 h-1 rounded-full ${
                         tx.status === 'Success' ? 'bg-[#00ff94] shadow-[0_0_8px_#00ff94]' : 
@@ -126,7 +135,7 @@ export default function FinanceManagement() {
         },
         {
             header: "Actions",
-            render: (tx: any) => {
+            render: (tx: Transaction) => {
                 if (tx.type === "Withdrawal" && tx.status === "Pending") {
                     return (
                         <div className="flex items-center gap-2">
@@ -190,7 +199,7 @@ export default function FinanceManagement() {
                         icon={<CreditCard size={20} />}
                         delay={0.2}
                     />
-                    {stats?.statsCards?.planStats?.map((plan: any, index: number) => (
+                    {stats?.statsCards?.planStats?.map((plan: { name: string; count: number }, index: number) => (
                         <StatCard 
                             key={plan.name}
                             title={`${plan.name} Plan`} 
@@ -285,7 +294,15 @@ export default function FinanceManagement() {
     );
 }
 
-const StatCard = ({ title, value, icon, isCurrency, delay }: any) => (
+interface StatCardProps {
+    title: string;
+    value: number;
+    icon: React.ReactNode;
+    isCurrency?: boolean;
+    delay?: number;
+}
+
+const StatCard = ({ title, value, icon, isCurrency, delay }: StatCardProps) => (
     <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -305,7 +322,13 @@ const StatCard = ({ title, value, icon, isCurrency, delay }: any) => (
     </motion.div>
 );
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+interface FinanceTooltipProps {
+    active?: boolean;
+    payload?: Array<{ value: number }>;
+    label?: string;
+}
+
+const CustomTooltip = ({ active, payload, label }: FinanceTooltipProps) => {
     if (active && payload && payload.length) {
         return (
             <div className="bg-[#0b1b16] border border-white/10 p-4 rounded-xl shadow-2xl">

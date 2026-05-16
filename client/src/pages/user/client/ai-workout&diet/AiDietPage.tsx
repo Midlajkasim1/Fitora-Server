@@ -28,7 +28,7 @@ const AiDietPage = () => {
   };
 
   const isBusy = isFetching || isGenerating;
-  const planData = (existingDiet as any)?.data || existingDiet;
+  const planData = (existingDiet as { data?: { success?: boolean; weeklyPlan?: DietDay[] } } | null)?.data || (existingDiet as { success?: boolean; weeklyPlan?: DietDay[] } | null);
 
   return (
     <div className="min-h-screen bg-[#05110B] text-white p-6 md:p-12 font-sans pt-28 selection:bg-[#00ff94] selection:text-black">
@@ -75,7 +75,7 @@ const AiDietPage = () => {
 
         {planData?.success && planData?.weeklyPlan?.length > 0 ? (
           <div className="space-y-24 relative z-10">
-            {planData.weeklyPlan.map((day: any, dIdx: number) => (
+            {planData.weeklyPlan.map((day: DietDay, dIdx: number) => (
               <DietDayAccordion key={dIdx} day={day} isDefaultOpen={dIdx === 0} />
             ))}
           </div>

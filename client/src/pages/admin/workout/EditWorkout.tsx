@@ -5,6 +5,7 @@ import { useSpecializationsForFilter } from "../../../hooks/admin/specialization
 import { useUpdateWorkout } from "../../../hooks/admin/workout/use-edit-workout";
 import { useGetWorkoutById } from "../../../hooks/admin/workout/use-workoutById";
 import WorkoutForm from "../../../components/admin/WorkoutForm";
+import type { CreateWorkoutFormData } from "../../../validators/admin/workout.Schema";
 
 
 export default function EditWorkoutPage() {
@@ -14,7 +15,7 @@ export default function EditWorkoutPage() {
     const mutation = useUpdateWorkout(id!);
     const { data: specializations } = useSpecializationsForFilter();
 
-    const onSubmit = (formData: any) => {
+    const onSubmit = (formData: CreateWorkoutFormData) => {
         toast.loading("Saving changes...", { id: "update" });
         mutation.mutate(formData, {
             onSuccess: () => {

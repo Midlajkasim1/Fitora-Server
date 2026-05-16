@@ -1,4 +1,4 @@
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin, type CredentialResponse } from '@react-oauth/google';
 import { UserIcon } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,7 @@ const RegisterPage: React.FC = () => {
     register(data);
   };
 
-  const handleGoogleSuccess = (credentialResponse: any) => {
+  const handleGoogleSuccess = (credentialResponse: CredentialResponse) => {
     googleLogin({ 
       idToken: credentialResponse.credential, 
       role: selectedRole 
