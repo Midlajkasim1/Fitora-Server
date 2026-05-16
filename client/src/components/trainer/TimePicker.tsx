@@ -1,8 +1,8 @@
 // components/trainer/TimePicker12h.tsx
-import type { UseFormRegister } from "react-hook-form";
+import type { UseFormRegister, FieldValues } from "react-hook-form";
 
 interface TimePickerProps {
-  register: UseFormRegister<Record<string, unknown>>;
+  register: UseFormRegister<FieldValues>;
   period: "AM" | "PM";
   setPeriod: (p: "AM" | "PM") => void;
 }

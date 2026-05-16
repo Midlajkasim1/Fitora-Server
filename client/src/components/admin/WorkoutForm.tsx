@@ -30,7 +30,7 @@ export default function WorkoutForm({ mode, initialData, specializations, onSubm
         control,
         formState: { errors },
     } = useForm<CreateWorkoutFormData>({
-        resolver: zodResolver(createWorkoutSchema) as ReturnType<typeof zodResolver>,
+        resolver: zodResolver(createWorkoutSchema),
         defaultValues: initialData as Partial<CreateWorkoutFormData>,
     });
 

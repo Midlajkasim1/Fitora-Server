@@ -1,11 +1,11 @@
-import type { UseFormRegister } from "react-hook-form";
+import type { UseFormRegister, FieldValues } from "react-hook-form";
 
 interface TrainerProfileFieldProps {
     icon: React.ReactNode;
     label: string;
     value: string | number | undefined;
     isEditing: boolean;
-    register: UseFormRegister<Record<string, unknown>>;
+    register: UseFormRegister<FieldValues>;
     name: string;
     error?: string;
 }

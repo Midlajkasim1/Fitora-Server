@@ -208,7 +208,7 @@ interface Report {
     );
 }
 
-const SummaryCard = ({ title, value, icon, color }: { title: string, value: number, icon: React.ReactElement, color: string }) => (
+const SummaryCard = ({ title, value, icon, color }: { title: string, value: number, icon: React.ReactElement<{ size?: number }>, color: string }) => (
     <motion.div 
         whileHover={{ y: -5 }}
         className="bg-[#0b1b16] border border-white/5 p-8 rounded-[2rem] relative group overflow-hidden"

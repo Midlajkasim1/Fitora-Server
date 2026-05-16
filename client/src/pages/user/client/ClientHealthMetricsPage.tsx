@@ -16,7 +16,7 @@ export default function ClientHealthMetrics() {
     handleSubmit,
     formState: { errors },
   } = useForm<HealthMetricsFormData>({
-    resolver: zodResolver(healthMetricsSchema) as ReturnType<typeof zodResolver>,
+    resolver: zodResolver(healthMetricsSchema),
     defaultValues: { 
       height: 175, 
       weight: 70, 

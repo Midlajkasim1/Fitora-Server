@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import SpecializationForm from "../../../components/admin/SpecializationForm";
 import { useSpecializationById } from "../../../hooks/admin/specialization/use-specializationById";
 import { useUpdateSpecialization } from "../../../hooks/admin/specialization/use-update-specialization";
+import type { UpdateSpecialization } from "../../../type/admin.types";
 
 export default function EditSpecialization() {
   const { id } = useParams();
@@ -10,7 +11,7 @@ export default function EditSpecialization() {
   const { data } = useSpecializationById(id!);
   const { mutate, isPending } = useUpdateSpecialization();
 
-  const handleUpdate = (formData: Record<string, unknown>) => {
+  const handleUpdate = (formData: Omit<UpdateSpecialization, "id">) => {
     mutate(
       { id: id!, ...formData },
       {

@@ -4,11 +4,12 @@ import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "../../store/use-auth-store";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast"; 
+import type { UserRole } from "../../type/auth.types";
 
 interface DecodedToken {
   userId: string;
   email: string;
-  role: string;
+  role: UserRole;
 }
 
 export const useAdminAuth = () => {

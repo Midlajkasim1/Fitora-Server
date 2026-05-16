@@ -19,7 +19,7 @@ const RegisterPage: React.FC = () => {
 
   const handleGoogleSuccess = (credentialResponse: CredentialResponse) => {
     googleLogin({ 
-      idToken: credentialResponse.credential, 
+      idToken: credentialResponse.credential!, 
       role: selectedRole 
     });
   };
