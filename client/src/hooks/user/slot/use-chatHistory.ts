@@ -64,8 +64,7 @@ export const useChatHistory = (otherUserId: string | null) => {
 
   // ─── Send Mutation ─────────────────────────────────────────────────────────
   const sendMutation = useMutation({
-    mutationFn: ({ message, attachmentUrl, attachmentType }: { message: string, attachmentUrl?: string, attachmentType?: string }) => 
-      sendMessage(otherUserId!, role, message, attachmentUrl, attachmentType),
+    mutationFn: ({ message }: { message: string }) => sendMessage(otherUserId!, role, message),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["chat-history", otherUserId, role] });
     },

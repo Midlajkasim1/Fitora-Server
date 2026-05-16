@@ -79,8 +79,7 @@ export const userControllers = {
   chatController: new ChatController(
     useCases.getChatHistoryUseCase,
     useCases.sendMessageUseCase,
-    useCases.markMessagesReadUseCase,
-    useCases.uploadChatAttachmentUseCase
+    useCases.markMessagesReadUseCase
   )
 
 

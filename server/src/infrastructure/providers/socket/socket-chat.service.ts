@@ -66,16 +66,14 @@ export class SocketChatService {
       const { userId } = socket.data.user as JwtPayload;
       const dto = new SendMessageRequestDTO(payload as SendMessageRequestDTO);
 
-      if (!dto.receiverId || (!dto.message && !dto.attachmentUrl)) {
-        return this._emitError(socket, "receiverId and (message or attachment) are required");
+      if (!dto.receiverId || !dto.message) {
+        return this._emitError(socket, "receiverId and message are required");
       }
 
       const saved = await this._sendMessageUseCase.execute({
         senderId: userId,
         receiverId: dto.receiverId,
-        message: dto.message || "",
-        attachmentUrl: dto.attachmentUrl,
-        attachmentType: dto.attachmentType,
+        message: dto.message,
       });
 
       socket.emit(

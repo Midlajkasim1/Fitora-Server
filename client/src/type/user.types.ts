@@ -210,8 +210,6 @@ export interface ChatMessage {
   senderId: string;
   receiverId: string;
   message: string;
-  attachmentUrl?: string;
-  attachmentType?: 'image' | 'video' | 'audio' | 'file';
   isRead: boolean;
   createdAt: string;
 }

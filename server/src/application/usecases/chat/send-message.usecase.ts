@@ -38,6 +38,10 @@ export class SendMessageUseCase implements IBaseUseCase<SendMessageRequestDTO, C
       throw new Error(CHAT_MESSAGES.COMMUNICATION_RESTRICTED);
     }
 
+    if (!dto.message || dto.message.trim().length === 0) {
+      throw new Error("Message cannot be empty");
+    }
+
     const entity = ChatMessageEntity.create({ 
       senderId, 
       receiverId, 

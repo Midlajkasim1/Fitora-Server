@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, User, ChevronLeft, Paperclip, Smile, FileText, Loader2, Download } from "lucide-react";
+import { MessageCircle, X, Send, User, ChevronLeft, Smile } from "lucide-react";
 import { useChatPartners } from "../../hooks/user/slot/use-chatPartners";
 import { useChatHistory } from "../../hooks/user/slot/use-chatHistory";
 import { useAuthStore } from "../../store/use-auth-store";
-import { uploadChatAttachment } from "../../api/user.api";
-import { toast } from "react-hot-toast";
 
 const COMMON_EMOJIS = ["😀", "😂", "🥰", "😎", "🤔", "🔥", "💪", "👍", "🙌", "💯", "✨", "🥊", "🥗", "🏃"];
 
@@ -23,9 +21,6 @@ export const ChatPanel = ({
   const [selectedTrainerId, setSelectedTrainerId] = useState<string | null>(initialTrainerId || null);
   const [message, setMessage] = useState("");
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [isUploading, setIsUploading] = useState(false);
-  const [attachment, setAttachment] = useState<{ url: string; type: string; name: string } | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   // ── Render-phase derivation ──
@@ -36,7 +31,6 @@ export const ChatPanel = ({
     setPrevInitialTrainerId(initialTrainerId);
     setPrevIsOpen(isOpen);
     setSelectedTrainerId(initialTrainerId || null);
-    setAttachment(null);
     setMessage("");
   }
 
@@ -58,47 +52,12 @@ export const ChatPanel = ({
 
   const handleSend = (e?: React.FormEvent) => {
     e?.preventDefault();
-    if ((!message.trim() && !attachment) || !selectedTrainerId) return;
+    if (!message.trim() || !selectedTrainerId) return;
     
-    sendMessage({ 
-      message: message.trim(),
-      attachmentUrl: attachment?.url,
-      attachmentType: attachment?.type
-    });
+    sendMessage({ message: message.trim() });
     
     setMessage("");
-    setAttachment(null);
     setShowEmojiPicker(false);
-  };
-
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Limit to 10MB
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error("File size too large (max 10MB)");
-      return;
-    }
-
-    setIsUploading(true);
-    const formData = new FormData();
-    formData.append("attachment", file);
-
-    try {
-      const result = await uploadChatAttachment(formData, role);
-      setAttachment({
-        url: result.attachmentUrl,
-        type: result.attachmentType,
-        name: file.name
-      });
-      toast.success("File attached");
-    } catch {
-      toast.error("Failed to upload attachment");
-    } finally {
-      setIsUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = "";
-    }
   };
 
   const addEmoji = (emoji: string) => {
@@ -202,46 +161,6 @@ export const ChatPanel = ({
                               ? "bg-[#00ff94] text-black rounded-tr-sm" 
                               : "bg-white/5 text-gray-200 border border-white/5 rounded-tl-sm"
                           }`}>
-                            {msg.attachmentUrl && (
-                              <div className="mb-2">
-                                {msg.attachmentType === 'image' ? (
-                                  <div className="relative group overflow-hidden rounded-2xl border border-black/10">
-                                    <img 
-                                      src={msg.attachmentUrl} 
-                                      alt="Attachment" 
-                                      className="max-h-60 w-auto object-cover transition-transform group-hover:scale-105" 
-                                    />
-                                    <a 
-                                      href={msg.attachmentUrl} 
-                                      download 
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                                    >
-                                      <Download size={24} className="text-white" />
-                                    </a>
-                                  </div>
-                                ) : (
-                                  <a 
-                                    href={msg.attachmentUrl} 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className={`flex items-center gap-3 p-3 rounded-2xl border ${
-                                      isOwn ? "bg-black/5 border-black/10" : "bg-white/5 border-white/10"
-                                    } hover:bg-black/10 transition-all`}
-                                  >
-                                    <div className={`p-2 rounded-lg ${isOwn ? "bg-black/10" : "bg-white/10"}`}>
-                                      <FileText size={16} />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                      <p className="truncate text-[10px] font-black uppercase tracking-tight">Attachment</p>
-                                      <p className="text-[8px] opacity-60 uppercase font-bold">Click to view</p>
-                                    </div>
-                                    <Download size={14} className="opacity-40" />
-                                  </a>
-                                )}
-                              </div>
-                            )}
                             {msg.message && <p className="leading-relaxed">{msg.message}</p>}
                             <div className={`text-[8px] mt-2 font-black uppercase opacity-40 ${isOwn ? "text-right" : "text-left"}`}>
                               {new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
@@ -266,31 +185,6 @@ export const ChatPanel = ({
 
               {/* Input Area */}
               <div className="p-6 bg-black/40 border-t border-white/5 relative">
-                {/* Attachment Preview */}
-                {attachment && (
-                  <div className="absolute bottom-full left-6 right-6 mb-4 animate-in slide-in-from-bottom-2 fade-in">
-                    <div className="bg-[#1a3a2a] border border-[#00ff94]/30 rounded-2xl p-3 flex items-center gap-3 shadow-2xl backdrop-blur-xl">
-                      <div className="w-12 h-12 rounded-xl bg-black/40 flex items-center justify-center overflow-hidden border border-white/10">
-                        {attachment.type === 'image' ? (
-                          <img src={attachment.url} alt="" className="w-full h-full object-cover" />
-                        ) : (
-                          <FileText size={20} className="text-[#00ff94]" />
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-[10px] font-black text-white truncate uppercase tracking-tight">{attachment.name}</p>
-                        <p className="text-[8px] text-[#00ff94] font-bold uppercase italic">Ready to send</p>
-                      </div>
-                      <button 
-                        onClick={() => setAttachment(null)}
-                        className="p-2 hover:bg-white/5 rounded-lg text-gray-400 hover:text-white transition-colors"
-                      >
-                        <X size={16} />
-                      </button>
-                    </div>
-                  </div>
-                )}
-
                 {/* Emoji Picker Popover */}
                 {showEmojiPicker && (
                   <div className="absolute bottom-full right-6 mb-4 animate-in zoom-in-95 duration-200">
@@ -313,14 +207,6 @@ export const ChatPanel = ({
                     <div className="absolute left-4 bottom-4 flex items-center gap-2">
                       <button
                         type="button"
-                        onClick={() => fileInputRef.current?.click()}
-                        className="p-1 hover:text-[#00ff94] text-gray-500 transition-colors"
-                        title="Attach file"
-                      >
-                        <Paperclip size={18} />
-                      </button>
-                      <button
-                        type="button"
                         onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                         className={`p-1 transition-colors ${showEmojiPicker ? "text-[#00ff94]" : "text-gray-500 hover:text-[#00ff94]"}`}
                         title="Add emoji"
@@ -340,23 +226,16 @@ export const ChatPanel = ({
                       }}
                       placeholder="Type a message..."
                       rows={1}
-                      className="w-full bg-[#132a1e] border border-white/5 rounded-2xl py-4 pl-20 pr-4 text-white text-xs font-bold italic outline-none focus:border-[#00ff94] transition-all resize-none max-h-32 scrollbar-hide"
-                    />
-
-                    <input 
-                      type="file" 
-                      ref={fileInputRef} 
-                      onChange={handleFileChange} 
-                      className="hidden" 
+                      className="w-full bg-[#132a1e] border border-white/5 rounded-2xl py-4 pl-12 pr-4 text-white text-xs font-bold italic outline-none focus:border-[#00ff94] transition-all resize-none max-h-32 scrollbar-hide"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    disabled={isSending || isUploading || (!message.trim() && !attachment)}
+                    disabled={isSending || !message.trim()}
                     className="w-12 h-12 bg-[#00ff94] text-black rounded-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all disabled:opacity-50 disabled:hover:scale-100 shadow-[0_0_20px_rgba(0,255,148,0.2)]"
                   >
-                    {isUploading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+                    <Send size={18} />
                   </button>
                 </form>
               </div>

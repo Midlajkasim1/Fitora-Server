@@ -99,9 +99,6 @@ router.post("/chat/send",userMiddlewares.authMiddleware,userMiddlewares.blockGua
 router.patch("/chat/:otherUserId/read",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.chatController.markAsRead(req,res)
 ));
-router.post("/chat/upload", userMiddlewares.authMiddleware, userMiddlewares.blockGuard, upload.single("attachment"), asyncHandler((req: Request, res: Response) =>
-    userControllers.chatController.uploadAttachment(req, res)
-));
 router.get("/premium-dashboard",userMiddlewares.authMiddleware,userMiddlewares.blockGuard,asyncHandler((req:Request,res:Response)=>
     userControllers.userController.getUserPremiumDashboard(req,res)
 ));
