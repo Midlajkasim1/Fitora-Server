@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { User, Phone, Briefcase, Wallet, Edit3, Lock, ShieldCheck } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link } from "react-router-dom";
 import { GlobalLoader } from "../../../shared/GlobalLoader";
@@ -21,7 +21,7 @@ export default function TrainerProfilePage() {
     reset,
     formState: { errors },
   } = useForm<TrainerProfileFormData>({
-    resolver: zodResolver(trainerProfileSchema) as any,
+    resolver: zodResolver(trainerProfileSchema) as Resolver<TrainerProfileFormData>,
   });
 
   useEffect(() => {
@@ -107,7 +107,7 @@ export default function TrainerProfilePage() {
             </Link>
           )}
           <button
-            onClick={() => (isEditing ? handleSubmit(onSubmit as any)() : setIsEditing(true))}
+            onClick={() => (isEditing ? handleSubmit(onSubmit as SubmitHandler<TrainerProfileFormData>)() : setIsEditing(true))}
             disabled={isUpdating}
             className="w-full sm:w-auto bg-[#00ff94] text-[#0d1f17] px-8 md:px-10 py-3 md:py-4 rounded-2xl font-black uppercase italic text-[10px] md:text-xs hover:shadow-[0_0_30px_rgba(0,255,148,0.3)] transition-all disabled:opacity-50"
           >
@@ -125,6 +125,7 @@ export default function TrainerProfilePage() {
             name="firstName"
             value={trainer.firstName}
             isEditing={isEditing}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             register={register as any}
             error={errors.firstName?.message}
           />
@@ -134,6 +135,7 @@ export default function TrainerProfilePage() {
             name="lastName"
             value={trainer.lastName}
             isEditing={isEditing}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             register={register as any}
             error={errors.lastName?.message}
           />
@@ -143,6 +145,7 @@ export default function TrainerProfilePage() {
             name="phone"
             value={trainer.phone}
             isEditing={isEditing}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             register={register as any}
             error={errors.phone?.message}
           />
@@ -152,6 +155,7 @@ export default function TrainerProfilePage() {
             name="experience_year"
             value={trainer.experience_year}
             isEditing={isEditing}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             register={register as any}
             error={errors.experience_year?.message}
           />

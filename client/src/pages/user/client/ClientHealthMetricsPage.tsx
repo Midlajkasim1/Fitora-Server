@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver, type SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate } from "react-router-dom";
 import { Target, Loader2, ArrowRight } from "lucide-react";
@@ -16,7 +16,7 @@ export default function ClientHealthMetrics() {
     handleSubmit,
     formState: { errors },
   } = useForm<HealthMetricsFormData>({
-    resolver: zodResolver(healthMetricsSchema) as any,
+    resolver: zodResolver(healthMetricsSchema) as Resolver<HealthMetricsFormData>,
     defaultValues: { 
       height: 175, 
       weight: 70, 
@@ -47,7 +47,7 @@ export default function ClientHealthMetrics() {
 
       <div className="flex-1 flex items-start justify-center p-6 pb-20">
         <form 
-          onSubmit={handleSubmit(onSubmit as any)} 
+          onSubmit={handleSubmit(onSubmit as SubmitHandler<HealthMetricsFormData>)} 
           className="max-w-2xl w-full bg-[#132a1e]/40 border border-white/5 rounded-[2.5rem] p-10 space-y-8 backdrop-blur-xl shadow-2xl"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

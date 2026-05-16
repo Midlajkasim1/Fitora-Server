@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload, Save } from "lucide-react";
 import { useEffect, useMemo } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch, type Resolver, type SubmitErrorHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { createWorkoutSchema, type CreateWorkoutFormData } from "../../validators/admin/workout.Schema";
@@ -30,7 +30,7 @@ export default function WorkoutForm({ mode, initialData, specializations, onSubm
         control,
         formState: { errors },
     } = useForm<CreateWorkoutFormData>({
-        resolver: zodResolver(createWorkoutSchema) as any,
+        resolver: zodResolver(createWorkoutSchema) as Resolver<CreateWorkoutFormData>,
         defaultValues: initialData as Partial<CreateWorkoutFormData>,
     });
 
@@ -54,25 +54,31 @@ export default function WorkoutForm({ mode, initialData, specializations, onSubm
         };
     }, [videoPreview, thumbnailPreview]);
 
-    const onInvalid = (errors: Record<string, unknown>) => {
+    const onInvalid: SubmitErrorHandler<CreateWorkoutFormData> = (errors) => {
         console.error("Form Validation Errors:", errors);
         toast.error("Please fill all required fields correctly", { id: "val-error" });
     };
 
+    const handleFormSubmit = (data: CreateWorkoutFormData) => {
+        onSubmit(data);
+    };
+
     return (
         <AdminLayout>
-            <div className="p-10 space-y-10 max-w-6xl">
-                <div>
-                    <h2 className="text-3xl font-black text-white italic uppercase tracking-tighter">
-                        {mode === "create" ? "Create Workout Session" : "Edit Workout Session"}
-                    </h2>
-                    <p className="text-gray-500 text-sm font-bold italic uppercase mt-2">
-                        {mode === "create" ? "Publish new content" : "Update session details"}
-                    </p>
+            <div className="min-h-screen bg-[#0a1810] p-4 md:p-12">
+                <div className="max-w-5xl mx-auto mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div>
+                        <h1 className="text-5xl md:text-7xl font-black text-white italic tracking-tighter uppercase leading-none mb-4">
+                            {mode === "create" ? "New Workout" : "Edit Session"}
+                        </h1>
+                        <p className="text-gray-500 font-bold uppercase tracking-[0.3em] text-[10px] italic">
+                            {mode === "create" ? "Publish new content" : "Update session details"}
+                        </p>
+                    </div>
                 </div>
 
                 <form 
-                    onSubmit={handleSubmit(onSubmit as any, onInvalid as any)} 
+                    onSubmit={handleSubmit(handleFormSubmit, onInvalid)} 
                     className="bg-[#0a1810] border border-white/5 rounded-2xl p-8 space-y-8 shadow-2xl"
                 >
                     <div className="space-y-6">

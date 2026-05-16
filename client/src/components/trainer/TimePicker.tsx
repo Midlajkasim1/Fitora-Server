@@ -1,7 +1,8 @@
 // components/trainer/TimePicker12h.tsx
-import type { UseFormRegister, FieldValues } from "react-hook-form";
+import type { UseFormRegister } from "react-hook-form";
 
 interface TimePickerProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: UseFormRegister<any>;
   period: "AM" | "PM";
   setPeriod: (p: "AM" | "PM") => void;
