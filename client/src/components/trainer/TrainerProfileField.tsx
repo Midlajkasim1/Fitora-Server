@@ -1,17 +1,16 @@
-import type { UseFormRegister } from "react-hook-form";
+import type { UseFormRegister, FieldValues, Path } from "react-hook-form";
 
-interface TrainerProfileFieldProps {
+interface TrainerProfileFieldProps<T extends FieldValues> {
     icon: React.ReactNode;
     label: string;
     value: string | number | undefined;
     isEditing: boolean;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    register: UseFormRegister<any>;
-    name: string;
+    register: UseFormRegister<T>;
+    name: Path<T>;
     error?: string;
 }
 
-export const TrainerProfileField = ({
+export const TrainerProfileField = <T extends FieldValues>({
     icon,
     label,
     value,
@@ -19,7 +18,7 @@ export const TrainerProfileField = ({
     register,
     name,
     error,
-}: TrainerProfileFieldProps) => {
+}: TrainerProfileFieldProps<T>) => {
     return (
         <div className="space-y-1.5 md:space-y-2 group">
             <div className="flex items-center gap-2 mb-0.5 md:mb-1 ml-1">

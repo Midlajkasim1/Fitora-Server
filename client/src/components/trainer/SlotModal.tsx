@@ -145,8 +145,7 @@ export const CreateSlotModal = ({ isOpen, onClose, initialData }: SlotModalProps
                 className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white text-sm outline-none focus:border-[#00ff94] transition-all" 
               />
             </div>
-            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-            <TimePicker12h register={register as any} period={period} setPeriod={setPeriod} />
+            <TimePicker12h register={register} name="time" period={period} setPeriod={setPeriod} />
           </div>
 
           {/* Capacity */}
@@ -155,8 +154,8 @@ export const CreateSlotModal = ({ isOpen, onClose, initialData }: SlotModalProps
             <div className="relative">
               <input 
                 type="number" 
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                {...register("capacity", { valueAsNumber: true }) as any}
+                disabled={sessionType === 'one_on_one'}
+                {...register("capacity", { valueAsNumber: true })}
                 className={`w-full bg-white/5 border rounded-xl p-3 text-white text-sm focus:border-[#00ff94] outline-none transition-all ${
                   errors.capacity ? "border-red-500" : "border-white/10"
                 } disabled:opacity-20`}

@@ -125,8 +125,7 @@ export default function TrainerProfilePage() {
             name="firstName"
             value={trainer.firstName}
             isEditing={isEditing}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            register={register as any}
+            register={register}
             error={errors.firstName?.message}
           />
           <TrainerProfileField
@@ -135,8 +134,7 @@ export default function TrainerProfilePage() {
             name="lastName"
             value={trainer.lastName}
             isEditing={isEditing}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            register={register as any}
+            register={register}
             error={errors.lastName?.message}
           />
           <TrainerProfileField
@@ -145,8 +143,7 @@ export default function TrainerProfilePage() {
             name="phone"
             value={trainer.phone}
             isEditing={isEditing}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            register={register as any}
+            register={register}
             error={errors.phone?.message}
           />
           <TrainerProfileField
@@ -155,8 +152,7 @@ export default function TrainerProfilePage() {
             name="experience_year"
             value={trainer.experience_year}
             isEditing={isEditing}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            register={register as any}
+            register={register}
             error={errors.experience_year?.message}
           />
         </form>
