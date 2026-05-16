@@ -30,7 +30,7 @@ export default function WorkoutForm({ mode, initialData, specializations, onSubm
         control,
         formState: { errors },
     } = useForm<CreateWorkoutFormData>({
-        resolver: zodResolver(createWorkoutSchema),
+        resolver: zodResolver(createWorkoutSchema) as any,
         defaultValues: initialData as Partial<CreateWorkoutFormData>,
     });
 
@@ -72,7 +72,7 @@ export default function WorkoutForm({ mode, initialData, specializations, onSubm
                 </div>
 
                 <form 
-                    onSubmit={handleSubmit(onSubmit, onInvalid)} 
+                    onSubmit={handleSubmit(onSubmit as any, onInvalid as any)} 
                     className="bg-[#0a1810] border border-white/5 rounded-2xl p-8 space-y-8 shadow-2xl"
                 >
                     <div className="space-y-6">

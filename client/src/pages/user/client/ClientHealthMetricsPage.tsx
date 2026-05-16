@@ -16,7 +16,7 @@ export default function ClientHealthMetrics() {
     handleSubmit,
     formState: { errors },
   } = useForm<HealthMetricsFormData>({
-    resolver: zodResolver(healthMetricsSchema),
+    resolver: zodResolver(healthMetricsSchema) as any,
     defaultValues: { 
       height: 175, 
       weight: 70, 
@@ -47,7 +47,7 @@ export default function ClientHealthMetrics() {
 
       <div className="flex-1 flex items-start justify-center p-6 pb-20">
         <form 
-          onSubmit={handleSubmit(onSubmit)} 
+          onSubmit={handleSubmit(onSubmit as any)} 
           className="max-w-2xl w-full bg-[#132a1e]/40 border border-white/5 rounded-[2.5rem] p-10 space-y-8 backdrop-blur-xl shadow-2xl"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

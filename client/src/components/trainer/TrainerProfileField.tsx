@@ -5,7 +5,7 @@ interface TrainerProfileFieldProps {
     label: string;
     value: string | number | undefined;
     isEditing: boolean;
-    register: UseFormRegister<FieldValues>;
+    register: UseFormRegister<any>;
     name: string;
     error?: string;
 }

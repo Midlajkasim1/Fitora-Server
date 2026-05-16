@@ -21,7 +21,7 @@ export default function TrainerProfilePage() {
     reset,
     formState: { errors },
   } = useForm<TrainerProfileFormData>({
-    resolver: zodResolver(trainerProfileSchema),
+    resolver: zodResolver(trainerProfileSchema) as any,
   });
 
   useEffect(() => {
@@ -107,7 +107,7 @@ export default function TrainerProfilePage() {
             </Link>
           )}
           <button
-            onClick={() => (isEditing ? handleSubmit(onSubmit)() : setIsEditing(true))}
+            onClick={() => (isEditing ? handleSubmit(onSubmit as any)() : setIsEditing(true))}
             disabled={isUpdating}
             className="w-full sm:w-auto bg-[#00ff94] text-[#0d1f17] px-8 md:px-10 py-3 md:py-4 rounded-2xl font-black uppercase italic text-[10px] md:text-xs hover:shadow-[0_0_30px_rgba(0,255,148,0.3)] transition-all disabled:opacity-50"
           >
@@ -125,7 +125,7 @@ export default function TrainerProfilePage() {
             name="firstName"
             value={trainer.firstName}
             isEditing={isEditing}
-            register={register}
+            register={register as any}
             error={errors.firstName?.message}
           />
           <TrainerProfileField
@@ -134,7 +134,7 @@ export default function TrainerProfilePage() {
             name="lastName"
             value={trainer.lastName}
             isEditing={isEditing}
-            register={register}
+            register={register as any}
             error={errors.lastName?.message}
           />
           <TrainerProfileField
@@ -143,7 +143,7 @@ export default function TrainerProfilePage() {
             name="phone"
             value={trainer.phone}
             isEditing={isEditing}
-            register={register}
+            register={register as any}
             error={errors.phone?.message}
           />
           <TrainerProfileField
@@ -152,7 +152,7 @@ export default function TrainerProfilePage() {
             name="experience_year"
             value={trainer.experience_year}
             isEditing={isEditing}
-            register={register}
+            register={register as any}
             error={errors.experience_year?.message}
           />
         </form>

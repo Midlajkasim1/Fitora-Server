@@ -2,7 +2,7 @@
 import type { UseFormRegister, FieldValues } from "react-hook-form";
 
 interface TimePickerProps {
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<any>;
   period: "AM" | "PM";
   setPeriod: (p: "AM" | "PM") => void;
 }

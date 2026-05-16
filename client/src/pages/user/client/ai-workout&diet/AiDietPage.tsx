@@ -73,7 +73,7 @@ const AiDietPage = () => {
           <PromptInput title="Diet" onGenerate={handleGenerate} isPending={isBusy} />
         </section>
 
-        {planData?.success && planData?.weeklyPlan?.length > 0 ? (
+        {planData?.success && planData?.weeklyPlan && planData.weeklyPlan.length > 0 ? (
           <div className="space-y-24 relative z-10">
             {planData.weeklyPlan.map((day: DietDay, dIdx: number) => (
               <DietDayAccordion key={dIdx} day={day} isDefaultOpen={dIdx === 0} />

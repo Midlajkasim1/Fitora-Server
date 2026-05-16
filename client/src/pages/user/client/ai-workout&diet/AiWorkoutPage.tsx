@@ -79,7 +79,7 @@ const AiWorkoutPage = () => {
           <PromptInput title="Workout" onGenerate={handleGenerate} isPending={isBusy} />
         </section>
 
-        {planData?.success && planData?.weeklyPlan?.length > 0 ? (
+        {planData?.success && planData?.weeklyPlan && planData.weeklyPlan.length > 0 ? (
           <div className="space-y-24 relative z-10">
             {planData.weeklyPlan.map((dayPlan: WorkoutDay, idx: number) => (
               <WorkoutDayAccordion key={idx} day={dayPlan} isDefaultOpen={idx === 0} />
