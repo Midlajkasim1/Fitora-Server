@@ -38,16 +38,12 @@ export class SendMessageUseCase implements IBaseUseCase<SendMessageRequestDTO, C
       throw new Error(CHAT_MESSAGES.COMMUNICATION_RESTRICTED);
     }
 
-    if (!dto.message || dto.message.trim().length === 0) {
-      throw new Error("Message cannot be empty");
-    }
-
     const entity = ChatMessageEntity.create({ 
       senderId, 
       receiverId, 
-      message: message || "", 
-      attachmentUrl, 
-      attachmentType 
+      message: message || "",
+      attachmentUrl,
+      attachmentType
     });
     const saved = await this._chatRepo.save(entity);
 

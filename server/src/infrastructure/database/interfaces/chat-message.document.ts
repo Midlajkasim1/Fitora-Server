@@ -5,6 +5,8 @@ export interface IChatMessageDocument {
   senderId: Types.ObjectId;
   receiverId: Types.ObjectId;
   message: string;
+  attachmentUrl?: string;
+  attachmentType?: string;
   isRead: boolean;
   createdAt?: Date;
   updatedAt?: Date;

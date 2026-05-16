@@ -16,9 +16,18 @@ export const ChatMessageSchema = new Schema(
     },
     message: {
       type: String,
-      required: true,
+      required: false,
       maxlength: 5000,
       trim: true,
+    },
+    attachmentUrl: {
+      type: String,
+      required: false,
+    },
+    attachmentType: {
+      type: String,
+      enum: ["image", "video", "audio", "file"],
+      required: false,
     },
     isRead: {
       type: Boolean,

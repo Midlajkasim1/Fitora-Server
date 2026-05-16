@@ -2,6 +2,8 @@ export interface ChatMessageProps {
   senderId: string;
   receiverId: string;
   message: string;
+  attachmentUrl?: string;
+  attachmentType?: string;
   isRead?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
@@ -12,6 +14,8 @@ export class ChatMessageEntity {
   readonly senderId: string;
   readonly receiverId: string;
   readonly message: string;
+  readonly attachmentUrl?: string;
+  readonly attachmentType?: string;
   readonly isRead: boolean;
   readonly createdAt?: Date;
   readonly updatedAt?: Date;
@@ -21,6 +25,8 @@ export class ChatMessageEntity {
     this.senderId = props.senderId;
     this.receiverId = props.receiverId;
     this.message = props.message;
+    this.attachmentUrl = props.attachmentUrl;
+    this.attachmentType = props.attachmentType;
     this.isRead = props.isRead || false;
     this.createdAt = props.createdAt;
     this.updatedAt = props.updatedAt;
