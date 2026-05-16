@@ -1,0 +1,40 @@
+name: Fitora CD Pipeline
+
+on:
+  workflow_run:
+    workflows: ["Fitora CI Pipeline"]
+    types:
+      - completed
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    name: Deploy to EC2
+    # Only deploy if the CI pipeline actually succeeded
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            # Navigate to your project folder.
+            cd ~/Fitora-Server
+            
+            # Pull the new code that passed CI
+            git pull origin main
+            
+            # Rebuild and restart the containers
+            # We use --build to ensure TypeScript changes are re-compiled
+            docker compose up -d --build
+            
+            # Cleanup old, unused images to save disk space
+            docker image prune -f
