@@ -20,22 +20,26 @@ export const ChatPanel = ({
   const [message, setMessage] = useState("");
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const { 
-    data: historyData, 
-    sendMessage, 
+  // ── Render-phase derivation (React "getDerivedStateFromProps" equivalent) ──
+  // Sync selectedTrainerId when initialTrainerId or isOpen changes WITHOUT
+  // a useEffect, which would cause an extra cascading render cycle.
+  const [prevInitialTrainerId, setPrevInitialTrainerId] = useState(initialTrainerId);
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
+
+  if (prevInitialTrainerId !== initialTrainerId || prevIsOpen !== isOpen) {
+    setPrevInitialTrainerId(initialTrainerId);
+    setPrevIsOpen(isOpen);
+    setSelectedTrainerId(initialTrainerId || null);
+  }
+
+  const {
+    data: historyData,
+    sendMessage,
     isSending,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage
   } = useChatHistory(selectedTrainerId);
-
-  // Sync initial trainer id whenever it changes or panel opens
-  // Use a ref to track the last seen initialTrainerId to avoid direct setState in effect
-  const prevInitialTrainerIdRef = useRef<string | undefined>(initialTrainerId);
-  if (prevInitialTrainerIdRef.current !== initialTrainerId) {
-    prevInitialTrainerIdRef.current = initialTrainerId;
-    setSelectedTrainerId(initialTrainerId || null);
-  }
 
   // Scroll to bottom on new messages
   useEffect(() => {

@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CheckCircle2, ChevronDown, Dumbbell, Flame, Target, Trophy, User
 } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { OnboardingLayout } from "../../../../components/auth/onboarding/OnboardingLayout";
@@ -35,14 +35,14 @@ export default function ClientStepOnePage() {
   const { data: specialization = [], isLoading } = useSpecializations();
 
 
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<ClientStepOne>({
+  const { register, handleSubmit, setValue, getValues, control, formState: { errors } } = useForm<ClientStepOne>({
     resolver: zodResolver(schema),
     defaultValues: { preferredWorkouts: "", primaryMotives: [] },
   });
 
-  const selectedGender = watch("gender");
-  const selectedWorkout= watch("preferredWorkouts");
-  const selectedMotives = watch("primaryMotives") || [];
+  const selectedGender = useWatch({ control, name: "gender" });
+  const selectedWorkout = useWatch({ control, name: "preferredWorkouts" });
+  const selectedMotives = (useWatch({ control, name: "primaryMotives" }) as string[]) || [];
 
   const onSubmit = (data: ClientStepOne) => {
     setClientStepOne(data);
@@ -50,7 +50,7 @@ export default function ClientStepOnePage() {
   };
 
 const toggleSelection = (field: keyof ClientStepOne, val: string) => {
-  const current = (watch(field) as string[]) || [];
+  const current = (getValues(field) as string[]) || [];
 
   const next = current.includes(val)
     ? current.filter(i => i !== val)

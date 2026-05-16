@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm, type FieldError } from 'react-hook-form';
+import { useForm, useWatch, type FieldError } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {  UserIcon, MailIcon, PhoneIcon, LockIcon,  UserCheckIcon, ShieldCheckIcon, EyeIcon, EyeOffIcon }from'lucide-react';
@@ -29,12 +29,12 @@ interface RegisterFormProps {
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit, onRoleChange, isLoading }) => {
   const [showPass, setShowPass] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm<RegisterFormData>({
+  const { register, handleSubmit, setValue, control, formState: { errors } } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     defaultValues: { role: 'user' }
   });
 
-  const selectedRole = watch('role');
+  const selectedRole = useWatch({ control, name: 'role' });
 
   useEffect(() => {
     onRoleChange(selectedRole);

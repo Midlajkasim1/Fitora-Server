@@ -45,7 +45,7 @@ const WebRTCSessionPage = () => {
                     if (!serverUrl.startsWith("ws")) serverUrl = `wss://${serverUrl}`;
                 }
                 setHost(serverUrl);
-            } catch (_error: unknown) {
+            } catch {
                 if (user?.role === "trainer") navigate("/trainer/session"); else navigate("/upcoming-sessions");
             } finally {
                 setIsLoading(false);
@@ -60,7 +60,7 @@ const WebRTCSessionPage = () => {
             await api.post(TRAINER_VIDEO_ROUTES.END_SESSION(slotId!));
             toast.success("Session concluded.");
             navigate("/trainer/session");
-        } catch (_error: unknown) {
+        } catch {
             toast.error("Failed to end session officially");
         }
     };

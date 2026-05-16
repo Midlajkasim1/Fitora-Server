@@ -6,7 +6,7 @@ import {
     Moon,
     Utensils
 } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { z } from "zod";
@@ -33,8 +33,9 @@ export default function ClientStepTwoPage() {
   const {
     register,
     handleSubmit,
-    watch,
+    getValues,
     setValue,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
@@ -46,11 +47,11 @@ export default function ClientStepTwoPage() {
     },
   });
 
-  const selectedConditions = watch("medicalConditions") || [];
-  const selectedDiet = watch("dietPreference");
+  const selectedConditions = (useWatch({ control, name: "medicalConditions" }) as string[]) || [];
+  const selectedDiet = useWatch({ control, name: "dietPreference" }) ?? "";
 
   const toggleCondition = (val: string) => {
-    const current = watch("medicalConditions") || [];
+    const current = getValues("medicalConditions") || [];
     let next: string[];
 
     if (val === "none") {

@@ -51,7 +51,7 @@ const SessionReviewPage = () => {
                 comment: feedback
             });
             toast.success("Thank you for your feedback!");
-        } catch (_error: unknown) {
+        } catch {
             // Error is handled by global interceptor
         } finally {
             setIsSubmittingReview(false);
@@ -78,7 +78,7 @@ const SessionReviewPage = () => {
             });
             toast.success("Report submitted. Our team will investigate.");
             setReportDetails('');
-        } catch (_error: unknown) {
+        } catch {
             // Error is handled by global interceptor
         } finally {
             setIsSubmittingReport(false);

@@ -1,5 +1,5 @@
 import React, { useRef, } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { ArrowRight } from 'lucide-react';
@@ -16,12 +16,12 @@ interface VerifyOtpFormProps {
 }
 
 export const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({ onSubmit, isLoading }) => {
-  const { handleSubmit, setValue, watch, formState: { errors } } = useForm<OtpFormData>({
+  const { handleSubmit, setValue, control, formState: { errors } } = useForm<OtpFormData>({
     resolver: zodResolver(otpSchema),
     defaultValues: { otp: '' }
   });
 
-  const otpValue = watch('otp');
+  const otpValue = useWatch({ control, name: 'otp' }) ?? '';
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {

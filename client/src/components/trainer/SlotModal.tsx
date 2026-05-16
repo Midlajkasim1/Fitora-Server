@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { X, Clock } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
@@ -20,35 +20,50 @@ interface SlotModalProps {
 export const CreateSlotModal = ({ isOpen, onClose, initialData }: SlotModalProps) => {
   const { mutate: createMutate, isPending: isCreating } = useCreateSlot();
   const { mutate: editMutate, isPending: isEditing } = useEditSlot();
+
+  // ── Derive period from initialData during render (React "getDerivedStateFromProps" pattern) ──
+  // Tracking the last-seen snapshot lets us compute period when props change
+  // without calling setState inside a useEffect (which causes cascading renders).
   const [period, setPeriod] = useState<"AM" | "PM">("AM");
+  const [prevSnapshot, setPrevSnapshot] = useState<{ data: typeof initialData; open: boolean }>({
+    data: initialData,
+    open: isOpen,
+  });
+
+  if (prevSnapshot.data !== initialData || prevSnapshot.open !== isOpen) {
+    setPrevSnapshot({ data: initialData, open: isOpen });
+    if (initialData && isOpen) {
+      const hours = new Date(initialData.startTime).getHours();
+      setPeriod(hours >= 12 ? "PM" : "AM");
+    } else if (!initialData && isOpen) {
+      setPeriod("AM");
+    }
+  }
 
   const isEditMode = !!initialData;
 
-  const { register, handleSubmit, watch, setValue, reset, formState: { errors } } = useForm<CreateSlotFormData>({
+  const { register, handleSubmit, control, setValue, reset, formState: { errors } } = useForm<CreateSlotFormData>({
     resolver: zodResolver(CreateSlotSchema),
   });
 
-  const sessionType = watch("type");
-  const selectedTime = watch("time");
+  const sessionType = useWatch({ control, name: "type" });
+  const selectedTime = useWatch({ control, name: "time" });
 
+  // Only call reset() here — react-hook-form imperative, not a React setState
   useEffect(() => {
     if (initialData && isOpen) {
       const start = new Date(initialData.startTime);
       let hours = start.getHours();
-      const ampm = hours >= 12 ? "PM" : "AM";
       hours = hours % 12 || 12;
       const timeStr = `${String(hours).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}`;
-
       reset({
         type: initialData.type,
         capacity: initialData.capacity,
         date: new Date(initialData.startTime).toISOString().split("T")[0],
         time: timeStr,
       });
-      setPeriod(ampm);
     } else if (!initialData && isOpen) {
       reset({ type: 'one_on_one', capacity: 1, date: getTodayDate(), time: "10:00" });
-      setPeriod("AM");
     }
   }, [initialData, isOpen, reset]);
 
