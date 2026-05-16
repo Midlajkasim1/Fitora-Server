@@ -48,6 +48,9 @@ router.post("/chat/send", userMiddlewares.authMiddleware, userMiddlewares.blockG
 router.patch("/chat/:otherUserId/read", userMiddlewares.authMiddleware, userMiddlewares.blockGuard, asyncHandler((req: Request, res: Response) =>
   userControllers.chatController.markAsRead(req,res)
 ));
+router.post("/chat/upload", userMiddlewares.authMiddleware, userMiddlewares.blockGuard, upload.single("attachment"), asyncHandler((req: Request, res: Response) =>
+  userControllers.chatController.uploadAttachment(req, res)
+));
 
 router.put("/profileImage", userMiddlewares.authMiddleware, userMiddlewares.blockGuard, upload.single("profileImg"), asyncHandler((req: Request, res: Response) =>
   trainerController.trainerController.uploadProfileImage(req, res)

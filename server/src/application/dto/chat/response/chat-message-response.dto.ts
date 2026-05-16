@@ -5,6 +5,8 @@ export class ChatMessageResponseDTO {
   senderId!: string;
   receiverId!: string;
   message!: string;
+  attachmentUrl?: string;
+  attachmentType?: 'image' | 'video' | 'audio' | 'file';
   isRead!: boolean;
   createdAt!: Date;
 
@@ -18,6 +20,8 @@ export class ChatMessageResponseDTO {
       senderId: entity.senderId,
       receiverId: entity.receiverId,
       message: entity.message,
+      attachmentUrl: entity.attachmentUrl,
+      attachmentType: entity.attachmentType,
       isRead: entity.isRead,
       createdAt: entity.createdAt!,
     });

@@ -106,9 +106,17 @@ export const fetchChatHistory = async (otherUserId: string, role: 'user' | 'trai
   return res.data.data;
 };
 
-export const sendMessage = async (receiverId: string, role: 'user' | 'trainer', message: string) => {
+export const sendMessage = async (receiverId: string, role: 'user' | 'trainer', message: string, attachmentUrl?: string, attachmentType?: string) => {
   const routes = role === 'trainer' ? TRAINER_CHAT_ROUTES : CHAT_ROUTES;
-  const res = await api.post(routes.SEND_MESSAGE, { receiverId, message });
+  const res = await api.post(routes.SEND_MESSAGE, { receiverId, message, attachmentUrl, attachmentType });
+  return res.data.data;
+};
+
+export const uploadChatAttachment = async (formdata: FormData, role: 'user' | 'trainer') => {
+  const routes = role === 'trainer' ? TRAINER_CHAT_ROUTES : CHAT_ROUTES;
+  const res = await api.post(`${routes.BASE}/chat/upload`, formdata, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  });
   return res.data.data;
 };
 

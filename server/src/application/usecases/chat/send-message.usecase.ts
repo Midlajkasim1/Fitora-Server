@@ -17,9 +17,12 @@ export class SendMessageUseCase implements IBaseUseCase<SendMessageRequestDTO, C
   ) {}
 
   async execute(dto: SendMessageRequestDTO): Promise<ChatMessageResponseDTO> {
-    const { senderId, receiverId, message } = dto;
+    const { senderId, receiverId, message, attachmentUrl, attachmentType } = dto;
 
-    if (!message || message.trim().length === 0) {
+    const isMessageEmpty = !message || message.trim().length === 0;
+    const hasAttachment = !!attachmentUrl;
+
+    if (isMessageEmpty && !hasAttachment) {
       throw new Error(CHAT_MESSAGES.MESSAGE_EMPTY);
     }
 
@@ -35,7 +38,13 @@ export class SendMessageUseCase implements IBaseUseCase<SendMessageRequestDTO, C
       throw new Error(CHAT_MESSAGES.COMMUNICATION_RESTRICTED);
     }
 
-    const entity = ChatMessageEntity.create({ senderId, receiverId, message });
+    const entity = ChatMessageEntity.create({ 
+      senderId, 
+      receiverId, 
+      message: message || "", 
+      attachmentUrl, 
+      attachmentType 
+    });
     const saved = await this._chatRepo.save(entity);
 
     const responseDto = ChatMessageResponseDTO.fromEntity(saved);

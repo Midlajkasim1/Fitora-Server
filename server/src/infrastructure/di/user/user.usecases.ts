@@ -46,6 +46,7 @@ import { GetChatPartnersUseCase } from "@/application/usecases/chat/get-chat-par
 import { SendMessageUseCase } from "@/application/usecases/chat/send-message.usecase";
 import { GetChatHistoryUseCase } from "@/application/usecases/chat/get-chat-history.usecase";
 import { MarkMessagesReadUseCase } from "@/application/usecases/chat/mark-read.usecase";
+import { UploadChatAttachmentUseCase } from "@/application/usecases/chat/upload-chat-attachment.usecase";
 import { notificationServiceProxy } from "@/infrastructure/providers/notification/notification.provider";
 // import { GeminiAiService } from "@/infrastructure/providers/ai-model/gemini-ai.service.provider";
 import { GenerateWorkoutPlanUseCase } from "@/application/usecases/ai-workout&diet/generate-workout-plan.usecase";
@@ -282,6 +283,9 @@ export const useCases = {
   ),
   markMessagesReadUseCase: new MarkMessagesReadUseCase(
     userRepositories.chatMessageRepository
+  ),
+  uploadChatAttachmentUseCase: new UploadChatAttachmentUseCase(
+    storageProvider
   )
 
   

@@ -87,6 +87,25 @@ async uploadWorkoutVideo(
   return `https://${this._bucketName}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
 }
 
+  async uploadChatAttachment(
+    file: Buffer,
+    fileName: string,
+    mimeType: string
+  ): Promise<string> {
+    const key = `chat/attachments/${Date.now()}-${fileName}`;
+
+    await this._s3Client.send(
+      new PutObjectCommand({
+        Bucket: this._bucketName,
+        Key: key,
+        Body: file,
+        ContentType: mimeType,
+      })
+    );
+
+    return `https://${this._bucketName}.s3.${env.AWS_REGION}.amazonaws.com/${key}`;
+  }
+
   async deleteFile(url: string): Promise<void> {
     const urlParts = url.split(
       `${this._bucketName}.s3.${env.AWS_REGION}.amazonaws.com/`

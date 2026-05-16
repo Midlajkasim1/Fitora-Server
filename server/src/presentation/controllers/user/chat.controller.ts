@@ -13,7 +13,8 @@ export class ChatController {
   constructor(
     private readonly _getChatHistoryUseCase: IBaseUseCase<GetChatHistoryRequestDTO, GetChatHistoryResponseDTO>,
     private readonly _sendMessageUseCase: IBaseUseCase<SendMessageRequestDTO, ChatMessageResponseDTO>,
-    private readonly _markMessagesReadUseCase: IBaseUseCase<MarkMessagesReadRequestDTO, void>
+    private readonly _markMessagesReadUseCase: IBaseUseCase<MarkMessagesReadRequestDTO, void>,
+    private readonly _uploadChatAttachmentUseCase: IBaseUseCase<any, any, any>
   ) {}
 
   async getChatHistory(req: Request, res: Response): Promise<Response> {
@@ -66,5 +67,20 @@ export class ChatController {
     });
 
     return res.status(HttpStatus.OK).json(ApiResponse.success({ success: true }));
+  }
+
+  async uploadAttachment(req: Request, res: Response): Promise<Response> {
+    const userId = req.user?.userId;
+    if (!userId) {
+      return res.status(HttpStatus.UNAUTHORIZED).json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
+    }
+
+    if (!req.file) {
+      throw new Error(AUTH_MESSAGES.FILE_NOT_FOUND);
+    }
+
+    const result = await this._uploadChatAttachmentUseCase.execute({}, req.file);
+
+    return res.status(HttpStatus.OK).json(ApiResponse.success(result));
   }
 }
