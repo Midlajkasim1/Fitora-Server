@@ -93,6 +93,7 @@ export const NOTIFICATION_ROUTES = {
 };
 
 export const CHAT_ROUTES = {
+  BASE: "/user",
   CHAT_PARTNERS: "user/chat/partners",
   CHAT_HISTORY: (otherUserId: string) => `user/chat/${otherUserId}`,
   SEND_MESSAGE: "user/chat/send",
@@ -100,6 +101,7 @@ export const CHAT_ROUTES = {
 };
 
 export const TRAINER_CHAT_ROUTES = {
+  BASE: "/trainer",
   CHAT_PARTNERS: "trainer/chat/partners",
   CHAT_HISTORY: (otherUserId: string) => `trainer/chat/${otherUserId}`,
   SEND_MESSAGE: "trainer/chat/send",

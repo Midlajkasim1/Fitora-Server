@@ -7,6 +7,7 @@ import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
 import { HttpStatus } from "@/domain/constants/http-status.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { ApiResponse } from "@/shared/utils/response.handler";
+import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer-upload-file.dto";
 import { Request, Response } from "express";
 
 export class ChatController {
@@ -14,7 +15,7 @@ export class ChatController {
     private readonly _getChatHistoryUseCase: IBaseUseCase<GetChatHistoryRequestDTO, GetChatHistoryResponseDTO>,
     private readonly _sendMessageUseCase: IBaseUseCase<SendMessageRequestDTO, ChatMessageResponseDTO>,
     private readonly _markMessagesReadUseCase: IBaseUseCase<MarkMessagesReadRequestDTO, void>,
-    private readonly _uploadChatAttachmentUseCase: IBaseUseCase<any, any, any>
+    private readonly _uploadChatAttachmentUseCase: IBaseUseCase<Record<string, unknown>, { attachmentUrl: string; attachmentType: string }, UploadFileDTO>
   ) {}
 
   async getChatHistory(req: Request, res: Response): Promise<Response> {

@@ -26,7 +26,7 @@ export const ChatMessageSchema = new Schema(
     },
     attachmentType: {
       type: String,
-      enum: ['image', 'video', 'audio', 'file'],
+      enum: ["image", "video", "audio", "file"],
       required: false,
     },
     isRead: {

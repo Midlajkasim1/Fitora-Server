@@ -6,7 +6,7 @@ export class ChatMessageResponseDTO {
   receiverId!: string;
   message!: string;
   attachmentUrl?: string;
-  attachmentType?: 'image' | 'video' | 'audio' | 'file';
+  attachmentType?: "image" | "video" | "audio" | "file";
   isRead!: boolean;
   createdAt!: Date;
 

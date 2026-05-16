@@ -4,7 +4,7 @@ export interface ChatMessageProps {
   receiverId: string;
   message: string;
   attachmentUrl?: string;
-  attachmentType?: 'image' | 'video' | 'audio' | 'file';
+  attachmentType?: "image" | "video" | "audio" | "file";
   isRead?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
@@ -16,7 +16,7 @@ export class ChatMessageEntity {
   readonly receiverId: string;
   readonly message: string;
   readonly attachmentUrl?: string;
-  readonly attachmentType?: 'image' | 'video' | 'audio' | 'file';
+  readonly attachmentType?: "image" | "video" | "audio" | "file";
   readonly isRead: boolean;
   readonly createdAt?: Date;
   readonly updatedAt?: Date;

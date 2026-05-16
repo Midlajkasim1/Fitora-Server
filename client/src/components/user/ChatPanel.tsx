@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, User, ChevronLeft, Paperclip, Smile, Image as ImageIcon, FileText, Loader2, Download } from "lucide-react";
+import { MessageCircle, X, Send, User, ChevronLeft, Paperclip, Smile, FileText, Loader2, Download } from "lucide-react";
 import { useChatPartners } from "../../hooks/user/slot/use-chatPartners";
 import { useChatHistory } from "../../hooks/user/slot/use-chatHistory";
 import { useAuthStore } from "../../store/use-auth-store";
@@ -93,7 +93,7 @@ export const ChatPanel = ({
         name: file.name
       });
       toast.success("File attached");
-    } catch (error) {
+    } catch {
       toast.error("Failed to upload attachment");
     } finally {
       setIsUploading(false);

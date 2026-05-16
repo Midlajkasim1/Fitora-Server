@@ -3,7 +3,7 @@ export class SendMessageRequestDTO {
   receiverId!: string;
   message!: string;
   attachmentUrl?: string;
-  attachmentType?: 'image' | 'video' | 'audio' | 'file';
+  attachmentType?: "image" | "video" | "audio" | "file";
 
   constructor(data: SendMessageRequestDTO) {
     Object.assign(this, data);
