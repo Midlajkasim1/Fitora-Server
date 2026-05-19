@@ -11,7 +11,7 @@ import { GetSubscriptionPlanByIdResponseDTO } from "@/application/dto/subscripti
 import { GetSubscriptionPlanResponseDTO } from "@/application/dto/subscription/response/get-subscriptionPlan.dto";
 import { GetPurchaseHistoryResponseDTO } from "@/application/dto/subscription/response/get.purchasehistory.dto";
 import { HandleWebhookResponseDTO } from "@/application/dto/subscription/response/handle.webhook.dto";
-import { PurchaseSubscriptionResponseDTO } from "@/application/dto/subscription/response/purchasesubscription.dto";
+import { PurchaseSubscriptionResponseDTO } from "@/application/dto/subscription/response/purchaseSubscription.dto";
 import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
 import { HttpStatus } from "@/domain/constants/http.status.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
