@@ -1,8 +1,8 @@
+import { WorkoutDifficulty } from "@/domain/constants/workout.constant";
 import { WorkoutEntity } from "@/domain/entities/workout/workout.entity";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
-import { IWorkoutDocument } from "../interfaces/workout-document.interface";
 import { Types } from "mongoose";
-import { WorkoutDifficulty } from "@/domain/constants/workout.constant";
+import { IWorkoutDocument } from "../interfaces/workout.document.interface";
 
 
 

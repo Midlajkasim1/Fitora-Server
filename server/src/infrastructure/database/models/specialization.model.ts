@@ -1,5 +1,5 @@
 import { model } from "mongoose";
-import {ISpecializationDocument } from "../interfaces/specialization-interface";
+import { ISpecializationDocument } from "../interfaces/specialization.interface";
 import { SpecializationSchema } from "../schemas/specialization.schema";
 
 

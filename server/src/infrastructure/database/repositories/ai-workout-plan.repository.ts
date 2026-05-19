@@ -1,9 +1,9 @@
-import { AiWorkoutPlanEntity } from "@/domain/entities/ai-workout&diet/ai-workout-plan.entity";
-import { AiWorkoutPlanMapper } from "../mappers/ai-workout-plan.mapper";
-import { BaseRepository } from "./base.repository"; // Adjust path to your BaseRepository
-import { IWorkoutPlanDocument } from "../interfaces/ai-workout-plan.document";
-import { WorkoutPlanModel } from "../models/ai-workout.model";
+import { AiWorkoutPlanEntity } from "@/domain/entities/ai.workout&diet/ai.workout.plan.entity";
 import { IAiWorkoutPlanRepository } from "@/domain/interfaces/repositories/ai-workout-plan.repository";
+import { IWorkoutPlanDocument } from "../interfaces/ai.workout.plan.document";
+import { AiWorkoutPlanMapper } from "../mappers/ai.workout.plan.mapper";
+import { WorkoutPlanModel } from "../models/ai-workout.model";
+import { BaseRepository } from "./base.repository"; // Adjust path to your BaseRepository
 
 export class AiWorkoutPlanRepository extends BaseRepository<AiWorkoutPlanEntity, IWorkoutPlanDocument> implements IAiWorkoutPlanRepository {
   constructor(

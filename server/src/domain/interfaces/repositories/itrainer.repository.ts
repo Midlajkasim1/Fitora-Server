@@ -1,9 +1,9 @@
 
 import { ApprovalStatus } from "@/domain/constants/auth.constants";
-import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.entity";
+import { TrainerDetailsEntity } from "@/domain/entities/user/trainer.details.entity";
 import { UserEntity } from "@/domain/entities/user/user.entity";
-import { IBaseRepository } from "./base.repository";
 import { ClientSession } from "mongoose";
+import { IBaseRepository } from "./base.repository";
 
 export interface ITrainerRepository extends IBaseRepository<TrainerDetailsEntity> {
 

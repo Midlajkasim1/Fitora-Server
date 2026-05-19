@@ -1,10 +1,10 @@
-import { GetChatHistoryRequestDTO } from "@/application/dto/chat/request/get-chat-history.dto";
-import { GetChatHistoryResponseDTO } from "@/application/dto/chat/response/get-chat-history.dto";
-import { MarkMessagesReadRequestDTO } from "@/application/dto/chat/request/mark-messages-read.dto";
-import { SendMessageRequestDTO } from "@/application/dto/chat/request/send-message.dto";
-import { ChatMessageResponseDTO } from "@/application/dto/chat/response/chat-message-response.dto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { HttpStatus } from "@/domain/constants/http-status.constants";
+import { GetChatHistoryRequestDTO } from "@/application/dto/chat/request/get.chat.history.dto";
+import { MarkMessagesReadRequestDTO } from "@/application/dto/chat/request/mark.messages.read.dto";
+import { SendMessageRequestDTO } from "@/application/dto/chat/request/send.message.dto";
+import { ChatMessageResponseDTO } from "@/application/dto/chat/response/chat.message.response.dto";
+import { GetChatHistoryResponseDTO } from "@/application/dto/chat/response/get.chat.history.dto";
+import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";

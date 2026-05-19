@@ -1,5 +1,5 @@
-import { AiDietPlanEntity, IDietDay } from "@/domain/entities/ai-workout&diet/ai-diet-plan.entity";
-import { AiWorkoutPlanEntity, IWorkoutDay } from "@/domain/entities/ai-workout&diet/ai-workout-plan.entity";
+import { AiDietPlanEntity, IDietDay } from "@/domain/entities/ai.workout&diet/ai.diet.plan.entity";
+import { AiWorkoutPlanEntity, IWorkoutDay } from "@/domain/entities/ai.workout&diet/ai.workout.plan.entity";
 import { IAiService, IUserDietMetrics, IUserFitnessMetrics } from "@/domain/interfaces/services/ai-generate.service.interface";
 import { logger } from "../loggers/logger";
 

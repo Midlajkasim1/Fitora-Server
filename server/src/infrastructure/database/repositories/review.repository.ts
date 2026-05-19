@@ -1,10 +1,10 @@
-import { IReviewRepository } from "@/domain/interfaces/repositories/review.repository";
 import { ReviewEntity } from "@/domain/entities/review/review.entity";
-import { ReviewModel } from "../models/review.model";
-import { ReviewMapper } from "../mappers/review.mapper";
-import { BaseRepository } from "./base.repository";
+import { IReviewRepository } from "@/domain/interfaces/repositories/review.repository";
 import mongoose, { Model } from "mongoose";
-import { IReviewDocument } from "../interfaces/review-document.interface";
+import { IReviewDocument } from "../interfaces/review.document.interface";
+import { ReviewMapper } from "../mappers/review.mapper";
+import { ReviewModel } from "../models/review.model";
+import { BaseRepository } from "./base.repository";
 
 export class MongooseReviewRepository
   extends BaseRepository<ReviewEntity, IReviewDocument>

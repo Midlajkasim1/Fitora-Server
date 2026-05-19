@@ -1,4 +1,4 @@
-import { SubscriptionPlanManagementListDTO } from "./subscriptionManagementPlan.dto";
+import { SubscriptionPlanManagementListDTO } from "./subscription.managementplan.dto";
 
 
 export class GetSubscriptionPlanResponseDTO {

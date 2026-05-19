@@ -1,11 +1,11 @@
 import { AuthProvider, UserRole, UserStatus } from "@/domain/constants/auth.constants";
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IUserRepository, UserWithPassword } from "@/domain/interfaces/repositories/user.repository";
-import { IUserDocument } from "../interfaces/user-document.interface";
+import mongoose, { Model } from "mongoose";
+import { IUserDocument } from "../interfaces/user.document.interface";
 import { UserMapper } from "../mappers/user.mapper";
 import { UserModel } from "../models/user.models";
 import { BaseRepository } from "./base.repository";
-import mongoose, { Model } from "mongoose";
 export class UserRepository extends BaseRepository<UserEntity,IUserDocument> implements IUserRepository {
 
   constructor(private readonly userMapper: UserMapper) {

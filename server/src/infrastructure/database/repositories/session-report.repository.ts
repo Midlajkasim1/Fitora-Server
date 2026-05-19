@@ -1,10 +1,10 @@
+import { SessionReportEntity } from "@/domain/entities/review/session.report.entity";
 import { ISessionReportRepository } from "@/domain/interfaces/repositories/session-report.repository";
-import { SessionReportEntity } from "@/domain/entities/review/session-report.entity";
-import { SessionReportModel } from "../models/session-report.model";
-import { SessionReportMapper } from "../mappers/session-report.mapper";
-import { BaseRepository } from "./base.repository";
 import mongoose, { Model } from "mongoose";
-import { ISessionReportDocument } from "../interfaces/session-report-document.interface";
+import { ISessionReportDocument } from "../interfaces/session.report.document.interface";
+import { SessionReportMapper } from "../mappers/session.report.mapper";
+import { SessionReportModel } from "../models/session-report.model";
+import { BaseRepository } from "./base.repository";
 
 export class MongooseSessionReportRepository
   extends BaseRepository<SessionReportEntity, ISessionReportDocument>

@@ -1,10 +1,10 @@
 import { SessionType, SlotStatus } from "@/domain/constants/session.constants";
-import { ISlotRepository, ITrainerUpcomingResult, IUserUpcomingResult, IUpcomingSlot, IUserUpcomingSlot, ISlotWithTrainer, IChatPartner, ITrainerParticipantRow } from "@/domain/interfaces/repositories/slot.repository";
-import { PipelineStage, Types, Model } from "mongoose";
-import { SlotModel } from "../models/slots.models";
-import { SlotMapper } from "../mappers/slot.mapper";
 import { SlotEntity } from "@/domain/entities/slot/slot.entity";
-import { ISlotDocument } from "../interfaces/slot-document.interface";
+import { IChatPartner, ISlotRepository, ISlotWithTrainer, ITrainerParticipantRow, ITrainerUpcomingResult, IUpcomingSlot, IUserUpcomingResult, IUserUpcomingSlot } from "@/domain/interfaces/repositories/slot.repository";
+import { Model, PipelineStage, Types } from "mongoose";
+import { ISlotDocument } from "../interfaces/slot.document.interface";
+import { SlotMapper } from "../mappers/slot.mapper";
+import { SlotModel } from "../models/slots.models";
 import { BaseRepository } from "./base.repository";
 
 export class SlotRepository extends BaseRepository<SlotEntity, ISlotDocument> implements ISlotRepository {

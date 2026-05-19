@@ -1,21 +1,21 @@
-import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer-upload-file.dto";
-import { UpdateTrainerProfileRequest } from "@/application/dto/trainer/request/update-trainer-profile.dto";
-import { UploadTrainerImageRequest } from "@/application/dto/trainer/request/upload-trainerProfile.dto";
-import { GetTrainerProfileResponse } from "@/application/dto/trainer/response/get-trainerProfile.dto";
-import { TrainerDashboardResponseDTO } from "@/application/dto/trainer/response/trainer-dashboard.dto";
-import { UpdateTrainerProfileResponseDTO } from "@/application/dto/trainer/response/update-trainerProfile.dto";
-import { UploadTrainerImageResponse } from "@/application/dto/trainer/response/upload-trainerProfileimage.dto";
-import { ChangePasswordRequest } from "@/application/dto/user/request/change-password.dto";
-import { ChangePasswordResponse } from "@/application/dto/user/response/change-password.dto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { HttpStatus } from "@/domain/constants/http-status.constants";
-import { AUTH_MESSAGES, TRAINER_MESSAGES, FINANCE_MESSAGES } from "@/domain/constants/messages.constants";
+import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer.upload.file.dto";
+import { UpdateTrainerProfileRequest } from "@/application/dto/trainer/request/update.trainer.profile.dto";
+import { UploadTrainerImageRequest } from "@/application/dto/trainer/request/upload.trainerprofile.dto";
+import { GetTrainerProfileResponse } from "@/application/dto/trainer/response/get.trainer.profile.dto";
+import { TrainerDashboardResponseDTO } from "@/application/dto/trainer/response/trainer.dashboard.dto";
+import { UpdateTrainerProfileResponseDTO } from "@/application/dto/trainer/response/update.trainerprofile.dto";
+import { UploadTrainerImageResponse } from "@/application/dto/trainer/response/upload.trainer.profileimage.dto";
+import { ChangePasswordRequest } from "@/application/dto/user/request/change.password.dto";
+import { ChangePasswordResponse } from "@/application/dto/user/response/change.password.dto";
+import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
+import { GetTrainerWalletRequest, TrainerWalletResponse } from "@/application/usecases/trainer/get.trainer.wallet.usecase";
+import { RequestPayoutDTO } from "@/application/usecases/trainer/request.payout.usecase";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
+import { AUTH_MESSAGES, FINANCE_MESSAGES, TRAINER_MESSAGES } from "@/domain/constants/messages.constants";
 import { changePasswordSchema } from "@/infrastructure/validators/user/change-password.validator";
 import { updateTrainerProfileSchema } from "@/infrastructure/validators/user/trainer/trainer-profile.validator";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
-import { TrainerWalletResponse, GetTrainerWalletRequest } from "@/application/usecases/trainer/get-trainer-wallet.usecase";
-import { RequestPayoutDTO } from "@/application/usecases/trainer/request-payout.usecase";
 
 
 export class TrainerController {

@@ -1,4 +1,4 @@
-import { ChatMessageEntity } from "@/domain/entities/chat/chat-message.entity";
+import { ChatMessageEntity } from "@/domain/entities/chat/chat.message.entity";
 
 export interface IChatMessageRepository {
   save(message: ChatMessageEntity): Promise<ChatMessageEntity>;

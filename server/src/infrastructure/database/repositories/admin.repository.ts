@@ -1,6 +1,6 @@
 import { AdminEntity } from "@/domain/entities/admin/admin.entity";
 import { AdminWithPassword, IAdminRepository } from "@/domain/interfaces/repositories/admin.repository";
-import { IAdminDocument } from "../interfaces/admin-document.interface";
+import { IAdminDocument } from "../interfaces/admin.document.interface";
 import { AdminMapper } from "../mappers/admin.mapper";
 import { AdminModel } from "../models/admin.models";
 

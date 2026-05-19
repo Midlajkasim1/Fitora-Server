@@ -1,7 +1,7 @@
-import { AiDietPlanEntity } from "@/domain/entities/ai-workout&diet/ai-diet-plan.entity";
+import { AiDietPlanEntity } from "@/domain/entities/ai.workout&diet/ai.diet.plan.entity";
 import { IAiDietPlanRepository } from "@/domain/interfaces/repositories/ai-diet-plan.repository";
-import { IDietPlanDocument } from "../interfaces/ai-diet-plan.document";
-import { AiDietPlanMapper } from "../mappers/ai-diet-plan.mapper";
+import { IDietPlanDocument } from "../interfaces/ai.diet.plan.document";
+import { AiDietPlanMapper } from "../mappers/ai.diet.plan.mapper";
 import { DietPlanModel } from "../models/ai-diet.model";
 import { BaseRepository } from "./base.repository"; // Adjust path to your BaseRepository
 

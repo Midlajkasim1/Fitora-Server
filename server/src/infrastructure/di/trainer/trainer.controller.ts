@@ -1,4 +1,4 @@
-import { TrainerSlotController } from "@/presentation/controllers/user/trainer-slot.controller";
+import { TrainerSlotController } from "@/presentation/controllers/user/trainer.slot.controller";
 import { trainerUsecase } from "./trainer.usecases";
 import { TrainerController } from "@/presentation/controllers/user/trainer.controller";
 

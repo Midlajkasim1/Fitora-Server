@@ -1,7 +1,7 @@
 import { SlotEntity } from "@/domain/entities/slot/slot.entity";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
-import { ISlotDocument } from "../interfaces/slot-document.interface";
 import { Types } from "mongoose";
+import { ISlotDocument } from "../interfaces/slot.document.interface";
 
 export class SlotMapper implements IMapper<SlotEntity,ISlotDocument>{
     toEntity(doc: ISlotDocument): SlotEntity {

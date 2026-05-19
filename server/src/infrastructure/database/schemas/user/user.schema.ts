@@ -1,6 +1,6 @@
-import { Schema } from "mongoose";
-import { IUserDocument } from "../../interfaces/user-document.interface";
 import { UserRole, UserStatus } from "@/domain/constants/auth.constants";
+import { Schema } from "mongoose";
+import { IUserDocument } from "../../interfaces/user.document.interface";
 
 export const UserSchema = new Schema(
   {

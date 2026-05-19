@@ -1,13 +1,13 @@
-import { AdminAuthController } from "@/presentation/controllers/admin/admin-auth.controller";
+import { AdminAuthController } from "@/presentation/controllers/admin/admin.auth.controller";
 import { adminUseCases } from "./admin.usecases";
-import { AdminUserController } from "@/presentation/controllers/admin/admin-user.controller";
-import { AdminTrainerController } from "@/presentation/controllers/admin/admin-trainer.controller";
+import { AdminUserController } from "@/presentation/controllers/admin/admin.user.controller";
+import { AdminTrainerController } from "@/presentation/controllers/admin/admin.trainer.controller";
 import { SpecializationController } from "@/presentation/controllers/admin/specialization.controller";
-import { WorkoutController } from "@/presentation/controllers/admin/admin-workout.controller";
-import { AdminSubscriptionController } from "@/presentation/controllers/admin/admin-subscription.controller";
-import { AdvertisementController } from "@/presentation/controllers/admin/admin-advertisement.controller";
-import { AdminReportController } from "@/presentation/controllers/admin/admin-report.controller";
-import { AdminFinanceController } from "@/presentation/controllers/admin/admin-finance.controller";
+import { WorkoutController } from "@/presentation/controllers/admin/admin.workout.controller";
+import { AdminSubscriptionController } from "@/presentation/controllers/admin/admin.subscription.controller";
+import { AdvertisementController } from "@/presentation/controllers/admin/admin.advertisement.controller";
+import { AdminReportController } from "@/presentation/controllers/admin/admin.report.controller";
+import { AdminFinanceController } from "@/presentation/controllers/admin/admin.finance.controller";
 
 
 export const adminControllers = {

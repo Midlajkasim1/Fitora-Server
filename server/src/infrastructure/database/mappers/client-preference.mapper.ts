@@ -1,7 +1,7 @@
-import { ClientPreferenceEntity } from "@/domain/entities/user/client-preference.entity";
-import { IClientPreferenceDocument } from "../interfaces/client-preference-document.interface";
-import { Types } from "mongoose";
+import { ClientPreferenceEntity } from "@/domain/entities/user/client.preference.entity";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
+import { Types } from "mongoose";
+import { IClientPreferenceDocument } from "../interfaces/client.preference.document.interface";
 
 export class ClientPreferenceMapper implements IMapper<ClientPreferenceEntity,IClientPreferenceDocument> {
    toEntity(doc: IClientPreferenceDocument): ClientPreferenceEntity {

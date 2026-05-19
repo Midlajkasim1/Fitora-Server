@@ -1,14 +1,14 @@
-import { Request, Response } from "express";
-import { userOnboardingSchema } from "@/infrastructure/validators/user/onboarding/user-onboarding.validator";
+import { TrainerOnboardingDTO } from "@/application/dto/auth/onboarding/request/trainer.onboarding.dto";
+import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer.upload.file.dto";
+import { UserOnboardingDTO } from "@/application/dto/auth/onboarding/request/user.onboarding.dto";
+import { OnboardingResponseDTO } from "@/application/dto/auth/onboarding/response/onboarding.success.dto";
+import { GetActiveSpecializationResponse } from "@/application/dto/specialization/response/get.active.specialization.dto";
+import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 import { trainerOnboardingSchema } from "@/infrastructure/validators/user/onboarding/trainer-onboarding";
-import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer-upload-file.dto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { UserOnboardingDTO } from "@/application/dto/auth/onboarding/request/user-onboarding.dto";
-import { OnboardingResponseDTO } from "@/application/dto/auth/onboarding/response/onboarding-success.dto";
-import { TrainerOnboardingDTO } from "@/application/dto/auth/onboarding/request/trainer-onboarding.dto";
-import { GetActiveSpecializationResponse } from "@/application/dto/specialization/response/getActive-specialization.dto";
-import { HttpStatus } from "@/domain/constants/http-status.constants";
+import { userOnboardingSchema } from "@/infrastructure/validators/user/onboarding/user-onboarding.validator";
 import { ApiResponse } from "@/shared/utils/response.handler";
+import { Request, Response } from "express";
 export class OnboardingController {
   constructor(
     private readonly _userOnboardingUseCase: IBaseUseCase<UserOnboardingDTO,OnboardingResponseDTO>,

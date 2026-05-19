@@ -1,10 +1,10 @@
 import { ApprovalStatus } from "@/domain/constants/auth.constants";
-import { TrainerDetailsEntity } from "@/domain/entities/user/trainer-details.entity";
+import { TrainerDetailsEntity } from "@/domain/entities/user/trainer.details.entity";
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
 import { TrainerWithUser } from "@/domain/interfaces/repositories/onboarding/approveTrainer.interface";
-import { Model, PipelineStage, Types, ClientSession } from "mongoose";
-import { ITrainerDetailsDocument } from "../interfaces/trainer-details-document.interface";
+import { ClientSession, Model, PipelineStage, Types } from "mongoose";
+import { ITrainerDetailsDocument } from "../interfaces/trainer-details.document.interface";
 import { TrainerDetailsMapper } from "../mappers/trainer-details.mapper";
 import { UserMapper } from "../mappers/user.mapper";
 import { TrainerDetailsModel } from "../models/trainer-details.model";

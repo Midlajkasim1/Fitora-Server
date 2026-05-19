@@ -1,7 +1,7 @@
 import { ReviewEntity } from "@/domain/entities/review/review.entity";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
-import { IReviewDocument } from "../interfaces/review-document.interface";
 import { Types } from "mongoose";
+import { IReviewDocument } from "../interfaces/review.document.interface";
 
 export class ReviewMapper implements IMapper<ReviewEntity, IReviewDocument> {
   toEntity(doc: IReviewDocument): ReviewEntity {

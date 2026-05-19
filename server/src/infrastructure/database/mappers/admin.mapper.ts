@@ -1,6 +1,6 @@
 import { AdminEntity } from "@/domain/entities/admin/admin.entity";
-import { IAdminDocument } from "../interfaces/admin-document.interface";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
+import { IAdminDocument } from "../interfaces/admin.document.interface";
 
 export class AdminMapper implements IMapper<AdminEntity, IAdminDocument> {
   toEntity(doc: IAdminDocument): AdminEntity {

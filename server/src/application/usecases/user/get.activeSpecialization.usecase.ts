@@ -1,0 +1,38 @@
+import { GetActiveSpecializationResponse } from "@/application/dto/specialization/response/get.active.specialization.dto";
+import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
+import { SpecializationStatus } from "@/domain/constants/auth.constants";
+import { SPECIALIZATION_MESSAGES } from "@/domain/constants/messages.constants";
+import { ISpecialization } from "@/domain/interfaces/repositories/specialization.interface";
+
+export class GetActiveSpecializationUseCase implements IBaseUseCase<void, GetActiveSpecializationResponse> {
+
+  constructor(
+    private readonly _specializationRepository: ISpecialization
+  ) {}
+
+  async execute(): Promise<GetActiveSpecializationResponse> {
+
+    const { data } =
+      await this._specializationRepository.findAllSP({
+        page: 1,
+        limit: 100,
+        status: SpecializationStatus.ACTIVE
+      });
+
+    const result = data.map(spec => {
+      if (!spec.id) {
+        throw new Error(SPECIALIZATION_MESSAGES.SPECIALIZATION_ID_MISSING);
+      }
+
+      return {
+        id: spec.id,
+        name: spec.name,
+        
+      };
+    });
+
+    return new GetActiveSpecializationResponse({
+      specialization: result
+    });
+  }
+}

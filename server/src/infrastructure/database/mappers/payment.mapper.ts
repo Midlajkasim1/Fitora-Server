@@ -1,8 +1,8 @@
-import { Types } from "mongoose";
+import { PaymentStatus } from "@/domain/constants/payment.constants";
 import { PaymentEntity } from "@/domain/entities/payment/payment.entity";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
-import { IPaymentDocument } from "../interfaces/IPayment.document";
-import { PaymentStatus } from "@/domain/constants/payment.constants";
+import { Types } from "mongoose";
+import { IPaymentDocument } from "../interfaces/Ipayment.document";
 
 export class PaymentMapper implements IMapper<PaymentEntity, IPaymentDocument> {
     toEntity(doc: IPaymentDocument): PaymentEntity {

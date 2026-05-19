@@ -1,17 +1,17 @@
-import { Namespace, Server, Socket } from "socket.io";
+import { GetChatHistoryRequestDTO } from "@/application/dto/chat/request/get.chat.history.dto";
+import { SendMessageRequestDTO } from "@/application/dto/chat/request/send.message.dto";
+import { ChatHistoryResponseDTO } from "@/application/dto/chat/response/chat.history.response.dto";
+import { ChatMessageResponseDTO } from "@/application/dto/chat/response/chat.message.response.dto";
+import { GetChatHistoryUseCase } from "@/application/usecases/chat/get.chat.history.usecase";
+import { SendMessageUseCase } from "@/application/usecases/chat/send.message.usecase";
+import { JwtPayload } from "@/domain/interfaces/services/token.interface";
+import { env } from "@/infrastructure/config/env.config";
+import { logger } from "@/infrastructure/providers/loggers/logger";
+import { ApiResponse } from "@/shared/utils/response.handler";
 import { createAdapter } from "@socket.io/redis-adapter";
 import Redis from "ioredis";
+import { Namespace, Server, Socket } from "socket.io";
 import { socketAuthMiddleware } from "./socket-auth.middleware";
-import { SendMessageUseCase } from "@/application/usecases/chat/send-message.usecase";
-import { GetChatHistoryUseCase } from "@/application/usecases/chat/get-chat-history.usecase";
-import { ApiResponse } from "@/shared/utils/response.handler";
-import { env } from "@/infrastructure/config/env.config";
-import { JwtPayload } from "@/domain/interfaces/services/token.interface";
-import { logger } from "@/infrastructure/providers/loggers/logger";
-import { SendMessageRequestDTO } from "@/application/dto/chat/request/send-message.dto";
-import { GetChatHistoryRequestDTO } from "@/application/dto/chat/request/get-chat-history.dto";
-import { ChatMessageResponseDTO } from "@/application/dto/chat/response/chat-message-response.dto";
-import { ChatHistoryResponseDTO } from "@/application/dto/chat/response/chat-history-response.dto";
 
 export class SocketChatService {
   private readonly _io: Server;

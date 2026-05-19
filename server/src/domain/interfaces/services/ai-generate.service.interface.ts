@@ -1,5 +1,5 @@
-import { AiDietPlanEntity } from "@/domain/entities/ai-workout&diet/ai-diet-plan.entity";
-import { AiWorkoutPlanEntity } from "@/domain/entities/ai-workout&diet/ai-workout-plan.entity";
+import { AiDietPlanEntity } from "@/domain/entities/ai.workout&diet/ai.diet.plan.entity";
+import { AiWorkoutPlanEntity } from "@/domain/entities/ai.workout&diet/ai.workout.plan.entity";
 
 export interface IAiService {
   generateWorkoutPlan(

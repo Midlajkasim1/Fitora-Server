@@ -1,6 +1,6 @@
 import { AdvertisementEntity } from "@/domain/entities/advertisement/advertisement.entity";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
-import { IAdvertisementDocument } from "../interfaces/IAdvertisement.interface";
+import { IAdvertisementDocument } from "../interfaces/Iadvertisement.interface";
 
 
 

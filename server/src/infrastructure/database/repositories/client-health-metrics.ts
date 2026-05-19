@@ -1,9 +1,9 @@
-import { Model, Types } from "mongoose";
-import { HealthMetricsMapper } from "../mappers/client-health-metrics.mapper";
-import { HealthMetricsEntity } from "@/domain/entities/user/client-health-metrics.entity";
-import { HealthMetricsModel } from "../models/client-health-metrics.models";
-import { IHealthMetricsDocument } from "../interfaces/health-metrics.documetn.interface";
+import { HealthMetricsEntity } from "@/domain/entities/user/client.health.metrics.entity";
 import { IHealthMetricsRepository } from "@/domain/interfaces/repositories/onboarding/iclient-health-metrics.interface";
+import { Model, Types } from "mongoose";
+import { IHealthMetricsDocument } from "../interfaces/health.metrics.document.interface";
+import { HealthMetricsMapper } from "../mappers/client.health.metrics.mapper";
+import { HealthMetricsModel } from "../models/client-health-metrics.models";
 import { BaseRepository } from "./base.repository";
 
 export class HealthMetricsRepository extends BaseRepository<HealthMetricsEntity,IHealthMetricsDocument> implements IHealthMetricsRepository{

@@ -1,4 +1,4 @@
-import { HealthMetricsEntity } from "@/domain/entities/user/client-health-metrics.entity";
+import { HealthMetricsEntity } from "@/domain/entities/user/client.health.metrics.entity";
 import { IBaseRepository } from "../base.repository";
 
 

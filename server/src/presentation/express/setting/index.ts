@@ -36,11 +36,8 @@ const startServer = async () => {
     },
   });
 
-  // Initialize SocketEmitter with io
   initSocketEmitter(io);
 
-  // ── Step 2: Global Notification & Identity Room Joining
-  // Ensures every connected socket joins a room named after their userId
   io.use(socketAuthMiddleware);
   io.on("connection", (socket) => {
      const { userId } = socket.data.user;

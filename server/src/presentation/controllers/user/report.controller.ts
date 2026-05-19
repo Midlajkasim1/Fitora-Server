@@ -1,7 +1,7 @@
-import { CreateReportRequestDTO } from "@/application/dto/report/request/create-report.dto";
-import { CreateReportResponseDTO } from "@/application/dto/report/response/create-report-response.dto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { HttpStatus } from "@/domain/constants/http-status.constants";
+import { CreateReportRequestDTO } from "@/application/dto/report/request/create.report.dto";
+import { CreateReportResponseDTO } from "@/application/dto/report/response/create.report.response.dto";
+import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 import { AUTH_MESSAGES, REPORT_MESSAGES } from "@/domain/constants/messages.constants";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";

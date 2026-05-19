@@ -1,9 +1,9 @@
-import { ChatMessageEntity } from "@/domain/entities/chat/chat-message.entity";
+import { ChatMessageEntity } from "@/domain/entities/chat/chat.message.entity";
 import { IChatMessageRepository } from "@/domain/interfaces/repositories/chat-message.repository";
-import { ChatMessageMapper } from "../mappers/chat-message.mapper";
+import { Model, Types } from "mongoose";
+import { IChatMessageDocument } from "../interfaces/chat.message.document";
+import { ChatMessageMapper } from "../mappers/chat.message.mapper";
 import { ChatMessageModel } from "../models/chat-message.model";
-import { IChatMessageDocument } from "../interfaces/chat-message.document";
-import { Types, Model } from "mongoose";
 import { BaseRepository } from "./base.repository";
 
 export class ChatMessageRepository extends BaseRepository<ChatMessageEntity, IChatMessageDocument> implements IChatMessageRepository {

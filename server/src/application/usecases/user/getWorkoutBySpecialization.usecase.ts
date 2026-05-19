@@ -1,7 +1,7 @@
 import { GetWorkoutBySpecializationRequestDTO } from "@/application/dto/user/request/get-workoutBy-Specialization.dto";
-import { GetWorkoutsBySpecializationResponseDTO } from "@/application/dto/user/response/get-workoutBy-specialization.dto";
 import { WorkoutBySpecializationListDTO } from "@/application/dto/user/response/get-workoutBySpList.dto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { GetWorkoutsBySpecializationResponseDTO } from "@/application/dto/user/response/get.workoutBy.specialization.dto";
+import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
 import { WORKOUT_MESSAGES } from "@/domain/constants/messages.constants";
 import { IWorkoutRepository } from "@/domain/interfaces/repositories/workout.repository";
 

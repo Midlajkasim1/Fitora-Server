@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
-import { EndSessionUseCase } from "@/application/usecases/video/end-session.usecase";
-import { GetSessionAccessStateUseCase } from "@/application/usecases/video/get-session-access-state.usecase";
-import { ApiResponse } from "@/shared/utils/response.handler";
-import { HttpStatus } from "@/domain/constants/http-status.constants";
+import { EndSessionUseCase } from "@/application/usecases/video/end.session.usecase";
+import { GetSessionAccessStateUseCase } from "@/application/usecases/video/get.session.access.state.usecase";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 import { AUTH_MESSAGES, VIDEO_MESSAGES } from "@/domain/constants/messages.constants";
+import { ApiResponse } from "@/shared/utils/response.handler";
+import { Request, Response } from "express";
 
 export class VideoController {
     constructor(

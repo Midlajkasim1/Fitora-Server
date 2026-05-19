@@ -1,0 +1,28 @@
+import { HealthMetricsEntity } from "@/domain/entities/user/client.health.metrics.entity";
+import { IMapper } from "@/domain/interfaces/services/mapper.interface";
+import { Types } from "mongoose";
+import { IHealthMetricsDocument } from "../interfaces/health.metrics.document.interface";
+
+export class HealthMetricsMapper implements IMapper<HealthMetricsEntity, IHealthMetricsDocument> {
+  toEntity(doc: IHealthMetricsDocument): HealthMetricsEntity {
+    return new HealthMetricsEntity({
+      id: doc._id.toString(),
+      userId: doc.user_id.toString(),
+      height: doc.height,
+      weight: doc.weight,
+      targetWeight: doc.target_weight,
+      primaryGoal: doc.primary_goal,
+      updateAt:doc.updatedAt || new Date()
+    });
+  }
+
+  toMongo(entity: HealthMetricsEntity): Partial<IHealthMetricsDocument> {
+    return {
+      user_id: new Types.ObjectId(entity.userId),
+      height: entity.height,
+      weight: entity.weight,
+      target_weight: entity.targetWeight,
+      primary_goal: entity.primaryGoal
+    };
+  }
+}

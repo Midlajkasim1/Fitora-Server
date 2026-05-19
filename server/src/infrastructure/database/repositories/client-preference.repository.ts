@@ -1,9 +1,9 @@
+import { ClientPreferenceEntity } from "@/domain/entities/user/client.preference.entity";
 import { IClientPreferenceRepository } from "@/domain/interfaces/repositories/onboarding/iclient.repository";
-import { ClientPreferenceEntity } from "@/domain/entities/user/client-preference.entity";
-import { ClientPreferenceModel } from "../models/client-preference.model";
-import { ClientPreferenceMapper } from "../mappers/client-preference.mapper";
 import { Model, Types } from "mongoose";
-import { IClientPreferenceDocument } from "../interfaces/client-preference-document.interface";
+import { IClientPreferenceDocument } from "../interfaces/client.preference.document.interface";
+import { ClientPreferenceMapper } from "../mappers/client-preference.mapper";
+import { ClientPreferenceModel } from "../models/client-preference.model";
 import { BaseRepository } from "./base.repository";
 
 export class ClientPreferenceRepository extends BaseRepository<ClientPreferenceEntity,IClientPreferenceDocument> implements IClientPreferenceRepository {

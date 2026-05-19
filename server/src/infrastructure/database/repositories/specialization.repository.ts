@@ -1,11 +1,11 @@
-import { ISpecialization } from "@/domain/interfaces/repositories/specialization.interface";
-import { SpecializationMapper } from "../mappers/specialization.mapper";
-import { SpecializationEntity } from "@/domain/entities/specialization/specialization.entity";
-import { SpecializationModel } from "../models/specialization.model";
 import { SpecializationStatus } from "@/domain/constants/auth.constants";
-import { BaseRepository } from "./base.repository";
-import { ISpecializationDocument } from "../interfaces/specialization-interface";
+import { SpecializationEntity } from "@/domain/entities/specialization/specialization.entity";
+import { ISpecialization } from "@/domain/interfaces/repositories/specialization.interface";
 import { Model } from "mongoose";
+import { ISpecializationDocument } from "../interfaces/specialization.interface";
+import { SpecializationMapper } from "../mappers/specialization.mapper";
+import { SpecializationModel } from "../models/specialization.model";
+import { BaseRepository } from "./base.repository";
 
 
 

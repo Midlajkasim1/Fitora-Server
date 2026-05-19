@@ -1,13 +1,13 @@
-import { CreateReviewRequestDTO } from "@/application/dto/review/request/create-review.dto";
-import { CreateReviewResponseDTO } from "@/application/dto/review/response/create-review.dto";
-import { SubmitSessionReportRequestDTO } from "@/application/dto/review/request/submit-session-report.dto";
-import { SubmitSessionReportResponseDTO } from "@/application/dto/review/response/submit-session-report.dto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
-import { HttpStatus } from "@/domain/constants/http-status.constants";
+import { CreateReviewRequestDTO } from "@/application/dto/review/request/create.review.dto";
+import { SubmitSessionReportRequestDTO } from "@/application/dto/review/request/submit.session.report.dto";
+import { CreateReviewResponseDTO } from "@/application/dto/review/response/create.review.dto";
+import { SubmitSessionReportResponseDTO } from "@/application/dto/review/response/submit.session.report.dto";
+import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { ReviewEntity } from "@/domain/entities/review/review.entity";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
-import { ReviewEntity } from "@/domain/entities/review/review.entity";
 
 export class ReviewController {
   constructor(

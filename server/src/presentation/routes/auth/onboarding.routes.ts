@@ -1,6 +1,6 @@
 import { onboardingControllers } from "@/infrastructure/di/user/onboarding/onboarding.controller";
 import { userMiddlewares } from "@/infrastructure/di/user/user.middleware";
-import { asyncHandler } from "@/presentation/middleware/asyncHandler";
+import { asyncHandler } from "@/presentation/middleware/async.handler";
 import { upload } from "@/presentation/middleware/multer.middleware";
 import { Request, Response, Router } from "express";
 

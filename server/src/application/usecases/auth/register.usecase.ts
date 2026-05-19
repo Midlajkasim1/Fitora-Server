@@ -1,6 +1,6 @@
 import { RegisterDTO } from "@/application/dto/auth/request/register.dto";
 import { RegisterResponseDTO } from "@/application/dto/auth/response/register.dto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { IEmailService } from "@/domain/interfaces/services/email-service.interface";

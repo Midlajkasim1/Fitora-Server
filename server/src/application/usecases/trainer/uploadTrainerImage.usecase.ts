@@ -1,7 +1,7 @@
-import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer-upload-file.dto";
-import { UploadTrainerImageRequest } from "@/application/dto/trainer/request/upload-trainerProfile.dto";
-import { UploadTrainerImageResponse } from "@/application/dto/trainer/response/upload-trainerProfileimage.dto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { UploadFileDTO } from "@/application/dto/auth/onboarding/request/trainer.upload.file.dto";
+import { UploadTrainerImageRequest } from "@/application/dto/trainer/request/upload.trainerprofile.dto";
+import { UploadTrainerImageResponse } from "@/application/dto/trainer/response/upload.trainer.profileimage.dto";
+import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
 import { AUTH_MESSAGES, TRAINER_MESSAGES } from "@/domain/constants/messages.constants";
 import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";

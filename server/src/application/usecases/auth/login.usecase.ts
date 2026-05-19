@@ -1,6 +1,6 @@
 import { LoginDTO } from "@/application/dto/auth/request/login.dto";
 import { LoginResponseDTO } from "@/application/dto/auth/response/login.dto";
-import { IBaseUseCase } from "@/application/interfaces/base-usecase.interface";
+import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
 import { UserRole } from "@/domain/constants/auth.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";

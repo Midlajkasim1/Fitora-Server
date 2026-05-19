@@ -1,13 +1,13 @@
 import { notificationControllers } from "@/infrastructure/di/common/notification.controller";
 import { userControllers } from "@/infrastructure/di/user/user.controllers";
 import { userMiddlewares } from "@/infrastructure/di/user/user.middleware";
-import { asyncHandler } from "@/presentation/middleware/asyncHandler";
+import { asyncHandler } from "@/presentation/middleware/async.handler";
 import { upload } from "@/presentation/middleware/multer.middleware";
 import { Request, Response, Router } from "express";
 
 import { reportControllers } from "@/infrastructure/di/report/report.controllers";
-import { videoControllers } from "@/infrastructure/di/video/video.di";
 import { reviewControllers } from "@/infrastructure/di/review/review.controllers";
+import { videoControllers } from "@/infrastructure/di/video/video.di";
 
 const router = Router();
 

@@ -1,0 +1,38 @@
+import { GetTrainersRequestDTO } from "@/application/dto/admin/request/get.trainer.dto";
+import { TrainerManagementDTO } from "@/application/dto/admin/response/trainer.management.dto";
+import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
+import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
+import { UserEntity } from "@/domain/entities/user/user.entity";
+import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
+import { GetTrainersResponseDTO } from "../../dto/admin/response/get.trainers.dto";
+
+export class GetAllTrainersUseCase implements IBaseUseCase<GetTrainersRequestDTO, GetTrainersResponseDTO> {
+  constructor(
+    private readonly trainerRepository: ITrainerRepository
+
+  ) {}
+
+  async execute(dto: GetTrainersRequestDTO): Promise<GetTrainersResponseDTO> {
+    const { data, total } = await this.trainerRepository.findAllTrainers(dto);
+ 
+
+    const trainerList: TrainerManagementDTO[] = data.map((trainer:UserEntity) => {
+      if (!trainer.id) throw new Error(AUTH_MESSAGES.ENTITY_ID_MISSING);
+
+      return new TrainerManagementDTO({
+        id: trainer.id,
+        email: trainer.email,
+        firstName: trainer.firstName,
+        lastName: trainer.lastName,
+        profileImage: trainer.profileImage,
+        status: trainer.status,
+        createdAt: trainer.createdAt || new Date(),
+      });
+    });
+
+    return new GetTrainersResponseDTO({
+      trainers: trainerList,
+      total
+    });
+  }
+}

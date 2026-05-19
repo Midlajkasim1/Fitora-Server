@@ -1,6 +1,6 @@
 import { SpecializationEntity } from "@/domain/entities/specialization/specialization.entity";
-import { ISpecializationDocument } from "../interfaces/specialization-interface";
 import { IMapper } from "@/domain/interfaces/services/mapper.interface";
+import { ISpecializationDocument } from "../interfaces/specialization.interface";
 
 
 export class SpecializationMapper implements IMapper<SpecializationEntity,ISpecializationDocument>{
