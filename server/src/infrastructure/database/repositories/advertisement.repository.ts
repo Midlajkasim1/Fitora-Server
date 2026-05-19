@@ -2,7 +2,7 @@ import { AdvertisementStatus } from "@/domain/constants/advertisment.constants";
 import { AdvertisementEntity } from "@/domain/entities/advertisement/advertisement.entity";
 import { IAdvertisementRepository } from "@/domain/interfaces/repositories/advertisement.repository";
 import { Model } from "mongoose";
-import { IAdvertisementDocument } from "../interfaces/IAdvertisement.interface";
+import { IAdvertisementDocument } from "../interfaces/Iadvertisement.interface";
 import { AdvertisementMapper } from "../mappers/advertisement.mapper";
 import { AdvertisementModel } from "../models/advertisement.model";
 import { BaseRepository } from "./base.repository";
