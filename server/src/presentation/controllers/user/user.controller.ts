@@ -42,7 +42,7 @@ export class UserController {
     async userProfileUpdate(req: Request, res: Response): Promise<Response> {
         const validatedata = updateUserProfileSchema.parse(req.body);
         const userId = req.user?.userId;
-        if (!userId) {
+        if (!userId) { 
             return res
                 .status(HttpStatus.UNAUTHORIZED)
                 .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
