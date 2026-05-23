@@ -29,7 +29,7 @@ export const createTrainerSlot = async (payload: CreateSlotPayload): Promise<Cre
 };
 export const editTrainerSlot = async (payload: EditSlotPayload) => {
   const { slotId, ...data } = payload;
-  const response = await api.put(TRAINER_ROUTES.EDIT_SLOT(slotId), data);
+  const response = await api.patch(TRAINER_ROUTES.EDIT_SLOT(slotId), data);
   return response.data;
 };
 
@@ -56,7 +56,7 @@ export const uploadTrainerAvatar = async (formData: FormData): Promise<{ profile
 };
 
 export const changeTrainerPassword = async (payload: ChangePasswordPayload): Promise<void> => {
-  await api.put(TRAINER_ROUTES.CHANGE_PASSWORD, payload);
+  await api.patch(TRAINER_ROUTES.CHANGE_PASSWORD, payload);
 };
 
 export const getClientDetails = async (clientId: string) => {

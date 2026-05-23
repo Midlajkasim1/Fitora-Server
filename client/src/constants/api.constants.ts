@@ -70,17 +70,17 @@ export const ADMIN_ROUTES = {
 export const TRAINER_ROUTES = {
   DASHBOARD: "/trainer/dashboard",
   PROFILE: "/trainer/profile",
-  EDIT_PROFILE: "/trainer/edit-profile",
+  EDIT_PROFILE: "/trainer/profile",
   PROFILE_IMAGE: "/trainer/profileImage",
-  CHANGE_PASSWORD: "/trainer/change-password",
+  CHANGE_PASSWORD: "/trainer/profile/password",
   
-  UPCOMING_SLOTS: "trainer/upcoming-slots",
-  CREATE_SLOTS: "trainer/create-slots",
-  EDIT_SLOT: (id: string) => `trainer/edit-slots/${id}`,
-  CANCEL_SLOT: (id: string) => `trainer/${id}/cancel`,
+  UPCOMING_SLOTS: "trainer/slots/upcoming",
+  CREATE_SLOTS: "trainer/slots",
+  EDIT_SLOT: (id: string) => `trainer/slots/${id}`,
+  CANCEL_SLOT: (id: string) => `trainer/slots/${id}`,
   
-  CLIENTS: (type: string) => `trainer/${type}`,
-  CLIENT_DETAILS: (clientId: string) => `trainer/client-details/${clientId}`,
+  CLIENTS: (type: string) => `trainer/slots/${type}`,
+  CLIENT_DETAILS: (clientId: string) => `trainer/clients/${clientId}`,
   WALLET: "/trainer/wallet",
   PAYOUT_REQUEST: "/trainer/wallet/payout",
 };

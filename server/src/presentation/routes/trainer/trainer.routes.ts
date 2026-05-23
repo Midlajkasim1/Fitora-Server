@@ -99,6 +99,16 @@ router.put(
   )
 );
 
+router.put(
+  "/profileImage",
+  userMiddlewares.authMiddleware,
+  userMiddlewares.blockGuard,
+  upload.single("profileImg"),
+  asyncHandler((req: Request, res: Response) =>
+    trainerController.trainerController.uploadProfileImage(req, res)
+  )
+);
+
 router.patch(
   "/profile/password",
   userMiddlewares.authMiddleware,
@@ -136,7 +146,7 @@ router.get(
 );
 
 router.get(
-  "/chat/:partnerId",
+  "/chat/:otherUserId",
   userMiddlewares.authMiddleware,
   userMiddlewares.blockGuard,
   asyncHandler((req: Request, res: Response) =>
@@ -145,7 +155,7 @@ router.get(
 );
 
 router.post(
-  "/chat/:partnerId/message",
+  "/chat/send",
   userMiddlewares.authMiddleware,
   userMiddlewares.blockGuard,
   asyncHandler((req: Request, res: Response) =>
@@ -154,7 +164,7 @@ router.post(
 );
 
 router.patch(
-  "/chat/:partnerId/read",
+  "/chat/:otherUserId/read",
   userMiddlewares.authMiddleware,
   userMiddlewares.blockGuard,
   asyncHandler((req: Request, res: Response) =>
