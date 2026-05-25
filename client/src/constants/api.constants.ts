@@ -60,11 +60,11 @@ export const ADMIN_ROUTES = {
   WORKOUTS: "/admin/workouts",
   TOGGLE_WORKOUT: (id: string) => `/admin/workouts/${id}/status`,
   
-  ADVERTISEMENTS: "/admin/advertisement",
-  TOGGLE_AD: (id: string) => `/admin/advertisement/${id}/status`,
-  CREATE_AD: "/admin/create-ad",
-  GET_AD_BY_ID: (id: string) => `/admin/advertisement/${id}`,
-  UPDATE_AD: (id: string) => `/admin/update-ad/${id}`,
+  ADVERTISEMENTS: "/admin/advertisements",
+  TOGGLE_AD: (id: string) => `/admin/advertisements/${id}/status`,
+  CREATE_AD: "/admin/advertisements",
+  GET_AD_BY_ID: (id: string) => `/admin/advertisements/${id}`,
+  UPDATE_AD: (id: string) => `/admin/advertisements/${id}`,
 };
 
 export const TRAINER_ROUTES = {

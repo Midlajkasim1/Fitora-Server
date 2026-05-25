@@ -62,7 +62,7 @@ export class AdvertisementController {
     }
     async getAllAdvertisement(req: Request, res: Response): Promise<Response> {
         const dto = new GetAllAdvertismentRequest({
-            page: Number(req.query.number) || 1,
+            page: Number(req.query.page) || 1,
             limit: Number(req.query.limit) || 10,
             search: req.query.search as string,
             status: req.query.status as AdvertisementStatus
