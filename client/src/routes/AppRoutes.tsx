@@ -39,7 +39,6 @@ const PurchaseHistoryPage = lazy(()=>import("../pages/user/client/PurchaseHistor
 const PaymentSuccessPage =lazy(()=>import("../pages/user/client/PaymentSucessPage"));
 const PaymentFailedPage = lazy(()=>import("../pages/user/client/PaymentFailedPage"));
 const ClientHealthMetrics = lazy(()=>import("../pages/user/client/ClientHealthMetricsPage"));
-const PremiumDashboardPage = lazy(()=>import("../pages/user/client/PremiumDashboardPage"));
 const UpcomingSessionPage = lazy(()=>import("../pages/user/client/slot/UpcomingSessions"))
 const CheckSlotsPage = lazy(()=>import("../pages/user/client/slot/CheckSlots"))
 const BrowseTrainersPage = lazy(() => import("../pages/user/client/slot/BrowserTrainersPage"));
@@ -145,7 +144,7 @@ export default function AppRoutes() {
           <Route element={<SubscriptionGuard />}>
             <Route element={<HealthMetricsGuard />}>
               <Route path="/browse-trainers" element={<BrowseTrainersPage />} />
-              <Route path="/premium-dashboard" element={<PremiumDashboardPage />} />
+              <Route path="/premium-dashboard" element={<Navigate to="/home" replace />} />
               <Route path="/upcoming-sessions" element={<UpcomingSessionPage />} />
               <Route path="/check-slots" element={<CheckSlotsPage />} />
             </Route>

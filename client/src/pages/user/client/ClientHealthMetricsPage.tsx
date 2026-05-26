@@ -28,7 +28,7 @@ export default function ClientHealthMetrics() {
   const onSubmit = (data: HealthMetricsFormData) => {
     mutate(data, {
       onSuccess: () => {
-        navigate("/premium-dashboard", { replace: true });
+        navigate("/home", { replace: true });
       }
     });
   };
