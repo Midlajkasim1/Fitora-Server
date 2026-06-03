@@ -35,4 +35,6 @@ findAllUsers(params: {
     countByRole(role: UserRole): Promise<number>;
     countTotalUsers(): Promise<number>;
     getMonthlyRegistrationStats(year: number): Promise<{ month: string, count: number }[]>;
+
+    
 }

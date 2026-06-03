@@ -186,4 +186,5 @@ export class BookingRepository extends BaseRepository<BookingEntity, IBookingDoc
             attendedDays: attendedDaysData.map((d: { _id: string }) => d._id)
         };
     }
+
 }
