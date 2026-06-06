@@ -5,11 +5,15 @@ export const updateUserProfileSchema = z.object({
     .string()
     .min(2, "First name is too short")
     .max(50)
+    .refine(val => !/^[_ \-\s]+$/.test(val), "First name cannot consist of only underscores, spaces, or hyphens")
+    .refine(val => /[a-zA-Z]/.test(val), "First name must contain letters")
     .optional(),
   lastName: z
     .string()
     .min(2, "Last name is too short")
     .max(50)
+    .refine(val => !/^[_ \-\s]+$/.test(val), "Last name cannot consist of only underscores, spaces, or hyphens")
+    .refine(val => /[a-zA-Z]/.test(val), "Last name must contain letters")
     .optional(),
   phone: z
     .string()

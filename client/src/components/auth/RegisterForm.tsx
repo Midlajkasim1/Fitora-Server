@@ -5,13 +5,20 @@ import { z } from 'zod';
 import {  UserIcon, MailIcon, PhoneIcon, LockIcon,  UserCheckIcon, ShieldCheckIcon, EyeIcon, EyeOffIcon }from'lucide-react';
 const registerSchema = z.object({
   role: z.enum(['user', 'trainer']),
-  firstName: z.string().min(2, "First name is too short"),
-  lastName: z.string().min(2, "Last name is too short"),
+  firstName: z.string()
+    .min(2, "First name is too short")
+    .refine(val => !/^[_ \-\s]+$/.test(val), "First name cannot consist of only underscores, spaces, or hyphens")
+    .refine(val => /[a-zA-Z]/.test(val), "First name must contain letters"),
+  lastName: z.string()
+    .min(2, "Last name is too short")
+    .refine(val => !/^[_ \-\s]+$/.test(val), "Last name cannot consist of only underscores, spaces, or hyphens")
+    .refine(val => /[a-zA-Z]/.test(val), "Last name must contain letters"),
   email: z.string().email("Invalid email address"),
-phone: z
-  .string()
-  .regex(/^[0-9]{10}$/, "Phone number must be exactly 10 digits"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
+  phone: z
+    .string()
+    .regex(/^[0-9]{10}$/, "Phone number must be exactly 10 digits")
+    .refine((val) => !/^(.)\1+$/.test(val), "Phone number cannot consist of the same repeating digit"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
   confirmPassword: z.string()
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords do not match",
