@@ -5,6 +5,8 @@ import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
 import { randomBytes } from "crypto";
+import { CustomError } from "@/shared/errors/custom.error";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 
 export class VerifyResetOtpUseCase implements IBaseUseCase<VerifyResetOtpDTO, VerifyResetOtpResponseDTO> {
   constructor(private readonly _otpStore: IOtpStore) {}
@@ -13,7 +15,9 @@ export class VerifyResetOtpUseCase implements IBaseUseCase<VerifyResetOtpDTO, Ve
     const redisKey = `otp:forgot-password:${dto.email}`;
     const stored = await this._otpStore.get<{ email: string; otp: string }>(redisKey);
 
-    if (!stored || stored.otp !== dto.otp) throw new Error(AUTH_MESSAGES.OTPS_EXPIRED);
+    if (!stored || stored.otp !== dto.otp) {
+      throw new CustomError(AUTH_MESSAGES.OTPS_EXPIRED, HttpStatus.BAD_REQUEST);
+    }
 
     const resetToken = randomBytes(32).toString("hex");
     const sessionKey = `reset-session:${resetToken}`;

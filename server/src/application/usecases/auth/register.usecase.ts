@@ -8,6 +8,9 @@ import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
 import { IPasswordHasher } from "@/domain/interfaces/services/password.interface";
 import { logger } from "@/infrastructure/providers/loggers/logger";
 import { randomInt } from "crypto";
+import { CustomError } from "@/shared/errors/custom.error";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
+
 export class RegisterUseCase implements IBaseUseCase<RegisterDTO, RegisterResponseDTO> {
   constructor(
     private readonly _userRepository: IUserRepository,
@@ -20,7 +23,7 @@ export class RegisterUseCase implements IBaseUseCase<RegisterDTO, RegisterRespon
 
    const existingUser = await this._userRepository.findByEmail(dto.email);
     if (existingUser) {
-      throw new Error(AUTH_MESSAGES.EMAIL_ALREADY_EXISTS);
+      throw new CustomError(AUTH_MESSAGES.EMAIL_ALREADY_EXISTS, HttpStatus.BAD_REQUEST);
     }
  
    

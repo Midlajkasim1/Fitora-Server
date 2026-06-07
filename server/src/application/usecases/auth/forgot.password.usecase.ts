@@ -7,6 +7,8 @@ import { IEmailService } from "@/domain/interfaces/services/email-service.interf
 import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
 import { logger } from "@/infrastructure/providers/loggers/logger";
 import { randomInt } from "crypto";
+import { CustomError } from "@/shared/errors/custom.error";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 
 export class ForgotPasswordUseCase implements IBaseUseCase<ForgotPasswordRequestDTO, ForgotPasswordResponseDTO> {
   constructor(
@@ -18,7 +20,7 @@ export class ForgotPasswordUseCase implements IBaseUseCase<ForgotPasswordRequest
   async execute(dto: ForgotPasswordRequestDTO): Promise<ForgotPasswordResponseDTO> {
     const user = await this._userRepository.findEntityByEmail(dto.email);
 if (!user) {
-      throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
+      throw new CustomError(AUTH_MESSAGES.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
     const otp = randomInt(100000, 999999).toString();
     const redisKey = `otp:forgot-password:${dto.email}`;

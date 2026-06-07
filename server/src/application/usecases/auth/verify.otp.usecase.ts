@@ -7,6 +7,8 @@ import { UserEntity } from "@/domain/entities/user/user.entity";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
 import { ITokenService } from "@/domain/interfaces/services/token.interface";
+import { CustomError } from "@/shared/errors/custom.error";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 
 export class VerifyOtpUseCase implements IBaseUseCase<VerifyOtpDTO,VerifyOtpResponseDTO> {
   constructor(
@@ -20,14 +22,14 @@ export class VerifyOtpUseCase implements IBaseUseCase<VerifyOtpDTO,VerifyOtpResp
 
     const stored = await this._otpStore.get<OtpSessionDTO>(redisKey);
     if (!stored) {
-      throw new Error(AUTH_MESSAGES.OTPS_EXPIRED);
+      throw new CustomError(AUTH_MESSAGES.OTPS_EXPIRED, HttpStatus.BAD_REQUEST);
     }
     if (!stored.email || !stored.role) {
-      throw new Error(AUTH_MESSAGES.SIGNUP_INVALID);
+      throw new CustomError(AUTH_MESSAGES.SIGNUP_INVALID, HttpStatus.BAD_REQUEST);
     }
 
     if (stored.otp !==dto.otp) {
-      throw new Error(AUTH_MESSAGES.OTP_INVALID);
+      throw new CustomError(AUTH_MESSAGES.OTP_INVALID, HttpStatus.BAD_REQUEST);
     }
 
  const userEntity = UserEntity.create({

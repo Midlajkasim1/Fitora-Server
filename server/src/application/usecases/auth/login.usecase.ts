@@ -7,6 +7,8 @@ import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.re
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { IPasswordHasher } from "@/domain/interfaces/services/password.interface";
 import { ITokenService } from "@/domain/interfaces/services/token.interface";
+import { CustomError } from "@/shared/errors/custom.error";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 
 export class LoginUseCase implements IBaseUseCase<LoginDTO, LoginResponseDTO>{
    constructor(
@@ -18,19 +20,19 @@ export class LoginUseCase implements IBaseUseCase<LoginDTO, LoginResponseDTO>{
 
   async execute(dto: LoginDTO):Promise<LoginResponseDTO> {
   const result = await this._userRepository.findByEmail(dto.email);
-  if (!result) throw new Error(AUTH_MESSAGES.INVALID_CREDENTIALS);
+  if (!result) throw new CustomError(AUTH_MESSAGES.INVALID_CREDENTIALS, HttpStatus.UNAUTHORIZED);
 
   const { user, passwordHash } = result;
 
-  if (!user.isverfied()) throw new Error(AUTH_MESSAGES.ACCOUNT_NOT_VERIFIED);
-  if (!user.isActive()) throw new Error(AUTH_MESSAGES.ACCOUNT_BLOCKED);
+  if (!user.isverfied()) throw new CustomError(AUTH_MESSAGES.ACCOUNT_NOT_VERIFIED, HttpStatus.BAD_REQUEST);
+  if (!user.isActive()) throw new CustomError(AUTH_MESSAGES.ACCOUNT_BLOCKED, HttpStatus.FORBIDDEN);
 
   const isMatch = await this._passwordService.compare(
     dto.password,
     passwordHash
   );
 
-  if (!isMatch) throw new Error(AUTH_MESSAGES.INVALID_CREDENTIALS);
+  if (!isMatch) throw new CustomError(AUTH_MESSAGES.INVALID_CREDENTIALS, HttpStatus.UNAUTHORIZED);
 let approvalStatus;
     if (user.role === UserRole.TRAINER) {
       const trainer = await this._trainerRepository.findByUserId(user.id!);

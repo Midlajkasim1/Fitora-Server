@@ -7,6 +7,8 @@ import { IEmailService } from "@/domain/interfaces/services/email-service.interf
 import { IOtpStore } from "@/domain/interfaces/services/otp-store.interface";
 import { logger } from "@/infrastructure/providers/loggers/logger";
 import { randomInt } from "crypto";
+import { CustomError } from "@/shared/errors/custom.error";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 
 export class ResendOtpUseCase implements IBaseUseCase<ResendOtpDTO, ResendOtpResponseDTO> {
   constructor(
@@ -20,12 +22,12 @@ export class ResendOtpUseCase implements IBaseUseCase<ResendOtpDTO, ResendOtpRes
 
     const session = await this._otpStore.get<OtpSessionDTO>(registerKey);
     if (!session) {
-      throw new Error(AUTH_MESSAGES.SESSION_EXPIRED);
+      throw new CustomError(AUTH_MESSAGES.SESSION_EXPIRED, HttpStatus.BAD_REQUEST);
     }
 
     const cooldown = await this._otpStore.get<boolean>(resendKey);
     if (cooldown) {
-      throw new Error(AUTH_MESSAGES.OTP_COOLDOWN);
+      throw new CustomError(AUTH_MESSAGES.OTP_COOLDOWN, HttpStatus.BAD_REQUEST);
     }
 
 const otp = randomInt(100000, 1000000).toString();
