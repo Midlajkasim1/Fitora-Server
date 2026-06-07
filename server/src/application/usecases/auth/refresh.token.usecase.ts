@@ -5,6 +5,8 @@ import { UserStatus } from "@/domain/constants/auth.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { ITokenService } from "@/domain/interfaces/services/token.interface";
+import { CustomError } from "@/shared/errors/custom.error";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 
 export class RefreshTokenUseCase implements IBaseUseCase<RefreshTokenRequestDTO,RefreshTokenResponseDTO> {
   constructor(
@@ -17,7 +19,7 @@ export class RefreshTokenUseCase implements IBaseUseCase<RefreshTokenRequestDTO,
     const user = await this._userRepository.findById(decoded.userId);
 
     if (!user || user.status !== UserStatus.ACTIVE) {
-      throw new Error(AUTH_MESSAGES.INVALID_SESSION);
+      throw new CustomError(AUTH_MESSAGES.INVALID_SESSION, HttpStatus.UNAUTHORIZED);
     }
 
     const accessToken = this._tokenService.generateAccessToken({

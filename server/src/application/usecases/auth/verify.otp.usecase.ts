@@ -29,7 +29,7 @@ export class VerifyOtpUseCase implements IBaseUseCase<VerifyOtpDTO,VerifyOtpResp
     }
 
     if (stored.otp !==dto.otp) {
-      throw new CustomError(AUTH_MESSAGES.OTP_INVALID, HttpStatus.BAD_REQUEST);
+      throw new CustomError(AUTH_MESSAGES.OTP_INVALID, HttpStatus.UNAUTHORIZED);
     }
 
  const userEntity = UserEntity.create({

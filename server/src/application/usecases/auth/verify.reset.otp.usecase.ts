@@ -15,8 +15,12 @@ export class VerifyResetOtpUseCase implements IBaseUseCase<VerifyResetOtpDTO, Ve
     const redisKey = `otp:forgot-password:${dto.email}`;
     const stored = await this._otpStore.get<{ email: string; otp: string }>(redisKey);
 
-    if (!stored || stored.otp !== dto.otp) {
+    if (!stored) {
       throw new CustomError(AUTH_MESSAGES.OTPS_EXPIRED, HttpStatus.BAD_REQUEST);
+    }
+
+    if (stored.otp !== dto.otp) {
+      throw new CustomError(AUTH_MESSAGES.OTP_INVALID, HttpStatus.UNAUTHORIZED);
     }
 
     const resetToken = randomBytes(32).toString("hex");

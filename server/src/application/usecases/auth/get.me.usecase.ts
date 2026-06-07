@@ -4,6 +4,8 @@ import { ApprovalStatus, UserRole } from "@/domain/constants/auth.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { CustomError } from "@/shared/errors/custom.error";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 
 export class GetMeUseCase implements IBaseUseCase<string, GetMeResponseDTO> {
   constructor(
@@ -17,7 +19,7 @@ export class GetMeUseCase implements IBaseUseCase<string, GetMeResponseDTO> {
     const user = await this._userRepository.findById(userId);
 
     if (!user) {
-      throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
+      throw new CustomError(AUTH_MESSAGES.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
     let approvalStatus: ApprovalStatus = ApprovalStatus.PENDING ;
     if(user.role === UserRole.TRAINER){

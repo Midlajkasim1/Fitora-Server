@@ -3,6 +3,8 @@ import { IBaseUseCase } from "@/application/interfaces/base.usecase.interface";
 import { UserStatus } from "@/domain/constants/auth.constants";
 import { AUTH_MESSAGES } from "@/domain/constants/messages.constants";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { CustomError } from "@/shared/errors/custom.error";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 
 
 
@@ -14,7 +16,7 @@ export class CheckUserBlockUseCase implements IBaseUseCase<string,CheckUserBlock
    async execute(userId: string): Promise<CheckUserBlockResponseDTO> {
         const user = await this._userRepository.findById(userId);
         if(!user){
-            throw new Error(AUTH_MESSAGES.USER_NOT_FOUND);
+            throw new CustomError(AUTH_MESSAGES.USER_NOT_FOUND, HttpStatus.NOT_FOUND);
         }
         return new CheckUserBlockResponseDTO({
             userId:user.id!,

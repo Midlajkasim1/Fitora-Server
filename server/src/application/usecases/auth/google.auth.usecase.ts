@@ -8,6 +8,8 @@ import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.re
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { IGoogleTokenProvider } from "@/domain/interfaces/services/google-token.interface";
 import { ITokenService } from "@/domain/interfaces/services/token.interface";
+import { CustomError } from "@/shared/errors/custom.error";
+import { HttpStatus } from "@/domain/constants/http.status.constants";
 
 export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginResponseDTO> {
   constructor(
@@ -35,7 +37,7 @@ export class GoogleAuthUseCase implements IBaseUseCase<GoogleDTO, GoogleLoginRes
       user = await this._userRepository.createWithGoogle(newUser, googleUser.googleId);
     }
     if(!user.isActive()){
-      throw new Error(AUTH_MESSAGES.ACCOUNT_BLOCKED);
+      throw new CustomError(AUTH_MESSAGES.ACCOUNT_BLOCKED, HttpStatus.FORBIDDEN);
     }
 
 
