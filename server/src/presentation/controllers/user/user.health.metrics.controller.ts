@@ -10,6 +10,7 @@ import { healthMetricsSchema } from "@/infrastructure/validators/user/onboarding
 import { weightUpdateSchema } from "@/infrastructure/validators/user/weight-update.validator";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
+import { ForbiddenError } from "@/shared/errors/forbidden.error";
 
 
 
@@ -20,34 +21,47 @@ export class HealthMetricsController {
         private readonly _userWeightProgressUseCase: IBaseUseCase<UserWeightProgressRequestDTO, void>
     ) { }
     async saveMetrics(req: Request, res: Response): Promise<Response> {
+        const authenticatedSessionId = req.user?.id;
+        const targetUserId = req.body?.userId || req.body?.id || req.query?.userId || req.query?.id || req.params?.userId || req.params?.id || authenticatedSessionId;
+        if (targetUserId !== authenticatedSessionId) {
+            throw new ForbiddenError("You are not authorized to save metrics for this user.");
+        }
         const validData = healthMetricsSchema.parse({
             ...req.body,
-            userId: req.user?.userId
+            userId: authenticatedSessionId
         });
         const result = await this._saveHealthMetricsUseCase.execute(validData);
         return res.status(HttpStatus.OK).json(ApiResponse.success(result,HEALTH_METRICS_MESSAGES.HEALTH_METRICS_SAVED));
     }
     async checkHealthMetrics(req: Request, res: Response): Promise<Response> {
-        const userId = req.user?.userId;
-        if (!userId) {
+        const authenticatedSessionId = req.user?.id;
+        if (!authenticatedSessionId) {
             return res
                 .status(HttpStatus.UNAUTHORIZED)
                 .json(ApiResponse.error(AUTH_MESSAGES.USER_NOT_FOUND));
         }
-        const dto = new CheckHealthMetricsRequestDTO({ userId });
+        const targetUserId = req.body?.userId || req.body?.id || req.query?.userId || req.query?.id || req.params?.userId || req.params?.id || authenticatedSessionId;
+        if (targetUserId !== authenticatedSessionId) {
+            throw new ForbiddenError("You are not authorized to check metrics for this user.");
+        }
+        const dto = new CheckHealthMetricsRequestDTO({ userId: authenticatedSessionId });
         const result = await this._checkHealthMetricsUseCase.execute(dto);
         return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
     async updateWeeklyProgress(req: Request, res: Response): Promise<Response> {
         const validation = weightUpdateSchema.parse(req.body);
-        const userId = req.user?.userId;
-        if (!userId) {
+        const authenticatedSessionId = req.user?.id;
+        if (!authenticatedSessionId) {
             return res
                 .status(HttpStatus.UNAUTHORIZED)
                 .json(ApiResponse.error(AUTH_MESSAGES.USER_NOT_FOUND));
         }
+        const targetUserId = req.body?.userId || req.body?.id || req.query?.userId || req.query?.id || req.params?.userId || req.params?.id || authenticatedSessionId;
+        if (targetUserId !== authenticatedSessionId) {
+            throw new ForbiddenError("You are not authorized to update weekly progress for this user.");
+        }
         const dto = new UserWeightProgressRequestDTO({
-            userId: userId,
+            userId: authenticatedSessionId,
             weight: validation.weight
         });
      const result =  await this._userWeightProgressUseCase.execute(dto);

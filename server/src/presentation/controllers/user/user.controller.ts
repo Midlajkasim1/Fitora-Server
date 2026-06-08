@@ -15,6 +15,7 @@ import { changePasswordSchema } from "@/infrastructure/validators/user/change-pa
 import { updateUserProfileSchema } from "@/infrastructure/validators/user/user-profile.validator";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
+import { ForbiddenError } from "@/shared/errors/forbidden.error";
 
 
 
@@ -29,26 +30,34 @@ export class UserController {
     ) { }
 
     async userProfile(req: Request, res: Response): Promise<Response> {
-        const userId = req.user?.userId;
-        if (!userId) {
+        const authenticatedSessionId = req.user?.id;
+        if (!authenticatedSessionId) {
             return res
                 .status(HttpStatus.UNAUTHORIZED)
                 .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
-        const result = await this._userProfileUseCase.execute(userId);
+        const targetUserId = req.body?.userId || req.body?.id || req.query?.userId || req.query?.id || req.params?.userId || req.params?.id || authenticatedSessionId;
+        if (targetUserId !== authenticatedSessionId) {
+            throw new ForbiddenError("You are not authorized to access this user profile.");
+        }
+        const result = await this._userProfileUseCase.execute(authenticatedSessionId);
         return res.status(HttpStatus.OK).json(ApiResponse.success(result));
     }
 
     async userProfileUpdate(req: Request, res: Response): Promise<Response> {
         const validatedata = updateUserProfileSchema.parse(req.body);
-        const userId = req.user?.userId;
-        if (!userId) { 
+        const authenticatedSessionId = req.user?.id;
+        if (!authenticatedSessionId) { 
             return res
                 .status(HttpStatus.UNAUTHORIZED)
                 .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
+        const targetUserId = req.body?.userId || req.body?.id || req.query?.userId || req.query?.id || req.params?.userId || req.params?.id || authenticatedSessionId;
+        if (targetUserId !== authenticatedSessionId) {
+            throw new ForbiddenError("You are not authorized to update this user profile.");
+        }
         const dto = new UpdateUserProfileRequest({
-            id: userId!,
+            id: authenticatedSessionId,
             firstName: validatedata.firstName,
             lastName: validatedata.lastName,
             phone: validatedata.phone,
@@ -61,43 +70,55 @@ export class UserController {
     }
 
     async uploadProfileImage(req: Request, res: Response): Promise<Response> {
-        const userId = req.user?.userId;
-        if (!userId) {
+        const authenticatedSessionId = req.user?.id;
+        if (!authenticatedSessionId) {
             return res
                 .status(HttpStatus.UNAUTHORIZED)
                 .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
+        }
+        const targetUserId = req.body?.userId || req.body?.id || req.query?.userId || req.query?.id || req.params?.userId || req.params?.id || authenticatedSessionId;
+        if (targetUserId !== authenticatedSessionId) {
+            throw new ForbiddenError("You are not authorized to update this user's profile image.");
         }
         if (!req.file) {
             throw new Error(AUTH_MESSAGES.FILE_NOT_FOUND);
         }
         const result = await this._uploadProfileImageUseCase.execute(
-            { userId },
+            { userId: authenticatedSessionId },
             req.file
         );
         return res.status(HttpStatus.OK).json(ApiResponse.success(result, AUTH_MESSAGES.PROFILE_IMAGE_UPDATED));
     }
     async ChangePassword(req: Request, res: Response): Promise<Response> {
-        const userId = req.user?.userId;
-        if (!userId) {
+        const authenticatedSessionId = req.user?.id;
+        if (!authenticatedSessionId) {
             return res
                 .status(HttpStatus.UNAUTHORIZED)
                 .json(ApiResponse.error(AUTH_MESSAGES.USER_NOT_FOUND));
         }
+        const targetUserId = req.body?.userId || req.body?.id || req.query?.userId || req.query?.id || req.params?.userId || req.params?.id || authenticatedSessionId;
+        if (targetUserId !== authenticatedSessionId) {
+            throw new ForbiddenError("You are not authorized to change password for this user account.");
+        }
         const validate = changePasswordSchema.parse(req.body);
         const result = await this._changePasswordUseCase.execute({
-            userId,
+            userId: authenticatedSessionId,
             ...validate
         });
         return res.status(HttpStatus.OK).json(ApiResponse.success(result, AUTH_MESSAGES.PASSWORD_UPDATE));
     }
     async getUserPremiumDashboard(req: Request, res: Response): Promise<Response> {
-        const userId = req.user?.userId;
-        if (!userId) {
+        const authenticatedSessionId = req.user?.id;
+        if (!authenticatedSessionId) {
             return res
                 .status(HttpStatus.UNAUTHORIZED)
                 .json(ApiResponse.error(AUTH_MESSAGES.UNAUTHORIZED));
         }
-        const result = await this._getUserDashboardUseCase.execute(userId);
+        const targetUserId = req.body?.userId || req.body?.id || req.query?.userId || req.query?.id || req.params?.userId || req.params?.id || authenticatedSessionId;
+        if (targetUserId !== authenticatedSessionId) {
+            throw new ForbiddenError("You are not authorized to access this user's dashboard.");
+        }
+        const result = await this._getUserDashboardUseCase.execute(authenticatedSessionId);
         return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
     }

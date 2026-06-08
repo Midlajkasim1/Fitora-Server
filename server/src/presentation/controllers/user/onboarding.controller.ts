@@ -9,6 +9,7 @@ import { trainerOnboardingSchema } from "@/infrastructure/validators/user/onboar
 import { userOnboardingSchema } from "@/infrastructure/validators/user/onboarding/user-onboarding.validator";
 import { ApiResponse } from "@/shared/utils/response.handler";
 import { Request, Response } from "express";
+import { ForbiddenError } from "@/shared/errors/forbidden.error";
 export class OnboardingController {
   constructor(
     private readonly _userOnboardingUseCase: IBaseUseCase<UserOnboardingDTO,OnboardingResponseDTO>,
@@ -19,7 +20,15 @@ export class OnboardingController {
 async completeUser(req: Request, res: Response): Promise<Response> {
 
     const validatedData = userOnboardingSchema.parse(req.body);
-    const result = await this._userOnboardingUseCase.execute(validatedData);
+    const authenticatedSessionId = req.user?.id;
+    const targetUserId = validatedData.userId;
+    if (targetUserId !== authenticatedSessionId) {
+        throw new ForbiddenError("You are not authorized to complete onboarding for this user profile.");
+    }
+    const result = await this._userOnboardingUseCase.execute({
+        ...validatedData,
+        authenticatedSessionId
+    });
     
     return res.status(HttpStatus.OK).json(ApiResponse.success(result));
 
@@ -28,6 +37,11 @@ async completeUser(req: Request, res: Response): Promise<Response> {
   async completeTrainer(req: Request, res: Response): Promise<Response> {
 
       const validatedData = trainerOnboardingSchema.parse(req.body);
+      const authenticatedSessionId = req.user?.id;
+      const targetUserId = validatedData.userId;
+      if (targetUserId !== authenticatedSessionId) {
+          throw new ForbiddenError("You are not authorized to complete onboarding for this user profile.");
+      }
 
       const allFiles = (req.files as Express.Multer.File[]) || [];
       const uploadedFiles: UploadFileDTO[] = allFiles.map((file) => ({
@@ -36,7 +50,13 @@ async completeUser(req: Request, res: Response): Promise<Response> {
         mimetype: file.mimetype,
         size: file.size,
       }));
-      const result = await this._trainerOnboardingUseCase.execute(validatedData, uploadedFiles);
+      const result = await this._trainerOnboardingUseCase.execute(
+        {
+          ...validatedData,
+          authenticatedSessionId
+        },
+        uploadedFiles
+      );
 
       return res.status(HttpStatus.OK).json(ApiResponse.success(result));
  

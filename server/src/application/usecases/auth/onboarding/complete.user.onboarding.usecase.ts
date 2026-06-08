@@ -7,6 +7,7 @@ import { ONBOARDING_MESSAGES } from "@/domain/constants/messages.constants";
 import { ClientPreferenceEntity } from "@/domain/entities/user/client.preference.entity";
 import { IClientPreferenceRepository } from "@/domain/interfaces/repositories/onboarding/iclient.repository";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
+import { ForbiddenError } from "@/shared/errors/forbidden.error";
 
 export class CompleteUserOnboardingUseCase implements IBaseUseCase<UserOnboardingDTO, OnboardingResponseDTO> {
   constructor(
@@ -14,7 +15,11 @@ export class CompleteUserOnboardingUseCase implements IBaseUseCase<UserOnboardin
     private _preferenceRepo: IClientPreferenceRepository
   ) {}
 
-  async execute(dto: UserOnboardingDTO): Promise<OnboardingResponseDTO> {
+  async execute(dto: UserOnboardingDTO & { authenticatedSessionId?: string }): Promise<OnboardingResponseDTO> {
+    if (dto.authenticatedSessionId && dto.userId !== dto.authenticatedSessionId) {
+      throw new ForbiddenError("You are not authorized to complete onboarding for this user profile.");
+    }
+
     await this._userRepo.completeOnboarding(dto.userId, {
       dob: dto.dob,
       gender: dto.gender,

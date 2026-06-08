@@ -10,6 +10,7 @@ export class UserOnboardingDTO {
   preferred_workouts!: string;
   sleep_hours!: number;
   medical_conditions!: string[];
+  authenticatedSessionId?: string;
 
   constructor(data: UserOnboardingDTO) {
     Object.assign(this, data);

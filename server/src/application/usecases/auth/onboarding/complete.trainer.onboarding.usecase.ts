@@ -8,6 +8,7 @@ import { TrainerDetailsEntity } from "@/domain/entities/user/trainer.details.ent
 import { ITrainerRepository } from "@/domain/interfaces/repositories/itrainer.repository";
 import { IUserRepository } from "@/domain/interfaces/repositories/user.repository";
 import { IStorageProvider } from "@/domain/interfaces/services/storage-provider.interface";
+import { ForbiddenError } from "@/shared/errors/forbidden.error";
 export class CompleteTrainerOnboardingUseCase implements IBaseUseCase<TrainerOnboardingDTO, OnboardingResponseDTO,UploadFileDTO[]> {
   constructor(
     private readonly _userRepo: IUserRepository,
@@ -15,7 +16,10 @@ export class CompleteTrainerOnboardingUseCase implements IBaseUseCase<TrainerOnb
     private readonly _storageProvider: IStorageProvider
   ) {}
 
-  async execute(dto: TrainerOnboardingDTO, files:UploadFileDTO[]=[]): Promise<OnboardingResponseDTO> {
+  async execute(dto: TrainerOnboardingDTO & { authenticatedSessionId?: string }, files:UploadFileDTO[]=[]): Promise<OnboardingResponseDTO> {
+    if (dto.authenticatedSessionId && dto.userId !== dto.authenticatedSessionId) {
+      throw new ForbiddenError("You are not authorized to complete onboarding for this user profile.");
+    }
 
     const certificationUrls = await Promise.all(
       files.map((file) => 

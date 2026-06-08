@@ -6,6 +6,7 @@ export class TrainerOnboardingDTO {
   gender!: string;
   certifications!: string[];
   specializations!: string;
+  authenticatedSessionId?: string;
 
   constructor(data: TrainerOnboardingDTO) {
     Object.assign(this, data);

@@ -28,6 +28,7 @@ export const authenticateAdmin = () => {
       }
 
       req.user = {
+        id: decoded.userId,
         userId: decoded.userId,
         email: decoded.email,
         name: decoded.name,
