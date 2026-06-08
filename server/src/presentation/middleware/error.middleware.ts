@@ -20,9 +20,12 @@ export const errorHandler = (
     message = err.message;
     statusCode = err.statusCode;
   }
-  else if (err && typeof err === "object" && "statusCode" in err && typeof (err as any).statusCode === "number") {
-    message = (err as any).message || message;
-    statusCode = (err as any).statusCode;
+  else if (err && typeof err === "object" && "statusCode" in err) {
+    const errObj = err as Record<string, unknown>;
+    if (typeof errObj.statusCode === "number") {
+      message = typeof errObj.message === "string" ? errObj.message : message;
+      statusCode = errObj.statusCode;
+    }
   }
   else if (err instanceof Error) {
     message = err.message;
