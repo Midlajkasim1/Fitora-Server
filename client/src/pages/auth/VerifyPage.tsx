@@ -13,7 +13,8 @@ const VerifyPage = ({ mode }: VerifyPageProps) => {
   const { 
     verifyOtp, isVerifying,          
     verifyResetOtp, isVerifyingOtp, 
-    sendResetOtp, isSendingOtp     
+    sendResetOtp, isSendingOtp,
+    resendOtp, isResendingRegisterOtp
   } = useAuth();
   
   const [timer, setTimer] = useState(60);
@@ -36,7 +37,11 @@ const VerifyPage = ({ mode }: VerifyPageProps) => {
   };
 
   const handleResend = () => {
-    if (mode === 'reset') sendResetOtp({ email });
+    if (mode === 'reset') {
+      sendResetOtp({ email });
+    } else {
+      resendOtp({ email });
+    }
     setTimer(60);
   };
 
@@ -66,7 +71,7 @@ const VerifyPage = ({ mode }: VerifyPageProps) => {
         <div className="mt-8 text-center space-y-4">
             <button
               onClick={handleResend}
-              disabled={timer > 0 || isSendingOtp}
+              disabled={timer > 0 || isSendingOtp || isResendingRegisterOtp}
               className="text-[#00ff88] font-black uppercase italic tracking-tighter hover:underline disabled:opacity-30"
             >
               {timer > 0 ? `Resend in ${timer}s` : "Resend Now"}

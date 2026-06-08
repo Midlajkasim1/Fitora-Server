@@ -2,6 +2,7 @@ import { AiDietPlanEntity, IDietDay } from "@/domain/entities/ai.workout&diet/ai
 import { AiWorkoutPlanEntity, IWorkoutDay } from "@/domain/entities/ai.workout&diet/ai.workout.plan.entity";
 import { IAiService, IUserDietMetrics, IUserFitnessMetrics } from "@/domain/interfaces/services/ai-generate.service.interface";
 import { logger } from "../loggers/logger";
+import { safeParseJson } from "@/shared/utils/json.parser";
 
 interface MistralWorkoutResponse {
   weeklyPlan: IWorkoutDay[];
@@ -47,25 +48,39 @@ export class MistralAiService implements IAiService {
 
     try {
       const content = await this._executeRequest(systemPrompt, userPrompt);
-      const parsed = JSON.parse(content) as MistralWorkoutResponse;
+      const parsed = await safeParseJson<any>(content);
 
-      if (!parsed.weeklyPlan || parsed.weeklyPlan.length === 0) {
-        throw new Error("Mistral returned an empty plan");
+      const rawPlan = Array.isArray(parsed) 
+        ? parsed 
+        : (parsed.weeklyPlan || parsed.weekly_plan || parsed.plan || parsed.schedule || parsed.workoutPlan || parsed.workout_plan);
+
+      if (!Array.isArray(rawPlan) || rawPlan.length === 0) {
+        throw new Error("Mistral response did not contain a valid weekly plan array");
       }
 
-      const cleanedPlan: IWorkoutDay[] = parsed.weeklyPlan.map((day) => ({
-        day: day.day || "Active Day",
-        focus: day.focus || metrics.specializations,
-        warmup: day.warmup || "Standard Warmup",
-        cooldown: day.cooldown || "Standard Cooldown",
-        exercises: (day.exercises || []).map((ex) => ({
-          name: ex.name || "Exercise",
-          sets: Number(ex.sets) || 3,
-          reps: String(ex.reps || "12"),
-          restTime: ex.restTime || "60s",
-          notes: ex.notes || ""
-        }))
-      }));
+      const cleanedPlan: IWorkoutDay[] = rawPlan.map((day: any) => {
+        const dayName = day.day || day.dayOfWeek || day.name || "Active Day";
+        const focus = day.focus || day.target || day.routine || metrics.specializations;
+        const warmup = day.warmup || day.warmUp || "Standard Warmup";
+        const cooldown = day.cooldown || day.coolDown || "Standard Cooldown";
+        
+        const rawExercises = day.exercises || day.exerciseList || day.routines || [];
+        const exercises = (Array.isArray(rawExercises) ? rawExercises : []).map((ex: any) => ({
+          name: ex.name || ex.exercise || "Exercise",
+          sets: Number(ex.sets || ex.sets_count) || 3,
+          reps: String(ex.reps || ex.repetitions || "12"),
+          restTime: ex.restTime || ex.rest_time || ex.rest || "60s",
+          notes: ex.notes || ex.instruction || ""
+        }));
+
+        return {
+          day: dayName,
+          focus,
+          warmup,
+          cooldown,
+          exercises
+        };
+      });
 
       return AiWorkoutPlanEntity.create({
         userId,
@@ -116,29 +131,68 @@ export class MistralAiService implements IAiService {
 
     try {
       const content = await this._executeRequest(systemPrompt, userPrompt);
-      const parsed = JSON.parse(content) as MistralDietResponse;
+      const parsed = await safeParseJson<any>(content);
 
-      if (!parsed.weeklyPlan || parsed.weeklyPlan.length === 0) {
-        throw new Error("Mistral returned empty diet array");
+      const rawDiet = Array.isArray(parsed) 
+        ? parsed 
+        : (parsed.weeklyPlan || parsed.weekly_plan || parsed.plan || parsed.dietPlan || parsed.diet_plan || parsed.schedule);
+
+      if (!Array.isArray(rawDiet) || rawDiet.length === 0) {
+        throw new Error("Mistral response did not contain a valid weekly diet plan array");
       }
 
-      const cleanedDiet: IDietDay[] = parsed.weeklyPlan.map((day) => ({
-        day: day.day || "Day",
-        totalCalories: Number(day.totalCalories) || 2000,
-        totalProtein: Number(day.totalProtein) || 150,
-        totalCarbs: Number(day.totalCarbs) || 200,
-        totalFats: Number(day.totalFats) || 60,
-        waterIntake: Number(day.waterIntake) || 2000,
-        meals: (day.meals || []).map((meal) => ({
-          name: meal.name || "Healthy Meal",
-          time: meal.time || "Scheduled",
-          foods: Array.isArray(meal.foods) ? meal.foods : ["Healthy choice"],
-          calories: Number(meal.calories) || 400,
-          protein: Number(meal.protein) || 25,
-          carbs: Number(meal.carbs) || 40,
-          fats: Number(meal.fats) || 10
-        }))
-      }));
+      const cleanedDiet: IDietDay[] = rawDiet.map((day: any) => {
+        const dayName = day.day || day.dayOfWeek || day.name || "Day";
+        const totalCalories = Number(day.totalCalories || day.total_calories || day.calories || day.kcal) || 2000;
+        const totalProtein = Number(day.totalProtein || day.total_protein || day.protein) || 150;
+        const totalCarbs = Number(day.totalCarbs || day.total_carbs || day.carbs || day.carbohydrates) || 200;
+        const totalFats = Number(day.totalFats || day.total_fats || day.fats || day.fat) || 60;
+        const waterIntake = Number(day.waterIntake || day.water_intake || day.water || day.hydration) || 2000;
+        
+        const rawMeals = day.meals || day.mealList || [];
+        const meals = (Array.isArray(rawMeals) ? rawMeals : []).map((meal: any) => {
+          const mealName = meal.name || meal.title || "Healthy Meal";
+          const mealTime = meal.time || meal.scheduledTime || "Scheduled";
+          
+          let foods: string[] = [];
+          if (Array.isArray(meal.foods)) {
+            foods = meal.foods;
+          } else if (Array.isArray(meal.food)) {
+            foods = meal.food;
+          } else if (typeof meal.foods === "string") {
+            foods = [meal.foods];
+          } else if (typeof meal.food === "string") {
+            foods = [meal.food];
+          } else {
+            foods = ["Healthy choice"];
+          }
+
+          const calories = Number(meal.calories || meal.kcal) || 400;
+          const protein = Number(meal.protein || meal.prot) || 25;
+          const carbs = Number(meal.carbs || meal.carbohydrates) || 40;
+          const fats = Number(meal.fats || meal.fat) || 10;
+
+          return {
+            name: mealName,
+            time: mealTime,
+            foods,
+            calories,
+            protein,
+            carbs,
+            fats
+          };
+        });
+
+        return {
+          day: dayName,
+          totalCalories,
+          totalProtein,
+          totalCarbs,
+          totalFats,
+          waterIntake,
+          meals
+        };
+      });
 
       return AiDietPlanEntity.create({
         userId,

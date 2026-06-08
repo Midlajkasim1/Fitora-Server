@@ -2,7 +2,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { 
   googleAuth, registerUser, verifyOtp, loginUser, 
-  forgotPassword, verifyResetOtp, resetPassword 
+  forgotPassword, verifyResetOtp, resetPassword,
+  resendOtp
 } from "../../api/auth.api";
 import { useAuthStore } from "../../store/use-auth-store";
 import type { User } from "../../type/auth.types";
@@ -93,6 +94,12 @@ export const useAuth = () => {
     },
   });
   
+  const resendOtpMutation = useMutation({
+    mutationFn: resendOtp,
+    onSuccess: () => {
+      toast.success("New OTP sent to your email.");
+    }
+  });
 
   return {
     register: registerMutation.mutate,
@@ -109,5 +116,7 @@ export const useAuth = () => {
     isSendingOtp: forgotPasswordMutation.isPending,
     isVerifyingOtp: verifyResetOtpMutation.isPending,
     isResettingPassword: resetPasswordMutation.isPending,
+    resendOtp: resendOtpMutation.mutate,
+    isResendingRegisterOtp: resendOtpMutation.isPending,
   };
 };
