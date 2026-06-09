@@ -21,7 +21,7 @@ export class MistralAiService implements IAiService {
   }
 
   async generateWorkoutPlan(userId: string, metrics: IUserFitnessMetrics): Promise<AiWorkoutPlanEntity> {
-    const systemPrompt = `You are an elite, world-class personal trainer. Your primary core directive is VARIETY.
+    const systemPrompt = `You are an elite, world-class personal trainer. Your primary core directive is VARIETY and COMPLETENESS.
     You must generate a strict 7-day training schedule. 
     CRITICAL REQUIREMENT: Every single day MUST focus on a different routine or variation (e.g., Push, Pull, Legs, Core, Cardio, Active Recovery). 
     Do NOT duplicate exercises or structures across days. Make every day unique and realistic.`;
@@ -29,7 +29,8 @@ export class MistralAiService implements IAiService {
     const userPrompt = `Generate a progressive 7-day workout plan for a ${metrics.level} athlete.
     GOAL: ${metrics.goal}. SPECIALIZATION: ${metrics.specializations}.
     
-    TASK: Return a JSON object with a "weeklyPlan" key containing exactly 7 objects (one for each day from Monday to Sunday).
+    TASK: Return a JSON object with a "weeklyPlan" key containing exactly 7 objects (one for each day from Monday to Sunday). 
+    Each day's exercises list MUST contain at least 4 to 6 distinct exercises suited for the day's focus. Do NOT output only one exercise.
     
     JSON STRUCTURE EXPECTED:
     {
@@ -40,7 +41,10 @@ export class MistralAiService implements IAiService {
           "warmup": "5 mins light cardio",
           "cooldown": "5 mins stretching",
           "exercises": [
-            {"name": "Bench Press", "sets": 3, "reps": "12", "restTime": "60s", "notes": "Focus on explosive execution"}
+            {"name": "Bench Press", "sets": 3, "reps": "12", "restTime": "60s", "notes": "Focus on explosive execution"},
+            {"name": "Overhead Press", "sets": 3, "reps": "10", "restTime": "60s", "notes": "Keep core engaged"},
+            {"name": "Incline Dumbbell Flyes", "sets": 3, "reps": "12", "restTime": "45s", "notes": "Control the negative phase"},
+            {"name": "Tricep Pushdowns", "sets": 3, "reps": "15", "restTime": "45s", "notes": "Squeeze at the bottom"}
           ]
         }
       ]
@@ -102,7 +106,7 @@ export class MistralAiService implements IAiService {
     const userPrompt = `Generate a detailed 7-day meal plan for a user with these goals: ${metrics.goal}.
     Preference: ${metrics.preference}. Limitations: ${metrics.limitations.join(", ")}.
     
-    TASK: You MUST return a JSON object with a "weeklyPlan" key containing exactly 7 unique day objects. Each day MUST feature at least 3 distinct meals.
+    TASK: You MUST return a JSON object with a "weeklyPlan" key containing exactly 7 unique day objects. Each day MUST feature at least 3 distinct meals (e.g., Breakfast, Lunch, Dinner).
     
     JSON STRUCTURE EXPECTED:
     {
@@ -123,6 +127,24 @@ export class MistralAiService implements IAiService {
               "protein": 30,
               "carbs": 40,
               "fats": 20
+            },
+            {
+              "name": "Lunch",
+              "time": "01:00 PM",
+              "foods": ["Grilled chicken breast", "Brown rice", "Steamed broccoli"],
+              "calories": 700,
+              "protein": 50,
+              "carbs": 60,
+              "fats": 15
+            },
+            {
+              "name": "Dinner",
+              "time": "07:30 PM",
+              "foods": ["Baked salmon", "Sweet potato", "Mixed green salad"],
+              "calories": 600,
+              "protein": 40,
+              "carbs": 45,
+              "fats": 22
             }
           ]
         }
@@ -212,15 +234,20 @@ export class MistralAiService implements IAiService {
     const defaultWeekly: IWorkoutDay[] = days.map(d => ({
       day: d,
       focus: metrics.specializations,
-      exercises: [{ name: "Standard Pushups", sets: 3, reps: "12", restTime: "60s", notes: "Focus on form" }],
+      exercises: [
+        { name: "Standard Pushups", sets: 3, reps: "12", restTime: "60s", notes: "Focus on form" },
+        { name: "Bodyweight Squats", sets: 3, reps: "15", restTime: "60s", notes: "Keep chest up" },
+        { name: "Plank Hold", sets: 3, reps: "45s", restTime: "45s", notes: "Keep core tight" },
+        { name: "Jumping Jacks", sets: 3, reps: "30", restTime: "30s", notes: "Light and quick" }
+      ],
       warmup: "5 min light cardio",
       cooldown: "5 min stretching"
     }));
 
     return AiWorkoutPlanEntity.create({
       userId,
-      title: `${metrics.level} Plan (Standard)`,
-      description: "A pre-built effective workout plan.",
+      title: `${metrics.level} ${metrics.specializations} Plan (Standard)`,
+      description: `Targeting ${metrics.goal}`,
       weeklyPlan: defaultWeekly
     });
   }
@@ -229,14 +256,18 @@ export class MistralAiService implements IAiService {
     const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
     const defaultWeekly: IDietDay[] = days.map(d => ({
       day: d,
-      meals: [{ name: "Balanced Breakfast", time: "08:00", foods: ["Oats", "Fruit"], calories: 400, protein: 20, carbs: 50, fats: 10 }],
-      totalCalories: 2000, totalProtein: 150, totalCarbs: 200, totalFats: 60, waterIntake: 2000
+      meals: [
+        { name: "Balanced Breakfast", time: "08:00 AM", foods: ["Oats", "Fruit", "Greek Yogurt"], calories: 500, protein: 25, carbs: 60, fats: 10 },
+        { name: "Power Lunch", time: "01:00 PM", foods: ["Grilled Chicken", "Quinoa", "Mixed Greens"], calories: 700, protein: 45, carbs: 65, fats: 15 },
+        { name: "Nourishing Dinner", time: "07:30 PM", foods: ["Salmon", "Sweet Potato", "Broccoli"], calories: 600, protein: 40, carbs: 50, fats: 20 }
+      ],
+      totalCalories: 1800, totalProtein: 110, totalCarbs: 175, totalFats: 45, waterIntake: 2500
     }));
 
     return AiDietPlanEntity.create({
       userId,
       title: `${metrics.preference} Plan (Standard)`,
-      description: "A balanced nutritional guide.",
+      description: `Targeting ${metrics.goal}`,
       weeklyPlan: defaultWeekly
     });
   }
