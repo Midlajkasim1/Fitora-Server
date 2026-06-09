@@ -12,25 +12,47 @@ export const attachLogicToApi = (apiInstance: AxiosInstance) => {
       const originalRequest = error.config;
 
       if (error.response?.status === 401 && !originalRequest._retry) {
+        const publicPages = [
+          "/",
+          "/login",
+          "/register",
+          "/verify-otp",
+          "/verify-reset-otp",
+          "/forgot-password",
+          "/reset-password",
+          "/admin-portal",
+        ];
         
-        const publicPages = ["/login", "/register", "/"];  
-        if (publicPages.includes(window.location.pathname)) {
-          return Promise.reject(error);
-        }
+        const publicUrls = [
+          "/auth/login",
+          "/auth/register",
+          "/auth/verify-otp",
+          "/auth/resend-otp",
+          "/auth/forgot-password",
+          "/auth/verify-reset-otp",
+          "/auth/reset-password",
+          "/auth/google",
+          "/admin/login",
+        ];
 
-        originalRequest._retry = true;
+        const isPublicPage = publicPages.includes(window.location.pathname);
+        const isPublicUrl = publicUrls.some(url => originalRequest.url?.includes(url));
 
-        try {
-          const isAdmin = window.location.pathname.startsWith("/admin");
-          const refreshUrl = isAdmin ? "/admin/refresh-token" : "/auth/refresh-token";
-          
-          await axios.post(`${import.meta.env.VITE_API_URL}${refreshUrl}`, {}, { withCredentials: true });
+        if (!isPublicPage && !isPublicUrl) {
+          originalRequest._retry = true;
 
-          return apiInstance(originalRequest);
-        } catch (refreshError) {
-          useAuthStore.getState().logout();
-          toast.error("Session expired. Please login again.");
-          return Promise.reject(refreshError);
+          try {
+            const isAdmin = window.location.pathname.startsWith("/admin");
+            const refreshUrl = isAdmin ? "/admin/refresh-token" : "/auth/refresh-token";
+            
+            await axios.post(`${import.meta.env.VITE_API_URL}${refreshUrl}`, {}, { withCredentials: true });
+
+            return apiInstance(originalRequest);
+          } catch (refreshError) {
+            useAuthStore.getState().logout();
+            toast.error("Session expired. Please login again.");
+            return Promise.reject(refreshError);
+          }
         }
       }
 
