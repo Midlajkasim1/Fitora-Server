@@ -10,28 +10,22 @@ async function getJsonRepair(): Promise<any> {
   return jsonrepairFn;
 }
 
-/**
- * Extracts and robustly parses a JSON string, recovering from markdown wrappers,
- * conversational wrappers, or minor syntax errors (like trailing commas).
- */
+
 export async function safeParseJson<T>(rawContent: string): Promise<T> {
   let content = rawContent.trim();
 
-  // 1. Remove markdown code block fences if present (e.g. ```json ... ```)
   const markdownRegex = /^```(?:json)?\s*([\s\S]*?)\s*```$/i;
   const match = content.match(markdownRegex);
   if (match) {
     content = match[1].trim();
   }
 
-  // 2. Try simple JSON.parse
   try {
     return JSON.parse(content) as T;
   } catch (error) {
     logger.warn(`Initial JSON.parse failed, attempting extraction/repair. Error: ${(error as Error).message}`);
   }
 
-  // 3. Extract JSON object/array from surrounding conversational text
   const firstBrace = content.indexOf("{");
   const lastBrace = content.lastIndexOf("}");
   const firstBracket = content.indexOf("[");
@@ -61,7 +55,6 @@ export async function safeParseJson<T>(rawContent: string): Promise<T> {
 
   const repair = await getJsonRepair();
 
-  // 4. Try jsonrepair on the extracted or cleaned string
   try {
     const repaired = repair(extracted);
     return JSON.parse(repaired) as T;
@@ -69,7 +62,6 @@ export async function safeParseJson<T>(rawContent: string): Promise<T> {
     logger.warn(`jsonrepair on extracted content failed. Trying jsonrepair on original cleaned content. Error: ${(repairError as Error).message}`);
   }
 
-  // 5. Try jsonrepair on the original cleaned content
   try {
     const repairedOriginal = repair(content);
     return JSON.parse(repairedOriginal) as T;

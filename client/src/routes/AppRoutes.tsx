@@ -17,6 +17,11 @@ const ForgotPasswordPage = lazy(() => import("../pages/auth/forgotPasswordPage")
 const ResetPasswordPage = lazy(() => import("../pages/auth/ResetPasswordPage"));
 const VerifyPage = lazy(() => import("../pages/auth/VerifyPage"));
 
+/* Static Info Pages */
+const FeaturesPage = lazy(() => import("../pages/user/FeaturesPage"));
+const PricingPage = lazy(() => import("../pages/user/PricingPage"));
+const AboutPage = lazy(() => import("../pages/user/AboutPage"));
+
 /* Onboarding */
 const ClientStepOne = lazy(() => import("../pages/user/client/ClientOnboarding/ClientStepOne"));
 const ClientStepTwo = lazy(() => import("../pages/user/client/ClientOnboarding/ClientStepTwo"));
@@ -101,6 +106,9 @@ export default function AppRoutes() {
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<GuestGuard><LandingPage /></GuestGuard>} />
+        <Route path="/features" element={<FeaturesPage />} />
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/about" element={<AboutPage />} />
         
         {/* Guest Routes */}
         <Route path="/login" element={<GuestGuard><LoginPage /></GuestGuard>} />

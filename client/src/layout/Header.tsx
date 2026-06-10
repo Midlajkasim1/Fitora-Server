@@ -29,9 +29,9 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Navigation */}
         {showNav && (
           <nav className="hidden lg:flex items-center gap-10 text-sm font-medium">
-            <a href="#features" className="text-gray-300 hover:text-[#00ff94] transition-colors">Features</a>
-            <a href="#pricing" className="text-gray-300 hover:text-[#00ff94] transition-colors">Pricing</a>
-            <a href="#about" className="text-gray-300 hover:text-[#00ff94] transition-colors">About</a>
+            <Link to="/features" className="text-gray-300 hover:text-[#00ff94] transition-colors">Features</Link>
+            <Link to="/pricing" className="text-gray-300 hover:text-[#00ff94] transition-colors">Pricing</Link>
+            <Link to="/about" className="text-gray-300 hover:text-[#00ff94] transition-colors">About</Link>
           </nav>
         )}
 
@@ -78,9 +78,9 @@ export const Header: React.FC<HeaderProps> = ({
 
         {showNav && (
           <nav className="flex flex-col gap-6">
-            <a href="#features" onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-[#00ff94] font-bold uppercase italic tracking-widest transition-colors py-2 border-b border-white/5">Features</a>
-            <a href="#pricing" onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-[#00ff94] font-bold uppercase italic tracking-widest transition-colors py-2 border-b border-white/5">Pricing</a>
-            <a href="#about" onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-[#00ff94] font-bold uppercase italic tracking-widest transition-colors py-2 border-b border-white/5">About</a>
+            <Link to="/features" onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-[#00ff94] font-bold uppercase italic tracking-widest transition-colors py-2 border-b border-white/5">Features</Link>
+            <Link to="/pricing" onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-[#00ff94] font-bold uppercase italic tracking-widest transition-colors py-2 border-b border-white/5">Pricing</Link>
+            <Link to="/about" onClick={() => setIsOpen(false)} className="text-gray-400 hover:text-[#00ff94] font-bold uppercase italic tracking-widest transition-colors py-2 border-b border-white/5">About</Link>
           </nav>
         )}
         
