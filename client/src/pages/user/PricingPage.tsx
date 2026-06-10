@@ -9,9 +9,9 @@ const PricingPage: React.FC = () => {
 
   const plans = [
     {
-      name: "Starter Trial",
-      price: "₹0",
-      period: "forever",
+      name: "Mid Plan",
+      price: "₹2999",
+      period: "per month",
       description: "Perfect for beginners looking to start their fitness journey and explore baseline metrics.",
       features: [
         { text: "Access to Standard Workouts", available: true },
@@ -28,7 +28,7 @@ const PricingPage: React.FC = () => {
     },
     {
       name: "Pro Performance",
-      price: "₹999",
+      price: "₹6999",
       period: "per month",
       description: "Unleash elite training with complete machine learning workout modifications and diet planners.",
       features: [
