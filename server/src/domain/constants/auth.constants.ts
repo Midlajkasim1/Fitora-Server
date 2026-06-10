@@ -15,7 +15,7 @@ export enum AuthProvider {
 }
 
 export enum AdminStatus {
-    ACTIVE = "active",
+    ACTIVE = "active",  
     BLOCKED = "blocked"
 }
 
